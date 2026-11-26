@@ -6,19 +6,23 @@ import { AppThemeName, THEMES } from '../shared/themes';
 import {
   addTrack,
   clipEnd,
+  closeAllGaps,
   createSolidClip,
   detachAudioLinks,
   duplicateClips,
+  evenOutAudioLevels,
   freeTrack,
   freezeFrameClip,
   linkedIds,
   makeClipsForAsset,
+  nearestEditPoint,
   newId,
   pasteClipGroup,
   projectDuration,
   removeClips,
   resolveOverlaps,
   reverseClipGroup,
+  rippleTrimEdge,
   snapFrame,
   splitClipsAt,
 } from '../shared/project';
@@ -58,6 +62,7 @@ export const App: React.FC = () => {
   const [sticky, setSticky] = useState(false);
   const [showStrip, setShowStrip] = useState(true);
   const [skim, setSkim] = useState(false);
+  const [audioScrub, setAudioScrub] = useState(false);
   const [skimTime, setSkimTime] = useState<number | null>(null);
   const [zoomPx, setZoomPx] = useState(48);
   const [loop, setLoop] = useState(false);
@@ -85,6 +90,7 @@ export const App: React.FC = () => {
     changed: boolean;
   } | null>(null);
   const [magicAnimated, setMagicAnimated] = useState(true);
+  const [recentProjects, setRecentProjects] = useState<string[]>([]);
   const activeMagicRunIdRef = useRef<string | null>(null);
 
   const mixerRef = useRef<AudioMixer | null>(null);
@@ -103,6 +109,7 @@ export const App: React.FC = () => {
     void window.vectrail.getMcpStatus().then((m) => setMcpRunning(m.running));
     void window.vectrail.getShortcuts().then(setShortcutMap);
     void window.vectrail.getMagicAnimated().then(setMagicAnimated);
+    void window.vectrail.getRecentProjects().then(setRecentProjects);
     const unsub = window.vectrail.onSnapshot(setSnap);
     const unsubMagic = window.vectrail.onMagicProgress((ev) => {
       if (ev.runId === activeMagicRunIdRef.current) {
@@ -419,6 +426,31 @@ export const App: React.FC = () => {
       } else if (action === 'stepForward') {
         e.preventDefault();
         void window.vectrail.setPlayhead(snap.playhead + 1 / snap.project.fps);
+      } else if (action === 'previousEdit') {
+        e.preventDefault();
+        const prev = nearestEditPoint(snap.project, snap.playhead, false);
+        if (prev !== undefined) void window.vectrail.setPlayhead(prev);
+      } else if (action === 'nextEdit') {
+        e.preventDefault();
+        const next = nearestEditPoint(snap.project, snap.playhead, true);
+        if (next !== undefined) void window.vectrail.setPlayhead(next);
+      } else if (action === 'addDissolve') {
+        e.preventDefault();
+        mutate((p) => {
+          const target =
+            (selectedIds.length ? p.clips.find((c) => selectedIds.includes(c.id) && c.kind !== 'audio') : undefined) ??
+            p.clips.find((c) => c.kind !== 'audio' && snap.playhead >= c.start && snap.playhead <= clipEnd(c));
+          if (target) target.transitionIn = { kind: 'dissolve', duration: Math.min(0.5, target.duration) };
+        });
+      } else if (action === 'rippleTrimStart') {
+        e.preventDefault();
+        mutate((p) => rippleTrimEdge(p, selectedIds, snap.playhead, true));
+      } else if (action === 'rippleTrimEnd') {
+        e.preventDefault();
+        mutate((p) => rippleTrimEdge(p, selectedIds, snap.playhead, false));
+      } else if (action === 'closeAllGaps') {
+        e.preventDefault();
+        mutate((p) => closeAllGaps(p));
       } else if (action === 'markIn') {
         e.preventDefault();
         mutate((p) => {
@@ -450,6 +482,7 @@ export const App: React.FC = () => {
       else if (action === 'toggleSticky') setSticky((s) => !s);
       else if (action === 'toggleStrip') setShowStrip((s) => !s);
       else if (action === 'toggleSkim') setSkim((s) => !s);
+      else if (action === 'toggleAudioScrub') setAudioScrub((s) => !s);
       else if (action === 'toggleLoop') setLoop((l) => !l);
       else if (action === 'zoomIn') setZoomPx((z) => Math.min(240, z * 1.25));
       else if (action === 'zoomOut') setZoomPx((z) => Math.max(12, z * 0.8));
@@ -509,7 +542,11 @@ export const App: React.FC = () => {
     setMagicPreviewProj(null);
   };
 
-  const handleRunMagic = async (promptText: string, backend: MagicBackend) => {
+  const handleRunMagic = async (
+    promptText: string,
+    backend: MagicBackend,
+    options?: { model?: string; effort?: string }
+  ) => {
     const runId = `magic-${Date.now()}`;
     activeMagicRunIdRef.current = runId;
     const worker = workerNameFor(backend);
@@ -519,7 +556,7 @@ export const App: React.FC = () => {
     setMagicThinking({ runId, stage: 'looking', worker, status: 'Looking at media' });
 
     try {
-      const res = await window.vectrail.runMagic(promptText, backend, selectedIds, runId);
+      const res = await window.vectrail.runMagic(promptText, backend, selectedIds, runId, options);
       if (activeMagicRunIdRef.current !== runId || res.cancelled) {
         setMagicThinking(null);
         return;
@@ -624,7 +661,14 @@ export const App: React.FC = () => {
           const p = (f as File & { path?: string }).path;
           if (p) paths.push(p);
         }
-        if (paths.length) void window.vectrail.importPaths(paths);
+        const projFile = paths.find((fp) => /\.(vectrail|editroom)$/i.test(fp));
+        if (projFile) {
+          void window.vectrail.openProjectPath(projFile).then(() => {
+            void window.vectrail.getRecentProjects().then(setRecentProjects);
+          });
+        } else if (paths.length) {
+          void window.vectrail.importPaths(paths);
+        }
       }}
     >
       <TitleBar
@@ -636,9 +680,24 @@ export const App: React.FC = () => {
         mcpRunning={mcpRunning}
         magicOpen={modal === 'magic'}
         magicStatus={activeMagicStatus}
+        recentProjects={recentProjects}
         onNew={() => void window.vectrail.newProject()}
-        onOpen={() => void window.vectrail.openProjectDialog()}
-        onSave={() => void window.vectrail.saveProjectDialog(false)}
+        onOpen={() =>
+          void window.vectrail.openProjectDialog().then(() => {
+            void window.vectrail.getRecentProjects().then(setRecentProjects);
+          })
+        }
+        onOpenRecent={(fp) =>
+          void window.vectrail.openProjectPath(fp).then(() => {
+            void window.vectrail.getRecentProjects().then(setRecentProjects);
+          })
+        }
+        onClearRecents={() => void window.vectrail.clearRecentProjects().then(setRecentProjects)}
+        onSave={() =>
+          void window.vectrail.saveProjectDialog(false).then(() => {
+            void window.vectrail.getRecentProjects().then(setRecentProjects);
+          })
+        }
         onImport={() => void window.vectrail.importFilesDialog()}
         onUndo={() => void window.vectrail.undo()}
         onRedo={() => void window.vectrail.redo()}
@@ -717,6 +776,10 @@ export const App: React.FC = () => {
           onStep={(frames) =>
             void window.vectrail.setPlayhead(Math.max(0, snap.playhead + frames / snap.project.fps))
           }
+          onJumpEdit={(forward) => {
+            const target = nearestEditPoint(snap.project, snap.playhead, forward);
+            if (target !== undefined) void window.vectrail.setPlayhead(target);
+          }}
           onToggleLoop={() => setLoop((l) => !l)}
           onImport={() => void window.vectrail.importFilesDialog()}
         />
@@ -779,6 +842,7 @@ export const App: React.FC = () => {
         sticky={sticky}
         showStrip={showStrip}
         skim={skim}
+        audioScrub={audioScrub}
         zoomPx={zoomPx}
         height={layout.timelineH}
         copiedGrade={copiedGrade}
@@ -790,10 +854,12 @@ export const App: React.FC = () => {
         onToggleSticky={() => setSticky((s) => !s)}
         onToggleStrip={() => setShowStrip((s) => !s)}
         onToggleSkim={() => setSkim((s) => !s)}
+        onToggleAudioScrub={() => setAudioScrub((s) => !s)}
         onSetZoom={setZoomPx}
         onZoomToFit={handleZoomToFit}
         onSeek={(t) => void window.vectrail.setPlayhead(t)}
         onSkimTime={setSkimTime}
+        onScrubAudio={(t) => mixerRef.current?.scrubAt(displayProject, t)}
         onSelectClips={setSelectedIds}
         onMutate={mutate}
         onSplitAtPlayhead={handleSplitAtPlayhead}
@@ -806,6 +872,8 @@ export const App: React.FC = () => {
           })
         }
         onAutoEdit={() => void handleRunMagic('Make a beat-synced highlight cut.', 'local')}
+        onCloseAllGaps={() => mutate((p) => closeAllGaps(p))}
+        onEvenLevels={() => mutate((p) => evenOutAudioLevels(p))}
         onDropAsset={handleDropAssetOnTimeline}
         onCopyGrade={setCopiedGrade}
         onDuplicateClip={(clipID) =>
@@ -871,7 +939,7 @@ export const App: React.FC = () => {
           prompt={magicPrompt}
           history={snap.project.magicHistory ?? []}
           onChangePrompt={setMagicPrompt}
-          onSubmit={(p, b) => void handleRunMagic(p, b)}
+          onSubmit={(p, b, opts) => void handleRunMagic(p, b, opts)}
           onOpenSettings={() => setModal('settings')}
           onClose={() => setModal(null)}
         />

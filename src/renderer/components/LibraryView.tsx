@@ -1,5 +1,18 @@
 import React, { useMemo, useState } from 'react';
-import { Captions, Film, FolderOpen, Image as ImageIcon, Music, Plus, Search, Sparkles, Square, Type } from 'lucide-react';
+import {
+  Captions,
+  Film,
+  FolderOpen,
+  Image as ImageIcon,
+  LayoutGrid,
+  List,
+  Music,
+  Plus,
+  Search,
+  Sparkles,
+  Square,
+  Type,
+} from 'lucide-react';
 import { MediaAsset, Transcript } from '../../shared/types';
 import { formatTimecode } from '../../shared/project';
 
@@ -50,8 +63,25 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
 }) => {
   const [query, setQuery] = useState('');
   const [activeFolder, setActiveFolder] = useState<string | null>(null);
+  const [viewMode, setViewMode] = useState<'grid' | 'list'>(() => {
+    try {
+      return localStorage.getItem('vectrail.mediaLayout.v1') === 'list' ? 'list' : 'grid';
+    } catch {
+      return 'grid';
+    }
+  });
   const [hoverScrub, setHoverScrub] = useState<{ id: string; idx: number; rel: number; time: number } | null>(null);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; asset: MediaAsset } | null>(null);
+  const [panelMenu, setPanelMenu] = useState<{ x: number; y: number } | null>(null);
+
+  const toggleViewMode = (mode: 'grid' | 'list') => {
+    setViewMode(mode);
+    try {
+      localStorage.setItem('vectrail.mediaLayout.v1', mode);
+    } catch {
+      // ignore
+    }
+  };
 
   const folders = useMemo(() => {
     const set = new Set<string>();
@@ -61,23 +91,59 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
     return [...set].sort();
   }, [assets]);
 
+  const parsedQuery = useMemo(() => {
+    const raw = query.trim();
+    const phrases: string[] = [];
+    const rest = raw
+      .replace(/["“”]([^"“”]*)["“”]?/g, (_m, inner: string) => {
+        const clean = inner.trim().toLowerCase();
+        if (clean) phrases.push(clean);
+        return ' ';
+      })
+      .trim()
+      .toLowerCase();
+    return { phrases, rest };
+  }, [query]);
+
+  const speechSnippetFor = (asset: MediaAsset): { before: string; match: string; after: string } | null => {
+    const phrase = parsedQuery.phrases[0];
+    if (!phrase) return null;
+    const full = transcripts[asset.id]?.words.map((w) => w.text).join(' ') ?? '';
+    if (!full) return null;
+    const idx = full.toLowerCase().indexOf(phrase);
+    if (idx === -1) return null;
+    const start = Math.max(0, idx - 18);
+    const end = Math.min(full.length, idx + phrase.length + 22);
+    return {
+      before: (start > 0 ? '…' : '') + full.slice(start, idx),
+      match: full.slice(idx, idx + phrase.length),
+      after: full.slice(idx + phrase.length, end) + (end < full.length ? '…' : ''),
+    };
+  };
+
   const filtered = useMemo(() => {
-    const q = query.trim().toLowerCase();
+    const { phrases, rest } = parsedQuery;
     return assets.filter((a) => {
       if (activeFolder && a.folder !== activeFolder) return false;
-      if (!q) return true;
-      const tags = (sceneTags[a.id] ?? []).join(' ').toLowerCase();
       const speech = (transcripts[a.id]?.words.map((w) => w.text).join(' ') ?? '').toLowerCase();
+      if (phrases.length && !phrases.every((ph) => speech.includes(ph))) return false;
+      if (!rest) return true;
+      const tags = (sceneTags[a.id] ?? []).join(' ').toLowerCase();
       const folder = (a.folder ?? '').toLowerCase();
-      return a.name.toLowerCase().includes(q) || a.kind.includes(q) || tags.includes(q) || speech.includes(q) || folder.includes(q);
+      return a.name.toLowerCase().includes(rest) || a.kind.includes(rest) || tags.includes(rest) || speech.includes(rest) || folder.includes(rest);
     });
-  }, [assets, query, activeFolder, sceneTags, transcripts]);
+  }, [assets, parsedQuery, activeFolder, sceneTags, transcripts]);
 
   return (
     <div
       data-magic-anchor="library"
       className="flex flex-col h-full shrink-0"
       style={{ width, background: 'var(--panel)' }}
+      onContextMenu={(e) => {
+        if ((e.target as HTMLElement).closest('[data-magic-asset]')) return;
+        e.preventDefault();
+        setPanelMenu({ x: e.clientX, y: e.clientY });
+      }}
     >
       <div
         className="flex items-center justify-between px-3 h-9 shrink-0"
@@ -134,6 +200,14 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
             title="Import Media (Ctrl+I)"
           >
             <Plus size={14} strokeWidth={1.6} />
+          </button>
+          <button
+            onClick={() => toggleViewMode(viewMode === 'grid' ? 'list' : 'grid')}
+            className="p-1 rounded hover:opacity-80"
+            style={{ color: 'var(--text-dim)' }}
+            title={viewMode === 'grid' ? 'Switch to List view' : 'Switch to Grid view'}
+          >
+            {viewMode === 'grid' ? <List size={13} strokeWidth={1.6} /> : <LayoutGrid size={13} strokeWidth={1.6} />}
           </button>
         </div>
       </div>
@@ -203,6 +277,78 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               isHovered && strip.length > 0
                 ? strip[Math.min(strip.length - 1, hoverScrub.idx)]
                 : strip[0];
+            const snippet = speechSnippetFor(asset);
+            if (viewMode === 'list') {
+              return (
+                <div
+                  key={asset.id}
+                  data-magic-asset={asset.id}
+                  draggable
+                  onDragStart={(e) => {
+                    e.dataTransfer.setData('application/x-vectrail-asset', asset.id);
+                    e.dataTransfer.effectAllowed = 'copy';
+                  }}
+                  className="group flex items-center gap-2 p-1.5 rounded-md cursor-pointer transition-colors"
+                  style={{
+                    background: 'var(--raised)',
+                    border: `1px solid ${isSourceSelected ? 'var(--accent)' : 'var(--stroke)'}`,
+                  }}
+                  onClick={() => {
+                    setContextMenu(null);
+                    setPanelMenu(null);
+                    if (asset.kind === 'video' || asset.kind === 'image') onSelectSource?.(asset);
+                  }}
+                  onContextMenu={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setPanelMenu(null);
+                    setContextMenu({ x: e.clientX, y: e.clientY, asset });
+                  }}
+                  onDoubleClick={() => onAddAsset(asset)}
+                >
+                  <div
+                    className="w-16 h-10 rounded overflow-hidden shrink-0 flex items-center justify-center relative"
+                    style={{ background: '#0B0B0B' }}
+                  >
+                    {activeThumb ? (
+                      <img src={activeThumb} alt={asset.name} className="w-full h-full object-cover" />
+                    ) : asset.kind === 'audio' ? (
+                      <Music size={16} style={{ color: 'var(--text-faint)' }} />
+                    ) : (
+                      <ImageIcon size={16} style={{ color: 'var(--text-faint)' }} />
+                    )}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate text-[11px] font-medium" style={{ color: 'var(--text)' }}>
+                      {asset.name}
+                    </div>
+                    <div className="mono-num text-[9.5px] truncate" style={{ color: 'var(--text-faint)' }}>
+                      {formatTimecode(asset.duration, fps, true)} · {asset.kind === 'video' ? `${asset.width}x${asset.height}` : asset.kind.toUpperCase()}
+                    </div>
+                    {snippet && (
+                      <div className="truncate text-[9.5px] mt-0.5" style={{ color: 'var(--text-dim)' }}>
+                        {snippet.before}
+                        <span className="font-semibold" style={{ color: 'var(--accent)' }}>
+                          {snippet.match}
+                        </span>
+                        {snippet.after}
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onAddAsset(asset);
+                    }}
+                    className="opacity-0 group-hover:opacity-100 px-1.5 py-0.5 rounded text-[10px] font-medium shrink-0"
+                    style={{ background: 'var(--accent)', color: '#FFFFFF' }}
+                    title="Add to timeline"
+                  >
+                    +
+                  </button>
+                </div>
+              );
+            }
             return (
               <div
                 key={asset.id}
@@ -336,11 +482,59 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                     ))}
                   </div>
                 )}
+                {snippet && (
+                  <div
+                    className="px-2 pb-1.5 text-[10px] truncate"
+                    style={{ color: 'var(--text-dim)' }}
+                  >
+                    {snippet.before}
+                    <span className="font-semibold" style={{ color: 'var(--accent)' }}>
+                      {snippet.match}
+                    </span>
+                    {snippet.after}
+                  </div>
+                )}
               </div>
             );
           })
         )}
       </div>
+
+      {panelMenu && (
+        <div
+          className="fixed z-50 w-44 rounded-lg py-1 shadow-2xl text-[11px]"
+          style={{
+            left: Math.min(window.innerWidth - 190, panelMenu.x),
+            top: Math.min(window.innerHeight - 200, panelMenu.y),
+            background: 'var(--sheet)',
+            border: '1px solid var(--sheet-field-stroke)',
+          }}
+          onMouseLeave={() => setPanelMenu(null)}
+        >
+          {[
+            ...(onAddText ? [{ label: 'Add Text at Playhead', action: onAddText }] : []),
+            ...(onAddSolid ? [{ label: 'Add Solid at Playhead', action: onAddSolid }] : []),
+            { label: 'Import Media...', action: onImport },
+            ...(onImportFolder ? [{ label: 'Import Folder...', action: onImportFolder }] : []),
+            {
+              label: viewMode === 'grid' ? 'View as List' : 'View as Thumbnails',
+              action: () => toggleViewMode(viewMode === 'grid' ? 'list' : 'grid'),
+            },
+          ].map((item) => (
+            <button
+              key={item.label}
+              onClick={() => {
+                setPanelMenu(null);
+                item.action();
+              }}
+              className="w-full text-left px-3 py-1.5 hover:bg-white/10"
+              style={{ color: 'var(--text)' }}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      )}
 
       {contextMenu && (
         <div

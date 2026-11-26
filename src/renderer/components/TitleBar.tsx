@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   AlertTriangle,
   CheckCircle2,
+  ChevronDown,
   Clock,
   Download,
   FolderOpen,
@@ -27,8 +28,11 @@ interface TitleBarProps {
   mcpRunning: boolean;
   magicOpen?: boolean;
   magicStatus?: { worker: string; stage: MagicStage; status?: string } | null;
+  recentProjects?: string[];
   onNew: () => void;
   onOpen: () => void;
+  onOpenRecent?: (filePath: string) => void;
+  onClearRecents?: () => void;
   onSave: () => void;
   onImport: () => void;
   onUndo: () => void;
@@ -50,8 +54,11 @@ export const TitleBar: React.FC<TitleBarProps> = ({
   mcpRunning,
   magicOpen = false,
   magicStatus = null,
+  recentProjects = [],
   onNew,
   onOpen,
+  onOpenRecent,
+  onClearRecents,
   onSave,
   onImport,
   onUndo,
@@ -65,6 +72,7 @@ export const TitleBar: React.FC<TitleBarProps> = ({
 }) => {
   const [magicHover, setMagicHover] = useState(false);
   const [exportsOpen, setExportsOpen] = useState(false);
+  const [recentsOpen, setRecentsOpen] = useState(false);
   const [dismissedFinished, setDismissedFinished] = useState(false);
   const activeExport = exportsList.find((j) => j.status === 'running');
   const waitingCount = exportsList.filter((j) => j.status === 'waiting').length;
@@ -125,14 +133,66 @@ export const TitleBar: React.FC<TitleBarProps> = ({
         >
           New
         </button>
-        <button
-          className={btnClass}
-          style={{ background: 'transparent', color: 'var(--text-dim)' }}
-          onClick={onOpen}
-          title="Open Project"
-        >
-          <FolderOpen size={13} strokeWidth={1.5} /> Open
-        </button>
+        <div className="relative titlebar-nodrag flex items-center">
+          <button
+            className={btnClass}
+            style={{ background: 'transparent', color: 'var(--text-dim)' }}
+            onClick={onOpen}
+            title="Open Project"
+          >
+            <FolderOpen size={13} strokeWidth={1.5} /> Open
+          </button>
+          {recentProjects.length > 0 && onOpenRecent && (
+            <button
+              className="p-1 rounded hover:opacity-80"
+              style={{ color: 'var(--text-faint)' }}
+              onClick={() => setRecentsOpen((v) => !v)}
+              title="Recent Projects"
+            >
+              <ChevronDown size={11} />
+            </button>
+          )}
+          {recentsOpen && recentProjects.length > 0 && (
+            <div
+              className="absolute left-0 top-8 z-50 w-60 rounded-lg py-1 shadow-2xl text-[11px]"
+              style={{ background: 'var(--sheet)', border: '1px solid var(--sheet-field-stroke)' }}
+              onMouseLeave={() => setRecentsOpen(false)}
+            >
+              <div className="px-3 py-1 text-[9.5px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-faint)' }}>
+                Open Recent
+              </div>
+              {recentProjects.map((fp) => {
+                const name = fp.split(/[\\/]/).pop() || fp;
+                return (
+                  <button
+                    key={fp}
+                    onClick={() => {
+                      setRecentsOpen(false);
+                      onOpenRecent?.(fp);
+                    }}
+                    className="w-full text-left px-3 py-1.5 truncate hover:bg-white/10"
+                    style={{ color: 'var(--text)' }}
+                    title={fp}
+                  >
+                    {name}
+                  </button>
+                );
+              })}
+              {onClearRecents && (
+                <button
+                  onClick={() => {
+                    setRecentsOpen(false);
+                    onClearRecents();
+                  }}
+                  className="w-full text-left px-3 py-1.5 text-[10.5px] hover:bg-white/10"
+                  style={{ color: 'var(--text-dim)', borderTop: '1px solid var(--stroke)' }}
+                >
+                  Clear Menu
+                </button>
+              )}
+            </div>
+          )}
+        </div>
         <button
           className={btnClass}
           style={{ background: 'transparent', color: 'var(--text-dim)' }}

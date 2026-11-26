@@ -729,3 +729,82 @@ export function addClipDefaults(kind: ClipKind): Partial<Clip> {
   }
   return {};
 }
+
+export function closeAllGaps(p: Project): void {
+  const fps = p.fps || 30;
+  const allTracks = [...p.videoTracks, ...p.audioTracks];
+  for (const track of allTracks) {
+    const lane = p.clips.filter((c) => c.trackID === track.id).sort((a, b) => a.start - b.start);
+    if (!lane.length) continue;
+    let cursor = 0;
+    for (const c of lane) {
+      c.start = snapFrame(cursor, fps);
+      cursor = c.start + c.duration;
+    }
+  }
+}
+
+export function evenOutAudioLevels(p: Project, targetDB = -6): void {
+  for (const c of p.clips) {
+    if (c.kind === 'audio') {
+      c.gainDB = targetDB;
+    }
+  }
+}
+
+export function rippleTrimEdge(
+  p: Project,
+  selectedIds: string[],
+  playhead: number,
+  head: boolean
+): void {
+  const fps = p.fps || 30;
+  const targets = selectedIds.length
+    ? p.clips.filter((c) => selectedIds.includes(c.id))
+    : p.clips.filter((c) => playhead > c.start && playhead < clipEnd(c));
+  if (!targets.length) return;
+
+  const expanded = new Set<string>();
+  for (const t of targets) {
+    for (const lid of linkedIds(p, [t.id])) expanded.add(lid);
+  }
+  const group = p.clips.filter((c) => expanded.has(c.id));
+  const primary = group[0];
+  if (!primary) return;
+  const cutTime = snapFrame(playhead, fps);
+  if (cutTime <= primary.start + 0.05 || cutTime >= clipEnd(primary) - 0.05) return;
+
+  const delta = head ? primary.start - cutTime : cutTime - clipEnd(primary);
+  const affectedTracks = new Set(group.map((c) => c.trackID));
+  const oldEnds = new Map(group.map((c) => [c.id, clipEnd(c)]));
+
+  for (const c of group) {
+    if (head) {
+      trimClipHead(c, cutTime);
+      c.start = snapFrame(primary.start, fps);
+    } else {
+      trimClipTail(c, cutTime);
+    }
+  }
+
+  const anchorEnd = Math.max(...[...oldEnds.values()]);
+  for (const c of p.clips) {
+    if (!expanded.has(c.id) && affectedTracks.has(c.trackID) && c.start >= anchorEnd - 0.02) {
+      c.start = snapFrame(Math.max(0, c.start + delta), fps);
+    }
+  }
+}
+
+export function nearestEditPoint(p: Project, playhead: number, forward: boolean): number | undefined {
+  const pts = new Set<number>([0]);
+  for (const c of p.clips) {
+    pts.add(Number(c.start.toFixed(4)));
+    pts.add(Number(clipEnd(c).toFixed(4)));
+  }
+  const sorted = [...pts].sort((a, b) => a - b);
+  const eps = 0.02;
+  if (forward) {
+    return sorted.find((t) => t > playhead + eps);
+  }
+  return [...sorted].reverse().find((t) => t < playhead - eps);
+}

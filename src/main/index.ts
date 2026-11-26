@@ -7,9 +7,11 @@ import { computeExportRenderSize } from '../shared/project';
 import { loadSavedShortcuts, ProjectStore, saveShortcutsConfig } from './state';
 import {
   checkForAppUpdates,
+  clearRecentProjects,
   getAutoSaveEnabled,
   getCloudAiConfig,
   getMagicAnimated,
+  getRecentProjects,
   saveCloudAiConfig,
   setAutoSaveEnabled,
   setMagicAnimated,
@@ -378,6 +380,14 @@ async function serveMediaRequest(req: Request, filePath: string): Promise<Respon
     }
     return store.snapshot();
   });
+  ipcMain.handle('vectrail:open-path', (_e, filePath: string) => {
+    if (fs.existsSync(filePath)) {
+      store.openFromFile(filePath);
+    }
+    return store.snapshot();
+  });
+  ipcMain.handle('vectrail:get-recents', () => getRecentProjects());
+  ipcMain.handle('vectrail:clear-recents', () => clearRecentProjects());
   ipcMain.handle('vectrail:save-dialog', async (_e, saveAs = false) => {
     if (!mainWindow) return store.snapshot();
     if (!saveAs && store.filePath) {
@@ -441,10 +451,19 @@ async function serveMediaRequest(req: Request, filePath: string): Promise<Respon
   ipcMain.handle('vectrail:disconnect-agent', (_e, target) => disconnectAgent(target));
   ipcMain.handle(
     'vectrail:run-magic',
-    (_e, prompt: string, backend: MagicBackend, selectedClipIds: string[], runId?: string) =>
+    (
+      _e,
+      prompt: string,
+      backend: MagicBackend,
+      selectedClipIds: string[],
+      runId?: string,
+      extra?: { model?: string; effort?: string }
+    ) =>
       runMagicPrompt(prompt, backend, store, selectedClipIds, {
         runId,
         mcpServer,
+        model: extra?.model,
+        effort: extra?.effort,
         onProgress: (ev) => {
           if (mainWindow && !mainWindow.isDestroyed()) {
             mainWindow.webContents.send('vectrail:magic-progress', ev);

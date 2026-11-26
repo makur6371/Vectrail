@@ -16,6 +16,7 @@ import {
   Trash2,
   Type,
   Unlock,
+  Volume2,
   X,
   ZoomIn,
   ZoomOut,
@@ -28,6 +29,7 @@ import {
   clipName,
   formatTimecode,
   linkedIds,
+  newId,
   projectDuration,
   resolveOverlaps,
   snapFrame,
@@ -55,6 +57,7 @@ interface TimelinePanelProps {
   sticky: boolean;
   showStrip: boolean;
   skim: boolean;
+  audioScrub?: boolean;
   zoomPx: number;
   height?: number;
   copiedGrade?: ColorGrade;
@@ -66,10 +69,12 @@ interface TimelinePanelProps {
   onToggleSticky: () => void;
   onToggleStrip: () => void;
   onToggleSkim: () => void;
+  onToggleAudioScrub?: () => void;
   onSetZoom: (z: number) => void;
   onZoomToFit: () => void;
   onSeek: (t: number) => void;
   onSkimTime?: (t: number | null) => void;
+  onScrubAudio?: (t: number) => void;
   onSelectClips: (ids: string[]) => void;
   onMutate: (fn: (p: Project) => void, recordHistory?: boolean) => void;
   onSplitAtPlayhead: () => void;
@@ -77,6 +82,8 @@ interface TimelinePanelProps {
   onAddText: () => void;
   onAddMarker: () => void;
   onAutoEdit: () => void;
+  onCloseAllGaps?: () => void;
+  onEvenLevels?: () => void;
   onDropAsset?: (assetID: string, time: number, trackID?: string) => void;
   onCopyGrade?: (grade: ColorGrade) => void;
   onDuplicateClip?: (clipID: string) => void;
@@ -90,6 +97,18 @@ const VIDEO_LANE_H = 54;
 const AUDIO_LANE_H = 44;
 const LANE_GAP = 4;
 
+function gainDbToRowY(gainDB: number, rowY: number, rowH: number): number {
+  const clamped = Math.max(-48, Math.min(12, gainDB));
+  const norm = (clamped + 48) / 60;
+  return rowY + rowH - 6 - norm * Math.max(8, rowH - 12);
+}
+
+function rowYToGainDb(y: number, rowY: number, rowH: number): number {
+  const span = Math.max(8, rowH - 12);
+  const norm = Math.max(0, Math.min(1, (rowY + rowH - 6 - y) / span));
+  return Math.round((norm * 60 - 48) * 10) / 10;
+}
+
 export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   project,
   playhead,
@@ -99,6 +118,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   sticky,
   showStrip,
   skim,
+  audioScrub = false,
   zoomPx,
   height = 320,
   copiedGrade,
@@ -110,10 +130,12 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   onToggleSticky,
   onToggleStrip,
   onToggleSkim,
+  onToggleAudioScrub,
   onSetZoom,
   onZoomToFit,
   onSeek,
   onSkimTime,
+  onScrubAudio,
   onSelectClips,
   onMutate,
   onSplitAtPlayhead,
@@ -121,6 +143,8 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   onAddText,
   onAddMarker,
   onAutoEdit,
+  onCloseAllGaps,
+  onEvenLevels,
   onDropAsset,
   onCopyGrade,
   onDuplicateClip,
@@ -138,6 +162,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   const [marquee, setMarquee] = useState<{ x1: number; y1: number; x2: number; y2: number } | null>(null);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; clip: Clip } | null>(null);
   const [editingMarkerId, setEditingMarkerId] = useState<string | null>(null);
+  const [gainReadout, setGainReadout] = useState<{ x: number; y: number; db: number } | null>(null);
 
   useEffect(() => {
     const el = scrollerRef.current;
@@ -150,8 +175,9 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   }, []);
 
   const dragRef = useRef<{
-    mode: 'scrub' | 'move' | 'trimL' | 'trimR' | 'trans' | 'marquee';
+    mode: 'scrub' | 'move' | 'trimL' | 'trimR' | 'trans' | 'fadeIn' | 'fadeOut' | 'gain' | 'marker' | 'rangeIn' | 'rangeOut' | 'marquee';
     clipID?: string;
+    markerID?: string;
     dragIds?: string[];
     startX: number;
     startY: number;
@@ -163,6 +189,9 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     origStart: number;
     origDuration: number;
     origTransDur?: number;
+    origGainDB?: number;
+    rowY?: number;
+    rowH?: number;
     snapshot: Project;
   } | null>(null);
 
@@ -180,8 +209,30 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     allRows.push({ track: audioRows[i], label: `A${i + 1}`, y: curY, h: AUDIO_LANE_H });
     curY += AUDIO_LANE_H + LANE_GAP;
   }
-  const latestDragHandlersRef = useRef({ onMutate, onSeek, onSkimTime, onSelectClips, snapping, sticky, zoomPx, allRows });
-  latestDragHandlersRef.current = { onMutate, onSeek, onSkimTime, onSelectClips, snapping, sticky, zoomPx, allRows };
+  const latestDragHandlersRef = useRef({
+    onMutate,
+    onSeek,
+    onSkimTime,
+    onScrubAudio,
+    onSelectClips,
+    snapping,
+    sticky,
+    audioScrub,
+    zoomPx,
+    allRows,
+  });
+  latestDragHandlersRef.current = {
+    onMutate,
+    onSeek,
+    onSkimTime,
+    onScrubAudio,
+    onSelectClips,
+    snapping,
+    sticky,
+    audioScrub,
+    zoomPx,
+    allRows,
+  };
   const totalH = Math.max(240, curY + 12);
   const maxDur = Math.max(20, projectDuration(project) + 8);
   const totalW = Math.max(viewportW, Math.ceil(maxDur * zoomPx));
@@ -358,6 +409,26 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
           ctx.fill();
         }
 
+        if (clip.kind === 'audio') {
+          const gy = gainDbToRowY(clip.gainDB ?? 0, y, h);
+          ctx.strokeStyle = isSel ? 'rgba(255,255,255,0.85)' : 'rgba(255,255,255,0.32)';
+          ctx.lineWidth = 1.25;
+          ctx.beginPath();
+          ctx.moveTo(x + 2, gy);
+          ctx.lineTo(x + w - 2, gy);
+          ctx.stroke();
+        }
+
+        if (w > 24 && (isSel || (clip.fadeIn ?? 0) > 0 || (clip.fadeOut ?? 0) > 0)) {
+          const fiX = x + Math.min(w * 0.45, Math.max(5, (clip.fadeIn ?? 0) * zoomPx));
+          const foX = x + w - Math.min(w * 0.45, Math.max(5, (clip.fadeOut ?? 0) * zoomPx));
+          ctx.fillStyle = '#FFFFFF';
+          ctx.beginPath();
+          ctx.arc(fiX, y + 6, 2.5, 0, Math.PI * 2);
+          ctx.arc(foX, y + 6, 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
         ctx.font = '500 10px Inter, Segoe UI, sans-serif';
         ctx.fillStyle = colText;
         ctx.fillText(clipName(project, clip), x + 6, y + 4);
@@ -458,9 +529,14 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     }
   }, [project, playhead, selectedIds, zoomPx, showStrip, skim, skimX, thumbs, waveforms, snapGuide, agentCursor, marquee, totalW, totalH]);
 
-  const hitTestClip = (x: number, y: number): { clip: Clip; edge: 'body' | 'left' | 'right' | 'trans' } | undefined => {
+  const hitTestClip = (
+    x: number,
+    y: number
+  ): { clip: Clip; edge: 'body' | 'left' | 'right' | 'trans' | 'fadeIn' | 'fadeOut' | 'gain'; rowY: number; rowH: number } | undefined => {
     for (const row of allRows) {
       if (y < row.y || y > row.y + row.h) continue;
+      const cy = row.y + 2;
+      const ch = row.h - 4;
       for (const c of project.clips) {
         if (c.trackID !== row.track.id) continue;
         const cx = c.start * zoomPx;
@@ -468,11 +544,23 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
         if (x >= cx && x <= cx + cw) {
           if (c.transitionIn) {
             const tw = Math.min(cw, c.transitionIn.duration * zoomPx);
-            if (Math.abs(x - (cx + tw)) <= 6 && y <= row.y + 18) return { clip: c, edge: 'trans' };
+            if (Math.abs(x - (cx + tw)) <= 6 && y <= row.y + 18) {
+              return { clip: c, edge: 'trans', rowY: cy, rowH: ch };
+            }
           }
-          if (x - cx <= 7) return { clip: c, edge: 'left' };
-          if (cx + cw - x <= 7) return { clip: c, edge: 'right' };
-          return { clip: c, edge: 'body' };
+          if (cw > 24 && Math.abs(y - (cy + 6)) <= 6) {
+            const fiX = cx + Math.min(cw * 0.45, Math.max(5, (c.fadeIn ?? 0) * zoomPx));
+            const foX = cx + cw - Math.min(cw * 0.45, Math.max(5, (c.fadeOut ?? 0) * zoomPx));
+            if (Math.abs(x - fiX) <= 7) return { clip: c, edge: 'fadeIn', rowY: cy, rowH: ch };
+            if (Math.abs(x - foX) <= 7) return { clip: c, edge: 'fadeOut', rowY: cy, rowH: ch };
+          }
+          if (x - cx <= 7) return { clip: c, edge: 'left', rowY: cy, rowH: ch };
+          if (cx + cw - x <= 7) return { clip: c, edge: 'right', rowY: cy, rowH: ch };
+          if (c.kind === 'audio') {
+            const gy = gainDbToRowY(c.gainDB ?? 0, cy, ch);
+            if (Math.abs(y - gy) <= 5) return { clip: c, edge: 'gain', rowY: cy, rowH: ch };
+          }
+          return { clip: c, edge: 'body', rowY: cy, rowH: ch };
         }
       }
     }
@@ -483,6 +571,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     p: Project,
     drag: NonNullable<typeof dragRef.current>,
     x: number,
+    y: number,
     useSnap: boolean,
     useSticky: boolean,
     pxPerSec: number,
@@ -491,11 +580,43 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     const dt = (x - drag.startX) / pxPerSec;
     const base = JSON.parse(JSON.stringify(drag.snapshot)) as Project;
     Object.assign(p, base);
+
+    if (drag.mode === 'marker' && drag.markerID) {
+      const m = (p.markers ?? []).find((mk) => mk.id === drag.markerID);
+      if (m) m.time = snapFrame(Math.max(0, x / pxPerSec), p.fps);
+      return null;
+    }
+    if ((drag.mode === 'rangeIn' || drag.mode === 'rangeOut') && p.playRange) {
+      const t = snapFrame(Math.max(0, x / pxPerSec), p.fps);
+      if (drag.mode === 'rangeIn') {
+        p.playRange = { in: Math.min(p.playRange.out - 0.1, t), out: p.playRange.out };
+      } else {
+        p.playRange = { in: p.playRange.in, out: Math.max(p.playRange.in + 0.1, t) };
+      }
+      return null;
+    }
+
     if (!drag.clipID) return null;
     const seedIds = drag.dragIds && drag.dragIds.length > 0 ? drag.dragIds : [drag.clipID];
     const group = linkedIds(p, seedIds);
     const primary = p.clips.find((c) => c.id === drag.clipID);
     if (!primary) return null;
+
+    if (drag.mode === 'fadeIn') {
+      const dur = Math.max(0, Math.min(primary.duration * 0.5, x / pxPerSec - primary.start));
+      primary.fadeIn = Math.round(dur * 20) / 20;
+      return null;
+    }
+    if (drag.mode === 'fadeOut') {
+      const dur = Math.max(0, Math.min(primary.duration * 0.5, clipEnd(primary) - x / pxPerSec));
+      primary.fadeOut = Math.round(dur * 20) / 20;
+      return null;
+    }
+    if (drag.mode === 'gain' && drag.rowY !== undefined && drag.rowH !== undefined) {
+      const db = rowYToGainDb(y, drag.rowY, drag.rowH);
+      primary.gainDB = Math.abs(db) < 0.4 ? 0 : db;
+      return null;
+    }
 
     if (drag.mode === 'trans') {
       if (primary.transitionIn) {
@@ -580,9 +701,11 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
         onMutate: mutateFn,
         onSeek: seekFn,
         onSkimTime: skimFn,
+        onScrubAudio: scrubAudioFn,
         onSelectClips: selectFn,
         snapping: useSnap,
         sticky: useSticky,
+        audioScrub: useAudioScrub,
         zoomPx: pxPerSec,
         allRows: rows,
       } = latestDragHandlersRef.current;
@@ -591,7 +714,15 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       drag.lastY = y;
 
       if (drag.mode === 'scrub') {
-        seekFn(Math.max(0, x / pxPerSec));
+        const targetT = Math.max(0, x / pxPerSec);
+        seekFn(targetT);
+        if (useAudioScrub) scrubAudioFn?.(targetT);
+        return;
+      }
+      if (drag.mode === 'marker' || drag.mode === 'rangeIn' || drag.mode === 'rangeOut') {
+        mutateFn((p) => {
+          computeDragResult(p, drag, x, y, useSnap, useSticky, pxPerSec, false);
+        }, false);
         return;
       }
       if (drag.mode === 'marquee') {
@@ -619,8 +750,11 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       let snappedAt: number | null = null;
       let trimPreviewTime: number | null = null;
       mutateFn((p) => {
-        snappedAt = computeDragResult(p, drag, x, useSnap, useSticky, pxPerSec, false);
+        snappedAt = computeDragResult(p, drag, x, y, useSnap, useSticky, pxPerSec, false);
         const primary = p.clips.find((c) => c.id === drag.clipID);
+        if (drag.mode === 'gain' && primary) {
+          setGainReadout({ x: ev.clientX, y: ev.clientY, db: primary.gainDB ?? 0 });
+        }
         if (primary && drag.mode === 'trimL') trimPreviewTime = primary.start + 0.01;
         else if (primary && drag.mode === 'trimR') trimPreviewTime = Math.max(primary.start, clipEnd(primary) - 0.02);
       }, false);
@@ -634,6 +768,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       dragRef.current = null;
       setSnapGuide(null);
       setMarquee(null);
+      setGainReadout(null);
       setHoverCursor(tool === 'cut' ? 'crosshair' : 'default');
       const { onMutate: mutateFn, onSeek: seekFn, onSkimTime: skimFn, onSelectClips: selectFn, snapping: useSnap, sticky: useSticky, zoomPx: pxPerSec } =
         latestDragHandlersRef.current;
@@ -645,12 +780,16 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
         }
         return;
       }
-      if (drag.mode !== 'scrub' && drag.clipID && drag.moved) {
+      if (drag.mode === 'marker' && drag.markerID && !drag.moved) {
+        setEditingMarkerId(drag.markerID);
+        return;
+      }
+      if (drag.mode !== 'scrub' && (drag.clipID || drag.markerID || drag.mode === 'rangeIn' || drag.mode === 'rangeOut') && drag.moved) {
         mutateFn((p) => {
           Object.assign(p, JSON.parse(JSON.stringify(drag.snapshot)) as Project);
         }, false);
         mutateFn((p) => {
-          computeDragResult(p, drag, drag.lastX, useSnap, useSticky, pxPerSec, true);
+          computeDragResult(p, drag, drag.lastX, drag.lastY, useSnap, useSticky, pxPerSec, true);
         }, true);
       }
     };
@@ -685,8 +824,38 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       const hitMarker = (project.markers ?? []).find((m) => Math.abs(m.time * zoomPx - x) <= 7);
       if (hitMarker) {
         onSeek(hitMarker.time);
-        setEditingMarkerId(hitMarker.id);
+        dragRef.current = {
+          mode: 'marker',
+          markerID: hitMarker.id,
+          startX: x,
+          startY: y,
+          lastX: x,
+          lastY: y,
+          moved: false,
+          origStart: hitMarker.time,
+          origDuration: 0,
+          snapshot: JSON.parse(JSON.stringify(project)) as Project,
+        };
         return;
+      }
+      if (project.playRange) {
+        const inX = project.playRange.in * zoomPx;
+        const outX = project.playRange.out * zoomPx;
+        if (Math.abs(x - inX) <= 6 || Math.abs(x - outX) <= 6) {
+          const isIn = Math.abs(x - inX) <= Math.abs(x - outX);
+          dragRef.current = {
+            mode: isIn ? 'rangeIn' : 'rangeOut',
+            startX: x,
+            startY: y,
+            lastX: x,
+            lastY: y,
+            moved: false,
+            origStart: isIn ? project.playRange.in : project.playRange.out,
+            origDuration: 0,
+            snapshot: JSON.parse(JSON.stringify(project)) as Project,
+          };
+          return;
+        }
       }
       setEditingMarkerId(null);
       onSeek(time);
@@ -762,17 +931,45 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       onSelectClips(nextSelected);
     }
     const snapProj = JSON.parse(JSON.stringify(project)) as Project;
+    let activeClipId = hit.clip.id;
+    let activeDragIds = hit.edge === 'body' ? nextSelected : [hit.clip.id];
+    if (hit.edge === 'body' && e.altKey) {
+      const dupGroup = linkedIds(snapProj, nextSelected);
+      const linkRemap = new Map<string, string>();
+      const newIds: string[] = [];
+      for (const orig of [...snapProj.clips]) {
+        if (!dupGroup.has(orig.id)) continue;
+        const copy = JSON.parse(JSON.stringify(orig)) as Clip;
+        copy.id = newId();
+        if (copy.linkID) {
+          if (!linkRemap.has(copy.linkID)) linkRemap.set(copy.linkID, newId());
+          copy.linkID = linkRemap.get(copy.linkID);
+        }
+        snapProj.clips.push(copy);
+        newIds.push(copy.id);
+        if (orig.id === hit.clip.id) activeClipId = copy.id;
+      }
+      activeDragIds = newIds;
+      onSelectClips(newIds);
+    }
+
     dragRef.current = {
       mode:
         hit.edge === 'trans'
           ? 'trans'
+          : hit.edge === 'fadeIn'
+          ? 'fadeIn'
+          : hit.edge === 'fadeOut'
+          ? 'fadeOut'
+          : hit.edge === 'gain'
+          ? 'gain'
           : hit.edge === 'left'
           ? 'trimL'
           : hit.edge === 'right'
           ? 'trimR'
           : 'move',
-      clipID: hit.clip.id,
-      dragIds: hit.edge === 'body' ? nextSelected : [hit.clip.id],
+      clipID: activeClipId,
+      dragIds: activeDragIds,
       startX: x,
       startY: y,
       lastX: x,
@@ -781,9 +978,20 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       origStart: hit.clip.start,
       origDuration: hit.clip.duration,
       origTransDur: hit.clip.transitionIn?.duration,
+      origGainDB: hit.clip.gainDB ?? 0,
+      rowY: hit.rowY,
+      rowH: hit.rowH,
       snapshot: snapProj,
     };
-    setHoverCursor(hit.edge === 'body' ? 'grabbing' : hit.edge === 'trans' ? 'col-resize' : 'ew-resize');
+    setHoverCursor(
+      hit.edge === 'gain'
+        ? 'ns-resize'
+        : hit.edge === 'body'
+        ? 'grabbing'
+        : hit.edge === 'trans' || hit.edge === 'fadeIn' || hit.edge === 'fadeOut'
+        ? 'ew-resize'
+        : 'ew-resize'
+    );
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
@@ -793,7 +1001,9 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     const y = e.clientY - rect.top;
     if (skim) {
       setSkimX(x);
-      onSkimTime?.(Math.max(0, x / zoomPx));
+      const skimT = Math.max(0, x / zoomPx);
+      onSkimTime?.(skimT);
+      if (audioScrub) onScrubAudio?.(skimT);
     } else if (skimX !== null) {
       setSkimX(null);
       onSkimTime?.(null);
@@ -804,7 +1014,16 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     }
     const hit = y > RULER_H ? hitTestClip(x, y) : undefined;
     if (!hit) setHoverCursor('default');
-    else setHoverCursor(hit.edge === 'body' ? 'grab' : hit.edge === 'trans' ? 'col-resize' : 'ew-resize');
+    else
+      setHoverCursor(
+        hit.edge === 'gain'
+          ? 'ns-resize'
+          : hit.edge === 'body'
+          ? 'grab'
+          : hit.edge === 'trans'
+          ? 'col-resize'
+          : 'ew-resize'
+      );
   };
 
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
@@ -1003,6 +1222,19 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
           >
             <Compass size={12} strokeWidth={1.5} /> Skim
           </button>
+          {onToggleAudioScrub && (
+            <button
+              onClick={onToggleAudioScrub}
+              className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px]"
+              style={{
+                background: audioScrub ? 'var(--raised)' : 'transparent',
+                color: audioScrub ? 'var(--text)' : 'var(--text-faint)',
+              }}
+              title="Audio Scrubbing (Shift+S): hear sound while scrubbing or skimming"
+            >
+              <Volume2 size={12} strokeWidth={1.5} /> Audio
+            </button>
+          )}
           <button
             onClick={() => onSetZoom(Math.max(12, zoomPx * 0.8))}
             className="p-1 rounded"
@@ -1204,6 +1436,21 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
         </div>
       )}
 
+      {gainReadout && (
+        <div
+          className="fixed z-50 pointer-events-none mono-num px-2 py-0.5 rounded text-[10px] font-semibold shadow-lg"
+          style={{
+            left: gainReadout.x + 10,
+            top: gainReadout.y - 24,
+            background: 'var(--sheet)',
+            color: 'var(--text)',
+            border: '1px solid var(--stroke)',
+          }}
+        >
+          {gainReadout.db > 0 ? `+${gainReadout.db.toFixed(1)}` : gainReadout.db.toFixed(1)} dB
+        </div>
+      )}
+
       {contextMenu && (
         <div
           className="fixed z-50 w-44 rounded-lg py-1 shadow-2xl text-[11px]"
@@ -1224,6 +1471,12 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
               label: 'Duplicate',
               action: () => onDuplicateClip?.(contextMenu.clip.id),
             },
+            ...(onEvenLevels
+              ? [{ label: 'Even Out Audio Levels', action: () => onEvenLevels() }]
+              : []),
+            ...(onCloseAllGaps
+              ? [{ label: 'Close All Gaps', action: () => onCloseAllGaps() }]
+              : []),
             ...(contextMenu.clip.kind !== 'audio'
               ? [
                   {

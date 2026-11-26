@@ -8,6 +8,7 @@ interface PersistedSettings {
   cloudAi?: Partial<CloudAiConfig>;
   autoSave?: boolean;
   magicAnimated?: boolean;
+  recentProjects?: string[];
 }
 
 const DEFAULT_CLOUD_AI: CloudAiConfig = {
@@ -74,6 +75,25 @@ export function setMagicAnimated(enabled: boolean): boolean {
   const current = readSettingsFile();
   writeSettingsFile({ ...current, magicAnimated: enabled });
   return enabled;
+}
+
+export function getRecentProjects(): string[] {
+  const list = readSettingsFile().recentProjects ?? [];
+  return list.filter((p) => typeof p === 'string' && fs.existsSync(p));
+}
+
+export function addRecentProject(filePath: string): string[] {
+  const resolved = path.resolve(filePath);
+  const current = readSettingsFile();
+  const next = [resolved, ...(current.recentProjects ?? []).filter((p) => p !== resolved)].slice(0, 8);
+  writeSettingsFile({ ...current, recentProjects: next });
+  return next;
+}
+
+export function clearRecentProjects(): string[] {
+  const current = readSettingsFile();
+  writeSettingsFile({ ...current, recentProjects: [] });
+  return [];
 }
 
 function compareSemver(a: string, b: string): number {

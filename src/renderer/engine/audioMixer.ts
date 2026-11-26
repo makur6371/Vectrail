@@ -14,6 +14,8 @@ export class AudioMixer {
   private leftAnalyser: AnalyserNode | null = null;
   private rightAnalyser: AnalyserNode | null = null;
   private meterBuf = new Float32Array(256);
+  private lastScrubMs = 0;
+  private scrubStopTimer: number | null = null;
 
   private ensureContext(): void {
     if (this.ctx || typeof AudioContext === 'undefined') return;
@@ -133,8 +135,64 @@ export class AudioMixer {
   }
 
   pauseAll(): void {
+    if (this.scrubStopTimer) {
+      window.clearTimeout(this.scrubStopTimer);
+      this.scrubStopTimer = null;
+    }
     for (const chain of this.chains.values()) {
       if (!chain.el.paused) chain.el.pause();
     }
+  }
+
+  scrubAt(project: Project, time: number): void {
+    const now = performance.now();
+    if (now - this.lastScrubMs < 55) return;
+    this.lastScrubMs = now;
+    this.ensureContext();
+    if (this.ctx?.state === 'suspended') void this.ctx.resume().catch(() => {});
+
+    const anySolo = project.audioTracks.some((t) => t.solo);
+    const playingChains: HTMLAudioElement[] = [];
+
+    for (const track of project.audioTracks) {
+      if (track.muted || (anySolo && !track.solo)) continue;
+      for (const clip of project.clips) {
+        if (clip.trackID !== track.id || clip.kind !== 'audio' || !clip.assetID) continue;
+        if (time < clip.start || time > clipEnd(clip)) continue;
+        const asset = project.assets.find((a) => a.id === clip.assetID);
+        if (!asset) continue;
+        const chain = this.getChain(asset.playablePath ?? asset.path);
+        const gain = dbToLinear((clip.gainDB ?? 0) + (track.gainDB ?? 0)) * clipFadeGainAt(clip, time);
+        if (chain.gain) {
+          chain.gain.gain.value = Math.max(0, gain);
+          chain.el.volume = 1;
+        } else {
+          chain.el.volume = Math.min(1, Math.max(0, gain));
+        }
+        const targetSrc = Math.max(
+          0,
+          Math.min(
+            Math.max(0, asset.duration - 0.05),
+            clip.reversed ? asset.duration - clipSourceTimeAt(clip, time) : clipSourceTimeAt(clip, time)
+          )
+        );
+        chain.el.playbackRate = 1;
+        if (Math.abs(chain.el.currentTime - targetSrc) > 0.04) {
+          chain.el.currentTime = targetSrc;
+        }
+        if (chain.el.readyState >= 2) {
+          void chain.el.play().catch(() => {});
+          playingChains.push(chain.el);
+        }
+      }
+    }
+
+    if (this.scrubStopTimer) window.clearTimeout(this.scrubStopTimer);
+    this.scrubStopTimer = window.setTimeout(() => {
+      this.scrubStopTimer = null;
+      for (const el of playingChains) {
+        if (!el.paused) el.pause();
+      }
+    }, 70);
   }
 }

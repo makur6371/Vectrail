@@ -15,19 +15,23 @@ import { buildCaptionBlocks } from '../src/shared/captions';
 import {
   applyStickyEdgeShift,
   cloneProject,
+  closeAllGaps,
   computeExportRenderSize,
   createEmptyProject,
   createSolidClip,
   detachAudioLinks,
   duplicateClips,
+  evenOutAudioLevels,
   formatTimecode,
   freezeFrameClip,
   makeClipsForAsset,
+  nearestEditPoint,
   parseTimecode,
   pasteClipGroup,
   removeClips,
   resolveOverlaps,
   reverseClipGroup,
+  rippleTrimEdge,
   snapFrame,
   splitClipsAt,
 } from '../src/shared/project';
@@ -327,5 +331,30 @@ describe('Project Timeline Ops, Timecode, Captions & AutoPlanner', () => {
     expect(working.clips.length).toBe(after.clips.length);
     expect(working.clips[0].grade?.look).toBe('Film print');
     expect(working.clips[0].transitionIn?.kind).toBe('dissolve');
+  });
+
+  it('closes gaps, evens audio levels, ripple-trims edges, and finds nearest edit points', () => {
+    const p = createEmptyProject();
+    const vt = p.videoTracks[0].id;
+    const at = p.audioTracks[0].id;
+    p.clips.push(
+      { id: 'v1', trackID: vt, kind: 'solid', start: 1, duration: 3 },
+      { id: 'v2', trackID: vt, kind: 'solid', start: 6, duration: 2 },
+      { id: 'a1', trackID: at, kind: 'audio', start: 0, duration: 4, gainDB: -14 }
+    );
+
+    expect(nearestEditPoint(p, 2, true)).toBe(4);
+    expect(nearestEditPoint(p, 5, false)).toBe(4);
+
+    closeAllGaps(p);
+    expect(p.clips.find((c) => c.id === 'v1')!.start).toBe(0);
+    expect(p.clips.find((c) => c.id === 'v2')!.start).toBe(3);
+
+    evenOutAudioLevels(p, -6);
+    expect(p.clips.find((c) => c.id === 'a1')!.gainDB).toBe(-6);
+
+    rippleTrimEdge(p, ['v1'], 2, false);
+    expect(p.clips.find((c) => c.id === 'v1')!.duration).toBe(2);
+    expect(p.clips.find((c) => c.id === 'v2')!.start).toBe(2);
   });
 });

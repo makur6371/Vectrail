@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
+  ChevronDown,
+  ChevronsLeft,
+  ChevronsRight,
   Film,
   Maximize2,
   Pause,
@@ -39,6 +42,7 @@ interface ViewerScreenProps {
   onTogglePlay: () => void;
   onSeek: (t: number) => void;
   onStep: (frames: number) => void;
+  onJumpEdit?: (forward: boolean) => void;
   onToggleLoop: () => void;
   onImport: () => void;
 }
@@ -61,6 +65,7 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
   onTogglePlay,
   onSeek,
   onStep,
+  onJumpEdit,
   onToggleLoop,
   onImport,
 }) => {
@@ -70,6 +75,8 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
   const [editingTime, setEditingTime] = useState(false);
   const [timeInput, setTimeInput] = useState('');
   const [snapGuides, setSnapGuides] = useState<{ x: boolean; y: boolean }>({ x: false, y: false });
+  const [viewerZoom, setViewerZoom] = useState<number | null>(null);
+  const [zoomMenuOpen, setZoomMenuOpen] = useState(false);
   const activeSource = sourcePreview ?? (!playing ? pinnedSource : null);
   const viewTime = !playing && !activeSource && skimTime !== null ? skimTime : playhead;
   const latestRef = useRef({ project, playhead: viewTime, transcripts, activeSource });
@@ -231,7 +238,9 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
       className="flex-1 flex flex-col min-w-0 h-full"
       style={{ background: 'var(--bg)' }}
     >
-      <div className="flex-1 relative flex items-center justify-center p-4 min-h-0">
+      <div
+        className={`flex-1 relative flex p-4 min-h-0 ${viewerZoom ? 'overflow-auto items-center justify-center' : 'overflow-hidden items-center justify-center'}`}
+      >
         {!hasClips && !activeSource && project.assets.length === 0 ? (
           <div
             onClick={onImport}
@@ -254,7 +263,15 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
             <div
               data-magic-anchor="viewer"
               className="relative max-w-full max-h-full"
-              style={{ aspectRatio: `${project.width} / ${project.height}`, height: '100%', maxHeight: '100%' }}
+              style={
+                viewerZoom
+                  ? {
+                      width: Math.round((project.width * viewerZoom) / (window.devicePixelRatio || 1)),
+                      height: Math.round((project.height * viewerZoom) / (window.devicePixelRatio || 1)),
+                      flexShrink: 0,
+                    }
+                  : { aspectRatio: `${project.width} / ${project.height}`, height: '100%', maxHeight: '100%' }
+              }
             >
               <canvas
                 ref={canvasRef}
@@ -448,7 +465,17 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
+          {onJumpEdit && (
+            <button
+              onClick={() => onJumpEdit(false)}
+              className="p-1.5 rounded hover:opacity-80"
+              style={{ color: 'var(--text-dim)' }}
+              title="Previous edit (Up)"
+            >
+              <ChevronsLeft size={14} strokeWidth={1.6} />
+            </button>
+          )}
           <button
             onClick={() => onStep(-1)}
             className="p-1.5 rounded hover:opacity-80"
@@ -473,9 +500,19 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
           >
             <SkipForward size={14} strokeWidth={1.5} />
           </button>
+          {onJumpEdit && (
+            <button
+              onClick={() => onJumpEdit(true)}
+              className="p-1.5 rounded hover:opacity-80"
+              style={{ color: 'var(--text-dim)' }}
+              title="Next edit (Down)"
+            >
+              <ChevronsRight size={14} strokeWidth={1.6} />
+            </button>
+          )}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <div className="flex flex-col gap-0.5 w-16" title="Stereo Level">
             {[meter.left, meter.right].map((lvl, idx) => (
               <div key={idx} className="h-1 rounded-full overflow-hidden" style={{ background: 'var(--well)' }}>
@@ -488,6 +525,42 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
                 />
               </div>
             ))}
+          </div>
+          <div className="relative">
+            <button
+              onClick={() => setZoomMenuOpen((v) => !v)}
+              className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10.5px] font-medium"
+              style={{ background: 'var(--field)', color: 'var(--text-dim)', border: '1px solid var(--stroke)' }}
+              title="Viewer zoom"
+            >
+              {viewerZoom === null ? 'Fit' : `${Math.round(viewerZoom * 100)}%`}
+              <ChevronDown size={10} />
+            </button>
+            {zoomMenuOpen && (
+              <div
+                className="absolute right-0 bottom-7 z-40 w-24 rounded-lg py-1 shadow-2xl"
+                style={{ background: 'var(--sheet)', border: '1px solid var(--sheet-field-stroke)' }}
+              >
+                {[
+                  { label: 'Fit', value: null },
+                  { label: '50%', value: 0.5 },
+                  { label: '100%', value: 1 },
+                  { label: '200%', value: 2 },
+                ].map((opt) => (
+                  <button
+                    key={opt.label}
+                    onClick={() => {
+                      setViewerZoom(opt.value);
+                      setZoomMenuOpen(false);
+                    }}
+                    className="w-full text-left px-2.5 py-1 text-[11px] hover:bg-white/10"
+                    style={{ color: viewerZoom === opt.value ? 'var(--accent)' : 'var(--text)' }}
+                  >
+                    {opt.label}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
           <button
             onClick={onToggleLoop}

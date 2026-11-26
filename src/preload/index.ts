@@ -35,6 +35,9 @@ export interface VectrailBridgeAPI {
   reloadAsset: (assetID: string) => Promise<EditorSnapshot>;
   deleteAsset: (assetID: string) => Promise<EditorSnapshot>;
   openProjectDialog: () => Promise<EditorSnapshot>;
+  openProjectPath: (filePath: string) => Promise<EditorSnapshot>;
+  getRecentProjects: () => Promise<string[]>;
+  clearRecentProjects: () => Promise<string[]>;
   saveProjectDialog: (saveAs?: boolean) => Promise<EditorSnapshot>;
   newProject: () => Promise<EditorSnapshot>;
   pickCubeFile: () => Promise<string | undefined>;
@@ -50,7 +53,8 @@ export interface VectrailBridgeAPI {
     prompt: string,
     backend: MagicBackend,
     selectedClipIds: string[],
-    runId?: string
+    runId?: string,
+    options?: { model?: string; effort?: string }
   ) => Promise<MagicRunResult>;
   cancelMagic: (runId?: string) => Promise<boolean>;
   commitMagic: (nextProject: Project, prompt?: string, tab?: string) => Promise<EditorSnapshot>;
@@ -95,6 +99,9 @@ const api: VectrailBridgeAPI = {
   reloadAsset: (assetID) => ipcRenderer.invoke('vectrail:reload-asset', assetID),
   deleteAsset: (assetID) => ipcRenderer.invoke('vectrail:delete-asset', assetID),
   openProjectDialog: () => ipcRenderer.invoke('vectrail:open-dialog'),
+  openProjectPath: (filePath) => ipcRenderer.invoke('vectrail:open-path', filePath),
+  getRecentProjects: () => ipcRenderer.invoke('vectrail:get-recents'),
+  clearRecentProjects: () => ipcRenderer.invoke('vectrail:clear-recents'),
   saveProjectDialog: (saveAs = false) => ipcRenderer.invoke('vectrail:save-dialog', saveAs),
   newProject: () => ipcRenderer.invoke('vectrail:new-project'),
   pickCubeFile: () => ipcRenderer.invoke('vectrail:pick-cube'),
@@ -106,8 +113,8 @@ const api: VectrailBridgeAPI = {
   getAgentStatuses: () => ipcRenderer.invoke('vectrail:agent-statuses'),
   connectAgent: (target) => ipcRenderer.invoke('vectrail:connect-agent', target),
   disconnectAgent: (target) => ipcRenderer.invoke('vectrail:disconnect-agent', target),
-  runMagic: (prompt, backend, selectedClipIds, runId) =>
-    ipcRenderer.invoke('vectrail:run-magic', prompt, backend, selectedClipIds, runId),
+  runMagic: (prompt, backend, selectedClipIds, runId, options) =>
+    ipcRenderer.invoke('vectrail:run-magic', prompt, backend, selectedClipIds, runId, options),
   cancelMagic: (runId) => ipcRenderer.invoke('vectrail:cancel-magic', runId),
   commitMagic: (nextProject, prompt, tab) => ipcRenderer.invoke('vectrail:commit-magic', nextProject, prompt, tab),
   onMagicProgress: (cb) => {

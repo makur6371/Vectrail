@@ -504,6 +504,8 @@ export async function runMagicPrompt(
   options?: {
     runId?: string;
     mcpServer?: MCPServer;
+    model?: string;
+    effort?: string;
     onProgress?: (ev: MagicProgressEvent) => void;
   }
 ): Promise<MagicRunResult> {
@@ -800,8 +802,19 @@ export async function runMagicPrompt(
       const fullPromptWithMentions = `${fullPrompt} ${mentionNote}`.trim();
       const args =
         backend === 'codex'
-          ? ['exec', '--skip-git-repo-check', fullPromptWithMentions]
-          : ['-p', fullPromptWithMentions];
+          ? [
+              'exec',
+              '--skip-git-repo-check',
+              ...(options?.model ? ['--model', options.model] : []),
+              ...(options?.effort ? ['-c', `model_reasoning_effort="${options.effort}"`] : []),
+              fullPromptWithMentions,
+            ]
+          : [
+              '-p',
+              ...(options?.model ? ['--model', options.model] : []),
+              ...(options?.effort ? ['--effort', options.effort] : []),
+              fullPromptWithMentions,
+            ];
 
       emitStage('thinking', `${worker} is planning`);
 
@@ -854,7 +867,11 @@ export async function runMagicPrompt(
     const changed = JSON.stringify(beforeProject) !== JSON.stringify(afterProject);
     const durationMs = Date.now() - startedAt;
     const detail = [
-      backend === 'cloud' ? getCloudAiConfig().model : backend === 'local' ? 'On this PC' : `${worker} MCP`,
+      backend === 'cloud'
+        ? getCloudAiConfig().model
+        : backend === 'local'
+        ? 'On this PC'
+        : [options?.model || `${worker} MCP`, options?.effort].filter(Boolean).join(' · '),
       `${Math.max(1, Math.round(durationMs / 1000))}s`,
     ].join(' · ');
 

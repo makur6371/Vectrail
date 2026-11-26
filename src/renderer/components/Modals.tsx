@@ -45,27 +45,67 @@ export const ExportModal: React.FC<{
   const [rangeOnly, setRangeOnly] = useState(false);
   const [enhanceDetail, setEnhanceDetail] = useState(false);
   const [fileName, setFileName] = useState(title || 'Vectrail-Export');
+  const [reframeX, setReframeX] = useState(0.5);
+  const [reframeY, setReframeY] = useState(0.5);
+  const [draggingReframe, setDraggingReframe] = useState(false);
   const totalDur = Math.max(0.1, projectDuration(project));
   const [previewTime, setPreviewTime] = useState<number>(Math.min(0.8, totalDur * 0.25));
   const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const previewFrameRef = useRef<HTMLDivElement | null>(null);
   const previewCompRef = useRef<PreviewCompositor | null>(null);
   if (!previewCompRef.current) previewCompRef.current = new PreviewCompositor();
 
   const size = computeExportRenderSize(project, shape, height);
   const isUpscaling = size.height > project.height;
+  const srcAspect = project.width / Math.max(1, project.height);
+  const dstAspect = size.width / Math.max(1, size.height);
+  const isReframed = format === 'video' && shape !== 'original' && Math.abs(srcAspect - dstAspect) > 0.02;
+  const cropWFrac = isReframed && srcAspect > dstAspect ? dstAspect / srcAspect : 1;
+  const cropHFrac = isReframed && srcAspect < dstAspect ? srcAspect / dstAspect : 1;
+
+  useEffect(() => {
+    setReframeX(0.5);
+    setReframeY(0.5);
+  }, [shape]);
 
   useEffect(() => {
     if (format === 'audio') return;
     const draw = () => {
       const canvas = previewCanvasRef.current;
       if (!canvas || !previewCompRef.current) return;
-      const previewProj: Project = { ...project, width: size.width, height: size.height };
+      const previewProj: Project = { ...project };
       previewCompRef.current.syncMediaElements(previewProj, previewTime, false);
       previewCompRef.current.renderFrame(canvas, previewProj, previewTime, transcripts);
     };
     previewCompRef.current?.setOnReady(draw);
     draw();
-  }, [format, project, size.width, size.height, previewTime, transcripts]);
+  }, [format, project, previewTime, transcripts]);
+
+  const startReframeDrag = (e: React.MouseEvent) => {
+    if (!isReframed || !previewFrameRef.current) return;
+    e.preventDefault();
+    const rect = previewFrameRef.current.getBoundingClientRect();
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const initX = reframeX;
+    const initY = reframeY;
+    setDraggingReframe(true);
+    const halfW = cropWFrac / 2;
+    const halfH = cropHFrac / 2;
+    const onMove = (ev: MouseEvent) => {
+      const dx = (ev.clientX - startX) / Math.max(1, rect.width);
+      const dy = (ev.clientY - startY) / Math.max(1, rect.height);
+      setReframeX(Math.min(1 - halfW, Math.max(halfW, initX + dx)));
+      setReframeY(Math.min(1 - halfH, Math.max(halfH, initY + dy)));
+    };
+    const onUp = () => {
+      setDraggingReframe(false);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
@@ -83,15 +123,46 @@ export const ExportModal: React.FC<{
         {format === 'video' && (
           <div className="space-y-1.5">
             <div
-              className="w-full h-40 rounded-lg flex items-center justify-center overflow-hidden"
+              className="w-full h-40 rounded-lg flex items-center justify-center overflow-hidden relative"
               style={{ background: '#050506', border: '1px solid var(--stroke)' }}
             >
-              <canvas
-                ref={previewCanvasRef}
-                width={Math.max(240, Math.round((160 * size.width) / Math.max(1, size.height)))}
-                height={160}
-                className="max-w-full max-h-full object-contain"
-              />
+              <div
+                ref={previewFrameRef}
+                onMouseDown={startReframeDrag}
+                className={`relative h-full flex items-center justify-center overflow-hidden ${
+                  isReframed ? (draggingReframe ? 'cursor-grabbing' : 'cursor-grab') : ''
+                }`}
+                style={{ aspectRatio: `${project.width} / ${project.height}`, maxWidth: '100%' }}
+                title={isReframed ? 'Drag to reframe export crop' : undefined}
+              >
+                <canvas
+                  ref={previewCanvasRef}
+                  width={Math.max(240, Math.round((160 * project.width) / Math.max(1, project.height)))}
+                  height={160}
+                  className="w-full h-full block"
+                />
+                {isReframed && (
+                  <div
+                    className="absolute pointer-events-none rounded-sm"
+                    style={{
+                      width: `${cropWFrac * 100}%`,
+                      height: `${cropHFrac * 100}%`,
+                      left: `${(reframeX - cropWFrac / 2) * 100}%`,
+                      top: `${(reframeY - cropHFrac / 2) * 100}%`,
+                      border: '1.5px solid rgba(255,255,255,0.9)',
+                      boxShadow: '0 0 0 9999px rgba(0,0,0,0.58)',
+                    }}
+                  />
+                )}
+              </div>
+              {isReframed && (
+                <span
+                  className="pointer-events-none absolute bottom-1.5 right-2 px-1.5 py-0.5 rounded text-[9.5px]"
+                  style={{ background: 'rgba(0,0,0,0.68)', color: 'var(--text-dim)' }}
+                >
+                  Drag to reframe
+                </span>
+              )}
             </div>
             <div className="flex items-center gap-2 text-[10px]" style={{ color: 'var(--text-dim)' }}>
               <span className="mono-num w-16">{formatTimecode(previewTime, project.fps, true)}</span>
@@ -232,8 +303,8 @@ export const ExportModal: React.FC<{
                 loudness: loudness ? Number(loudness) : undefined,
                 rangeOnly,
                 enhanceDetail: enhanceDetail || isUpscaling,
-                reframeX: 0.5,
-                reframeY: 0.5,
+                reframeX: Number(reframeX.toFixed(3)),
+                reframeY: Number(reframeY.toFixed(3)),
                 name: fileName.trim() || title || 'Vectrail-Export',
               });
               onClose();
@@ -311,6 +382,26 @@ function loadSavedMagicTab(): MagicBackend {
   return 'local';
 }
 
+const MAGIC_AGENT_MODELS: Record<'claude' | 'codex', Array<{ id: string; label: string }>> = {
+  claude: [
+    { id: 'claude-sonnet-4-6', label: 'Sonnet 4.6' },
+    { id: 'claude-opus-4-6', label: 'Opus 4.6' },
+    { id: 'claude-haiku-4-5', label: 'Haiku 4.5' },
+  ],
+  codex: [
+    { id: 'gpt-5.3-codex', label: 'GPT-5.3 Codex' },
+    { id: 'gpt-5.2', label: 'GPT-5.2' },
+    { id: 'gpt-5.4', label: 'GPT-5.4' },
+  ],
+};
+
+const MAGIC_EFFORTS = [
+  { id: 'low', label: 'Low' },
+  { id: 'medium', label: 'Medium' },
+  { id: 'high', label: 'High' },
+  { id: 'xhigh', label: 'Extra high' },
+];
+
 export const MagicPopover: React.FC<{
   assets: MediaAsset[];
   selectedIds: string[];
@@ -318,13 +409,29 @@ export const MagicPopover: React.FC<{
   prompt: string;
   history: MagicHistoryEntry[];
   onChangePrompt: (p: string) => void;
-  onSubmit: (prompt: string, backend: MagicBackend) => void;
+  onSubmit: (prompt: string, backend: MagicBackend, options?: { model?: string; effort?: string }) => void;
   onOpenSettings: () => void;
   onClose: () => void;
 }> = ({ assets, selectedIds, hasEdit, prompt, history, onChangePrompt, onSubmit, onOpenSettings, onClose }) => {
   const [backend, setBackend] = useState<MagicBackend>(loadSavedMagicTab);
   const [cloudReady, setCloudReady] = useState(false);
   const [cloudModel, setCloudModel] = useState('gpt-4o-mini');
+  const [cliModels, setCliModels] = useState<Record<'claude' | 'codex', string>>(() => {
+    try {
+      const raw = localStorage.getItem('vectrail.magicCliModels.v1');
+      if (raw) return JSON.parse(raw) as Record<'claude' | 'codex', string>;
+    } catch {
+      // ignore
+    }
+    return { claude: 'claude-sonnet-4-6', codex: 'gpt-5.3-codex' };
+  });
+  const [cliEffort, setCliEffort] = useState<string>(() => {
+    try {
+      return localStorage.getItem('vectrail.magicCliEffort.v1') || 'medium';
+    } catch {
+      return 'medium';
+    }
+  });
   const [agents, setAgents] = useState<AgentTargetStatus[]>([]);
   const [connecting, setConnecting] = useState(false);
   const [ideasOpen, setIdeasOpen] = useState(false);
@@ -411,6 +518,14 @@ export const MagicPopover: React.FC<{
       ? `Describe what to change, or leave empty and ${name} will make the best edit it can.`
       : `Describe the video you want, or leave empty and ${name} will cut from your Media.`;
   })();
+
+  const submitWithOptions = () => {
+    if (backend === 'claude' || backend === 'codex') {
+      onSubmit(prompt, backend, { model: cliModels[backend], effort: cliEffort });
+    } else {
+      onSubmit(prompt, backend);
+    }
+  };
 
   return (
     <div className="fixed top-11 right-[112px] z-50 w-[392px]">
@@ -636,7 +751,7 @@ export const MagicPopover: React.FC<{
                 }
                 if (e.key === 'Enter' && !e.shiftKey) {
                   e.preventDefault();
-                  onSubmit(prompt, backend);
+                  submitWithOptions();
                   return;
                 }
                 if (e.key === 'Escape') onClose();
@@ -668,7 +783,7 @@ export const MagicPopover: React.FC<{
             )}
 
             <div className="flex items-center justify-between pt-0.5">
-              <div className="text-[10.5px]" style={{ color: 'var(--text-faint)' }}>
+              <div className="text-[10.5px] flex items-center gap-1.5 flex-wrap" style={{ color: 'var(--text-faint)' }}>
                 {backend === 'cloud' ? (
                   cloudReady ? (
                     <span>Model: {cloudModel}</span>
@@ -680,14 +795,54 @@ export const MagicPopover: React.FC<{
                 ) : backend === 'local' ? (
                   <span>Instant beat &amp; rule planner · On this PC</span>
                 ) : (
-                  <button onClick={onOpenSettings} className="hover:underline">
-                    Connected via MCP · Manage AI Agents
-                  </button>
+                  <>
+                    <select
+                      value={cliModels[backend]}
+                      onChange={(e) => {
+                        const next = { ...cliModels, [backend]: e.target.value };
+                        setCliModels(next);
+                        try {
+                          localStorage.setItem('vectrail.magicCliModels.v1', JSON.stringify(next));
+                        } catch {
+                          // ignore
+                        }
+                      }}
+                      className="px-2 py-0.5 rounded-full text-[10px] outline-none"
+                      style={{ background: 'var(--button)', color: 'var(--text)', border: '1px solid var(--stroke)' }}
+                      title="Model"
+                    >
+                      {MAGIC_AGENT_MODELS[backend].map((m) => (
+                        <option key={m.id} value={m.id}>
+                          {m.label}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      value={cliEffort}
+                      onChange={(e) => {
+                        setCliEffort(e.target.value);
+                        try {
+                          localStorage.setItem('vectrail.magicCliEffort.v1', e.target.value);
+                        } catch {
+                          // ignore
+                        }
+                      }}
+                      className="px-2 py-0.5 rounded-full text-[10px] outline-none"
+                      style={{ background: 'var(--button)', color: 'var(--text)', border: '1px solid var(--stroke)' }}
+                      title="Reasoning effort"
+                    >
+                      {MAGIC_EFFORTS.map((ef) => (
+                        <option key={ef.id} value={ef.id}>
+                          {ef.label}
+                        </option>
+                      ))}
+                    </select>
+                  </>
                 )}
               </div>
               <button
                 disabled={backend === 'cloud' && !cloudReady}
-                onClick={() => onSubmit(prompt, backend)}
+                onClick={submitWithOptions}
                 className="px-4 py-1.5 rounded-full text-[11px] font-semibold disabled:opacity-40"
                 style={{ background: 'var(--text)', color: 'var(--on-text)' }}
               >

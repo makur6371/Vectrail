@@ -19,7 +19,7 @@ import {
   probeMediaAsset,
   WaveformData,
 } from './engine/ffmpeg';
-import { getAutoSaveEnabled } from './settings';
+import { addRecentProject, getAutoSaveEnabled } from './settings';
 import {
   analyzeMusicAsset,
   analyzeVisualAsset,
@@ -258,6 +258,7 @@ export class ProjectStore {
     fs.writeFileSync(outPath, JSON.stringify(this.project, null, 2), 'utf8');
     this.filePath = path.resolve(outPath);
     this.isDirty = false;
+    addRecentProject(this.filePath);
     this.emit();
     return this.filePath;
   }
@@ -275,6 +276,7 @@ export class ProjectStore {
     sanitizeProject(raw);
     this.project = raw;
     this.filePath = resolved;
+    addRecentProject(resolved);
     this.isDirty = false;
     this.playhead = 0;
     this.playing = false;

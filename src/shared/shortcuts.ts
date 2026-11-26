@@ -5,9 +5,15 @@ export type ShortcutActionId =
   | 'shuttleForward'
   | 'stepBack'
   | 'stepForward'
+  | 'previousEdit'
+  | 'nextEdit'
   | 'split'
+  | 'addDissolve'
   | 'deleteClip'
   | 'rippleDelete'
+  | 'rippleTrimStart'
+  | 'rippleTrimEnd'
+  | 'closeAllGaps'
   | 'markIn'
   | 'markOut'
   | 'clearInOut'
@@ -19,6 +25,7 @@ export type ShortcutActionId =
   | 'toggleSticky'
   | 'toggleStrip'
   | 'toggleSkim'
+  | 'toggleAudioScrub'
   | 'fullscreen'
   | 'zoomIn'
   | 'zoomOut'
@@ -49,9 +56,15 @@ export const DEFAULT_SHORTCUTS: ShortcutBinding[] = [
   { id: 'shuttleForward', label: 'Shuttle Forward', combo: 'L' },
   { id: 'stepBack', label: 'Previous Frame', combo: 'ArrowLeft' },
   { id: 'stepForward', label: 'Next Frame', combo: 'ArrowRight' },
+  { id: 'previousEdit', label: 'Previous Edit', combo: 'ArrowUp' },
+  { id: 'nextEdit', label: 'Next Edit', combo: 'ArrowDown' },
   { id: 'split', label: 'Split at Playhead', combo: 'S' },
+  { id: 'addDissolve', label: 'Add Dissolve at Playhead', combo: 'Ctrl+D' },
   { id: 'deleteClip', label: 'Delete Selected', combo: 'Delete' },
   { id: 'rippleDelete', label: 'Ripple Delete', combo: 'Shift+Delete' },
+  { id: 'rippleTrimStart', label: 'Ripple Trim Start to Playhead', combo: 'Alt+[' },
+  { id: 'rippleTrimEnd', label: 'Ripple Trim End to Playhead', combo: 'Alt+]' },
+  { id: 'closeAllGaps', label: 'Close All Gaps', combo: 'Alt+G' },
   { id: 'markIn', label: 'Mark In Point', combo: 'I' },
   { id: 'markOut', label: 'Mark Out Point', combo: 'O' },
   { id: 'clearInOut', label: 'Clear In / Out', combo: 'Alt+X' },
@@ -62,6 +75,7 @@ export const DEFAULT_SHORTCUTS: ShortcutBinding[] = [
   { id: 'toggleSticky', label: 'Sticky Edges', combo: 'R' },
   { id: 'toggleStrip', label: 'Toggle Filmstrips', combo: 'Shift+T' },
   { id: 'toggleSkim', label: 'Toggle Skimming', combo: 'Y' },
+  { id: 'toggleAudioScrub', label: 'Toggle Audio Scrubbing', combo: 'Shift+S' },
   { id: 'toggleLoop', label: 'Toggle Loop', combo: 'Ctrl+L' },
   { id: 'fullscreen', label: 'Fullscreen Viewer', combo: 'F' },
   { id: 'zoomIn', label: 'Zoom Timeline In', combo: '=' },
