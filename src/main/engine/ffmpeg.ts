@@ -369,6 +369,7 @@ export async function checkHardwareEncoders(): Promise<{ h264: string; hevc: str
 const CHROMIUM_NATIVE_VIDEO_EXTS = new Set(['.mp4', '.m4v', '.webm']);
 const CHROMIUM_NATIVE_VCODECS = new Set(['h264', 'vp8', 'vp9', 'av1']);
 const CHROMIUM_NATIVE_ACODECS = new Set(['aac', 'mp3', 'opus', 'vorbis', 'flac']);
+const pendingProxies = new Map<string, Promise<string | undefined>>();
 
 export async function ensurePlayableProxy(asset: MediaAsset): Promise<string | undefined> {
   if (asset.kind !== 'video' || !fs.existsSync(asset.path)) return undefined;
@@ -399,34 +400,44 @@ export async function ensurePlayableProxy(asset: MediaAsset): Promise<string | u
 
   const proxyPath = path.join(getCacheDir('Playable'), `${fileHashKey(asset.path)}.mp4`);
   if (fs.existsSync(proxyPath)) return proxyPath;
-  const tmpPath = `${proxyPath}.tmp.mp4`;
-  try {
-    if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
-    const args: string[] = ['-hide_banner', '-v', 'error', '-y', '-i', asset.path];
-    if (vCodec === 'h264') {
-      args.push('-c:v', 'copy');
-    } else {
-      args.push('-vf', "scale=-2:'min(720,ih)'", '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '22', '-pix_fmt', 'yuv420p');
-    }
-    if (aCodec) {
-      if (aCodec === 'aac' && vCodec === 'h264') {
-        args.push('-c:a', 'copy');
-      } else {
-        args.push('-c:a', 'aac', '-b:a', '160k', '-ar', '48000');
-      }
-    } else {
-      args.push('-an');
-    }
-    args.push('-movflags', '+faststart', tmpPath);
-    await execFileAsync(FFMPEG_BIN, args, { windowsHide: true, timeout: 120000 });
-    fs.renameSync(tmpPath, proxyPath);
-    return proxyPath;
-  } catch {
+  const inFlight = pendingProxies.get(proxyPath);
+  if (inFlight) return inFlight;
+
+  const job = (async (): Promise<string | undefined> => {
+    const tmpPath = `${proxyPath}.tmp.mp4`;
     try {
       if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
+      const args: string[] = ['-hide_banner', '-v', 'error', '-y', '-i', asset.path];
+      if (vCodec === 'h264') {
+        args.push('-c:v', 'copy');
+      } else {
+        args.push('-vf', "scale=-2:'min(720,ih)'", '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '22', '-pix_fmt', 'yuv420p');
+      }
+      if (aCodec) {
+        if (aCodec === 'aac' && vCodec === 'h264') {
+          args.push('-c:a', 'copy');
+        } else {
+          args.push('-c:a', 'aac', '-b:a', '160k', '-ar', '48000');
+        }
+      } else {
+        args.push('-an');
+      }
+      args.push('-movflags', '+faststart', tmpPath);
+      await execFileAsync(FFMPEG_BIN, args, { windowsHide: true, timeout: 120000 });
+      fs.renameSync(tmpPath, proxyPath);
+      return proxyPath;
     } catch {
-      // ignore
+      try {
+        if (fs.existsSync(tmpPath)) fs.unlinkSync(tmpPath);
+      } catch {
+        // ignore
+      }
+      return undefined;
+    } finally {
+      pendingProxies.delete(proxyPath);
     }
-    return undefined;
-  }
+  })();
+
+  pendingProxies.set(proxyPath, job);
+  return job;
 }
