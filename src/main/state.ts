@@ -62,6 +62,7 @@ export class ProjectStore {
   readonly exports: ExportManager;
   private listeners = new Set<(snap: EditorSnapshot) => void>();
   private agentClearTimer?: NodeJS.Timeout;
+  private pendingWarmups = new Set<Promise<void>>();
 
   constructor() {
     this.project = createEmptyProject();
@@ -231,6 +232,12 @@ export class ProjectStore {
     }
   }
 
+  async waitForIdle(): Promise<void> {
+    while (this.pendingWarmups.size > 0) {
+      await Promise.allSettled([...this.pendingWarmups]);
+    }
+  }
+
   async importFiles(paths: string[]): Promise<MediaAsset[]> {
     const added: MediaAsset[] = [];
     for (const rawPath of paths) {
@@ -258,6 +265,18 @@ export class ProjectStore {
 
   async warmAsset(asset: MediaAsset): Promise<void> {
     if (!fs.existsSync(asset.path)) return;
+    const task = (async () => {
+      await this.runWarmAsset(asset);
+    })();
+    this.pendingWarmups.add(task);
+    try {
+      await task;
+    } finally {
+      this.pendingWarmups.delete(task);
+    }
+  }
+
+  private async runWarmAsset(asset: MediaAsset): Promise<void> {
     try {
       if (asset.kind !== 'audio') {
         if (asset.kind === 'video' && !asset.playablePath) {

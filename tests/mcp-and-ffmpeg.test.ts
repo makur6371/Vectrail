@@ -41,7 +41,7 @@ describe('MCP Server + Real FFmpeg Pipeline', () => {
   }, 30000);
 
   afterAll(() => {
-    fs.rmSync(tmpDir, { recursive: true, force: true });
+    fs.rmSync(tmpDir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
   });
 
   it('runs full MCP lifecycle: import, analyze, look_at_media, edit, get_frame, auto_edit, and export MP4', async () => {
@@ -275,5 +275,7 @@ describe('MCP Server + Real FFmpeg Pipeline', () => {
     });
     expect((duckRes?.result as { isError: boolean }).isError).toBe(false);
     expect(store.project.audioTracks[0].duckDB).toBe(-12);
+
+    await store.waitForIdle();
   }, 60000);
 });
