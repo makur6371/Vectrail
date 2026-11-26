@@ -35,7 +35,7 @@ jobs:
         run: npm run typecheck && npm test
 
       - name: Package Windows Installer & Portable EXE
-        run: npm run dist:win
+        run: npm run dist:win -- --publish never
 
       - name: Upload Release Assets
         uses: softprops/action-gh-release@v2
@@ -45,4 +45,5 @@ jobs:
             release/Editroom Setup *.exe
             release/Editroom-Windows-Portable-*.exe
             release/*.blockmap
+            release/latest.yml
           generate_release_notes: true
