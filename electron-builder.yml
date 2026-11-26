@@ -1,0 +1,36 @@
+appId: com.editroomwindows.app
+productName: Editroom
+copyright: Copyright (c) 2026 EditroomWindows Contributors (MIT)
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**/*
+  - dist-electron/**/*
+  - package.json
+extraResources:
+  - from: build/Base.mp4
+    to: Base.mp4
+  - from: build/icon.png
+    to: icon.png
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+portable:
+  artifactName: Editroom-Windows-Portable-${version}-${arch}.exe
+fileAssociations:
+  - ext: editroom
+    name: Editroom Project
+    description: Editroom Video Project
+    role: Editor

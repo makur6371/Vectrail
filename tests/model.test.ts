@@ -1,0 +1,224 @@
+import { describe, expect, it } from 'vitest';
+import {
+  BUILT_IN_LOOKS,
+  bakeGradeLUT,
+  isGradeNeutral,
+  parseCubeText,
+  serializeGradeAsCubeText,
+} from '../src/shared/colorGrade';
+import { rampSource, rampSpan, retimeClip } from '../src/shared/speedRamp';
+import { starterZoomMove, transformAt, zoomAmountAt } from '../src/shared/zoomMove';
+import { buildCaptionBlocks } from '../src/shared/captions';
+import {
+  computeExportRenderSize,
+  createEmptyProject,
+  detachAudioLinks,
+  duplicateClips,
+  formatTimecode,
+  freezeFrameClip,
+  makeClipsForAsset,
+  parseTimecode,
+  removeClips,
+  resolveOverlaps,
+  reverseClipGroup,
+  snapFrame,
+  splitClipsAt,
+} from '../src/shared/project';
+import { autoPlanEdit, findBestMoments } from '../src/shared/autoPlanner';
+import { MediaAsset, Transcript } from '../src/shared/types';
+
+describe('ColorGrade & 3D LUT', () => {
+  it('treats empty grade as neutral and bakes non-neutral looks', () => {
+    expect(isGradeNeutral(undefined)).toBe(true);
+    expect(isGradeNeutral({ exposure: 0, contrast: 0 })).toBe(true);
+    expect(isGradeNeutral({ look: 'Film print', lookIntensity: 1 })).toBe(false);
+
+    for (const look of BUILT_IN_LOOKS) {
+      const cube = bakeGradeLUT({ look: look.name, lookIntensity: 1, exposure: 0.2 });
+      expect(cube).toBeInstanceOf(Float32Array);
+      expect(cube?.length).toBe(32 * 32 * 32 * 4);
+    }
+  });
+
+  it('parses and serializes .cube 3D LUT files', () => {
+    const cubeText = serializeGradeAsCubeText({ look: 'Golden hour', saturation: 15 });
+    expect(cubeText).toContain('LUT_3D_SIZE 32');
+    const parsed = parseCubeText(cubeText!);
+    expect(parsed?.size).toBe(32);
+  });
+});
+
+describe('SpeedRamp & ZoomMove', () => {
+  it('integrates piecewise speed ramp consistently', () => {
+    const ramp = { inFrom: 1, inTo: 2, outFrom: 4, outTo: 5, startSpeed: 1, endSpeed: 1 };
+    const span = rampSpan(ramp, 0, 6, 2);
+    expect(span).toBeGreaterThan(3);
+    expect(span).toBeLessThan(6);
+    const backToSource = rampSource(ramp, 0, span, 2);
+    expect(backToSource).toBeCloseTo(6, 2);
+  });
+
+  it('retimes clip duration when speed changes', () => {
+    const proj = createEmptyProject();
+    const asset: MediaAsset = {
+      id: 'a1',
+      path: 'test.mp4',
+      name: 'test.mp4',
+      kind: 'video',
+      duration: 10,
+      width: 1920,
+      height: 1080,
+      fps: 30,
+      hasAudio: false,
+    };
+    const [clip] = makeClipsForAsset(proj, asset, 0, proj.videoTracks[0].id, proj.audioTracks[0].id, 0, 4);
+    retimeClip(clip, (t) => snapFrame(t, 30), 1 / 30, (c) => {
+      c.speed = 2;
+    });
+    expect(clip.duration).toBeCloseTo(2, 2);
+  });
+
+  it('computes smooth ZoomMove curves', () => {
+    const zm = starterZoomMove('inOut', 4);
+    expect(zoomAmountAt(zm, 0)).toBe(0);
+    expect(zoomAmountAt(zm, 2)).toBeCloseTo(1, 5);
+    expect(zoomAmountAt(zm, 4)).toBeCloseTo(0, 5);
+    const tf = transformAt({ scale: 1.5, x: 0.2, y: -0.1, zoom: zm }, 2);
+    expect(tf.scale).toBeCloseTo(1.5, 4);
+  });
+});
+
+describe('Project Timeline Ops, Timecode, Captions & AutoPlanner', () => {
+  it('splits, freezes, reverses, detaches, duplicates, and ripple-deletes clips', () => {
+    const proj = createEmptyProject();
+    const asset: MediaAsset = {
+      id: 'v1',
+      path: 'clip.mp4',
+      name: 'clip.mp4',
+      kind: 'video',
+      duration: 12,
+      width: 1920,
+      height: 1080,
+      fps: 30,
+      hasAudio: true,
+    };
+    proj.assets.push(asset);
+    const made = makeClipsForAsset(proj, asset, 0, proj.videoTracks[0].id, proj.audioTracks[0].id, 0, 6);
+    proj.clips.push(...made);
+    expect(proj.clips.length).toBe(2);
+
+    const rightIds = splitClipsAt(proj, [made[0].id, made[1].id], 3);
+    expect(rightIds.length).toBe(2);
+    expect(proj.clips.length).toBe(4);
+
+    const frozen = freezeFrameClip(proj, made[0].id, 1.5, 2);
+    expect(frozen?.freeze).toBe(true);
+
+    reverseClipGroup(proj, rightIds[0]);
+    expect(proj.clips.find((c) => c.id === rightIds[0])?.reversed).toBe(true);
+
+    const copies = duplicateClips(proj, [rightIds[0]], 12);
+    expect(copies.length).toBe(2);
+
+    detachAudioLinks(proj, [rightIds[0]]);
+    expect(proj.clips.find((c) => c.id === rightIds[0])?.linkID).toBeUndefined();
+
+    const beforeCount = proj.clips.length;
+    removeClips(proj, new Set([copies[0].id]), true);
+    expect(proj.clips.length).toBe(beforeCount - 1);
+
+    resolveOverlaps(proj, new Set([made[0].id]));
+  });
+
+  it('formats and parses timecodes and export sizes', () => {
+    expect(formatTimecode(12.2, 30)).toBe('00:00:12:06');
+    expect(parseTimecode('00:00:12:06', 30)).toBeCloseTo(12.2, 3);
+    expect(formatTimecode(65.5, 30, true)).toBe('1:05.50');
+
+    const proj = createEmptyProject(1920, 1080, 30);
+    expect(computeExportRenderSize(proj, 'vertical', 1080)).toEqual({ width: 1080, height: 1920 });
+    expect(computeExportRenderSize(proj, 'square', 1080)).toEqual({ width: 1080, height: 1080 });
+    expect(computeExportRenderSize(proj, 'portrait', 1080)).toEqual({ width: 1080, height: 1350 });
+  });
+
+  it('builds balanced caption blocks from transcript', () => {
+    const proj = createEmptyProject();
+    const asset: MediaAsset = {
+      id: 'aud1',
+      path: 'talk.wav',
+      name: 'talk.wav',
+      kind: 'audio',
+      duration: 8,
+      width: 0,
+      height: 0,
+      fps: 30,
+      hasAudio: true,
+    };
+    proj.assets.push(asset);
+    const [clip] = makeClipsForAsset(proj, asset, 0, proj.videoTracks[0].id, proj.audioTracks[0].id, 0, 8);
+    clip.captioned = true;
+    proj.clips.push(clip);
+
+    const transcripts: Record<string, Transcript> = {
+      aud1: {
+        duration: 8,
+        words: [
+          { start: 0.2, end: 0.5, text: 'Welcome' },
+          { start: 0.55, end: 0.8, text: 'to' },
+          { start: 0.85, end: 1.4, text: 'Editroom.' },
+          { start: 2.5, end: 3.1, text: 'Cut' },
+          { start: 3.15, end: 3.6, text: 'faster.' },
+        ],
+      },
+    };
+    const blocks = buildCaptionBlocks(proj, transcripts);
+    expect(blocks.length).toBe(2);
+    expect(blocks[0].words.map((w) => w.text).join(' ')).toBe('Welcome to Editroom.');
+  });
+
+  it('plans beat-synced montage in AutoPlanner', () => {
+    const proj = createEmptyProject();
+    const videoAsset: MediaAsset = {
+      id: 'vid',
+      path: 'v.mp4',
+      name: 'v.mp4',
+      kind: 'video',
+      duration: 12,
+      width: 1920,
+      height: 1080,
+      fps: 30,
+      hasAudio: true,
+    };
+    const musicAsset: MediaAsset = {
+      id: 'mus',
+      path: 'm.mp3',
+      name: 'm.mp3',
+      kind: 'audio',
+      duration: 20,
+      width: 0,
+      height: 0,
+      fps: 30,
+      hasAudio: true,
+    };
+    const samples = Array.from({ length: 24 }, (_, i) => ({
+      time: i * 0.5,
+      luma: 0.45,
+      sharpness: 0.1 + (i % 4) * 0.02,
+      motion: 0.05,
+      color: 0.3,
+      faces: i % 3 === 0 ? 1 : 0,
+    }));
+    const moments = findBestMoments({ duration: 12, samples }, 12, 2, 3);
+    expect(moments.length).toBeGreaterThan(0);
+
+    const beats = Array.from({ length: 40 }, (_, i) => i * 0.5);
+    const plan = autoPlanEdit(
+      proj,
+      [{ asset: videoAsset, analysis: { duration: 12, samples } }],
+      { asset: musicAsset, analysis: { duration: 20, bpm: 120, beats, barPhase: 0, energy: beats.map(() => 0.8) } }
+    );
+    expect(plan).toBeDefined();
+    expect(plan!.shots.length).toBeGreaterThan(0);
+    expect(plan!.music).toBeDefined();
+  });
+});

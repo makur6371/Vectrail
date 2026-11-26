@@ -1,0 +1,49 @@
+{
+  "name": "editroom-windows",
+  "productName": "Editroom",
+  "version": "1.0.0",
+  "description": "Fast, open-source AI-native video editor for Windows with real-time WebGL2 playback, FFmpeg export, and built-in MCP server.",
+  "main": "dist-electron/main/index.js",
+  "license": "MIT",
+  "author": "EditroomWindows Contributors",
+  "homepage": "https://github.com/makur6371/EditroomWindows#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/makur6371/EditroomWindows.git"
+  },
+  "bugs": {
+    "url": "https://github.com/makur6371/EditroomWindows/issues"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build:renderer": "vite build",
+    "build:main": "tsc -p tsconfig.main.json",
+    "build": "npm run build:renderer && npm run build:main",
+    "start": "npm run build && electron .",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit && tsc -p tsconfig.main.json --noEmit",
+    "pack:dir": "npm run build && electron-builder --win --dir",
+    "dist:win": "npm run build && electron-builder --win nsis portable",
+    "dist:win:offline": "npm run build && electron-builder --win nsis portable --config.electronDist=node_modules/electron/dist",
+    "qa:live": "node scripts/qa-live-frame.mjs"
+  },
+  "dependencies": {
+    "lucide-react": "^0.460.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.7.0",
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8",
+    "postcss": "^8.5.33",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.7.2",
+    "vite": "^5.4.11",
+    "vitest": "^2.1.8"
+  }
+}
