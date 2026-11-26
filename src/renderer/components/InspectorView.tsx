@@ -11,6 +11,7 @@ interface InspectorViewProps {
   project: Project;
   selectedClip?: Clip;
   copiedGrade?: ColorGrade;
+  width?: number;
   onUpdateClip: (clipID: string, fn: (c: Clip) => void) => void;
   onUpdateSequence: (fn: (p: Project) => void) => void;
   onCopyGrade: (grade: ColorGrade) => void;
@@ -126,7 +127,7 @@ const SliderRow: React.FC<{
       onChange={(e) => onChange(Number(e.target.value))}
       className="flex-1"
     />
-    <span className="mono-num w-12 text-right text-[11px]" style={{ color: 'var(--text)' }}>
+    <span className="mono-num w-14 shrink-0 whitespace-nowrap text-right text-[11px]" style={{ color: 'var(--text)' }}>
       {display}
     </span>
   </div>
@@ -136,6 +137,7 @@ export const InspectorView: React.FC<InspectorViewProps> = ({
   project,
   selectedClip,
   copiedGrade,
+  width = 296,
   onUpdateClip,
   onUpdateSequence,
   onCopyGrade,
@@ -151,7 +153,7 @@ export const InspectorView: React.FC<InspectorViewProps> = ({
   return (
     <div
       className="flex flex-col h-full shrink-0 overflow-y-auto"
-      style={{ width: 296, background: 'var(--panel)', borderLeft: '1px solid var(--stroke)' }}
+      style={{ width, background: 'var(--panel)' }}
     >
       <div
         className="flex items-center justify-between px-3 h-9 shrink-0"
@@ -552,7 +554,7 @@ export const InspectorView: React.FC<InspectorViewProps> = ({
                   </select>
                   <button
                     onClick={async () => {
-                      const p = await window.editroom.pickCubeFile();
+                      const p = await window.vectrail.pickCubeFile();
                       if (p) {
                         onUpdateClip(selectedClip.id, (c) => {
                           c.grade = { ...(c.grade ?? {}), look: p };
@@ -720,6 +722,118 @@ export const InspectorView: React.FC<InspectorViewProps> = ({
                   }}
                 />
               </div>
+              <SliderRow
+                label="Stroke"
+                value={selectedClip.text.strokeWidth ?? 0}
+                min={0}
+                max={16}
+                step={1}
+                display={`${Math.round(selectedClip.text.strokeWidth ?? 0)}px`}
+                onChange={(v) =>
+                  onUpdateClip(selectedClip.id, (c) => {
+                    if (c.text) {
+                      c.text.strokeWidth = v;
+                      if (v > 0 && !c.text.strokeColor) c.text.strokeColor = { r: 0, g: 0, b: 0, a: 1 };
+                    }
+                  })
+                }
+              />
+              {(selectedClip.text.strokeWidth ?? 0) > 0 && (
+                <div className="flex items-center justify-between">
+                  <span className="text-[11px]" style={{ color: 'var(--text-dim)' }}>
+                    Stroke Color
+                  </span>
+                  <input
+                    type="color"
+                    value={rgbaToHex(selectedClip.text.strokeColor ?? { r: 0, g: 0, b: 0, a: 1 })}
+                    onChange={(e) => {
+                      const col = hexToRgba(e.target.value);
+                      if (col) {
+                        onUpdateClip(selectedClip.id, (c) => {
+                          if (c.text) c.text.strokeColor = col;
+                        });
+                      }
+                    }}
+                  />
+                </div>
+              )}
+              <div className="flex items-center justify-between pt-0.5">
+                <span className="text-[11px]" style={{ color: 'var(--text-dim)' }}>
+                  Background Pill
+                </span>
+                <div className="flex items-center gap-2">
+                  {selectedClip.text.bgColor && (selectedClip.text.bgColor.a ?? 1) > 0 && (
+                    <input
+                      type="color"
+                      value={rgbaToHex(selectedClip.text.bgColor)}
+                      onChange={(e) => {
+                        const col = hexToRgba(e.target.value);
+                        if (col) {
+                          onUpdateClip(selectedClip.id, (c) => {
+                            if (c.text) c.text.bgColor = { ...col, a: c.text.bgColor?.a ?? 0.75 };
+                          });
+                        }
+                      }}
+                    />
+                  )}
+                  <button
+                    onClick={() =>
+                      onUpdateClip(selectedClip.id, (c) => {
+                        if (!c.text) return;
+                        if (c.text.bgColor && (c.text.bgColor.a ?? 1) > 0) {
+                          delete c.text.bgColor;
+                        } else {
+                          c.text.bgColor = { r: 0.06, g: 0.06, b: 0.08, a: 0.75 };
+                          c.text.bgPadding = c.text.bgPadding ?? 16;
+                        }
+                      })
+                    }
+                    className="px-2 py-0.5 rounded text-[10px] font-medium"
+                    style={{
+                      background:
+                        selectedClip.text.bgColor && (selectedClip.text.bgColor.a ?? 1) > 0
+                          ? 'var(--accent)'
+                          : 'var(--button)',
+                      color:
+                        selectedClip.text.bgColor && (selectedClip.text.bgColor.a ?? 1) > 0
+                          ? '#FFF'
+                          : 'var(--text)',
+                    }}
+                  >
+                    {selectedClip.text.bgColor && (selectedClip.text.bgColor.a ?? 1) > 0 ? 'On' : 'Off'}
+                  </button>
+                </div>
+              </div>
+              {selectedClip.text.bgColor && (selectedClip.text.bgColor.a ?? 1) > 0 && (
+                <>
+                  <SliderRow
+                    label="Bg Opacity"
+                    value={selectedClip.text.bgColor.a ?? 0.75}
+                    min={0.1}
+                    max={1}
+                    step={0.05}
+                    display={`${Math.round((selectedClip.text.bgColor.a ?? 0.75) * 100)}%`}
+                    onChange={(v) =>
+                      onUpdateClip(selectedClip.id, (c) => {
+                        if (c.text?.bgColor) c.text.bgColor = { ...c.text.bgColor, a: v };
+                      })
+                    }
+                  />
+                  <SliderRow
+                    label="Bg Padding"
+                    value={selectedClip.text.bgPadding ?? 16}
+                    min={4}
+                    max={40}
+                    step={2}
+                    display={`${Math.round(selectedClip.text.bgPadding ?? 16)}px`}
+                    onChange={(v) =>
+                      onUpdateClip(selectedClip.id, (c) => {
+                        if (c.text) c.text.bgPadding = v;
+                      })
+                    }
+                  />
+                </>
+              )}
             </Section>
           )}
 

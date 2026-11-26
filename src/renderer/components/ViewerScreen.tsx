@@ -4,13 +4,22 @@ import {
   Maximize2,
   Pause,
   Play,
+  Plus,
   Repeat,
   SkipBack,
   SkipForward,
+  X,
 } from 'lucide-react';
-import { Project, Transcript } from '../../shared/types';
-import { formatTimecode, parseTimecode, projectDuration } from '../../shared/project';
+import { Clip, MediaAsset, Project, Transcript } from '../../shared/types';
+import { clipEnd, formatTimecode, parseTimecode, projectDuration } from '../../shared/project';
 import { PreviewCompositor } from '../engine/compositor';
+
+export interface PinnedSourceState {
+  asset: MediaAsset;
+  time: number;
+  inTime?: number;
+  outTime?: number;
+}
 
 interface ViewerScreenProps {
   project: Project;
@@ -19,6 +28,13 @@ interface ViewerScreenProps {
   loop: boolean;
   meter: { left: number; right: number };
   transcripts: Record<string, Transcript>;
+  selectedClip?: Clip;
+  shuttleRate?: number;
+  sourcePreview?: { asset: MediaAsset; time: number } | null;
+  pinnedSource?: PinnedSourceState | null;
+  onChangePinnedSource?: (next: PinnedSourceState | null) => void;
+  onInsertSourceRange?: (asset: MediaAsset, inTime?: number, outTime?: number) => void;
+  onMutate?: (fn: (p: Project) => void, recordHistory?: boolean) => void;
   onTogglePlay: () => void;
   onSeek: (t: number) => void;
   onStep: (frames: number) => void;
@@ -33,6 +49,13 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
   loop,
   meter,
   transcripts,
+  selectedClip,
+  shuttleRate = 1,
+  sourcePreview = null,
+  pinnedSource = null,
+  onChangePinnedSource,
+  onInsertSourceRange,
+  onMutate,
   onTogglePlay,
   onSeek,
   onStep,
@@ -44,8 +67,10 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
   const compositorRef = useRef<PreviewCompositor | null>(null);
   const [editingTime, setEditingTime] = useState(false);
   const [timeInput, setTimeInput] = useState('');
-  const latestRef = useRef({ project, playhead, transcripts });
-  latestRef.current = { project, playhead, transcripts };
+  const [snapGuides, setSnapGuides] = useState<{ x: boolean; y: boolean }>({ x: false, y: false });
+  const activeSource = sourcePreview ?? (!playing ? pinnedSource : null);
+  const latestRef = useRef({ project, playhead, transcripts, activeSource });
+  latestRef.current = { project, playhead, transcripts, activeSource };
 
   if (!compositorRef.current) compositorRef.current = new PreviewCompositor();
 
@@ -57,7 +82,10 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
       readyRaf = requestAnimationFrame(() => {
         const canvas = canvasRef.current;
         const latest = latestRef.current;
-        if (canvas && compositorRef.current) {
+        if (!canvas || !compositorRef.current) return;
+        if (latest.activeSource) {
+          compositorRef.current.renderSourcePreview(canvas, latest.activeSource.asset, latest.activeSource.time);
+        } else {
           compositorRef.current.renderFrame(canvas, latest.project, latest.playhead, latest.transcripts);
         }
       });
@@ -65,26 +93,134 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
     const draw = () => {
       const canvas = canvasRef.current;
       if (canvas && compositorRef.current) {
-        compositorRef.current.syncMediaElements(project, playhead, playing);
-        compositorRef.current.renderFrame(canvas, project, playhead, transcripts);
+        if (activeSource) {
+          compositorRef.current.renderSourcePreview(canvas, activeSource.asset, activeSource.time);
+        } else {
+          compositorRef.current.syncMediaElements(project, playhead, playing);
+          compositorRef.current.renderFrame(canvas, project, playhead, transcripts);
+        }
       }
-      if (playing) raf = requestAnimationFrame(draw);
+      if (playing && !activeSource) raf = requestAnimationFrame(draw);
     };
     draw();
     return () => {
       cancelAnimationFrame(raf);
       cancelAnimationFrame(readyRaf);
     };
-  }, [project, playhead, playing, transcripts]);
+  }, [project, playhead, playing, transcripts, activeSource]);
 
   const dur = Math.max(0.01, projectDuration(project));
   const hasClips = project.clips.length > 0;
+  const gizmoClip =
+    !activeSource &&
+    selectedClip &&
+    selectedClip.kind !== 'audio' &&
+    playhead >= selectedClip.start - 1e-4 &&
+    playhead <= clipEnd(selectedClip) + 1e-4
+      ? selectedClip
+      : undefined;
+
+  const startTransformDrag = (mode: 'move' | 'scale', e: React.MouseEvent) => {
+    if (!gizmoClip || !canvasRef.current || !onMutate) return;
+    e.preventDefault();
+    e.stopPropagation();
+    const rect = canvasRef.current.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return;
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const isText = gizmoClip.kind === 'text';
+    const initX = isText ? gizmoClip.text?.x ?? 0.5 : gizmoClip.transform?.x ?? 0;
+    const initY = isText ? gizmoClip.text?.y ?? 0.5 : gizmoClip.transform?.y ?? 0;
+    const initScale = isText ? (gizmoClip.text?.size ?? 110) / 110 : gizmoClip.transform?.scale ?? 1;
+    const initCenterPxX = rect.left + (isText ? initX : 0.5 + initX) * rect.width;
+    const initCenterPxY = rect.top + (isText ? initY : 0.5 + initY) * rect.height;
+    const initDist = Math.max(12, Math.hypot(startX - initCenterPxX, startY - initCenterPxY));
+
+    const applyDelta = (clientX: number, clientY: number, recordHistory: boolean) => {
+      if (mode === 'move') {
+        let nx = initX + (clientX - startX) / rect.width;
+        let ny = initY + (clientY - startY) / rect.height;
+        const centerTarget = isText ? 0.5 : 0;
+        const snapX = Math.abs(nx - centerTarget) < 0.018;
+        const snapY = Math.abs(ny - centerTarget) < 0.018;
+        if (snapX) nx = centerTarget;
+        if (snapY) ny = centerTarget;
+        setSnapGuides({ x: snapX, y: snapY });
+        onMutate((p) => {
+          const target = p.clips.find((c) => c.id === gizmoClip.id);
+          if (!target) return;
+          if (target.kind === 'text' && target.text) {
+            target.text = {
+              ...target.text,
+              x: Math.round(Math.min(1, Math.max(0, nx)) * 1000) / 1000,
+              y: Math.round(Math.min(1, Math.max(0, ny)) * 1000) / 1000,
+            };
+          } else {
+            target.transform = {
+              ...(target.transform ?? { scale: 1, x: 0, y: 0 }),
+              x: Math.round(nx * 1000) / 1000,
+              y: Math.round(ny * 1000) / 1000,
+            };
+          }
+        }, recordHistory);
+      } else {
+        const dist = Math.max(8, Math.hypot(clientX - initCenterPxX, clientY - initCenterPxY));
+        const nextScale = Math.min(6, Math.max(0.1, initScale * (dist / initDist)));
+        onMutate((p) => {
+          const target = p.clips.find((c) => c.id === gizmoClip.id);
+          if (!target) return;
+          if (target.kind === 'text' && target.text) {
+            target.text = {
+              ...target.text,
+              size: Math.round(Math.min(360, Math.max(20, nextScale * 110))),
+            };
+          } else {
+            target.transform = {
+              ...(target.transform ?? { scale: 1, x: 0, y: 0 }),
+              scale: Math.round(nextScale * 100) / 100,
+            };
+          }
+        }, recordHistory);
+      }
+    };
+
+    const onMove = (ev: MouseEvent) => applyDelta(ev.clientX, ev.clientY, false);
+    const onUp = (ev: MouseEvent) => {
+      setSnapGuides({ x: false, y: false });
+      if (Math.hypot(ev.clientX - startX, ev.clientY - startY) > 1.5) {
+        applyDelta(startX, startY, false);
+        applyDelta(ev.clientX, ev.clientY, true);
+      }
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  };
 
   const handleFullscreen = () => {
     if (!containerRef.current) return;
     if (document.fullscreenElement) void document.exitFullscreen();
     else void containerRef.current.requestFullscreen();
   };
+
+  const gizmoBox = (() => {
+    if (!gizmoClip) return null;
+    if (gizmoClip.kind === 'text') {
+      const scale = Math.min(1.4, Math.max(0.2, (gizmoClip.text?.size ?? 110) / 260));
+      const cx = (gizmoClip.text?.x ?? 0.5) * 100;
+      const cy = (gizmoClip.text?.y ?? 0.5) * 100;
+      const bw = Math.min(92, Math.max(20, scale * 54));
+      const bh = Math.min(70, Math.max(10, scale * 22));
+      return { left: cx - bw / 2, top: cy - bh / 2, width: bw, height: bh };
+    }
+    const sc = gizmoClip.transform?.scale ?? 1;
+    const cx = (0.5 + (gizmoClip.transform?.x ?? 0)) * 100;
+    const cy = (0.5 + (gizmoClip.transform?.y ?? 0)) * 100;
+    const bw = Math.min(100, Math.max(8, sc * 100));
+    const bh = Math.min(100, Math.max(8, sc * 100));
+    return { left: cx - bw / 2, top: cy - bh / 2, width: bw, height: bh };
+  })();
 
   return (
     <div
@@ -93,7 +229,7 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
       style={{ background: 'var(--bg)' }}
     >
       <div className="flex-1 relative flex items-center justify-center p-4 min-h-0">
-        {!hasClips && project.assets.length === 0 ? (
+        {!hasClips && !activeSource && project.assets.length === 0 ? (
           <div
             onClick={onImport}
             className="w-full max-w-md h-52 rounded-xl flex flex-col items-center justify-center cursor-pointer transition-colors"
@@ -112,13 +248,149 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
             className="relative flex items-center justify-center w-full h-full"
             style={{ maxWidth: '100%', maxHeight: '100%' }}
           >
-            <canvas
-              ref={canvasRef}
-              width={Math.min(1280, project.width)}
-              height={Math.max(2, Math.round((Math.min(1280, project.width) * project.height) / Math.max(1, project.width)))}
-              className="max-w-full max-h-full rounded shadow-2xl"
-              style={{ background: '#000', border: '1px solid var(--stroke)', aspectRatio: `${project.width} / ${project.height}` }}
-            />
+            <div
+              className="relative max-w-full max-h-full"
+              style={{ aspectRatio: `${project.width} / ${project.height}`, height: '100%', maxHeight: '100%' }}
+            >
+              <canvas
+                ref={canvasRef}
+                width={Math.min(1280, project.width)}
+                height={Math.max(
+                  2,
+                  Math.round((Math.min(1280, project.width) * project.height) / Math.max(1, project.width))
+                )}
+                className="w-full h-full block rounded shadow-2xl"
+                style={{ background: '#000', border: '1px solid var(--stroke)' }}
+              />
+
+              {activeSource && (
+                <div
+                  className="absolute top-2.5 left-2.5 flex items-center gap-2 px-2.5 py-1 rounded-full text-[10px] font-semibold pointer-events-none"
+                  style={{ background: 'rgba(16,17,20,0.86)', border: '1px solid var(--accent)', color: '#F2F2F0' }}
+                >
+                  <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: 'var(--accent)' }} />
+                  <span>SOURCE</span>
+                  <span style={{ color: 'var(--text-dim)' }}>{activeSource.asset.name}</span>
+                  <span className="mono-num">{formatTimecode(activeSource.time, project.fps, true)}</span>
+                </div>
+              )}
+
+              {!activeSource && (
+                <div
+                  className="absolute top-2.5 right-2.5 flex items-center gap-1.5 pointer-events-none"
+                >
+                  {Math.abs(shuttleRate - 1) > 0.05 && playing && (
+                    <span
+                      className="mono-num px-2 py-0.5 rounded-full text-[10px] font-semibold"
+                      style={{ background: 'var(--accent)', color: '#FFFFFF' }}
+                    >
+                      {shuttleRate > 0 ? `${shuttleRate}x` : `${shuttleRate}x`}
+                    </span>
+                  )}
+                  <span
+                    className="mono-num px-2 py-0.5 rounded-full text-[10px]"
+                    style={{ background: 'rgba(16,17,20,0.72)', color: 'var(--text-dim)', border: '1px solid var(--stroke)' }}
+                  >
+                    {project.width}x{project.height} · {project.fps}fps
+                  </span>
+                </div>
+              )}
+
+              {gizmoBox && onMutate && (
+                <div className="absolute inset-0 overflow-hidden pointer-events-none">
+                  {snapGuides.x && (
+                    <div
+                      className="absolute top-0 bottom-0 w-px"
+                      style={{ left: '50%', background: 'var(--accent)', opacity: 0.8 }}
+                    />
+                  )}
+                  {snapGuides.y && (
+                    <div
+                      className="absolute left-0 right-0 h-px"
+                      style={{ top: '50%', background: 'var(--accent)', opacity: 0.8 }}
+                    />
+                  )}
+                  <div
+                    onMouseDown={(e) => startTransformDrag('move', e)}
+                    className="absolute pointer-events-auto cursor-move"
+                    style={{
+                      left: `${gizmoBox.left}%`,
+                      top: `${gizmoBox.top}%`,
+                      width: `${gizmoBox.width}%`,
+                      height: `${gizmoBox.height}%`,
+                      border: '1px dashed rgba(255, 74, 28, 0.85)',
+                    }}
+                    title="Drag to reposition · drag corners to scale"
+                  >
+                    {[
+                      { pos: '-top-1 -left-1 cursor-nwse-resize' },
+                      { pos: '-top-1 -right-1 cursor-nesw-resize' },
+                      { pos: '-bottom-1 -left-1 cursor-nesw-resize' },
+                      { pos: '-bottom-1 -right-1 cursor-nwse-resize' },
+                    ].map((h, i) => (
+                      <div
+                        key={i}
+                        onMouseDown={(e) => startTransformDrag('scale', e)}
+                        className={`absolute w-2.5 h-2.5 rounded-sm ${h.pos}`}
+                        style={{ background: '#FFFFFF', border: '1.5px solid var(--accent)' }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {!sourcePreview && pinnedSource && onChangePinnedSource && (
+                <div
+                  className="absolute bottom-3 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-1.5 rounded-full text-[11px] shadow-xl"
+                  style={{ background: 'rgba(16,17,20,0.92)', border: '1px solid var(--stroke)' }}
+                >
+                  <input
+                    type="range"
+                    min={0}
+                    max={Math.max(0.05, pinnedSource.asset.duration)}
+                    step={0.02}
+                    value={pinnedSource.time}
+                    onChange={(e) => onChangePinnedSource({ ...pinnedSource, time: Number(e.target.value) })}
+                    className="w-28"
+                    title="Scrub source"
+                  />
+                  <button
+                    onClick={() => onChangePinnedSource({ ...pinnedSource, inTime: pinnedSource.time })}
+                    className="px-1.5 py-0.5 rounded text-[10px] font-medium"
+                    style={{ background: 'var(--button)', color: pinnedSource.inTime !== undefined ? 'var(--accent)' : 'var(--text)' }}
+                    title="Set Source In"
+                  >
+                    In {pinnedSource.inTime !== undefined ? formatTimecode(pinnedSource.inTime, project.fps, true) : ''}
+                  </button>
+                  <button
+                    onClick={() => onChangePinnedSource({ ...pinnedSource, outTime: pinnedSource.time })}
+                    className="px-1.5 py-0.5 rounded text-[10px] font-medium"
+                    style={{ background: 'var(--button)', color: pinnedSource.outTime !== undefined ? 'var(--accent)' : 'var(--text)' }}
+                    title="Set Source Out"
+                  >
+                    Out {pinnedSource.outTime !== undefined ? formatTimecode(pinnedSource.outTime, project.fps, true) : ''}
+                  </button>
+                  <button
+                    onClick={() => {
+                      onInsertSourceRange?.(pinnedSource.asset, pinnedSource.inTime, pinnedSource.outTime);
+                      onChangePinnedSource(null);
+                    }}
+                    className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[10px] font-semibold"
+                    style={{ background: 'var(--accent)', color: '#FFFFFF' }}
+                  >
+                    <Plus size={11} /> Insert
+                  </button>
+                  <button
+                    onClick={() => onChangePinnedSource(null)}
+                    className="p-0.5 rounded"
+                    style={{ color: 'var(--text-dim)' }}
+                    title="Back to Timeline"
+                  >
+                    <X size={12} />
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>

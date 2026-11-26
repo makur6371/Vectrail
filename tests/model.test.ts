@@ -165,7 +165,7 @@ describe('Project Timeline Ops, Timecode, Captions & AutoPlanner', () => {
         words: [
           { start: 0.2, end: 0.5, text: 'Welcome' },
           { start: 0.55, end: 0.8, text: 'to' },
-          { start: 0.85, end: 1.4, text: 'Editroom.' },
+          { start: 0.85, end: 1.4, text: 'Vectrail.' },
           { start: 2.5, end: 3.1, text: 'Cut' },
           { start: 3.15, end: 3.6, text: 'faster.' },
         ],
@@ -173,7 +173,7 @@ describe('Project Timeline Ops, Timecode, Captions & AutoPlanner', () => {
     };
     const blocks = buildCaptionBlocks(proj, transcripts);
     expect(blocks.length).toBe(2);
-    expect(blocks[0].words.map((w) => w.text).join(' ')).toBe('Welcome to Editroom.');
+    expect(blocks[0].words.map((w) => w.text).join(' ')).toBe('Welcome to Vectrail.');
   });
 
   it('plans beat-synced montage in AutoPlanner', () => {

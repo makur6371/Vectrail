@@ -52,7 +52,7 @@ export class MCPServer {
     srv.on('error', (err: NodeJS.ErrnoException) => {
       if (err.code === 'EADDRINUSE' && port !== 0) {
         this.server = undefined;
-        this.problem = 'Another copy of Editroom is using port 47920; running on dynamic port.';
+        this.problem = 'Another copy of Vectrail is using port 47920; running on dynamic port.';
         this.start(0);
       } else {
         this.running = false;
@@ -105,7 +105,7 @@ export class MCPServer {
 
   private async handleHttp(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
     res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Mcp-Session-Id, X-Editroom-Client');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Mcp-Session-Id, X-Vectrail-Client, X-Editroom-Client');
     if (req.method === 'OPTIONS') {
       res.writeHead(204);
       res.end();
@@ -134,7 +134,7 @@ export class MCPServer {
       return;
     }
 
-    const clientHeader = String(req.headers['x-editroom-client'] ?? 'Agent');
+    const clientHeader = String(req.headers['x-vectrail-client'] ?? req.headers['x-editroom-client'] ?? 'Agent');
     const response = await this.handleRpc(rpc, clientHeader);
     if (response === null) {
       res.writeHead(202);
@@ -169,7 +169,7 @@ export class MCPServer {
         result: {
           protocolVersion: '2025-03-26',
           capabilities: { tools: { listChanged: false } },
-          serverInfo: { name: 'editroom', version: '1.0.0' },
+          serverInfo: { name: 'vectrail', version: '1.0.0' },
           instructions: MCP_INSTRUCTIONS,
         },
       };

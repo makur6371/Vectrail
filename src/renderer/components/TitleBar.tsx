@@ -21,6 +21,7 @@ interface TitleBarProps {
   canRedo: boolean;
   exportsList: ExportJobInfo[];
   mcpRunning: boolean;
+  magicOpen?: boolean;
   onNew: () => void;
   onOpen: () => void;
   onSave: () => void;
@@ -40,6 +41,7 @@ export const TitleBar: React.FC<TitleBarProps> = ({
   canRedo,
   exportsList,
   mcpRunning,
+  magicOpen = false,
   onNew,
   onOpen,
   onSave,
@@ -68,11 +70,25 @@ export const TitleBar: React.FC<TitleBarProps> = ({
           className="text-[12px] font-semibold tracking-tight mr-2 flex items-center gap-1.5"
           style={{ color: 'var(--text)' }}
         >
-          <span
-            className="inline-block w-2 h-2 rounded-full"
-            style={{ background: 'var(--accent)' }}
-          />
-          Editroom
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 1024 1024"
+            fill="none"
+            aria-label="Vectrail"
+            className="shrink-0"
+          >
+            <path
+              d="M 154 308 L 368 308 Q 390 308 403 330 L 488 477 Q 498 494 498 512 L 498 742 Q 498 764 476 764 L 446 764 Q 426 764 411 748 L 149 479 Q 128 458 128 432 L 128 335 Q 128 308 154 308 Z"
+              fill="var(--accent)"
+            />
+            <path
+              transform="translate(1024 0) scale(-1 1)"
+              d="M 154 308 L 368 308 Q 390 308 403 330 L 488 477 Q 498 494 498 512 L 498 742 Q 498 764 476 764 L 446 764 Q 426 764 411 748 L 149 479 Q 128 458 128 432 L 128 335 Q 128 308 154 308 Z"
+              fill="var(--accent)"
+            />
+          </svg>
+          Vectrail
         </span>
         <button
           className={btnClass}
@@ -157,14 +173,14 @@ export const TitleBar: React.FC<TitleBarProps> = ({
         <button
           className="titlebar-nodrag inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium"
           style={{
-            background: 'var(--button)',
-            color: 'var(--text)',
-            border: '1px solid var(--stroke)',
+            background: magicOpen ? 'var(--accent)' : 'var(--button)',
+            color: magicOpen ? '#FFFFFF' : 'var(--text)',
+            border: `1px solid ${magicOpen ? 'var(--accent)' : 'var(--stroke)'}`,
           }}
           onClick={onOpenMagic}
           title="Magic AI Edit"
         >
-          <Sparkles size={12} strokeWidth={1.6} style={{ color: 'var(--accent)' }} />
+          <Sparkles size={12} strokeWidth={1.6} style={{ color: magicOpen ? '#FFFFFF' : 'var(--accent)' }} />
           Magic
         </button>
 
@@ -197,7 +213,7 @@ export const TitleBar: React.FC<TitleBarProps> = ({
           <button
             className="p-1.5 rounded hover:opacity-80"
             style={{ color: 'var(--text-dim)' }}
-            onClick={() => window.editroom.minimizeWindow()}
+            onClick={() => window.vectrail.minimizeWindow()}
             title="Minimize"
           >
             <Minus size={13} />
@@ -205,7 +221,7 @@ export const TitleBar: React.FC<TitleBarProps> = ({
           <button
             className="p-1.5 rounded hover:opacity-80"
             style={{ color: 'var(--text-dim)' }}
-            onClick={() => window.editroom.maximizeWindow()}
+            onClick={() => window.vectrail.maximizeWindow()}
             title="Maximize"
           >
             <Square size={11} />
@@ -213,7 +229,7 @@ export const TitleBar: React.FC<TitleBarProps> = ({
           <button
             className="p-1.5 rounded hover:opacity-80"
             style={{ color: 'var(--text-dim)' }}
-            onClick={() => window.editroom.closeWindow()}
+            onClick={() => window.vectrail.closeWindow()}
             title="Close"
           >
             <X size={13} />

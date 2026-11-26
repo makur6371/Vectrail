@@ -58,7 +58,7 @@ import {
 } from '../engine/analyzer';
 
 export const MCP_INSTRUCTIONS =
-  'Editroom is a video editor. Times are in seconds. Video tracks are V1, V2, ... (V1 is the bottom; higher tracks cover lower ones) and audio tracks are A1, A2, .... A video with sound is placed as a linked pair: moving, trimming or deleting either moves both. Placing, moving or trimming a clip over another on the same track overwrites what is underneath. Start with get_project and list_media; analyze_media finds a clip\'s best moments or a song\'s beats; look_at_media shows you a clip or photo, and get_frame shows you the cut; search_media finds shots by what they show or what is said. After looking at a clip, save what you saw with note_media; list_media gives those notes back next time. Each edit is shown with your cursor and can be undone with history. auto_edit builds a whole cut on its own, and export delivers it to a file.';
+  'Vectrail is an AI-native Windows video editor. Times are in seconds. Video tracks are V1, V2, ... (V1 is the bottom; higher tracks cover lower ones) and audio tracks are A1, A2, .... A video with sound is placed as a linked pair: moving, trimming or deleting either moves both. Placing, moving or trimming a clip over another on the same track overwrites what is underneath. Start with get_project and list_media; analyze_media finds a clip\'s best moments or a song\'s beats; look_at_media shows you a clip or photo, and get_frame shows you the cut; search_media finds shots by what they show or what is said. After looking at a clip, save what you saw with note_media; list_media gives those notes back next time. Each edit is shown with your cursor and can be undone with history. auto_edit builds a whole cut on its own, and export delivers it to a file.';
 
 export interface MCPToolDefinition {
   name: string;
@@ -284,7 +284,7 @@ export async function callMCPTool(
     case 'download_media': {
       const url = String(args.url ?? '').trim();
       if (!url.startsWith('https://')) throw new Error('url must be an https link to an audio file.');
-      const baseDir = store.filePath ? path.dirname(store.filePath) : path.join(os.homedir(), 'Videos', 'EditroomMedia');
+      const baseDir = store.filePath ? path.dirname(store.filePath) : path.join(os.homedir(), 'Videos', 'VectrailMedia');
       fs.mkdirSync(baseDir, { recursive: true });
       const ext = path.extname(new URL(url).pathname) || '.mp3';
       const safeName = String(args.name ?? 'audio')
@@ -1089,6 +1089,7 @@ export async function callMCPTool(
         includeAudio: args.include_audio !== false,
         loudness: asNum(args.loudness) !== undefined ? clamp(asNum(args.loudness)!, -40, -5) : undefined,
         rangeOnly: Boolean(args.range_only),
+        enhanceDetail: Boolean(args.enhance_detail),
         reframeX: clamp(asNum(args.reframe_x) ?? 0.5, 0, 1),
         reframeY: clamp(asNum(args.reframe_y) ?? 0.5, 0, 1),
       };
@@ -1100,7 +1101,7 @@ export async function callMCPTool(
           : path.join(os.homedir(), 'Videos');
       fs.mkdirSync(outDir, { recursive: true });
       const ext = settings.format === 'audio' ? 'wav' : 'mp4';
-      const base = String(args.name ?? p.exportName ?? store.title).replace(/[\\/:*?"<>|]/g, '-').trim() || 'Editroom-Export';
+      const base = String(args.name ?? p.exportName ?? store.title).replace(/[\\/:*?"<>|]/g, '-').trim() || 'Vectrail-Export';
       let target = path.join(outDir, `${base}.${ext}`);
       let n = 2;
       while (fs.existsSync(target)) {

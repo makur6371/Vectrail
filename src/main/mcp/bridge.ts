@@ -7,15 +7,15 @@ import readline from 'node:readline';
 const MCP_DEFAULT_PORT = 47920;
 
 function resolveRuntimeDir(): string {
-  const override = process.env.EDITROOM_CACHE_DIR;
+  const override = process.env.VECTRAIL_CACHE_DIR ?? process.env.EDITROOM_CACHE_DIR;
   if (override) return path.join(override, 'Runtime');
   const appData = process.env.APPDATA ?? path.join(os.homedir(), 'AppData', 'Roaming');
-  return path.join(appData, 'EditroomWindows', 'Runtime');
+  return path.join(appData, 'Vectrail', 'Runtime');
 }
 
 function resolveActivePort(explicitPort?: number): number {
   if (explicitPort && explicitPort > 0) return explicitPort;
-  const envPort = Number.parseInt(process.env.EDITROOM_MCP_PORT || '', 10);
+  const envPort = Number.parseInt(process.env.VECTRAIL_MCP_PORT || process.env.EDITROOM_MCP_PORT || '', 10);
   if (envPort > 0) return envPort;
   try {
     const pf = path.join(resolveRuntimeDir(), 'mcp-port.json');
@@ -41,7 +41,7 @@ function forwardToServer(line: string, port: number): Promise<string | undefined
         headers: {
           'Content-Type': 'application/json',
           'Content-Length': data.byteLength,
-          'X-Editroom-Client': process.env.EDITROOM_MCP_CLIENT || 'Codex',
+          'X-Vectrail-Client': process.env.VECTRAIL_MCP_CLIENT || process.env.EDITROOM_MCP_CLIENT || 'Codex',
         },
       },
       (res) => {
@@ -84,7 +84,7 @@ export function runStdioMcpBridge(port?: number): void {
             id,
             error: {
               code: -32000,
-              message: 'Editroom for Windows is not running. Launch Editroom and open a project first.',
+              message: 'Vectrail is not running. Launch Vectrail and open a project first.',
             },
           }) + '\n'
         );
@@ -94,6 +94,6 @@ export function runStdioMcpBridge(port?: number): void {
 }
 
 if (require.main === module) {
-  const portArg = Number.parseInt(process.env.EDITROOM_MCP_PORT || '', 10) || undefined;
+  const portArg = Number.parseInt(process.env.VECTRAIL_MCP_PORT || process.env.EDITROOM_MCP_PORT || '', 10) || undefined;
   runStdioMcpBridge(portArg);
 }

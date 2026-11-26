@@ -1,6 +1,6 @@
-appId: com.editroomwindows.app
-productName: Editroom
-copyright: Copyright (c) 2026 EditroomWindows Contributors (MIT)
+appId: com.makur.vectrail
+productName: Vectrail
+copyright: Copyright (c) 2026 Makur (MIT)
 directories:
   output: release
   buildResources: build
@@ -28,9 +28,9 @@ nsis:
   createDesktopShortcut: true
   createStartMenuShortcut: true
 portable:
-  artifactName: Editroom-Windows-Portable-${version}-${arch}.exe
+  artifactName: Vectrail-Windows-Portable-${version}-${arch}.exe
 fileAssociations:
-  - ext: editroom
-    name: Editroom Project
-    description: Editroom Video Project
+  - ext: vectrail
+    name: Vectrail Project
+    description: Vectrail Video Project
     role: Editor

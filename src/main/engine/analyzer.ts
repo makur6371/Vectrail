@@ -385,17 +385,25 @@ export async function downloadWhisperModel(size: 'tiny' | 'base' = 'tiny'): Prom
   const fileName = size === 'base' ? 'ggml-base.bin' : 'ggml-tiny.bin';
   const dest = path.join(getCacheDir('Models'), fileName);
   if (fs.existsSync(dest) && fs.statSync(dest).size > 1_000_000) return dest;
-  const url = `https://huggingface.co/ggerganov/whisper.cpp/resolve/main/${fileName}`;
+  fs.mkdirSync(path.dirname(dest), { recursive: true });
+  const candidates = [
+    `https://huggingface.co/ggerganov/whisper.cpp/resolve/main/${fileName}`,
+    `https://hf-mirror.com/ggerganov/whisper.cpp/resolve/main/${fileName}`,
+  ];
   const tmp = `${dest}.download`;
+  const cleanupTmp = () => {
+    if (fs.existsSync(tmp)) fs.unlinkSync(tmp);
+  };
 
   const downloadRedirect = (u: string, redirects = 0): Promise<void> =>
     new Promise((resolve, reject) => {
       if (redirects > 6) return reject(new Error('Too many redirects downloading Whisper model.'));
-      https
-        .get(u, { headers: { 'User-Agent': 'EditroomWindows/1.0' } }, (res) => {
+      const req = https
+        .get(u, { headers: { 'User-Agent': 'Vectrail/1.0' }, timeout: 30000 }, (res) => {
           if (res.statusCode && res.statusCode >= 300 && res.statusCode < 400 && res.headers.location) {
             res.resume();
-            void downloadRedirect(res.headers.location, redirects + 1).then(resolve, reject);
+            const nextUrl = new URL(res.headers.location, u).toString();
+            void downloadRedirect(nextUrl, redirects + 1).then(resolve, reject);
             return;
           }
           if (res.statusCode !== 200) {
@@ -405,17 +413,46 @@ export async function downloadWhisperModel(size: 'tiny' | 'base' = 'tiny'): Prom
           const file = fs.createWriteStream(tmp);
           res.pipe(file);
           file.on('finish', () => {
-            file.close();
-            fs.renameSync(tmp, dest);
-            resolve();
+            file.close((closeErr) => {
+              if (closeErr) {
+                cleanupTmp();
+                reject(closeErr);
+                return;
+              }
+              try {
+                fs.renameSync(tmp, dest);
+                resolve();
+              } catch (renameErr) {
+                cleanupTmp();
+                reject(renameErr);
+              }
+            });
           });
-          file.on('error', reject);
+          file.on('error', (err) => {
+            cleanupTmp();
+            reject(err);
+          });
         })
-        .on('error', reject);
+        .on('error', (err) => {
+          cleanupTmp();
+          reject(err);
+        })
+        .on('timeout', () => {
+          req.destroy(new Error(`Timed out downloading ${fileName}`));
+        });
     });
 
-  await downloadRedirect(url);
-  return dest;
+  let lastErr: unknown;
+  for (const url of candidates) {
+    try {
+      await downloadRedirect(url);
+      return dest;
+    } catch (err) {
+      lastErr = err;
+      cleanupTmp();
+    }
+  }
+  throw lastErr instanceof Error ? lastErr : new Error(String(lastErr));
 }
 
 export async function transcribeMediaAsset(asset: MediaAsset, language = 'auto'): Promise<Transcript> {
@@ -427,7 +464,7 @@ export async function transcribeMediaAsset(asset: MediaAsset, language = 'auto')
     throw new Error('FFmpeg in this environment does not include the whisper filter.');
   }
   const modelPath = status.modelPath ?? (await downloadWhisperModel('tiny'));
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'editroom-whisper-'));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vectrail-whisper-'));
   const jsonOut = path.join(tmpDir, 'transcript.json');
   try {
     const escModel = modelPath.replace(/\\/g, '/').replace(':', '\\:');

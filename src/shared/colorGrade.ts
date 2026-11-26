@@ -334,7 +334,7 @@ export function bakeGradeLUT(grade?: ColorGrade, externalCube?: ParsedCubeLUT): 
 export function serializeGradeAsCubeText(grade: ColorGrade, externalCube?: ParsedCubeLUT): string | undefined {
   const lut = bakeGradeLUT(grade, externalCube);
   if (!lut) return undefined;
-  const lines: string[] = [`TITLE "Editroom Grade"`, `LUT_3D_SIZE ${GRADE_CUBE_DIM}`];
+  const lines: string[] = [`TITLE "Vectrail Grade"`, `LUT_3D_SIZE ${GRADE_CUBE_DIM}`];
   for (let i = 0; i < lut.length; i += 4) {
     lines.push(`${lut[i].toFixed(6)} ${lut[i + 1].toFixed(6)} ${lut[i + 2].toFixed(6)}`);
   }

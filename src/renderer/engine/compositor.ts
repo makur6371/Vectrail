@@ -1,9 +1,44 @@
-import { ColorGrade, MediaAsset, Project, Transcript } from '../../shared/types';
+import { ColorGrade, MediaAsset, Project, TextStyle, Transcript } from '../../shared/types';
 import { bakeGradeLUT, GRADE_CUBE_DIM, isGradeNeutral, parseCubeText, ParsedCubeLUT } from '../../shared/colorGrade';
 import { clipFadeGainAt, clipEnd, rgbaToHex } from '../../shared/project';
 import { clipSourceTimeAt } from '../../shared/speedRamp';
 import { transformAt } from '../../shared/zoomMove';
 import { buildCaptionBlocks } from '../../shared/captions';
+
+function drawTextOverlay(ctx: CanvasRenderingContext2D, tStyle: TextStyle, W: number, H: number): void {
+  const px = (tStyle.size / 1080) * H;
+  ctx.font = `${tStyle.bold ? '700' : '400'} ${px}px ${tStyle.fontName || 'Inter, Segoe UI, sans-serif'}`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const cx = tStyle.x * W;
+  const cy = tStyle.y * H;
+
+  if (tStyle.bgColor && (tStyle.bgColor.a ?? 1) > 0) {
+    const pad = ((tStyle.bgPadding ?? 16) / 1080) * H;
+    const metrics = ctx.measureText(tStyle.string || ' ');
+    const boxW = metrics.width + pad * 2.2;
+    const boxH = px * 1.15 + pad * 1.2;
+    const prevAlpha = ctx.globalAlpha;
+    ctx.globalAlpha = prevAlpha * Math.min(1, Math.max(0, tStyle.bgColor.a ?? 0.75));
+    ctx.fillStyle = rgbaToHex(tStyle.bgColor);
+    ctx.beginPath();
+    ctx.roundRect(cx - boxW / 2, cy - boxH / 2, boxW, boxH, Math.min(boxH / 2, pad * 0.75 + 4));
+    ctx.fill();
+    ctx.globalAlpha = prevAlpha;
+  }
+
+  const strokeW = ((tStyle.strokeWidth ?? 0) / 1080) * H;
+  if (strokeW > 0.25) {
+    ctx.lineJoin = 'round';
+    ctx.miterLimit = 2;
+    ctx.lineWidth = strokeW * 2;
+    ctx.strokeStyle = rgbaToHex(tStyle.strokeColor ?? { r: 0, g: 0, b: 0, a: 1 });
+    ctx.strokeText(tStyle.string, cx, cy);
+  }
+
+  ctx.fillStyle = rgbaToHex(tStyle.color);
+  ctx.fillText(tStyle.string, cx, cy);
+}
 
 const VS_SRC = `#version 300 es
 in vec2 a_pos;
@@ -100,7 +135,7 @@ class WebGLGrader {
 
   async ensureExternalCube(path?: string): Promise<void> {
     if (!path || !path.toLowerCase().endsWith('.cube') || this.cubeFileCache.has(path)) return;
-    const text = await window.editroom.readTextFile(path);
+    const text = await window.vectrail.readTextFile(path);
     if (text) {
       const parsed = parseCubeText(text);
       if (parsed) this.cubeFileCache.set(path, parsed);
@@ -192,7 +227,7 @@ export class PreviewCompositor {
   }
 
   private mediaUrl(filePath: string): string {
-    return `editroom-media://local?path=${encodeURIComponent(filePath)}`;
+    return `vectrail-media://local?path=${encodeURIComponent(filePath)}`;
   }
 
   private getVideo(asset: MediaAsset): HTMLVideoElement {
@@ -217,7 +252,7 @@ export class PreviewCompositor {
       el.addEventListener('canplay', () => this.onReady?.());
       el.addEventListener('seeked', () => this.onReady?.());
       el.addEventListener('error', () => {
-        console.error('[Editroom] video load error:', srcPath, el?.error?.code, el?.error?.message);
+        console.error('[Vectrail] video load error:', srcPath, el?.error?.code, el?.error?.message);
       });
       this.videos.set(srcPath, el);
     }
@@ -234,6 +269,40 @@ export class PreviewCompositor {
       this.images.set(asset.path, el);
     }
     return el;
+  }
+
+  renderSourcePreview(canvas: HTMLCanvasElement, asset: MediaAsset, time: number): void {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.fillStyle = '#000';
+    ctx.fillRect(0, 0, w, h);
+
+    if (asset.kind === 'image') {
+      const img = this.getImage(asset);
+      if (!img.complete || img.naturalWidth === 0) return;
+      const ratio = Math.min(w / img.naturalWidth, h / img.naturalHeight);
+      const dw = img.naturalWidth * ratio;
+      const dh = img.naturalHeight * ratio;
+      ctx.drawImage(img, (w - dw) / 2, (h - dh) / 2, dw, dh);
+      return;
+    }
+
+    if (asset.kind === 'video') {
+      const el = this.getVideo(asset);
+      if (!el.paused) el.pause();
+      const clamped = Math.max(0, Math.min(Math.max(0, asset.duration - 0.02), time));
+      if (Math.abs(el.currentTime - clamped) > 0.04) {
+        if (el.readyState < 1) el.dataset.pendingSeek = String(clamped);
+        else el.currentTime = clamped;
+      }
+      if (el.readyState < 2 || el.videoWidth === 0) return;
+      const ratio = Math.min(w / el.videoWidth, h / el.videoHeight);
+      const dw = el.videoWidth * ratio;
+      const dh = el.videoHeight * ratio;
+      ctx.drawImage(el, (w - dw) / 2, (h - dh) / 2, dw, dh);
+    }
   }
 
   syncMediaElements(project: Project, playhead: number, playing: boolean): void {
@@ -334,12 +403,7 @@ export class PreviewCompositor {
         } else if (clip.kind === 'text') {
           const tStyle = clip.text;
           if (tStyle) {
-            const px = (tStyle.size / 1080) * H;
-            ctx.font = `${tStyle.bold ? '700' : '400'} ${px}px ${tStyle.fontName || 'Inter, Segoe UI, sans-serif'}`;
-            ctx.fillStyle = rgbaToHex(tStyle.color);
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(tStyle.string, tStyle.x * W, tStyle.y * H);
+            drawTextOverlay(ctx, tStyle, W, H);
           }
         } else if (clip.assetID) {
           const asset = project.assets.find((a) => a.id === clip.assetID);

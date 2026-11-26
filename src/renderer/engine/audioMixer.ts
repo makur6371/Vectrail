@@ -39,7 +39,7 @@ export class AudioMixer {
     if (!chain) {
       const el = document.createElement('audio');
       el.crossOrigin = 'anonymous';
-      el.src = `editroom-media://local?path=${encodeURIComponent(pathStr)}`;
+      el.src = `vectrail-media://local?path=${encodeURIComponent(pathStr)}`;
       el.preload = 'auto';
       chain = { el };
       if (this.ctx && this.masterGain) {

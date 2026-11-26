@@ -1,7 +1,7 @@
-import type { EditroomBridgeAPI } from '../preload';
+import type { VectrailBridgeAPI } from '../preload';
 
 declare global {
   interface Window {
-    editroom: EditroomBridgeAPI;
+    vectrail: VectrailBridgeAPI;
   }
 }

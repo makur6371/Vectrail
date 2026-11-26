@@ -9,8 +9,12 @@ interface LibraryViewProps {
   sceneTags: Record<string, string[]>;
   transcripts: Record<string, Transcript>;
   fps: number;
+  width?: number;
+  activeSourceId?: string;
   onImport: () => void;
   onAddAsset: (asset: MediaAsset) => void;
+  onHoverPreview?: (preview: { asset: MediaAsset; time: number } | null) => void;
+  onSelectSource?: (asset: MediaAsset) => void;
   onAutoEdit: () => void;
   onTranscribeAsset?: (assetID: string) => void;
 }
@@ -21,13 +25,17 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
   sceneTags,
   transcripts,
   fps,
+  width = 268,
+  activeSourceId,
   onImport,
   onAddAsset,
+  onHoverPreview,
+  onSelectSource,
   onAutoEdit,
   onTranscribeAsset,
 }) => {
   const [query, setQuery] = useState('');
-  const [hoverIdx, setHoverIdx] = useState<{ id: string; idx: number } | null>(null);
+  const [hoverScrub, setHoverScrub] = useState<{ id: string; idx: number; rel: number; time: number } | null>(null);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -42,7 +50,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
   return (
     <div
       className="flex flex-col h-full shrink-0"
-      style={{ width: 256, background: 'var(--panel)', borderRight: '1px solid var(--stroke)' }}
+      style={{ width, background: 'var(--panel)' }}
     >
       <div
         className="flex items-center justify-between px-3 h-9 shrink-0"
@@ -104,31 +112,45 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
         ) : (
           filtered.map((asset) => {
             const strip = thumbs[asset.id] ?? [];
+            const isHovered = hoverScrub?.id === asset.id;
+            const isSourceSelected = activeSourceId === asset.id;
             const activeThumb =
-              hoverIdx?.id === asset.id && strip.length > 0
-                ? strip[Math.min(strip.length - 1, hoverIdx.idx)]
+              isHovered && strip.length > 0
+                ? strip[Math.min(strip.length - 1, hoverScrub.idx)]
                 : strip[0];
             return (
               <div
                 key={asset.id}
                 draggable
                 onDragStart={(e) => {
-                  e.dataTransfer.setData('application/x-editroom-asset', asset.id);
+                  e.dataTransfer.setData('application/x-vectrail-asset', asset.id);
                   e.dataTransfer.effectAllowed = 'copy';
                 }}
                 className="group rounded-md overflow-hidden cursor-pointer transition-colors"
                 style={{
                   background: 'var(--raised)',
-                  border: '1px solid var(--stroke)',
+                  border: `1px solid ${isSourceSelected ? 'var(--accent)' : 'var(--stroke)'}`,
+                }}
+                onClick={() => {
+                  if (asset.kind === 'video' || asset.kind === 'image') onSelectSource?.(asset);
                 }}
                 onDoubleClick={() => onAddAsset(asset)}
                 onMouseMove={(e) => {
-                  if (strip.length <= 1) return;
+                  if (asset.kind !== 'video') {
+                    if (asset.kind === 'image') onHoverPreview?.({ asset, time: 0 });
+                    return;
+                  }
                   const rect = e.currentTarget.getBoundingClientRect();
                   const rel = Math.min(0.999, Math.max(0, (e.clientX - rect.left) / rect.width));
-                  setHoverIdx({ id: asset.id, idx: Math.floor(rel * strip.length) });
+                  const time = rel * Math.max(0.05, asset.duration);
+                  const idx = strip.length > 0 ? Math.floor(rel * strip.length) : 0;
+                  setHoverScrub({ id: asset.id, idx, rel, time });
+                  onHoverPreview?.({ asset, time });
                 }}
-                onMouseLeave={() => setHoverIdx(null)}
+                onMouseLeave={() => {
+                  setHoverScrub(null);
+                  onHoverPreview?.(null);
+                }}
               >
                 <div
                   className="relative h-20 flex items-center justify-center overflow-hidden"
@@ -141,11 +163,30 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                   ) : (
                     <ImageIcon size={22} strokeWidth={1.3} style={{ color: 'var(--text-faint)' }} />
                   )}
+                  {isHovered && asset.kind === 'video' && (
+                    <>
+                      <div
+                        className="absolute top-0 bottom-0 w-0.5 pointer-events-none"
+                        style={{ left: `${hoverScrub.rel * 100}%`, background: 'var(--accent)' }}
+                      />
+                      <div
+                        className="absolute bottom-0 left-0 right-0 h-0.5 pointer-events-none"
+                        style={{ background: 'rgba(255,255,255,0.18)' }}
+                      >
+                        <div
+                          className="h-full"
+                          style={{ width: `${hoverScrub.rel * 100}%`, background: 'var(--accent)' }}
+                        />
+                      </div>
+                    </>
+                  )}
                   <span
                     className="mono-num absolute bottom-1.5 right-1.5 px-1.5 py-0.5 rounded text-[10px]"
                     style={{ background: 'rgba(0,0,0,0.75)', color: '#F2F2F0' }}
                   >
-                    {formatTimecode(asset.duration, fps, true)}
+                    {isHovered && asset.kind === 'video'
+                      ? formatTimecode(hoverScrub.time, fps, true)
+                      : formatTimecode(asset.duration, fps, true)}
                   </span>
                   <button
                     onClick={(e) => {

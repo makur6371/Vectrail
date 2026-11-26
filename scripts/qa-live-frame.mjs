@@ -3,17 +3,17 @@ import os from 'node:os';
 import path from 'node:path';
 
 const appData = process.env.APPDATA ?? path.join(os.homedir(), 'AppData', 'Roaming');
-const runtimeFile = path.join(appData, 'EditroomWindows', 'Runtime', 'mcp-port.json');
+const runtimeFile = path.join(appData, 'Vectrail', 'Runtime', 'mcp-port.json');
 const portInfo = JSON.parse(fs.readFileSync(runtimeFile, 'utf8'));
 const endpoint = `http://127.0.0.1:${portInfo.port}/mcp`;
-const mediaDir = path.join(os.tmpdir(), 'editroom-live-test');
+const mediaDir = path.join(os.tmpdir(), 'vectrail-live-test');
 
 let id = 0;
 
 async function call(method, params = {}) {
   const response = await fetch(endpoint, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'X-Editroom-Client': 'Codex QA' },
+    headers: { 'Content-Type': 'application/json', 'X-Vectrail-Client': 'Codex QA' },
     body: JSON.stringify({ jsonrpc: '2.0', id: ++id, method, params }),
   });
   const text = await response.text();
@@ -30,14 +30,17 @@ function resultText(result) {
 
 const fixtures = ['city_walk.mp4', 'camera_clip.mkv', 'beat_track.wav', 'badge.png']
   .map((name) => path.join(mediaDir, name));
-console.log('import', resultText(await call('tools/call', {
+const importText = resultText(await call('tools/call', {
   name: 'import_media',
   arguments: { paths: fixtures },
-})));
+}));
+console.log('import', importText);
+const importData = JSON.parse(importText);
 const initialProjectText = resultText(await call('tools/call', { name: 'get_project', arguments: {} }));
 console.log('project', initialProjectText);
-const initialProject = JSON.parse(initialProjectText);
-const songAsset = initialProject.assets.find((asset) => asset.kind === 'audio' || asset.name.endsWith('.wav'));
+const mediaList = JSON.parse(resultText(await call('tools/call', { name: 'list_media', arguments: {} })));
+const assets = mediaList.assets ?? importData.imported ?? [];
+const songAsset = assets.find((asset) => asset.kind === 'audio' || asset.name.endsWith('.wav'));
 console.log('auto_edit', resultText(await call('tools/call', {
   name: 'auto_edit',
   arguments: {

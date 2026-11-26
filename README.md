@@ -1,15 +1,21 @@
-# Editroom for Windows
+![Vectrail](docs/banner.png)
 
-Fast, open-source AI-native video editor for Windows — an authoritative Windows adaptation of [robbietilton/Editroom](https://github.com/robbietilton/Editroom), built with Electron, React, TypeScript, WebGL2, FFmpeg, and a built-in Model Context Protocol (MCP) server.
+# Vectrail
+
+Fast, open-source **AI-native video editor for Windows**, built from the ground up with Electron, React, TypeScript, WebGL2, FFmpeg, Cloud AI planning, and a built-in 45-tool Model Context Protocol (MCP) server.
+
+*Built by Makur · Inspired by [robbietilton/Editroom](https://github.com/robbietilton/Editroom) for macOS.*
 
 ## Features
 
-- **Real-time WebGL2 Preview**: Multi-track compositing, 11 built-in 3D LUT looks + `.cube` LUT import, exposure/contrast/saturation/temperature/tint/lift-gamma-gain color wheels, smooth zoom/pan curves, `dissolve`/`dipToBlack`/`wipe` transitions, fade curves, and word-highlighted caption preview.
-- **Universal Format Support**: Native `editroom-media://` byte-range streaming plus automatic background FFmpeg playable proxy/remuxing for `.mkv`, `.mxf`, `.avi`, and `.mov` (HEVC/ProRes/PCM) files while exporting directly from original sources.
-- **Non-linear Multi-track Timeline**: Video tracks (`V1`, `V2`, ...) and audio tracks (`A1`, `A2`, ...), linked audio/video pairs, library drag-and-drop, snapping, ripple delete (`Shift+Delete`), split (`S`), `J`/`K`/`L` shuttle, `I`/`O` In/Out range, freeze frame, speed & piecewise speed ramps, reverse playback, track ducking (`duck_under`/`duck_db`), editable shortcuts, and undo/redo (`Ctrl+Z` / `Ctrl+Shift+Z`).
+- **Real-time WebGL2 Preview & Direct Canvas Gizmo**: Multi-track compositing, 11 built-in 3D LUT looks + `.cube` LUT import, exposure/contrast/saturation/temperature/tint/lift-gamma-gain color wheels, smooth zoom/pan curves, `dissolve`/`dipToBlack`/`wipe` transitions, fade curves, word-highlighted captions, and direct Viewer drag/scale handles with center-snap guides.
+- **Media Library Hover Scrubbing & Source In/Out**: Move your cursor across any library video card to scrub frames live in the Viewer, or pin a source clip to mark `I`/`O` subclip ranges before inserting.
+- **Resizable Pro Workspace**: Drag panel splitters between Library, Viewer, Inspector, and Timeline (saved automatically) with four built-in palettes (`Dark`, `Grey`, `Amber`, `Light`).
+- **Universal Format Support**: Native `vectrail-media://` byte-range streaming plus automatic background FFmpeg playable proxy/remuxing for `.mkv`, `.mxf`, `.avi`, and `.mov` (HEVC/ProRes/PCM) files while exporting directly from original sources.
+- **Non-linear Multi-track Timeline**: Video (`V1`, `V2`, ...) and audio (`A1`, `A2`, ...) tracks, continuous filmstrip tiling, linked pairs, snapping, right-click clip context menu, marker tint/rename popover, ripple delete (`Shift+Delete`), split (`S`), `J`/`K`/`L` shuttle with rate badge, freeze frame, piecewise speed ramps, reverse playback, track ducking, editable shortcuts, and undo/redo (`Ctrl+Z` / `Ctrl+Shift+Z`).
 - **Local Whisper Transcription & Scene Tags**: Built-in `whisper.cpp` speech transcription via FFmpeg (`ggml-tiny`/`ggml-base` download in Settings) and automatic visual scene tagging (`bright`, `night`, `action`, `people`, `vivid`, `sharp`) for instant media search.
-- **AI-Native MCP Server (45 tools) & Magic Bar**: Built-in local HTTP MCP server (`127.0.0.1:47920/mcp` with dynamic port discovery via `%APPDATA%\EditroomWindows\Runtime\mcp-port.json`) plus standalone stdio bridge (`dist-electron/main/mcp/bridge.js`) for **Codex CLI**, **Claude Code**, and **Claude Desktop**. Supports `@asset` / `@clip` / `@playhead` mentions, live agent cursor feedback, `look_at_media` contact sheets, `analyze_media`, `transcribe_media`, `auto_edit`, and background `export`.
-- **FFmpeg Export Engine**: Hardware-probed H.264/HEVC MP4 (NVENC / QSV / AMF with automatic `libx264` / `libx265` fallback), audio-only WAV, aspect ratio presets (`16:9`, `9:16 Reels`, `1:1 Square`, `4:5 Portrait`), EBU R128 loudness normalization, 3D LUT `.cube` bake, speed ramps, and caption burn-in.
+- **Magic AI Bar (Cloud OpenAI-Compatible API + Codex/Claude + 45-Tool MCP)**: Floating Magic popover with `@` mention autocomplete, live execution steps, one-click undo, configurable **OpenAI-compatible Cloud AI** (`Base URL`, `API Key`, `Model`), and local HTTP/stdio MCP server (`127.0.0.1:47920/mcp`, port file at `%APPDATA%\Vectrail\Runtime\mcp-port.json`).
+- **FFmpeg Export Engine**: Hardware-probed H.264/HEVC MP4 (NVENC / QSV / AMF with `libx264` / `libx265` fallback), Lanczos + Contrast Adaptive Sharpen (`cas`) detail enhancement on upscales, audio-only WAV, aspect ratio presets (`16:9`, `9:16`, `1:1`, `4:5`), EBU R128 loudness normalization, `.cube` LUT bake, and caption burn-in.
 
 ## Prerequisites
 
@@ -17,13 +23,13 @@ Fast, open-source AI-native video editor for Windows — an authoritative Window
 - **Node.js 20+** (for building from source)
 - **FFmpeg & FFprobe** on `PATH` (for example `winget install Gyan.FFmpeg`, or placed under `resources/ffmpeg/ffmpeg.exe`)
 
-## AI Agent Integration (MCP)
+## AI Agent Integration (MCP & Cloud AI)
 
-1. Launch Editroom and open **Settings → AI Agents**.
-2. Click **Connect** for **Codex** (`%USERPROFILE%\.codex\config.toml`), **Claude Code**, or **Claude Desktop** to write the `editroom` stdio MCP server entry automatically.
-3. You can also use the in-app **Magic** prompt bar (`codex` / `claude` CLI integration) with `@` mentions for assets, clips, and playhead context.
+1. Launch Vectrail and open **Settings**.
+2. For **Cloud AI** inside the Magic popover, enter any OpenAI-compatible `Base URL`, `API Key`, and `Model` and click **Test**.
+3. For external coding/editing agents, click **Connect** under **AI Agents & MCP Server** for **Codex** (`%USERPROFILE%\.codex\config.toml`), **Claude Code**, or **Claude Desktop** to register the `vectrail` stdio MCP server automatically.
 
-If you run the Portable executable, Editroom writes the bridge script to `%APPDATA%\EditroomWindows\Runtime\mcp-bridge.js` so agent configs remain valid across temporary extraction directories.
+If you run the Portable executable, Vectrail copies the bridge script to `%APPDATA%\Vectrail\Runtime\vectrail-mcp-bridge.js` so agent configs stay valid across launches.
 
 ## Development & Testing
 
@@ -47,13 +53,13 @@ npm run dist:win:offline
 ```
 
 Outputs are generated in `release/`:
-- `Editroom Setup 1.0.0.exe` (NSIS installer)
-- `Editroom-Windows-Portable-1.0.0-x64.exe` (single-file portable executable)
-- `win-unpacked/Editroom.exe`
+- `Vectrail Setup 1.0.0.exe` (NSIS installer)
+- `Vectrail-Windows-Portable-1.0.0-x64.exe` (single-file portable executable)
+- `win-unpacked/Vectrail.exe`
 
 ## Live QA
 
-With Editroom running and fixtures present in `%TEMP%\editroom-live-test`, import the fixtures, build a beat-synced cut, apply a color grade, seek, inspect the playhead frame, and save:
+With Vectrail running and fixtures present in `%TEMP%\vectrail-live-test`, import the fixtures, build a beat-synced cut, apply a color grade, seek, inspect the playhead frame, and save:
 
 ```powershell
 npm run qa:live
@@ -61,7 +67,7 @@ npm run qa:live
 
 ## Architecture
 
-- `src/main/` — Electron main process, `editroom-media://` protocol handler, FFmpeg analyzer/exporter/proxy pipeline, Magic agent connector, and MCP HTTP + stdio server (`45` tools).
+- `src/main/` — Electron main process, `vectrail-media://` protocol handler, FFmpeg analyzer/exporter/proxy pipeline, Cloud AI & Magic agent connector, and MCP HTTP + stdio server (`45` tools).
 - `src/renderer/` — React + Tailwind UI, WebGL2 color-grading compositor, Web Audio mixer, timeline, inspector, library, and modals.
 - `src/shared/` — Cross-process project model, 3D `.cube` LUT parser & baker, caption layout, speed ramp math, beat-cut planner, themes, and shortcuts.
 - `tests/` — Unit tests and end-to-end MCP + real FFmpeg pipeline tests (`vitest`).
@@ -69,4 +75,4 @@ npm run qa:live
 ## Attribution & License
 
 MIT License — see [LICENSE](LICENSE).
-Inspired by and adapted for Windows from [robbietilton/Editroom](https://github.com/robbietilton/Editroom).
+Built by Makur. Inspired by [robbietilton/Editroom](https://github.com/robbietilton/Editroom) for macOS.

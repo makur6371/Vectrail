@@ -1,18 +1,18 @@
 {
-  "name": "editroom-windows",
-  "productName": "Editroom",
+  "name": "vectrail",
+  "productName": "Vectrail",
   "version": "1.0.0",
-  "description": "Fast, open-source AI-native video editor for Windows with real-time WebGL2 playback, FFmpeg export, and built-in MCP server.",
+  "description": "Fast, open-source AI-native video editor for Windows with real-time WebGL2 playback, FFmpeg export, Cloud AI & 45-tool MCP server. Built by Makur, inspired by Editroom.",
   "main": "dist-electron/main/index.js",
   "license": "MIT",
-  "author": "EditroomWindows Contributors",
-  "homepage": "https://github.com/makur6371/EditroomWindows#readme",
+  "author": "Makur",
+  "homepage": "https://github.com/makur6371/Vectrail#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/makur6371/EditroomWindows.git"
+    "url": "git+https://github.com/makur6371/Vectrail.git"
   },
   "bugs": {
-    "url": "https://github.com/makur6371/EditroomWindows/issues"
+    "url": "https://github.com/makur6371/Vectrail/issues"
   },
   "scripts": {
     "dev": "vite",

@@ -5,6 +5,7 @@ import {
   addTrack,
   clipEnd,
   detachAudioLinks,
+  duplicateClips,
   freeTrack,
   freezeFrameClip,
   linkedIds,
@@ -22,10 +23,27 @@ import { formatEventCombo, mergeShortcutBindings, ShortcutActionId } from '../sh
 import { AudioMixer } from './engine/audioMixer';
 import { TitleBar } from './components/TitleBar';
 import { LibraryView } from './components/LibraryView';
-import { ViewerScreen } from './components/ViewerScreen';
+import { PinnedSourceState, ViewerScreen } from './components/ViewerScreen';
 import { InspectorView } from './components/InspectorView';
 import { TimelinePanel } from './components/TimelinePanel';
-import { ExportModal, MagicModal, SettingsModal } from './components/Modals';
+import { ExportModal, MagicPopover, SettingsModal } from './components/Modals';
+
+const DEFAULT_LAYOUT = { libraryW: 268, inspectorW: 300, timelineH: 320 };
+
+function loadLayout() {
+  try {
+    const raw = localStorage.getItem('vectrail.layout.v1');
+    if (!raw) return DEFAULT_LAYOUT;
+    const parsed = JSON.parse(raw) as Partial<typeof DEFAULT_LAYOUT>;
+    return {
+      libraryW: Math.min(460, Math.max(190, parsed.libraryW ?? DEFAULT_LAYOUT.libraryW)),
+      inspectorW: Math.min(440, Math.max(250, parsed.inspectorW ?? DEFAULT_LAYOUT.inspectorW)),
+      timelineH: Math.min(520, Math.max(190, parsed.timelineH ?? DEFAULT_LAYOUT.timelineH)),
+    };
+  } catch {
+    return DEFAULT_LAYOUT;
+  }
+}
 
 export const App: React.FC = () => {
   const [snap, setSnap] = useState<EditorSnapshot | null>(null);
@@ -42,17 +60,37 @@ export const App: React.FC = () => {
   const [dropActive, setDropActive] = useState(false);
   const [shuttleRate, setShuttleRate] = useState(1);
   const [shortcutMap, setShortcutMap] = useState<Record<string, string>>({});
+  const [layout, setLayout] = useState(loadLayout);
+  const [sourcePreview, setSourcePreview] = useState<{ asset: MediaAsset; time: number } | null>(null);
+  const [pinnedSource, setPinnedSource] = useState<PinnedSourceState | null>(null);
+  const [toast, setToast] = useState<{ text: string; kind: 'info' | 'error' } | null>(null);
 
   const mixerRef = useRef<AudioMixer | null>(null);
   if (!mixerRef.current) mixerRef.current = new AudioMixer();
+  const snapRef = useRef<EditorSnapshot | null>(null);
+  snapRef.current = snap;
+  const toastTimerRef = useRef<number | null>(null);
+  const showToast = (text: string, kind: 'info' | 'error' = 'info') => {
+    setToast({ text, kind });
+    if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
+    toastTimerRef.current = window.setTimeout(() => setToast(null), kind === 'error' ? 5000 : 2600);
+  };
 
   useEffect(() => {
-    void window.editroom.getSnapshot().then(setSnap);
-    void window.editroom.getMcpStatus().then((m) => setMcpRunning(m.running));
-    void window.editroom.getShortcuts().then(setShortcutMap);
-    const unsub = window.editroom.onSnapshot(setSnap);
+    void window.vectrail.getSnapshot().then(setSnap);
+    void window.vectrail.getMcpStatus().then((m) => setMcpRunning(m.running));
+    void window.vectrail.getShortcuts().then(setShortcutMap);
+    const unsub = window.vectrail.onSnapshot(setSnap);
     return unsub;
   }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('vectrail.layout.v1', JSON.stringify(layout));
+    } catch {
+      // ignore storage errors
+    }
+  }, [layout]);
 
   useEffect(() => {
     const pal = THEMES[theme];
@@ -98,30 +136,32 @@ export const App: React.FC = () => {
       return;
     }
     let last = performance.now();
-    let curTime = snap.playhead;
-    const dur = Math.max(0.1, projectDuration(snap.project));
+    let curTime = snapRef.current?.playhead ?? 0;
     let raf = 0;
 
     const tick = (now: number) => {
+      const latestSnap = snapRef.current;
+      if (!latestSnap) return;
       const dt = (now - last) / 1000;
       last = now;
+      const dur = Math.max(0.1, projectDuration(latestSnap.project));
       curTime += dt * shuttleRate;
-      if (curTime < 0) {
+      if (curTime <= 0 && shuttleRate < 0) {
         curTime = 0;
-        void window.editroom.setPlaying(false);
-        void window.editroom.setPlayhead(0);
+        void window.vectrail.setPlaying(false);
+        void window.vectrail.setPlayhead(0);
         return;
       }
       if (curTime >= dur) {
         if (loop) {
-          curTime = snap.project.playRange?.in ?? 0;
+          curTime = latestSnap.project.playRange?.in ?? 0;
         } else {
-          void window.editroom.setPlaying(false);
-          void window.editroom.setPlayhead(dur);
+          void window.vectrail.setPlaying(false);
+          void window.vectrail.setPlayhead(dur);
           return;
         }
       }
-      const m = mixerRef.current?.sync(snap.project, curTime, true) ?? { left: 0, right: 0 };
+      const m = mixerRef.current?.sync(latestSnap.project, curTime, true) ?? { left: 0, right: 0 };
       setMeter(m);
       setSnap((prev) => (prev ? { ...prev, playhead: curTime } : prev));
       raf = requestAnimationFrame(tick);
@@ -129,28 +169,31 @@ export const App: React.FC = () => {
     raf = requestAnimationFrame(tick);
     return () => {
       cancelAnimationFrame(raf);
-      void window.editroom.setPlayhead(curTime);
+      void window.vectrail.setPlayhead(curTime);
     };
   }, [snap?.playing, loop, shuttleRate]);
 
   const mutate = (fn: (p: Project) => void, recordHistory = true) => {
-    if (!snap) return;
-    const draft = JSON.parse(JSON.stringify(snap.project)) as Project;
+    const cur = snapRef.current;
+    if (!cur) return;
+    const draft = JSON.parse(JSON.stringify(cur.project)) as Project;
     fn(draft);
-    void window.editroom.mutateProject(draft, recordHistory);
+    void window.vectrail.mutateProject(draft, recordHistory);
   };
 
-  const handleAddAsset = (asset: MediaAsset) => {
+  const handleAddAsset = (asset: MediaAsset, inTime?: number, outTime?: number) => {
     mutate((p) => {
       const vTrack = p.videoTracks[0].id;
       const trackMax = p.clips
         .filter((c) => c.trackID === (asset.kind === 'audio' ? p.audioTracks[0].id : vTrack))
         .reduce((mx, c) => Math.max(mx, clipEnd(c)), 0);
+      const s0 = Math.max(0, inTime ?? 0);
+      const rawDur = outTime !== undefined && outTime > s0 + 0.05 ? outTime - s0 : Math.max(0.1, asset.duration - s0);
       const aTrack =
         asset.kind === 'audio'
           ? p.audioTracks[0].id
-          : freeTrack(p, 'audio', trackMax, asset.duration) ?? p.audioTracks[0]?.id ?? addTrack(p, 'audio').id;
-      const made = makeClipsForAsset(p, asset, trackMax, vTrack, aTrack);
+          : freeTrack(p, 'audio', trackMax, rawDur) ?? p.audioTracks[0]?.id ?? addTrack(p, 'audio').id;
+      const made = makeClipsForAsset(p, asset, trackMax, vTrack, aTrack, s0, rawDur);
       p.clips.push(...made);
       resolveOverlaps(p, new Set(made.map((c) => c.id)));
     });
@@ -173,17 +216,38 @@ export const App: React.FC = () => {
     });
   };
 
+  const handleTranscribeAsset = async (assetID: string) => {
+    if (!snap) return;
+    const asset = snap.project.assets.find((a) => a.id === assetID);
+    showToast(`Transcribing ${asset?.name ?? 'clip'}...`);
+    try {
+      await window.vectrail.transcribeAsset(assetID);
+      showToast(`Transcribed ${asset?.name ?? 'clip'}`);
+    } catch (err) {
+      showToast(err instanceof Error ? err.message : String(err), 'error');
+    }
+  };
+
   const handleTranscribeAll = async () => {
     if (!snap) return;
-    for (const a of snap.project.assets) {
-      if (a.kind === 'audio' || a.hasAudio) {
-        try {
-          await window.editroom.transcribeAsset(a.id);
-        } catch {
-          // skip asset on error
-        }
+    const targets = snap.project.assets.filter((a) => a.kind === 'audio' || a.hasAudio);
+    if (targets.length === 0) {
+      showToast('No audio clips found to transcribe', 'error');
+      return;
+    }
+    showToast(`Transcribing ${targets.length} clip(s)...`);
+    let okCount = 0;
+    let lastErr = '';
+    for (const a of targets) {
+      try {
+        await window.vectrail.transcribeAsset(a.id);
+        okCount++;
+      } catch (err) {
+        lastErr = err instanceof Error ? err.message : String(err);
       }
     }
+    if (okCount > 0) showToast(`Transcribed ${okCount}/${targets.length} clip(s)`);
+    else if (lastErr) showToast(lastErr, 'error');
   };
 
   const handleSplitAtPlayhead = () => {
@@ -230,6 +294,13 @@ export const App: React.FC = () => {
       if (!snap) return;
       const tag = (e.target as HTMLElement)?.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT') return;
+      if (modal) {
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          setModal(null);
+        }
+        return;
+      }
       const combo = formatEventCombo(e);
       if (!combo) return;
       const bindings = mergeShortcutBindings(shortcutMap);
@@ -238,46 +309,46 @@ export const App: React.FC = () => {
 
       if (action === 'undo') {
         e.preventDefault();
-        void window.editroom.undo();
+        void window.vectrail.undo();
       } else if (action === 'redo') {
         e.preventDefault();
-        void window.editroom.redo();
+        void window.vectrail.redo();
       } else if (action === 'saveProject') {
         e.preventDefault();
-        void window.editroom.saveProjectDialog(e.shiftKey);
+        void window.vectrail.saveProjectDialog(e.shiftKey);
       } else if (action === 'importMedia') {
         e.preventDefault();
-        void window.editroom.importFilesDialog();
+        void window.vectrail.importFilesDialog();
       } else if (action === 'exportVideo') {
         e.preventDefault();
         setModal('export');
       } else if (action === 'magic') {
         e.preventDefault();
-        setModal('magic');
+        setModal((m) => (m === 'magic' ? null : 'magic'));
       } else if (action === 'split') {
         e.preventDefault();
         handleSplitAtPlayhead();
       } else if (action === 'playPause') {
         e.preventDefault();
-        void window.editroom.setPlaying(!snap.playing);
+        void window.vectrail.setPlaying(!snap.playing);
       } else if (action === 'shuttleReverse') {
         e.preventDefault();
         setShuttleRate((r) => (snap.playing && r < 0 ? Math.max(-4, r * 2) : -1));
-        if (!snap.playing) void window.editroom.setPlaying(true);
+        if (!snap.playing) void window.vectrail.setPlaying(true);
       } else if (action === 'shuttlePause') {
         e.preventDefault();
         setShuttleRate(1);
-        void window.editroom.setPlaying(false);
+        void window.vectrail.setPlaying(false);
       } else if (action === 'shuttleForward') {
         e.preventDefault();
         setShuttleRate((r) => (snap.playing && r > 0 ? Math.min(4, r * 2) : 1));
-        if (!snap.playing) void window.editroom.setPlaying(true);
+        if (!snap.playing) void window.vectrail.setPlaying(true);
       } else if (action === 'stepBack') {
         e.preventDefault();
-        void window.editroom.setPlayhead(Math.max(0, snap.playhead - 1 / snap.project.fps));
+        void window.vectrail.setPlayhead(Math.max(0, snap.playhead - 1 / snap.project.fps));
       } else if (action === 'stepForward') {
         e.preventDefault();
-        void window.editroom.setPlayhead(snap.playhead + 1 / snap.project.fps);
+        void window.vectrail.setPlayhead(snap.playhead + 1 / snap.project.fps);
       } else if (action === 'markIn') {
         e.preventDefault();
         mutate((p) => {
@@ -329,12 +400,34 @@ export const App: React.FC = () => {
   if (!snap) {
     return (
       <div className="w-full h-full flex items-center justify-center" style={{ background: '#0A0A0A', color: '#9A9A96' }}>
-        Loading Editroom...
+        Loading Vectrail...
       </div>
     );
   }
 
   const selectedClip = snap.project.clips.find((c) => c.id === selectedIds[0]);
+
+  const startSplitDrag = (axis: 'library' | 'inspector' | 'timeline', e: React.MouseEvent) => {
+    e.preventDefault();
+    const startX = e.clientX;
+    const startY = e.clientY;
+    const init = { ...layout };
+    const onMove = (ev: MouseEvent) => {
+      if (axis === 'library') {
+        setLayout((prev) => ({ ...prev, libraryW: Math.min(460, Math.max(190, init.libraryW + (ev.clientX - startX))) }));
+      } else if (axis === 'inspector') {
+        setLayout((prev) => ({ ...prev, inspectorW: Math.min(440, Math.max(250, init.inspectorW - (ev.clientX - startX))) }));
+      } else {
+        setLayout((prev) => ({ ...prev, timelineH: Math.min(520, Math.max(190, init.timelineH - (ev.clientY - startY))) }));
+      }
+    };
+    const onUp = () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+    };
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+  };
 
   return (
     <div
@@ -352,7 +445,7 @@ export const App: React.FC = () => {
           const p = (f as File & { path?: string }).path;
           if (p) paths.push(p);
         }
-        if (paths.length) void window.editroom.importPaths(paths);
+        if (paths.length) void window.vectrail.importPaths(paths);
       }}
     >
       <TitleBar
@@ -362,16 +455,17 @@ export const App: React.FC = () => {
         canRedo={snap.canRedo}
         exportsList={snap.exports}
         mcpRunning={mcpRunning}
-        onNew={() => void window.editroom.newProject()}
-        onOpen={() => void window.editroom.openProjectDialog()}
-        onSave={() => void window.editroom.saveProjectDialog(false)}
-        onImport={() => void window.editroom.importFilesDialog()}
-        onUndo={() => void window.editroom.undo()}
-        onRedo={() => void window.editroom.redo()}
-        onOpenMagic={() => setModal('magic')}
+        magicOpen={modal === 'magic'}
+        onNew={() => void window.vectrail.newProject()}
+        onOpen={() => void window.vectrail.openProjectDialog()}
+        onSave={() => void window.vectrail.saveProjectDialog(false)}
+        onImport={() => void window.vectrail.importFilesDialog()}
+        onUndo={() => void window.vectrail.undo()}
+        onRedo={() => void window.vectrail.redo()}
+        onOpenMagic={() => setModal((m) => (m === 'magic' ? null : 'magic'))}
         onOpenExport={() => setModal('export')}
         onOpenSettings={() => setModal('settings')}
-        onCancelExport={(id) => void window.editroom.cancelExport(id)}
+        onCancelExport={(id) => void window.vectrail.cancelExport(id)}
       />
 
       <div className="flex-1 flex min-h-0">
@@ -381,10 +475,21 @@ export const App: React.FC = () => {
           sceneTags={snap.sceneTags ?? {}}
           transcripts={snap.transcripts ?? {}}
           fps={snap.project.fps}
-          onImport={() => void window.editroom.importFilesDialog()}
+          width={layout.libraryW}
+          activeSourceId={pinnedSource?.asset.id}
+          onImport={() => void window.vectrail.importFilesDialog()}
           onAddAsset={handleAddAsset}
-          onAutoEdit={() => void window.editroom.autoEdit()}
-          onTranscribeAsset={(id) => void window.editroom.transcribeAsset(id)}
+          onHoverPreview={setSourcePreview}
+          onSelectSource={(asset) => setPinnedSource({ asset, time: 0 })}
+          onAutoEdit={() => void window.vectrail.autoEdit()}
+          onTranscribeAsset={(id) => void handleTranscribeAsset(id)}
+        />
+        <div
+          onMouseDown={(e) => startSplitDrag('library', e)}
+          onDoubleClick={() => setLayout((prev) => ({ ...prev, libraryW: DEFAULT_LAYOUT.libraryW }))}
+          className="w-1 shrink-0 cursor-col-resize hover:opacity-100 transition-colors"
+          style={{ background: 'var(--stroke)' }}
+          title="Drag to resize Library (double-click to reset)"
         />
         <ViewerScreen
           project={snap.project}
@@ -393,18 +498,33 @@ export const App: React.FC = () => {
           loop={loop}
           meter={meter}
           transcripts={snap.transcripts ?? {}}
-          onTogglePlay={() => void window.editroom.setPlaying(!snap.playing)}
-          onSeek={(t) => void window.editroom.setPlayhead(t)}
+          selectedClip={selectedClip}
+          shuttleRate={shuttleRate}
+          sourcePreview={sourcePreview}
+          pinnedSource={pinnedSource}
+          onChangePinnedSource={setPinnedSource}
+          onInsertSourceRange={(asset, inT, outT) => handleAddAsset(asset, inT, outT)}
+          onMutate={mutate}
+          onTogglePlay={() => void window.vectrail.setPlaying(!snap.playing)}
+          onSeek={(t) => void window.vectrail.setPlayhead(t)}
           onStep={(frames) =>
-            void window.editroom.setPlayhead(Math.max(0, snap.playhead + frames / snap.project.fps))
+            void window.vectrail.setPlayhead(Math.max(0, snap.playhead + frames / snap.project.fps))
           }
           onToggleLoop={() => setLoop((l) => !l)}
-          onImport={() => void window.editroom.importFilesDialog()}
+          onImport={() => void window.vectrail.importFilesDialog()}
+        />
+        <div
+          onMouseDown={(e) => startSplitDrag('inspector', e)}
+          onDoubleClick={() => setLayout((prev) => ({ ...prev, inspectorW: DEFAULT_LAYOUT.inspectorW }))}
+          className="w-1 shrink-0 cursor-col-resize hover:opacity-100 transition-colors"
+          style={{ background: 'var(--stroke)' }}
+          title="Drag to resize Inspector (double-click to reset)"
         />
         <InspectorView
           project={snap.project}
           selectedClip={selectedClip}
           copiedGrade={copiedGrade}
+          width={layout.inspectorW}
           onUpdateClip={(id, fn) =>
             mutate((p) => {
               const c = p.clips.find((x) => x.id === id);
@@ -412,7 +532,10 @@ export const App: React.FC = () => {
             })
           }
           onUpdateSequence={(fn) => mutate(fn)}
-          onCopyGrade={setCopiedGrade}
+          onCopyGrade={(grade) => {
+            setCopiedGrade(grade);
+            showToast('Color grade copied');
+          }}
           onFreezeFrame={(id) =>
             mutate((p) => {
               freezeFrameClip(p, id, snap.playhead, 2);
@@ -432,6 +555,14 @@ export const App: React.FC = () => {
         />
       </div>
 
+      <div
+        onMouseDown={(e) => startSplitDrag('timeline', e)}
+        onDoubleClick={() => setLayout((prev) => ({ ...prev, timelineH: DEFAULT_LAYOUT.timelineH }))}
+        className="h-1 shrink-0 cursor-row-resize hover:opacity-100 transition-colors"
+        style={{ background: 'var(--stroke)' }}
+        title="Drag to resize Timeline (double-click to reset)"
+      />
+
       <TimelinePanel
         project={snap.project}
         playhead={snap.playhead}
@@ -439,13 +570,15 @@ export const App: React.FC = () => {
         tool={tool}
         snapping={snapping}
         zoomPx={zoomPx}
+        height={layout.timelineH}
+        copiedGrade={copiedGrade}
         thumbs={snap.thumbs}
         waveforms={snap.waveforms}
         agentCursor={snap.agentCursor}
         onSetTool={setTool}
         onToggleSnap={() => setSnapping((s) => !s)}
         onSetZoom={setZoomPx}
-        onSeek={(t) => void window.editroom.setPlayhead(t)}
+        onSeek={(t) => void window.vectrail.setPlayhead(t)}
         onSelectClips={setSelectedIds}
         onMutate={mutate}
         onSplitAtPlayhead={handleSplitAtPlayhead}
@@ -457,8 +590,29 @@ export const App: React.FC = () => {
             p.markers.push({ id: newId(), time: snap.playhead, name: 'Marker', color: 'orange' });
           })
         }
-        onAutoEdit={() => void window.editroom.autoEdit()}
+        onAutoEdit={() => void window.vectrail.autoEdit()}
         onDropAsset={handleDropAssetOnTimeline}
+        onCopyGrade={setCopiedGrade}
+        onDuplicateClip={(clipID) =>
+          mutate((p) => {
+            duplicateClips(p, [clipID]);
+          })
+        }
+        onFreezeFrame={(clipID) =>
+          mutate((p) => {
+            freezeFrameClip(p, clipID, snap.playhead, 2);
+          })
+        }
+        onReverseClip={(clipID) =>
+          mutate((p) => {
+            reverseClipGroup(p, clipID);
+          })
+        }
+        onDetachAudio={(clipID) =>
+          mutate((p) => {
+            detachAudioLinks(p, [clipID]);
+          })
+        }
       />
 
       {dropActive && (
@@ -472,16 +626,36 @@ export const App: React.FC = () => {
         </div>
       )}
 
+      {toast && (
+        <div
+          className="fixed bottom-4 right-4 z-50 px-3 py-1.5 rounded-lg shadow-xl text-[11px] font-medium"
+          style={{
+            background: toast.kind === 'error' ? '#3A1515' : 'var(--sheet)',
+            color: toast.kind === 'error' ? '#FFB4AB' : 'var(--text)',
+            border: `1px solid ${toast.kind === 'error' ? '#FF453A' : 'var(--sheet-field-stroke)'}`,
+          }}
+        >
+          {toast.text}
+        </div>
+      )}
+
       {modal === 'export' && (
         <ExportModal
           project={snap.project}
           title={snap.title}
           onClose={() => setModal(null)}
-          onStart={(s: ExportSettings) => void window.editroom.startExport(s)}
+          onStart={(s: ExportSettings) => void window.vectrail.startExport(s)}
         />
       )}
       {modal === 'magic' && (
-        <MagicModal assets={snap.project.assets} selectedIds={selectedIds} onClose={() => setModal(null)} />
+        <MagicPopover
+          assets={snap.project.assets}
+          selectedIds={selectedIds}
+          canUndo={snap.canUndo}
+          onUndo={() => void window.vectrail.undo()}
+          onOpenSettings={() => setModal('settings')}
+          onClose={() => setModal(null)}
+        />
       )}
       {modal === 'settings' && (
         <SettingsModal
@@ -489,7 +663,7 @@ export const App: React.FC = () => {
           shortcutMap={shortcutMap}
           onUpdateShortcuts={(next) => {
             setShortcutMap(next);
-            void window.editroom.saveShortcuts(next);
+            void window.vectrail.saveShortcuts(next);
           }}
           onChangeTheme={setTheme}
           onClose={() => setModal(null)}

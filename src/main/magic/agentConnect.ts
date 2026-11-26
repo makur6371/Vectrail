@@ -3,11 +3,13 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { ProjectStore } from '../state';
-import { callMCPTool } from '../mcp/tools';
+import { callMCPTool, MCP_TOOL_DEFINITIONS } from '../mcp/tools';
 import { MCP_DEFAULT_PORT } from '../mcp/server';
 import { getCacheDir } from '../engine/ffmpeg';
+import { getCloudAiConfig } from '../settings';
 import { BUILT_IN_LOOKS } from '../../shared/colorGrade';
 import { clipName } from '../../shared/project';
+import { CloudAiConfig } from '../../shared/types';
 
 export type AgentTarget = 'codex' | 'claudeCode' | 'claudeDesktop';
 
@@ -45,7 +47,7 @@ function isEphemeralPortableExec(): boolean {
 
 function ensureStableBridgeCopy(): string {
   const src = findBridgeScript();
-  const dest = path.join(getCacheDir('Runtime'), 'editroom-mcp-bridge.js');
+  const dest = path.join(getCacheDir('Runtime'), 'vectrail-mcp-bridge.js');
   try {
     fs.copyFileSync(src, dest);
     return dest;
@@ -62,14 +64,14 @@ function commandPathIsValid(cmd: string, firstArg?: string): boolean {
   return true;
 }
 
-function extractCodexEditroomTargets(toml: string): { command?: string; firstArg?: string } {
+function extractCodexSectionTargets(toml: string, sectionHeader = '[mcp_servers.vectrail]'): { command?: string; firstArg?: string } {
   const lines = toml.split(/\r?\n/);
   let inSection = false;
   let command: string | undefined;
   let firstArg: string | undefined;
   for (const line of lines) {
     const trimmed = line.trim();
-    if (trimmed === '[mcp_servers.editroom]') {
+    if (trimmed === sectionHeader) {
       inSection = true;
       continue;
     }
@@ -95,13 +97,13 @@ function findOnPath(cmd: string): string | undefined {
   return undefined;
 }
 
-function removeEditroomTomlSection(text: string): string {
+function removeTomlMcpSections(text: string): string {
   const lines = text.split(/\r?\n/);
   const out: string[] = [];
   let skipping = false;
   for (const line of lines) {
     const trimmed = line.trim();
-    if (trimmed === '[mcp_servers.editroom]') {
+    if (trimmed === '[mcp_servers.vectrail]' || trimmed === '[mcp_servers.editroom]') {
       skipping = true;
       continue;
     }
@@ -116,9 +118,9 @@ function removeEditroomTomlSection(text: string): string {
 export function getAgentStatuses(): AgentTargetStatus[] {
   const codexExists = fs.existsSync(path.dirname(codexConfigPath())) || Boolean(findOnPath('codex'));
   const codexContent = fs.existsSync(codexConfigPath()) ? fs.readFileSync(codexConfigPath(), 'utf8') : '';
-  const codexTargets = extractCodexEditroomTargets(codexContent);
+  const codexTargets = extractCodexSectionTargets(codexContent, '[mcp_servers.vectrail]');
   const codexConnected =
-    codexContent.includes('[mcp_servers.editroom]') &&
+    codexContent.includes('[mcp_servers.vectrail]') &&
     commandPathIsValid(codexTargets.command ?? '', codexTargets.firstArg);
 
   const claudeCli = findOnPath('claude');
@@ -126,7 +128,7 @@ export function getAgentStatuses(): AgentTargetStatus[] {
   if (fs.existsSync(claudeCodeConfigPath())) {
     try {
       const json = JSON.parse(fs.readFileSync(claudeCodeConfigPath(), 'utf8')) as { mcpServers?: Record<string, unknown> };
-      const entry = json.mcpServers?.editroom as { command?: string; args?: string[] } | undefined;
+      const entry = json.mcpServers?.vectrail as { command?: string; args?: string[] } | undefined;
       claudeCodeConnected = Boolean(entry && commandPathIsValid(entry.command ?? '', entry.args?.[0]));
     } catch {
       // ignore
@@ -139,7 +141,7 @@ export function getAgentStatuses(): AgentTargetStatus[] {
   if (fs.existsSync(cdPath)) {
     try {
       const json = JSON.parse(fs.readFileSync(cdPath, 'utf8')) as { mcpServers?: Record<string, unknown> };
-      const entry = json.mcpServers?.editroom as { command?: string; args?: string[] } | undefined;
+      const entry = json.mcpServers?.vectrail as { command?: string; args?: string[] } | undefined;
       cdConnected = Boolean(entry && commandPathIsValid(entry.command ?? '', entry.args?.[0]));
     } catch {
       // ignore
@@ -200,13 +202,13 @@ export function connectAgent(target: AgentTarget): AgentTargetStatus[] {
     const cfg = codexConfigPath();
     fs.mkdirSync(path.dirname(cfg), { recursive: true });
     const existing = fs.existsSync(cfg) ? fs.readFileSync(cfg, 'utf8') : '';
-    const backup = `${cfg}.before-editroom`;
+    const backup = `${cfg}.before-vectrail`;
     if (existing && !fs.existsSync(backup)) {
       fs.writeFileSync(backup, existing, 'utf8');
     }
-    const cleaned = removeEditroomTomlSection(existing);
+    const cleaned = removeTomlMcpSections(existing);
     const block = [
-      '[mcp_servers.editroom]',
+      '[mcp_servers.vectrail]',
       `command = "${escapedCmd}"`,
       `args = [${escapedArgs}]`,
       ...(useElectronAsNode ? ['env = { ELECTRON_RUN_AS_NODE = "1" }'] : []),
@@ -226,13 +228,14 @@ export function connectAgent(target: AgentTarget): AgentTargetStatus[] {
       }
     }
     const servers = ((json.mcpServers as Record<string, unknown>) ?? {});
-    servers.editroom = {
+    delete servers.editroom;
+    servers.vectrail = {
       command: cmdBin,
       args: bridgeArgs,
       env: {
         ...(useElectronAsNode ? { ELECTRON_RUN_AS_NODE: '1' } : {}),
-        EDITROOM_MCP_PORT: String(MCP_DEFAULT_PORT),
-        EDITROOM_MCP_CLIENT: 'Claude',
+        VECTRAIL_MCP_PORT: String(MCP_DEFAULT_PORT),
+        VECTRAIL_MCP_CLIENT: 'Claude',
       },
     };
     json.mcpServers = servers;
@@ -245,7 +248,7 @@ export function disconnectAgent(target: AgentTarget): AgentTargetStatus[] {
   if (target === 'codex') {
     const cfg = codexConfigPath();
     if (fs.existsSync(cfg)) {
-      const cleaned = removeEditroomTomlSection(fs.readFileSync(cfg, 'utf8'));
+      const cleaned = removeTomlMcpSections(fs.readFileSync(cfg, 'utf8'));
       fs.writeFileSync(cfg, cleaned ? `${cleaned}\n` : '', 'utf8');
     }
   } else {
@@ -255,6 +258,7 @@ export function disconnectAgent(target: AgentTarget): AgentTargetStatus[] {
         const json = JSON.parse(fs.readFileSync(cfg, 'utf8')) as { mcpServers?: Record<string, unknown> };
         if (json.mcpServers) {
           delete json.mcpServers.editroom;
+          delete json.mcpServers.vectrail;
           fs.writeFileSync(cfg, JSON.stringify(json, null, 2), 'utf8');
         }
       } catch {
@@ -265,7 +269,138 @@ export function disconnectAgent(target: AgentTarget): AgentTargetStatus[] {
   return getAgentStatuses();
 }
 
-export type MagicBackend = 'local' | 'codex' | 'claude';
+export type MagicBackend = 'cloud' | 'local' | 'codex' | 'claude';
+
+function extractJsonObject(text: string): Record<string, unknown> {
+  const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
+  const candidate = (fenced ? fenced[1] : text).trim();
+  const firstBrace = candidate.indexOf('{');
+  const lastBrace = candidate.lastIndexOf('}');
+  if (firstBrace >= 0 && lastBrace > firstBrace) {
+    return JSON.parse(candidate.slice(firstBrace, lastBrace + 1)) as Record<string, unknown>;
+  }
+  return JSON.parse(candidate) as Record<string, unknown>;
+}
+
+export async function testCloudAiConnection(config: CloudAiConfig): Promise<{ ok: boolean; message: string }> {
+  const baseUrl = config.baseUrl.replace(/\/+$/, '');
+  if (!baseUrl.startsWith('http')) {
+    return { ok: false, message: 'Base URL must start with http:// or https://' };
+  }
+  if (!config.apiKey.trim()) {
+    return { ok: false, message: 'API key is required.' };
+  }
+  try {
+    const res = await fetch(`${baseUrl}/chat/completions`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${config.apiKey.trim()}`,
+      },
+      body: JSON.stringify({
+        model: config.model || 'gpt-4o-mini',
+        messages: [{ role: 'user', content: 'Reply with OK' }],
+        max_tokens: 8,
+        temperature: 0,
+      }),
+    });
+    const raw = await res.text();
+    if (!res.ok) {
+      return { ok: false, message: `HTTP ${res.status}: ${raw.slice(0, 180)}` };
+    }
+    return { ok: true, message: `Connected to ${config.model}` };
+  } catch (err) {
+    return { ok: false, message: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+async function runCloudAiMagic(
+  prompt: string,
+  store: ProjectStore,
+  matchedAssets: Array<{ id: string; name: string; kind: string; duration: number }>,
+  targetClipIds: string[],
+  usesPlayhead: boolean
+): Promise<{ ok: boolean; summary: string; steps?: string[] }> {
+  const cfg = getCloudAiConfig();
+  if (!cfg.apiKey.trim()) {
+    throw new Error('Configure your Cloud AI API Key in Settings -> Cloud AI first.');
+  }
+  const p = store.project;
+  const toolDocs = MCP_TOOL_DEFINITIONS.map((t) => {
+    const props = Object.keys((t.inputSchema?.properties as Record<string, unknown>) ?? {});
+    return `- ${t.name}(${props.join(', ')})`;
+  }).join('\n');
+
+  const contextObj = {
+    sequence: { width: p.width, height: p.height, fps: p.fps, playhead: Number(store.playhead.toFixed(2)) },
+    assets: p.assets.map((a) => ({ id: a.id, name: a.name, kind: a.kind, duration: Number(a.duration.toFixed(2)) })),
+    clips: p.clips.map((c) => ({
+      id: c.id,
+      name: clipName(p, c),
+      track: c.trackID,
+      kind: c.kind,
+      start: Number(c.start.toFixed(2)),
+      duration: Number(c.duration.toFixed(2)),
+    })),
+    selectedClipIds: targetClipIds,
+    mentionedAssets: matchedAssets.map((a) => ({ id: a.id, name: a.name })),
+    usesPlayhead,
+    builtInLooks: BUILT_IN_LOOKS.map((l) => l.name),
+  };
+
+  const sysPrompt = [
+    'You are the AI editing planner inside Vectrail (Windows non-linear video editor).',
+    'Convert the user editing request into a short JSON sequence of MCP tool calls.',
+    'Respond ONLY with valid JSON: {"summary":"short human summary","steps":[{"tool":"tool_name","args":{...}}]}',
+    'Available tools:',
+    toolDocs,
+  ].join('\n');
+
+  store.setAgentCursor({ name: `Cloud (${cfg.model})`, activity: 'planning edit...' });
+  const baseUrl = cfg.baseUrl.replace(/\/+$/, '');
+  const res = await fetch(`${baseUrl}/chat/completions`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${cfg.apiKey.trim()}`,
+    },
+    body: JSON.stringify({
+      model: cfg.model,
+      temperature: 0.2,
+      messages: [
+        { role: 'system', content: sysPrompt },
+        { role: 'user', content: `Project state:\n${JSON.stringify(contextObj)}\n\nInstruction:\n${prompt}` },
+      ],
+    }),
+  });
+  const raw = await res.text();
+  if (!res.ok) {
+    throw new Error(`Cloud AI HTTP ${res.status}: ${raw.slice(0, 240)}`);
+  }
+  const payload = JSON.parse(raw) as {
+    choices?: Array<{ message?: { content?: string } }>;
+  };
+  const content = payload.choices?.[0]?.message?.content ?? '';
+  const parsed = extractJsonObject(content);
+  const steps = Array.isArray(parsed.steps)
+    ? (parsed.steps as Array<{ tool?: string; args?: Record<string, unknown> }>)
+    : [];
+  if (!steps.length) {
+    return { ok: true, summary: String(parsed.summary ?? 'No changes required.'), steps: [] };
+  }
+
+  const ranSteps: string[] = [];
+  for (const step of steps.slice(0, 16)) {
+    if (!step.tool) continue;
+    await callMCPTool(step.tool, step.args ?? {}, store, `Cloud (${cfg.model})`);
+    ranSteps.push(step.tool);
+  }
+  return {
+    ok: true,
+    summary: String(parsed.summary ?? `Executed ${ranSteps.join(', ')}`),
+    steps: ranSteps,
+  };
+}
 
 function resolveMagicMentions(prompt: string, store: ProjectStore, selectedClipIds: string[]) {
   const p = store.project;
@@ -295,10 +430,14 @@ export async function runMagicPrompt(
   backend: MagicBackend,
   store: ProjectStore,
   selectedClipIds: string[]
-): Promise<{ ok: boolean; summary: string }> {
+): Promise<{ ok: boolean; summary: string; steps?: string[] }> {
   const trimmed = prompt.trim();
   if (!trimmed) throw new Error('Enter a Magic instruction first.');
   const { matchedAssets, targetClipIds, usesPlayhead } = resolveMagicMentions(trimmed, store, selectedClipIds);
+
+  if (backend === 'cloud') {
+    return runCloudAiMagic(trimmed, store, matchedAssets, targetClipIds, usesPlayhead);
+  }
 
   if (backend === 'local') {
     const lower = trimmed.toLowerCase();
@@ -398,10 +537,11 @@ export async function runMagicPrompt(
     }
 
     if (actions.length > 0) {
-      return { ok: true, summary: actions.join(' · ') };
+      return { ok: true, summary: actions.join(' · '), steps: actions };
     }
     const res = await callMCPTool('auto_edit', {}, store, 'Magic');
-    return { ok: true, summary: res[0].type === 'text' ? res[0].text : 'Built auto-cut.' };
+    const msg = res[0].type === 'text' ? res[0].text : 'Built auto-cut.';
+    return { ok: true, summary: msg, steps: ['auto_edit'] };
   }
 
   const cli = backend === 'codex' ? findOnPath('codex') : findOnPath('claude');
@@ -413,7 +553,7 @@ export async function runMagicPrompt(
     ? `Mentioned assets: ${matchedAssets.map((a) => `${a.name} (${a.id})`).join(', ')}. `
     : '';
   const contextLine = targetClipIds.length ? `Target clip ids: ${targetClipIds.join(', ')}. ` : '';
-  const fullPrompt = `You are editing in Editroom for Windows via the editroom MCP server. Playhead is at ${store.playhead.toFixed(2)}s. ${contextLine}User request: ${trimmed}`;
+  const fullPrompt = `You are editing in Vectrail for Windows via the vectrail MCP server. Playhead is at ${store.playhead.toFixed(2)}s. ${contextLine}User request: ${trimmed}`;
   const fullPromptWithMentions = `${fullPrompt} ${mentionNote}`.trim();
   const args =
     backend === 'codex'

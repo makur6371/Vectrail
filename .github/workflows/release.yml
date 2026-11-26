@@ -42,8 +42,8 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
-            release/Editroom Setup *.exe
-            release/Editroom-Windows-Portable-*.exe
+            release/Vectrail Setup *.exe
+            release/Vectrail-Windows-Portable-*.exe
             release/*.blockmap
             release/latest.yml
           generate_release_notes: true

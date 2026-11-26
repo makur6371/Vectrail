@@ -2,7 +2,7 @@ import { spawn, ChildProcess } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { Clip, ExportJobInfo, ExportSettings, Project, Transcript } from '../../shared/types';
+import { Clip, ExportJobInfo, ExportSettings, Project, TextStyle, Transcript } from '../../shared/types';
 import {
   clipEnd,
   computeExportRenderSize,
@@ -56,6 +56,34 @@ function buildCaptionDrawtext(text: string, size: { width: number; height: numbe
   return `drawtext=text='${escapeDrawtext(text)}'${fontOpt}:fontsize=${fontSize}:fontcolor=white:borderw=3:bordercolor=black@0.75:x=(w-text_w)/2:y=${yPos}-text_h/2`;
 }
 
+function buildTextDrawtextFilter(tStyle: TextStyle | undefined, size: { width: number; height: number }): string {
+  const txt = tStyle?.string ?? 'Text';
+  const hex = rgbaToHex(tStyle?.color).replace('#', '0x');
+  const fontSize = Math.round(((tStyle?.size ?? 110) / 1080) * size.height);
+  const tx = Math.round((tStyle?.x ?? 0.5) * size.width);
+  const ty = Math.round((tStyle?.y ?? 0.5) * size.height);
+  const fontOpt = resolveDrawtextFontOption(txt);
+  const parts = [
+    `drawtext=text='${escapeDrawtext(txt)}'${fontOpt}`,
+    `fontsize=${fontSize}`,
+    `fontcolor=${hex}`,
+    `x=${tx}-text_w/2`,
+    `y=${ty}-text_h/2`,
+  ];
+  const strokePx = Math.round(((tStyle?.strokeWidth ?? 0) / 1080) * size.height);
+  if (strokePx > 0) {
+    const strokeHex = rgbaToHex(tStyle?.strokeColor ?? { r: 0, g: 0, b: 0, a: 1 }).replace('#', '0x');
+    parts.push(`borderw=${strokePx}`, `bordercolor=${strokeHex}`);
+  }
+  if (tStyle?.bgColor && (tStyle.bgColor.a ?? 1) > 0) {
+    const bgHex = rgbaToHex(tStyle.bgColor).replace('#', '0x');
+    const bgAlpha = Math.min(1, Math.max(0, tStyle.bgColor.a ?? 0.75)).toFixed(2);
+    const padPx = Math.max(2, Math.round(((tStyle.bgPadding ?? 16) / 1080) * size.height));
+    parts.push('box=1', `boxcolor=${bgHex}@${bgAlpha}`, `boxborderw=${padPx}`);
+  }
+  return parts.join(':');
+}
+
 /** Renders a single composited JPEG frame of all active video tracks, titles, grades, transforms, and captions at `time`. */
 export async function renderTimelineFrameJpeg(
   project: Project,
@@ -76,7 +104,7 @@ export async function renderTimelineFrameJpeg(
   const w = Math.max(2, Math.min(maxWidth, project.width) & ~1);
   const h = Math.max(2, Math.round((w * project.height) / Math.max(1, project.width)) & ~1);
   const size = { width: w, height: h };
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'editroom-frame-'));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vectrail-frame-'));
   try {
     const args: string[] = ['-hide_banner', '-v', 'error'];
     const inputs: string[] = [];
@@ -94,14 +122,8 @@ export async function renderTimelineFrameJpeg(
         filterSteps.push(`${currentV}${tag}overlay=0:0${nextTag}`);
         currentV = nextTag;
       } else if (clip.kind === 'text') {
-        const txt = clip.text?.string ?? 'Text';
-        const hex = rgbaToHex(clip.text?.color).replace('#', '0x');
-        const fontSize = Math.round(((clip.text?.size ?? 110) / 1080) * h);
-        const tx = Math.round((clip.text?.x ?? 0.5) * w);
-        const ty = Math.round((clip.text?.y ?? 0.5) * h);
-        const fontOpt = resolveDrawtextFontOption(txt);
         filterSteps.push(
-          `color=c=black@0.0:s=${w}x${h}:d=0.05,format=rgba,drawtext=text='${escapeDrawtext(txt)}'${fontOpt}:fontsize=${fontSize}:fontcolor=${hex}:x=${tx}-text_w/2:y=${ty}-text_h/2${tag}`
+          `color=c=black@0.0:s=${w}x${h}:d=0.05,format=rgba,${buildTextDrawtextFilter(clip.text, size)}${tag}`
         );
         filterSteps.push(`${currentV}${tag}overlay=0:0${nextTag}`);
         currentV = nextTag;
@@ -277,7 +299,7 @@ export class ExportManager {
     this.jobs.set(id, entry);
     this.emit();
 
-    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'editroom-export-'));
+    const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vectrail-export-'));
     try {
       const args = await this.buildFfmpegArgs(project, settings, size, totalDuration, targetFile, tmpDir, transcripts);
       await new Promise<void>((resolve, reject) => {
@@ -397,6 +419,11 @@ export class ExportManager {
           );
           currentV = nextTag;
         }
+      }
+      if (settings.enhanceDetail || size.height > project.height) {
+        const sharpTag = '[vcas]';
+        filterSteps.push(`${currentV}format=yuv420p,cas=strength=0.42${sharpTag}`);
+        currentV = sharpTag;
       }
       videoLabel = currentV;
     }
@@ -529,16 +556,10 @@ export class ExportManager {
     }
 
     if (clip.kind === 'text') {
-      const txt = clip.text?.string ?? 'Text';
-      const hex = rgbaToHex(clip.text?.color).replace('#', '0x');
-      const fontSize = Math.round(((clip.text?.size ?? 110) / 1080) * size.height);
-      const tx = Math.round((clip.text?.x ?? 0.5) * size.width);
-      const ty = Math.round((clip.text?.y ?? 0.5) * size.height);
-      const fontOpt = resolveDrawtextFontOption(txt);
       const ops = [
         `color=c=black@0.0:s=${size.width}x${size.height}:r=${project.fps}:d=${clip.duration.toFixed(4)}`,
         'format=rgba',
-        `drawtext=text='${escapeDrawtext(txt)}'${fontOpt}:fontsize=${fontSize}:fontcolor=${hex}:x=${tx}-text_w/2:y=${ty}-text_h/2`,
+        buildTextDrawtextFilter(clip.text, size),
       ];
       if ((clip.fadeIn ?? 0) > 0) ops.push(`fade=t=in:st=0:d=${(clip.fadeIn ?? 0).toFixed(4)}:alpha=1`);
       if ((clip.fadeOut ?? 0) > 0) {
@@ -571,7 +592,7 @@ export class ExportManager {
     }
 
     const { scaledW, scaledH, xExpr, yExpr } = buildScaledOffset(clip, size);
-    ops.push(`scale=${scaledW}:${scaledH}:force_original_aspect_ratio=decrease`);
+    ops.push(`scale=${scaledW}:${scaledH}:force_original_aspect_ratio=decrease:flags=lanczos+accurate_rnd`);
 
     const lut = buildGradeLutFilter(clip, tmpDir, idxSeed);
     if (lut) ops.push(lut);

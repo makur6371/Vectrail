@@ -32,6 +32,10 @@ export interface TextStyle {
   color: RGBA;
   x: number;
   y: number;
+  strokeColor?: RGBA;
+  strokeWidth?: number;
+  bgColor?: RGBA;
+  bgPadding?: number;
 }
 
 export type FadeCurve = 'linear' | 'easeIn' | 'easeOut' | 'smooth';
@@ -257,8 +261,23 @@ export interface ExportSettings {
   reframeX: number;
   reframeY: number;
   rangeOnly: boolean;
+  enhanceDetail?: boolean;
   name?: string;
   outputDir?: string;
+}
+
+export interface CloudAiConfig {
+  baseUrl: string;
+  apiKey: string;
+  model: string;
+}
+
+export interface AppUpdateInfo {
+  currentVersion: string;
+  latestVersion?: string;
+  hasUpdate: boolean;
+  releaseUrl?: string;
+  error?: string;
 }
 
 export interface ExportJobInfo {

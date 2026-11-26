@@ -44,19 +44,19 @@ export const FFMPEG_BIN = findBinary('ffmpeg');
 export const FFPROBE_BIN = findBinary('ffprobe');
 
 export function getCacheDir(sub: string): string {
-  const override = process.env.EDITROOM_CACHE_DIR;
+  const override = process.env.VECTRAIL_CACHE_DIR ?? process.env.EDITROOM_CACHE_DIR;
   if (override) {
     const dir = path.join(override, sub);
     fs.mkdirSync(dir, { recursive: true });
     return dir;
   }
   const appData = process.env.APPDATA ?? path.join(os.homedir(), 'AppData', 'Roaming');
-  const primary = path.join(appData, 'EditroomWindows', sub);
+  const primary = path.join(appData, 'Vectrail', sub);
   try {
     fs.mkdirSync(primary, { recursive: true });
     return primary;
   } catch {
-    const fallback = path.join(os.tmpdir(), 'EditroomWindows', sub);
+    const fallback = path.join(os.tmpdir(), 'Vectrail', sub);
     fs.mkdirSync(fallback, { recursive: true });
     return fallback;
   }
@@ -284,7 +284,7 @@ export async function buildContactSheet(
     ? explicitTimes.slice(0, 12).map((t) => Math.min(Math.max(0, t), Math.max(0, asset.duration - 0.05)))
     : Array.from({ length: clampedFrames }, (_, i) => ((i + 0.5) / clampedFrames) * asset.duration);
 
-  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'editroom-sheet-'));
+  const tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vectrail-sheet-'));
   try {
     const inputs: string[] = [];
     for (let i = 0; i < times.length; i++) {

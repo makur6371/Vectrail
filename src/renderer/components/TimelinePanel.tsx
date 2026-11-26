@@ -15,7 +15,7 @@ import {
   ZoomIn,
   ZoomOut,
 } from 'lucide-react';
-import { AgentCursorState, Clip, Project, Track } from '../../shared/types';
+import { AgentCursorState, Clip, ColorGrade, MarkerTint, Project, Track, TransitionKind } from '../../shared/types';
 import { WaveformData } from '../../main/engine/ffmpeg';
 import {
   clipEnd,
@@ -23,12 +23,22 @@ import {
   formatTimecode,
   linkedIds,
   projectDuration,
+  resolveOverlaps,
   snapFrame,
   snapPoints,
   trimClipHead,
   trimClipTail,
   trimLimits,
 } from '../../shared/project';
+
+const MARKER_HEX: Record<MarkerTint, string> = {
+  orange: '#FF4A1C',
+  red: '#FF453A',
+  yellow: '#FFD60A',
+  green: '#30D158',
+  blue: '#0A84FF',
+  purple: '#BF5AF2',
+};
 
 interface TimelinePanelProps {
   project: Project;
@@ -37,6 +47,8 @@ interface TimelinePanelProps {
   tool: 'select' | 'cut';
   snapping: boolean;
   zoomPx: number;
+  height?: number;
+  copiedGrade?: ColorGrade;
   thumbs: Record<string, string[]>;
   waveforms: Record<string, WaveformData>;
   agentCursor?: AgentCursorState;
@@ -52,6 +64,11 @@ interface TimelinePanelProps {
   onAddMarker: () => void;
   onAutoEdit: () => void;
   onDropAsset?: (assetID: string, time: number, trackID?: string) => void;
+  onCopyGrade?: (grade: ColorGrade) => void;
+  onDuplicateClip?: (clipID: string) => void;
+  onFreezeFrame?: (clipID: string) => void;
+  onReverseClip?: (clipID: string) => void;
+  onDetachAudio?: (clipID: string) => void;
 }
 
 const RULER_H = 26;
@@ -66,6 +83,8 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   tool,
   snapping,
   zoomPx,
+  height = 320,
+  copiedGrade,
   thumbs,
   waveforms,
   agentCursor,
@@ -81,12 +100,21 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   onAddMarker,
   onAutoEdit,
   onDropAsset,
+  onCopyGrade,
+  onDuplicateClip,
+  onFreezeFrame,
+  onReverseClip,
+  onDetachAudio,
 }) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const scrollerRef = useRef<HTMLDivElement | null>(null);
   const imgCacheRef = useRef<Map<string, HTMLImageElement>>(new Map());
   const [snapGuide, setSnapGuide] = useState<number | null>(null);
   const [viewportW, setViewportW] = useState<number>(1100);
+  const [hoverCursor, setHoverCursor] = useState<string>('default');
+  const [marquee, setMarquee] = useState<{ x1: number; y1: number; x2: number; y2: number } | null>(null);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; clip: Clip } | null>(null);
+  const [editingMarkerId, setEditingMarkerId] = useState<string | null>(null);
 
   useEffect(() => {
     const el = scrollerRef.current;
@@ -99,11 +127,19 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   }, []);
 
   const dragRef = useRef<{
-    mode: 'scrub' | 'move' | 'trimL' | 'trimR';
+    mode: 'scrub' | 'move' | 'trimL' | 'trimR' | 'trans' | 'marquee';
     clipID?: string;
+    dragIds?: string[];
     startX: number;
+    startY: number;
+    lastX: number;
+    lastY: number;
+    moved: boolean;
+    additive?: boolean;
+    initialSelected?: string[];
     origStart: number;
     origDuration: number;
+    origTransDur?: number;
     snapshot: Project;
   } | null>(null);
 
@@ -121,6 +157,8 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     allRows.push({ track: audioRows[i], label: `A${i + 1}`, y: curY, h: AUDIO_LANE_H });
     curY += AUDIO_LANE_H + LANE_GAP;
   }
+  const latestDragHandlersRef = useRef({ onMutate, onSeek, onSelectClips, snapping, zoomPx, allRows });
+  latestDragHandlersRef.current = { onMutate, onSeek, onSelectClips, snapping, zoomPx, allRows };
   const totalH = Math.max(240, curY + 12);
   const maxDur = Math.max(20, projectDuration(project) + 8);
   const totalW = Math.max(viewportW, Math.ceil(maxDur * zoomPx));
@@ -269,6 +307,28 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
           ctx.fill();
         }
 
+        if (clip.transitionIn) {
+          const tw = Math.min(w, clip.transitionIn.duration * zoomPx);
+          ctx.fillStyle = 'rgba(255, 74, 28, 0.22)';
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + tw, y);
+          ctx.lineTo(x, y + h);
+          ctx.closePath();
+          ctx.fill();
+          const hx = x + tw;
+          ctx.strokeStyle = 'rgba(255, 74, 28, 0.85)';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(hx, y + 1);
+          ctx.lineTo(hx, y + 15);
+          ctx.stroke();
+          ctx.fillStyle = '#FF4A1C';
+          ctx.beginPath();
+          ctx.roundRect(hx - 3, y + 3, 6, 8, 2);
+          ctx.fill();
+        }
+
         ctx.font = '500 10px Inter, Segoe UI, sans-serif';
         ctx.fillStyle = colText;
         ctx.fillText(clipName(project, clip), x + 6, y + 4);
@@ -296,7 +356,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
 
     for (const m of project.markers ?? []) {
       const mx = m.time * zoomPx;
-      ctx.fillStyle = colAccent;
+      ctx.fillStyle = MARKER_HEX[m.color ?? 'orange'];
       ctx.beginPath();
       ctx.arc(mx, RULER_H - 6, 3.5, 0, Math.PI * 2);
       ctx.fill();
@@ -358,9 +418,21 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     ctx.fillStyle = '#FFFFFF';
     ctx.font = '600 10px "JetBrains Mono", Consolas, monospace';
     ctx.fillText(readout, px + 12, 5);
-  }, [project, playhead, selectedIds, zoomPx, thumbs, waveforms, snapGuide, agentCursor, totalW, totalH]);
 
-  const hitTestClip = (x: number, y: number): { clip: Clip; edge: 'body' | 'left' | 'right' } | undefined => {
+    if (marquee) {
+      const mx = Math.min(marquee.x1, marquee.x2);
+      const my = Math.min(marquee.y1, marquee.y2);
+      const mw = Math.abs(marquee.x2 - marquee.x1);
+      const mh = Math.abs(marquee.y2 - marquee.y1);
+      ctx.fillStyle = 'rgba(255, 74, 28, 0.14)';
+      ctx.fillRect(mx, my, mw, mh);
+      ctx.strokeStyle = colAccent;
+      ctx.lineWidth = 1;
+      ctx.strokeRect(mx + 0.5, my + 0.5, Math.max(1, mw - 1), Math.max(1, mh - 1));
+    }
+  }, [project, playhead, selectedIds, zoomPx, thumbs, waveforms, snapGuide, agentCursor, marquee, totalW, totalH]);
+
+  const hitTestClip = (x: number, y: number): { clip: Clip; edge: 'body' | 'left' | 'right' | 'trans' } | undefined => {
     for (const row of allRows) {
       if (y < row.y || y > row.y + row.h) continue;
       for (const c of project.clips) {
@@ -368,6 +440,10 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
         const cx = c.start * zoomPx;
         const cw = Math.max(4, c.duration * zoomPx);
         if (x >= cx && x <= cx + cw) {
+          if (c.transitionIn) {
+            const tw = Math.min(cw, c.transitionIn.duration * zoomPx);
+            if (Math.abs(x - (cx + tw)) <= 6 && y <= row.y + 18) return { clip: c, edge: 'trans' };
+          }
           if (x - cx <= 7) return { clip: c, edge: 'left' };
           if (cx + cw - x <= 7) return { clip: c, edge: 'right' };
           return { clip: c, edge: 'body' };
@@ -377,23 +453,229 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     return undefined;
   };
 
+  const computeDragResult = (
+    p: Project,
+    drag: NonNullable<typeof dragRef.current>,
+    x: number,
+    useSnap: boolean,
+    pxPerSec: number,
+    finalize: boolean
+  ): number | null => {
+    const dt = (x - drag.startX) / pxPerSec;
+    const base = JSON.parse(JSON.stringify(drag.snapshot)) as Project;
+    Object.assign(p, base);
+    if (!drag.clipID) return null;
+    const seedIds = drag.dragIds && drag.dragIds.length > 0 ? drag.dragIds : [drag.clipID];
+    const group = linkedIds(p, seedIds);
+    const primary = p.clips.find((c) => c.id === drag.clipID);
+    if (!primary) return null;
+
+    if (drag.mode === 'trans') {
+      if (primary.transitionIn) {
+        const maxDur = Math.max(0.1, Math.min(3, primary.duration));
+        const nextDur = Math.round(Math.min(maxDur, Math.max(0.1, (drag.origTransDur ?? 0.5) + dt)) * 20) / 20;
+        primary.transitionIn = { ...primary.transitionIn, duration: nextDur };
+      }
+      return null;
+    }
+
+    const snapPts = useSnap ? snapPoints(drag.snapshot, group) : [];
+    const snapTol = 8 / pxPerSec;
+    let snappedAt: number | null = null;
+    const findSnap = (candidate: number): number => {
+      for (const pt of snapPts) {
+        if (Math.abs(candidate - pt) <= snapTol) {
+          snappedAt = pt;
+          return pt;
+        }
+      }
+      return candidate;
+    };
+
+    if (drag.mode === 'move') {
+      let nextStart = Math.max(0, drag.origStart + dt);
+      if (useSnap) {
+        const sHead = findSnap(nextStart);
+        if (snappedAt !== null) nextStart = sHead;
+        else {
+          const sTail = findSnap(nextStart + drag.origDuration);
+          if (snappedAt !== null) nextStart = sTail - drag.origDuration;
+        }
+      }
+      const delta = snapFrame(nextStart, p.fps) - drag.origStart;
+      for (const c of p.clips) {
+        if (group.has(c.id)) c.start = Math.max(0, snapFrame(c.start + delta, p.fps));
+      }
+    } else if (drag.mode === 'trimL') {
+      const [lo, hi] = trimLimits(p, primary, true, group);
+      let d = Math.min(hi, Math.max(lo, dt));
+      if (useSnap) {
+        const target = findSnap(drag.origStart + d);
+        if (snappedAt !== null) d = Math.min(hi, Math.max(lo, target - drag.origStart));
+      }
+      for (const c of p.clips) {
+        if (group.has(c.id)) trimClipHead(c, snapFrame(drag.origStart + d, p.fps));
+      }
+    } else if (drag.mode === 'trimR') {
+      const [lo, hi] = trimLimits(p, primary, false, group);
+      let d = Math.min(hi, Math.max(lo, dt));
+      const origEnd = drag.origStart + drag.origDuration;
+      if (useSnap) {
+        const target = findSnap(origEnd + d);
+        if (snappedAt !== null) d = Math.min(hi, Math.max(lo, target - origEnd));
+      }
+      for (const c of p.clips) {
+        if (group.has(c.id)) trimClipTail(c, snapFrame(origEnd + d, p.fps));
+      }
+    }
+    if (finalize) resolveOverlaps(p, group);
+    return snappedAt;
+  };
+
+  useEffect(() => {
+    const onWinMove = (ev: MouseEvent) => {
+      const drag = dragRef.current;
+      const canvas = canvasRef.current;
+      if (!drag || !canvas) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = ev.clientX - rect.left;
+      const y = ev.clientY - rect.top;
+      const {
+        onMutate: mutateFn,
+        onSeek: seekFn,
+        onSelectClips: selectFn,
+        snapping: useSnap,
+        zoomPx: pxPerSec,
+        allRows: rows,
+      } = latestDragHandlersRef.current;
+      if (Math.hypot(x - drag.startX, y - drag.startY) > 3) drag.moved = true;
+      drag.lastX = x;
+      drag.lastY = y;
+
+      if (drag.mode === 'scrub') {
+        seekFn(Math.max(0, x / pxPerSec));
+        return;
+      }
+      if (drag.mode === 'marquee') {
+        if (!drag.moved) return;
+        const x1 = Math.max(0, Math.min(drag.startX, x));
+        const x2 = Math.max(0, Math.max(drag.startX, x));
+        const y1 = Math.max(RULER_H, Math.min(drag.startY, y));
+        const y2 = Math.max(RULER_H, Math.max(drag.startY, y));
+        setMarquee({ x1, y1, x2, y2 });
+        const hits: string[] = [];
+        for (const row of rows) {
+          if (row.y + row.h < y1 || row.y > y2) continue;
+          for (const c of drag.snapshot.clips) {
+            if (c.trackID !== row.track.id) continue;
+            const cx1 = c.start * pxPerSec;
+            const cx2 = cx1 + Math.max(4, c.duration * pxPerSec);
+            if (cx2 >= x1 && cx1 <= x2) hits.push(c.id);
+          }
+        }
+        const baseSel = drag.additive ? drag.initialSelected ?? [] : [];
+        selectFn([...new Set([...baseSel, ...hits])]);
+        return;
+      }
+      if (!drag.clipID) return;
+      let snappedAt: number | null = null;
+      mutateFn((p) => {
+        snappedAt = computeDragResult(p, drag, x, useSnap, pxPerSec, false);
+      }, false);
+      setSnapGuide(snappedAt);
+    };
+
+    const onWinUp = () => {
+      const drag = dragRef.current;
+      if (!drag) return;
+      dragRef.current = null;
+      setSnapGuide(null);
+      setMarquee(null);
+      setHoverCursor(tool === 'cut' ? 'crosshair' : 'default');
+      const { onMutate: mutateFn, onSeek: seekFn, onSelectClips: selectFn, snapping: useSnap, zoomPx: pxPerSec } =
+        latestDragHandlersRef.current;
+      if (drag.mode === 'marquee') {
+        if (!drag.moved) {
+          if (!drag.additive) selectFn([]);
+          seekFn(Math.max(0, drag.startX / pxPerSec));
+        }
+        return;
+      }
+      if (drag.mode !== 'scrub' && drag.clipID && drag.moved) {
+        mutateFn((p) => {
+          Object.assign(p, JSON.parse(JSON.stringify(drag.snapshot)) as Project);
+        }, false);
+        mutateFn((p) => {
+          computeDragResult(p, drag, drag.lastX, useSnap, pxPerSec, true);
+        }, true);
+      }
+    };
+
+    window.addEventListener('mousemove', onWinMove);
+    window.addEventListener('mouseup', onWinUp);
+    return () => {
+      window.removeEventListener('mousemove', onWinMove);
+      window.removeEventListener('mouseup', onWinUp);
+    };
+  }, [tool]);
+
   const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    setContextMenu(null);
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     const time = Math.max(0, x / zoomPx);
 
-    if (y <= RULER_H) {
-      onSeek(time);
-      dragRef.current = { mode: 'scrub', startX: x, origStart: time, origDuration: 0, snapshot: project };
+    if (e.button === 2) {
+      const hitCtx = hitTestClip(x, y);
+      if (hitCtx) {
+        if (!selectedIds.includes(hitCtx.clip.id)) {
+          onSelectClips([hitCtx.clip.id]);
+        }
+        setContextMenu({ x: e.clientX, y: e.clientY, clip: hitCtx.clip });
+      }
       return;
     }
 
+    if (y <= RULER_H) {
+      const hitMarker = (project.markers ?? []).find((m) => Math.abs(m.time * zoomPx - x) <= 7);
+      if (hitMarker) {
+        onSeek(hitMarker.time);
+        setEditingMarkerId(hitMarker.id);
+        return;
+      }
+      setEditingMarkerId(null);
+      onSeek(time);
+      dragRef.current = {
+        mode: 'scrub',
+        startX: x,
+        startY: y,
+        lastX: x,
+        lastY: y,
+        moved: false,
+        origStart: time,
+        origDuration: 0,
+        snapshot: project,
+      };
+      return;
+    }
+    setEditingMarkerId(null);
+
     const hit = hitTestClip(x, y);
     if (!hit) {
-      onSelectClips([]);
-      onSeek(time);
-      dragRef.current = { mode: 'scrub', startX: x, origStart: time, origDuration: 0, snapshot: project };
+      dragRef.current = {
+        mode: 'marquee',
+        startX: x,
+        startY: y,
+        lastX: x,
+        lastY: y,
+        moved: false,
+        additive: e.shiftKey,
+        initialSelected: [...selectedIds],
+        origStart: time,
+        origDuration: 0,
+        snapshot: project,
+      };
       return;
     }
 
@@ -424,91 +706,76 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       return;
     }
 
-    onSelectClips([hit.clip.id]);
+    let nextSelected = [hit.clip.id];
+    if (e.shiftKey) {
+      nextSelected = selectedIds.includes(hit.clip.id)
+        ? selectedIds.filter((id) => id !== hit.clip.id)
+        : [...selectedIds, hit.clip.id];
+      onSelectClips(nextSelected);
+    } else if (selectedIds.includes(hit.clip.id)) {
+      nextSelected = selectedIds;
+    } else {
+      onSelectClips(nextSelected);
+    }
     const snapProj = JSON.parse(JSON.stringify(project)) as Project;
     dragRef.current = {
-      mode: hit.edge === 'left' ? 'trimL' : hit.edge === 'right' ? 'trimR' : 'move',
+      mode:
+        hit.edge === 'trans'
+          ? 'trans'
+          : hit.edge === 'left'
+          ? 'trimL'
+          : hit.edge === 'right'
+          ? 'trimR'
+          : 'move',
       clipID: hit.clip.id,
+      dragIds: hit.edge === 'body' ? nextSelected : [hit.clip.id],
       startX: x,
+      startY: y,
+      lastX: x,
+      lastY: y,
+      moved: false,
       origStart: hit.clip.start,
       origDuration: hit.clip.duration,
+      origTransDur: hit.clip.transitionIn?.duration,
       snapshot: snapProj,
     };
+    setHoverCursor(hit.edge === 'body' ? 'grabbing' : hit.edge === 'trans' ? 'col-resize' : 'ew-resize');
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
-    const drag = dragRef.current;
-    if (!drag) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const dt = (x - drag.startX) / zoomPx;
-
-    if (drag.mode === 'scrub') {
-      onSeek(Math.max(0, x / zoomPx));
+    if (dragRef.current) return;
+    if (tool === 'cut') {
+      setHoverCursor('crosshair');
       return;
     }
-
-    if (!drag.clipID) return;
-    const snapPts = snapping ? snapPoints(drag.snapshot, linkedIds(drag.snapshot, [drag.clipID])) : [];
-    const snapTol = 8 / zoomPx;
-    let snappedAt: number | null = null;
-
-    const findSnap = (candidate: number): number => {
-      for (const pt of snapPts) {
-        if (Math.abs(candidate - pt) <= snapTol) {
-          snappedAt = pt;
-          return pt;
-        }
-      }
-      return candidate;
-    };
-
-    onMutate((p) => {
-      const base = JSON.parse(JSON.stringify(drag.snapshot)) as Project;
-      Object.assign(p, base);
-      const group = linkedIds(p, [drag.clipID!]);
-      const primary = p.clips.find((c) => c.id === drag.clipID);
-      if (!primary) return;
-
-      if (drag.mode === 'move') {
-        let nextStart = Math.max(0, drag.origStart + dt);
-        if (snapping) {
-          const sHead = findSnap(nextStart);
-          if (snappedAt !== null) nextStart = sHead;
-          else {
-            const sTail = findSnap(nextStart + drag.origDuration);
-            if (snappedAt !== null) nextStart = sTail - drag.origDuration;
-          }
-        }
-        const delta = snapFrame(nextStart, p.fps) - drag.origStart;
-        for (const c of p.clips) {
-          if (group.has(c.id)) c.start = Math.max(0, snapFrame(c.start + delta, p.fps));
-        }
-      } else if (drag.mode === 'trimL') {
-        const [lo, hi] = trimLimits(p, primary, true, group);
-        let d = Math.min(hi, Math.max(lo, dt));
-        const target = findSnap(drag.origStart + d);
-        if (snappedAt !== null) d = Math.min(hi, Math.max(lo, target - drag.origStart));
-        for (const c of p.clips) {
-          if (group.has(c.id)) trimClipHead(c, snapFrame(drag.origStart + d, p.fps));
-        }
-      } else if (drag.mode === 'trimR') {
-        const [lo, hi] = trimLimits(p, primary, false, group);
-        let d = Math.min(hi, Math.max(lo, dt));
-        const origEnd = drag.origStart + drag.origDuration;
-        const target = findSnap(origEnd + d);
-        if (snappedAt !== null) d = Math.min(hi, Math.max(lo, target - origEnd));
-        for (const c of p.clips) {
-          if (group.has(c.id)) trimClipTail(c, snapFrame(origEnd + d, p.fps));
-        }
-      }
-    }, false);
-    setSnapGuide(snappedAt);
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const hit = y > RULER_H ? hitTestClip(x, y) : undefined;
+    if (!hit) setHoverCursor('default');
+    else setHoverCursor(hit.edge === 'body' ? 'grab' : hit.edge === 'trans' ? 'col-resize' : 'ew-resize');
   };
 
-  const handleMouseUp = () => {
-    dragRef.current = null;
-    setSnapGuide(null);
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    const scroller = scrollerRef.current;
+    if (!scroller) return;
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      const rect = scroller.getBoundingClientRect();
+      const pointerX = e.clientX - rect.left;
+      const anchorTime = (scroller.scrollLeft + pointerX) / zoomPx;
+      const factor = e.deltaY < 0 ? 1.15 : 0.87;
+      const nextZoom = Math.min(240, Math.max(12, Math.round(zoomPx * factor)));
+      onSetZoom(nextZoom);
+      requestAnimationFrame(() => {
+        if (scrollerRef.current) {
+          scrollerRef.current.scrollLeft = Math.max(0, anchorTime * nextZoom - pointerX);
+        }
+      });
+    } else if (e.shiftKey && Math.abs(e.deltaY) > 0) {
+      e.preventDefault();
+      scroller.scrollLeft += e.deltaY;
+    }
   };
 
   const toggleTrackProp = (trackID: string, key: 'hidden' | 'muted' | 'solo' | 'locked') => {
@@ -518,10 +785,14 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     });
   };
 
+  const activeMarker = editingMarkerId
+    ? (project.markers ?? []).find((m) => m.id === editingMarkerId)
+    : undefined;
+
   return (
     <div
-      className="flex flex-col shrink-0"
-      style={{ height: 320, background: 'var(--panel)', borderTop: '1px solid var(--stroke)' }}
+      className="flex flex-col shrink-0 relative"
+      style={{ height, background: 'var(--panel)' }}
     >
       <div
         className="flex items-center justify-between px-3 h-9 shrink-0"
@@ -710,13 +981,19 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
         <div
           ref={scrollerRef}
           className="flex-1 overflow-auto"
+          onWheel={handleWheel}
           onDragOver={(e) => {
-            if (e.dataTransfer.types.includes('application/x-editroom-asset')) {
+            if (
+              e.dataTransfer.types.includes('application/x-vectrail-asset') ||
+              e.dataTransfer.types.includes('application/x-editroom-asset')
+            ) {
               e.preventDefault();
             }
           }}
           onDrop={(e) => {
-            const assetID = e.dataTransfer.getData('application/x-editroom-asset');
+            const assetID =
+              e.dataTransfer.getData('application/x-vectrail-asset') ||
+              e.dataTransfer.getData('application/x-editroom-asset');
             if (!assetID || !onDropAsset || !canvasRef.current) return;
             e.preventDefault();
             const rect = canvasRef.current.getBoundingClientRect();
@@ -728,14 +1005,184 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
         >
           <canvas
             ref={canvasRef}
-            style={{ width: totalW, height: totalH, display: 'block', cursor: tool === 'cut' ? 'crosshair' : 'default' }}
+            style={{ width: totalW, height: totalH, display: 'block', cursor: hoverCursor }}
+            onContextMenu={(e) => e.preventDefault()}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
           />
         </div>
       </div>
+
+      {activeMarker && (
+        <div
+          className="absolute top-9 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 px-3 py-1.5 rounded-lg shadow-xl text-[11px]"
+          style={{ background: 'var(--sheet)', border: '1px solid var(--sheet-field-stroke)' }}
+        >
+          <span className="mono-num text-[10px]" style={{ color: 'var(--text-dim)' }}>
+            {formatTimecode(activeMarker.time, project.fps)}
+          </span>
+          <input
+            value={activeMarker.name}
+            onChange={(e) =>
+              onMutate((p) => {
+                const m = p.markers?.find((x) => x.id === activeMarker.id);
+                if (m) m.name = e.target.value;
+              })
+            }
+            className="w-32 px-2 py-0.5 rounded text-[11px] outline-none"
+            style={{ background: 'var(--field)', border: '1px solid var(--stroke)', color: 'var(--text)' }}
+          />
+          <div className="flex items-center gap-1">
+            {(Object.keys(MARKER_HEX) as MarkerTint[]).map((tint) => (
+              <button
+                key={tint}
+                onClick={() =>
+                  onMutate((p) => {
+                    const m = p.markers?.find((x) => x.id === activeMarker.id);
+                    if (m) m.color = tint;
+                  })
+                }
+                className="w-3 h-3 rounded-full"
+                style={{
+                  background: MARKER_HEX[tint],
+                  outline: (activeMarker.color ?? 'orange') === tint ? '2px solid #FFF' : 'none',
+                }}
+                title={tint}
+              />
+            ))}
+          </div>
+          <button
+            onClick={() => {
+              onMutate((p) => {
+                p.markers = (p.markers ?? []).filter((x) => x.id !== activeMarker.id);
+              });
+              setEditingMarkerId(null);
+            }}
+            className="px-1.5 py-0.5 rounded text-[10px]"
+            style={{ background: 'var(--button)', color: '#FF453A' }}
+          >
+            Delete
+          </button>
+          <button
+            onClick={() => setEditingMarkerId(null)}
+            className="px-1.5 py-0.5 rounded text-[10px]"
+            style={{ color: 'var(--text-dim)' }}
+          >
+            Done
+          </button>
+        </div>
+      )}
+
+      {contextMenu && (
+        <div
+          className="fixed z-50 w-44 rounded-lg py-1 shadow-2xl text-[11px]"
+          style={{
+            left: Math.min(window.innerWidth - 190, contextMenu.x),
+            top: Math.min(window.innerHeight - 280, contextMenu.y),
+            background: 'var(--sheet)',
+            border: '1px solid var(--sheet-field-stroke)',
+          }}
+          onMouseLeave={() => setContextMenu(null)}
+        >
+          {[
+            {
+              label: 'Split at Playhead',
+              action: () => onSplitAtPlayhead(),
+            },
+            {
+              label: 'Duplicate',
+              action: () => onDuplicateClip?.(contextMenu.clip.id),
+            },
+            ...(contextMenu.clip.kind !== 'audio'
+              ? [
+                  {
+                    label: 'Copy Grade',
+                    action: () => onCopyGrade?.(contextMenu.clip.grade ?? {}),
+                  },
+                  ...(copiedGrade
+                    ? [
+                        {
+                          label: 'Paste Grade',
+                          action: () =>
+                            onMutate((p) => {
+                              const c = p.clips.find((x) => x.id === contextMenu.clip.id);
+                              if (c) c.grade = JSON.parse(JSON.stringify(copiedGrade)) as ColorGrade;
+                            }),
+                        },
+                      ]
+                    : []),
+                  {
+                    label: 'Freeze Frame (2s)',
+                    action: () => onFreezeFrame?.(contextMenu.clip.id),
+                  },
+                  ...((
+                    [
+                      { kind: 'dissolve', label: 'Dissolve In (0.5s)' },
+                      { kind: 'dipToBlack', label: 'Dip to Black (0.5s)' },
+                      { kind: 'wipe', label: 'Wipe In (0.5s)' },
+                    ] as Array<{ kind: TransitionKind; label: string }>
+                  ).map((tr) => ({
+                    label: tr.label,
+                    action: () =>
+                      onMutate((p) => {
+                        const c = p.clips.find((x) => x.id === contextMenu.clip.id);
+                        if (c) c.transitionIn = { kind: tr.kind, duration: Math.min(0.5, c.duration) };
+                      }),
+                  }))),
+                  ...(contextMenu.clip.transitionIn
+                    ? [
+                        {
+                          label: 'Remove Transition',
+                          action: () =>
+                            onMutate((p) => {
+                              const c = p.clips.find((x) => x.id === contextMenu.clip.id);
+                              if (c) delete c.transitionIn;
+                            }),
+                        },
+                      ]
+                    : []),
+                ]
+              : []),
+            {
+              label: contextMenu.clip.reversed ? 'Un-reverse' : 'Reverse Clip',
+              action: () => onReverseClip?.(contextMenu.clip.id),
+            },
+            ...(contextMenu.clip.linkID
+              ? [
+                  {
+                    label: 'Detach Audio',
+                    action: () => onDetachAudio?.(contextMenu.clip.id),
+                  },
+                ]
+              : []),
+            {
+              label: 'Delete',
+              danger: true,
+              action: () => onDeleteSelected(false),
+            },
+            {
+              label: 'Ripple Delete',
+              danger: true,
+              action: () => onDeleteSelected(true),
+            },
+          ].map((item) => (
+            <button
+              key={item.label}
+              onClick={() => {
+                item.action();
+                setContextMenu(null);
+              }}
+              className="w-full text-left px-3 py-1.5 hover:opacity-90"
+              style={{
+                color: item.danger ? '#FF453A' : 'var(--text)',
+                background: 'transparent',
+              }}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

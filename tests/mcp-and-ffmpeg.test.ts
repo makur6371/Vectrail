@@ -19,8 +19,8 @@ describe('MCP Server + Real FFmpeg Pipeline', () => {
   let sampleAudio: string;
 
   beforeAll(async () => {
-    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'editroom-test-'));
-    process.env.EDITROOM_CACHE_DIR = path.join(tmpDir, 'cache');
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vectrail-test-'));
+    process.env.VECTRAIL_CACHE_DIR = path.join(tmpDir, 'cache');
     sampleVideo = path.join(tmpDir, 'sample.mp4');
     sampleAudio = path.join(tmpDir, 'music.wav');
 
@@ -49,7 +49,7 @@ describe('MCP Server + Real FFmpeg Pipeline', () => {
     const mcp = new MCPServer(store);
 
     const init = await mcp.handleRpc({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { clientInfo: { name: 'codex' } } });
-    expect((init?.result as { serverInfo: { name: string } }).serverInfo.name).toBe('editroom');
+    expect((init?.result as { serverInfo: { name: string } }).serverInfo.name).toBe('vectrail');
 
     const listTools = await mcp.handleRpc({ jsonrpc: '2.0', id: 2, method: 'tools/list' });
     const tools = (listTools?.result as { tools: unknown[] }).tools;
@@ -121,7 +121,7 @@ describe('MCP Server + Real FFmpeg Pipeline', () => {
     expect((autoRes?.result as { isError: boolean }).isError).toBe(false);
     expect(store.project.clips.length).toBeGreaterThanOrEqual(3);
 
-    const savePath = path.join(tmpDir, 'test.editroom');
+    const savePath = path.join(tmpDir, 'test.vectrail');
     store.saveToFile(savePath);
     expect(fs.existsSync(savePath)).toBe(true);
 
@@ -172,7 +172,7 @@ describe('MCP Server + Real FFmpeg Pipeline', () => {
       duration: 3,
       words: [
         { text: 'Hello', start: 0.1, end: 0.5 },
-        { text: 'Editroom', start: 0.55, end: 1.0 },
+        { text: 'Vectrail', start: 0.55, end: 1.0 },
       ],
     };
     await mcp.handleRpc({
@@ -187,7 +187,7 @@ describe('MCP Server + Real FFmpeg Pipeline', () => {
       method: 'tools/call',
       params: {
         name: 'export',
-        arguments: { name: 'graded-captioned', height: 360, quality: 'web', wait: true },
+        arguments: { name: 'graded-captioned', height: 480, quality: 'web', enhance_detail: true, wait: true },
       },
     });
     const gradedInfo = JSON.parse(((gradedRes?.result as { content: Array<{ text: string }> }).content[0]).text) as {
@@ -242,6 +242,24 @@ describe('MCP Server + Real FFmpeg Pipeline', () => {
     );
     expect(magicRes.ok).toBe(true);
     expect(magicRes.summary).toContain('Warm film');
+
+    const textClip = store.project.clips.find((c) => c.kind === 'text');
+    expect(textClip).toBeDefined();
+    if (textClip?.text) {
+      textClip.text.strokeWidth = 6;
+      textClip.text.strokeColor = { r: 0, g: 0, b: 0, a: 1 };
+      textClip.text.bgColor = { r: 0.1, g: 0.1, b: 0.12, a: 0.8 };
+      textClip.text.bgPadding = 18;
+      const styledFrame = await mcp.handleRpc({
+        jsonrpc: '2.0',
+        id: 19,
+        method: 'tools/call',
+        params: { name: 'get_frame', arguments: { time: textClip.start + 0.1 } },
+      });
+      const styledContent = (styledFrame?.result as { content: Array<{ type: string; data?: string }> }).content;
+      expect(styledContent[0].type).toBe('image');
+      expect(styledContent[0].data!.length).toBeGreaterThan(100);
+    }
 
     const zoomMagicRes = await runMagicPrompt('zoom in', 'local', store, []);
     expect(zoomMagicRes.ok).toBe(true);
