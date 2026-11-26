@@ -62,7 +62,7 @@ function buildTextDrawtextFilter(tStyle: TextStyle | undefined, size: { width: n
   const fontSize = Math.round(((tStyle?.size ?? 110) / 1080) * size.height);
   const tx = Math.round((tStyle?.x ?? 0.5) * size.width);
   const ty = Math.round((tStyle?.y ?? 0.5) * size.height);
-  const fontOpt = resolveDrawtextFontOption(txt);
+  const fontOpt = resolveDrawtextFontOption(txt, tStyle?.fontName, tStyle?.bold);
   const parts = [
     `drawtext=text='${escapeDrawtext(txt)}'${fontOpt}`,
     `fontsize=${fontSize}`,
@@ -199,18 +199,39 @@ function escapeDrawtext(s: string): string {
     .replace(/%/g, '\\%');
 }
 
-function resolveDrawtextFontOption(text: string): string {
+const WIN_FONT_MAP: Record<string, string[]> = {
+  'microsoft yahei': ['msyhbd.ttc', 'msyh.ttc'],
+  simhei: ['simhei.ttf'],
+  'segoe ui': ['segoeuib.ttf', 'segoeui.ttf'],
+  arial: ['arialbd.ttf', 'arial.ttf'],
+  georgia: ['georgiab.ttf', 'georgia.ttf'],
+  consolas: ['consolab.ttf', 'consola.ttf'],
+  impact: ['impact.ttf'],
+  'times new roman': ['timesbd.ttf', 'times.ttf'],
+};
+
+function resolveDrawtextFontOption(text: string, fontName?: string, bold = false): string {
   const hasNonAscii = /[^\x00-\x7F]/.test(text);
+  const winPreferred: string[] = [];
+  if (process.platform === 'win32' && fontName) {
+    const mapped = WIN_FONT_MAP[fontName.trim().toLowerCase()];
+    if (mapped) {
+      const ordered = bold ? mapped : [...mapped].reverse();
+      ordered.forEach((f) => winPreferred.push(path.join('C:\\Windows\\Fonts', f)));
+    }
+  }
   const candidates =
     process.platform === 'win32'
       ? hasNonAscii
         ? [
+            ...winPreferred,
             'C:\\Windows\\Fonts\\msyh.ttc',
             'C:\\Windows\\Fonts\\simhei.ttf',
             'C:\\Windows\\Fonts\\segoeui.ttf',
             'C:\\Windows\\Fonts\\arial.ttf',
           ]
         : [
+            ...winPreferred,
             'C:\\Windows\\Fonts\\segoeui.ttf',
             'C:\\Windows\\Fonts\\arial.ttf',
             'C:\\Windows\\Fonts\\msyh.ttc',

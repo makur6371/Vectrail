@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { ColorGrade, ExportSettings, MediaAsset, Project } from '../shared/types';
+import { Clip, ColorGrade, ExportSettings, MediaAsset, Project } from '../shared/types';
 import { AppThemeName, THEMES } from '../shared/themes';
 import {
   addTrack,
   clipEnd,
+  createSolidClip,
   detachAudioLinks,
   duplicateClips,
   freeTrack,
@@ -11,6 +12,7 @@ import {
   linkedIds,
   makeClipsForAsset,
   newId,
+  pasteClipGroup,
   projectDuration,
   removeClips,
   resolveOverlaps,
@@ -50,10 +52,15 @@ export const App: React.FC = () => {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [tool, setTool] = useState<'select' | 'cut'>('select');
   const [snapping, setSnapping] = useState(true);
+  const [sticky, setSticky] = useState(false);
+  const [showStrip, setShowStrip] = useState(true);
+  const [skim, setSkim] = useState(false);
+  const [skimTime, setSkimTime] = useState<number | null>(null);
   const [zoomPx, setZoomPx] = useState(48);
   const [loop, setLoop] = useState(false);
   const [theme, setTheme] = useState<AppThemeName>('dark');
   const [copiedGrade, setCopiedGrade] = useState<ColorGrade | undefined>();
+  const [clipClipboard, setClipClipboard] = useState<Clip[]>([]);
   const [modal, setModal] = useState<'export' | 'magic' | 'settings' | null>(null);
   const [mcpRunning, setMcpRunning] = useState(false);
   const [meter, setMeter] = useState({ left: 0, right: 0 });
@@ -289,6 +296,45 @@ export const App: React.FC = () => {
     });
   };
 
+  const handleAddSolid = () => {
+    if (!snap) return;
+    mutate((p) => {
+      const clip = createSolidClip(p, '#111216', snap.playhead, 3);
+      setSelectedIds([clip.id]);
+    });
+  };
+
+  const handleZoomToFit = () => {
+    if (!snap) return;
+    const dur = Math.max(4, projectDuration(snap.project) + 1);
+    const avail = Math.max(320, window.innerWidth - 130);
+    setZoomPx(Math.min(240, Math.max(12, Math.floor(avail / dur))));
+  };
+
+  const handleCopyClips = () => {
+    if (!snap || selectedIds.length === 0) return;
+    const ids = linkedIds(snap.project, selectedIds);
+    const group = snap.project.clips.filter((c) => ids.has(c.id));
+    if (group.length > 0) {
+      setClipClipboard(JSON.parse(JSON.stringify(group)) as Clip[]);
+      showToast(`Copied ${group.length} clip(s)`);
+    }
+  };
+
+  const handleCutClips = () => {
+    if (!snap || selectedIds.length === 0) return;
+    handleCopyClips();
+    handleDeleteSelected(false);
+  };
+
+  const handlePasteClips = () => {
+    if (!snap || clipClipboard.length === 0) return;
+    mutate((p) => {
+      const created = pasteClipGroup(p, clipClipboard, snap.playhead);
+      if (created.length) setSelectedIds(created.map((c) => c.id));
+    });
+  };
+
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (!snap) return;
@@ -377,9 +423,28 @@ export const App: React.FC = () => {
       } else if (action === 'selectTool') setTool('select');
       else if (action === 'cutTool') setTool('cut');
       else if (action === 'toggleSnap') setSnapping((s) => !s);
+      else if (action === 'toggleSticky') setSticky((s) => !s);
+      else if (action === 'toggleStrip') setShowStrip((s) => !s);
+      else if (action === 'toggleSkim') setSkim((s) => !s);
       else if (action === 'toggleLoop') setLoop((l) => !l);
       else if (action === 'zoomIn') setZoomPx((z) => Math.min(240, z * 1.25));
       else if (action === 'zoomOut') setZoomPx((z) => Math.max(12, z * 0.8));
+      else if (action === 'zoomToFit') {
+        e.preventDefault();
+        handleZoomToFit();
+      } else if (action === 'selectAll') {
+        e.preventDefault();
+        setSelectedIds(snap.project.clips.map((c) => c.id));
+      } else if (action === 'copyClips') {
+        e.preventDefault();
+        handleCopyClips();
+      } else if (action === 'cutClips') {
+        e.preventDefault();
+        handleCutClips();
+      } else if (action === 'pasteClips') {
+        e.preventDefault();
+        handlePasteClips();
+      }
       else if (action === 'copyGrade' && selectedClip?.grade) {
         setCopiedGrade(JSON.parse(JSON.stringify(selectedClip.grade)));
       } else if (action === 'pasteGrade' && copiedGrade && selectedClip) {
@@ -478,7 +543,28 @@ export const App: React.FC = () => {
           width={layout.libraryW}
           activeSourceId={pinnedSource?.asset.id}
           onImport={() => void window.vectrail.importFilesDialog()}
+          onImportFolder={() => void window.vectrail.importFolderDialog()}
           onAddAsset={handleAddAsset}
+          onAddText={handleAddText}
+          onAddSolid={handleAddSolid}
+          onMatchSequence={(asset) => {
+            mutate((p) => {
+              p.width = asset.width;
+              p.height = asset.height;
+              if (asset.fps > 0) p.fps = asset.fps;
+              p.settingsLocked = true;
+            });
+            showToast(`Matched sequence to ${asset.width}x${asset.height} @ ${asset.fps}fps`);
+          }}
+          onShowInExplorer={(asset) => void window.vectrail.showInExplorer(asset.path)}
+          onReloadAsset={(id) => {
+            void window.vectrail.reloadAsset(id);
+            showToast('Reloaded asset from disk');
+          }}
+          onDeleteAsset={(id) => {
+            void window.vectrail.deleteAsset(id);
+            showToast('Removed asset from library');
+          }}
           onHoverPreview={setSourcePreview}
           onSelectSource={(asset) => setPinnedSource({ asset, time: 0 })}
           onAutoEdit={() => void window.vectrail.autoEdit()}
@@ -500,6 +586,7 @@ export const App: React.FC = () => {
           transcripts={snap.transcripts ?? {}}
           selectedClip={selectedClip}
           shuttleRate={shuttleRate}
+          skimTime={skim ? skimTime : null}
           sourcePreview={sourcePreview}
           pinnedSource={pinnedSource}
           onChangePinnedSource={setPinnedSource}
@@ -569,6 +656,9 @@ export const App: React.FC = () => {
         selectedIds={selectedIds}
         tool={tool}
         snapping={snapping}
+        sticky={sticky}
+        showStrip={showStrip}
+        skim={skim}
         zoomPx={zoomPx}
         height={layout.timelineH}
         copiedGrade={copiedGrade}
@@ -577,8 +667,13 @@ export const App: React.FC = () => {
         agentCursor={snap.agentCursor}
         onSetTool={setTool}
         onToggleSnap={() => setSnapping((s) => !s)}
+        onToggleSticky={() => setSticky((s) => !s)}
+        onToggleStrip={() => setShowStrip((s) => !s)}
+        onToggleSkim={() => setSkim((s) => !s)}
         onSetZoom={setZoomPx}
+        onZoomToFit={handleZoomToFit}
         onSeek={(t) => void window.vectrail.setPlayhead(t)}
+        onSkimTime={setSkimTime}
         onSelectClips={setSelectedIds}
         onMutate={mutate}
         onSplitAtPlayhead={handleSplitAtPlayhead}
@@ -643,6 +738,7 @@ export const App: React.FC = () => {
         <ExportModal
           project={snap.project}
           title={snap.title}
+          transcripts={snap.transcripts ?? {}}
           onClose={() => setModal(null)}
           onStart={(s: ExportSettings) => void window.vectrail.startExport(s)}
         />

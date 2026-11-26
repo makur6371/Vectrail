@@ -47,7 +47,7 @@ import { buildCaptionBlocks, defaultCaptionStyle } from '../../shared/captions';
 import { autoPlanEdit, findBestMoments } from '../../shared/autoPlanner';
 import { starterZoomMove } from '../../shared/zoomMove';
 import { ProjectStore } from '../state';
-import { buildContactSheet, extractFrameJpeg } from '../engine/ffmpeg';
+import { buildContactSheet, collectMediaFiles, extractFrameJpeg } from '../engine/ffmpeg';
 import { renderTimelineFrameJpeg } from '../engine/exporter';
 import {
   analyzeMusicAsset,
@@ -92,7 +92,7 @@ function def(
 export const MCP_TOOL_DEFINITIONS: MCPToolDefinition[] = [
   def('get_project', 'Get project', 'The sequence (size, frame rate, length), tracks, and every clip with its id, track, times, source, grade, sound and transition.', {}, [], true),
   def('list_media', 'List media', 'Everything in the library: id, name, kind, length, size, frame rate, whether people talk in it, and saved notes.', {}, [], true),
-  def('import_media', 'Import media', 'Adds files to the library.', { paths: { type: 'array', items: { type: 'string' }, description: 'Absolute file paths.' } }, ['paths']),
+  def('import_media', 'Import media', 'Adds files or folders recursively to the library.', { paths: { type: 'array', items: { type: 'string' }, description: 'Absolute file or folder paths.' } }, ['paths']),
   def(
     'download_media',
     'Download media',
@@ -127,7 +127,7 @@ export const MCP_TOOL_DEFINITIONS: MCPToolDefinition[] = [
   def('set_transition', 'Set transition', 'Sets incoming transition between touching clips.', { clip_id: str('Later clip id.'), kind: { type: 'string', enum: ['dissolve', 'dipToBlack', 'wipe', 'none'] }, duration: num('Seconds (default 0.5).') }, ['clip_id', 'kind']),
   def('set_transform', 'Set transform', 'Moves and scales a visual clip.', { clip_id: str('Clip id.'), scale: num('0.05..10.'), x: num('Normalized X offset.'), y: num('Normalized Y offset.'), reset: bool('Reset transform.') }, ['clip_id']),
   def('set_zoom', 'Set zoom', 'Applies or removes a smooth zoom/pan animation on a visual clip.', { clip_id: str('Clip id.'), mode: { type: 'string', enum: ['in', 'out', 'inOut', 'none'] }, amount: num('Target scale (1.05..3.0, default 1.2).') }, ['clip_id', 'mode']),
-  def('set_title_style', 'Title style', 'Updates text clip styling.', { clip_id: str('Title clip id.'), text: str('Words.'), font: str('Font family.'), size: num('12..600.'), bold: bool('Bold.'), color: str('Hex color.'), x: num('0..1.'), y: num('0..1.') }, ['clip_id']),
+  def('set_title_style', 'Title style', 'Updates text clip styling.', { clip_id: str('Title clip id.'), text: str('Words.'), font: str('Font family.'), size: num('12..600.'), bold: bool('Bold.'), color: str('Hex color.'), stroke_width: num('0..24.'), stroke_color: str('Hex color.'), bg_color: str('Hex color or "none".'), bg_padding: num('2..48.'), x: num('0..1.'), y: num('0..1.') }, ['clip_id']),
   def('set_sequence', 'Set sequence', 'Sets sequence resolution and frame rate.', { width: { type: 'integer' }, height: { type: 'integer' }, fps: num('Frame rate.') }),
   def('add_track', 'Add track', 'Adds an empty video or audio track.', { kind: { type: 'string', enum: ['video', 'audio'] } }, ['kind']),
   def('set_track', 'Set track', 'Updates track flags, gain, and audio ducking.', { track: str('V1.. or A1..'), hidden: bool('Video hidden.'), muted: bool('Audio muted.'), solo: bool('Audio solo.'), locked: bool('Locked.'), gain_db: num('-60..12.'), duck_under: str('Audio track name to duck under (e.g. A1), or "none".'), duck_db: num('Duck attenuation dB (-30..0).') }, ['track']),
@@ -153,6 +153,7 @@ function assetToJson(a: MediaAsset) {
     id: a.id,
     name: a.name,
     kind: a.kind,
+    ...(a.folder ? { folder: a.folder } : {}),
     duration: r3(a.duration),
     width: a.width,
     height: a.height,
@@ -277,8 +278,9 @@ export async function callMCPTool(
       const paths = Array.isArray(args.paths) ? args.paths.map(String) : [];
       const missing = paths.filter((fp) => !fs.existsSync(fp));
       if (missing.length) throw new Error(`No file at: ${missing.join(', ')}`);
+      const candidateCount = collectMediaFiles(paths).length;
       const assets = await store.importFiles(paths);
-      return jsonOut({ imported: assets.map(assetToJson), failed: paths.length - assets.length });
+      return jsonOut({ imported: assets.map(assetToJson), failed: Math.max(0, candidateCount - assets.length) });
     }
 
     case 'download_media': {
@@ -840,6 +842,21 @@ export async function callMCPTool(
         }
         if (asNum(args.x) !== undefined) item.text.x = clamp(asNum(args.x)!, 0, 1);
         if (asNum(args.y) !== undefined) item.text.y = clamp(asNum(args.y)!, 0, 1);
+        if (asNum(args.stroke_width) !== undefined) item.text.strokeWidth = clamp(asNum(args.stroke_width)!, 0, 24);
+        if (typeof args.stroke_color === 'string') {
+          const scol = hexToRgba(args.stroke_color);
+          if (!scol) throw new Error('Invalid stroke hex color.');
+          item.text.strokeColor = scol;
+        }
+        if (typeof args.bg_color === 'string') {
+          if (args.bg_color.toLowerCase() === 'none') delete item.text.bgColor;
+          else {
+            const bcol = hexToRgba(args.bg_color);
+            if (!bcol) throw new Error('Invalid background hex color.');
+            item.text.bgColor = { ...bcol, a: item.text.bgColor?.a ?? 0.75 };
+          }
+        }
+        if (asNum(args.bg_padding) !== undefined) item.text.bgPadding = clamp(asNum(args.bg_padding)!, 2, 48);
       });
       touchCursor('styling title', c.id, c.start);
       return jsonOut(clipToJson(store.project.clips.find((x) => x.id === c.id)!, store.project));

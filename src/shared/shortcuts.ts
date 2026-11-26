@@ -16,9 +16,17 @@ export type ShortcutActionId =
   | 'cutTool'
   | 'toggleSnap'
   | 'toggleLoop'
+  | 'toggleSticky'
+  | 'toggleStrip'
+  | 'toggleSkim'
   | 'fullscreen'
   | 'zoomIn'
   | 'zoomOut'
+  | 'zoomToFit'
+  | 'selectAll'
+  | 'copyClips'
+  | 'cutClips'
+  | 'pasteClips'
   | 'undo'
   | 'redo'
   | 'copyGrade'
@@ -51,10 +59,18 @@ export const DEFAULT_SHORTCUTS: ShortcutBinding[] = [
   { id: 'selectTool', label: 'Select Tool', combo: 'V' },
   { id: 'cutTool', label: 'Cut Tool', combo: 'C' },
   { id: 'toggleSnap', label: 'Toggle Snapping', combo: 'N' },
+  { id: 'toggleSticky', label: 'Sticky Edges', combo: 'R' },
+  { id: 'toggleStrip', label: 'Toggle Filmstrips', combo: 'Shift+T' },
+  { id: 'toggleSkim', label: 'Toggle Skimming', combo: 'Y' },
   { id: 'toggleLoop', label: 'Toggle Loop', combo: 'Ctrl+L' },
   { id: 'fullscreen', label: 'Fullscreen Viewer', combo: 'F' },
   { id: 'zoomIn', label: 'Zoom Timeline In', combo: '=' },
   { id: 'zoomOut', label: 'Zoom Timeline Out', combo: '-' },
+  { id: 'zoomToFit', label: 'Zoom to Fit', combo: 'Shift+Z' },
+  { id: 'selectAll', label: 'Select All Clips', combo: 'Ctrl+A' },
+  { id: 'copyClips', label: 'Copy Clips', combo: 'Ctrl+C' },
+  { id: 'cutClips', label: 'Cut Clips', combo: 'Ctrl+X' },
+  { id: 'pasteClips', label: 'Paste Clips', combo: 'Ctrl+V' },
   { id: 'undo', label: 'Undo', combo: 'Ctrl+Z' },
   { id: 'redo', label: 'Redo', combo: 'Ctrl+Shift+Z' },
   { id: 'copyGrade', label: 'Copy Color Grade', combo: 'Ctrl+Alt+C' },
@@ -89,6 +105,6 @@ export function formatEventCombo(e: {
 export function mergeShortcutBindings(saved?: Partial<Record<ShortcutActionId, string>>): ShortcutBinding[] {
   return DEFAULT_SHORTCUTS.map((b) => ({
     ...b,
-    combo: saved?.[b.id] ?? b.combo,
+    combo: saved && saved[b.id] !== undefined ? saved[b.id]! : b.combo,
   }));
 }

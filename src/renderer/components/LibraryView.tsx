@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { Captions, Film, Image as ImageIcon, Music, Plus, Search, Sparkles } from 'lucide-react';
+import { Captions, Film, FolderOpen, Image as ImageIcon, Music, Plus, Search, Sparkles, Square, Type } from 'lucide-react';
 import { MediaAsset, Transcript } from '../../shared/types';
 import { formatTimecode } from '../../shared/project';
 
@@ -12,7 +12,14 @@ interface LibraryViewProps {
   width?: number;
   activeSourceId?: string;
   onImport: () => void;
+  onImportFolder?: () => void;
   onAddAsset: (asset: MediaAsset) => void;
+  onAddText?: () => void;
+  onAddSolid?: () => void;
+  onMatchSequence?: (asset: MediaAsset) => void;
+  onShowInExplorer?: (asset: MediaAsset) => void;
+  onReloadAsset?: (assetID: string) => void;
+  onDeleteAsset?: (assetID: string) => void;
   onHoverPreview?: (preview: { asset: MediaAsset; time: number } | null) => void;
   onSelectSource?: (asset: MediaAsset) => void;
   onAutoEdit: () => void;
@@ -28,24 +35,43 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
   width = 268,
   activeSourceId,
   onImport,
+  onImportFolder,
   onAddAsset,
+  onAddText,
+  onAddSolid,
+  onMatchSequence,
+  onShowInExplorer,
+  onReloadAsset,
+  onDeleteAsset,
   onHoverPreview,
   onSelectSource,
   onAutoEdit,
   onTranscribeAsset,
 }) => {
   const [query, setQuery] = useState('');
+  const [activeFolder, setActiveFolder] = useState<string | null>(null);
   const [hoverScrub, setHoverScrub] = useState<{ id: string; idx: number; rel: number; time: number } | null>(null);
+  const [contextMenu, setContextMenu] = useState<{ x: number; y: number; asset: MediaAsset } | null>(null);
+
+  const folders = useMemo(() => {
+    const set = new Set<string>();
+    assets.forEach((a) => {
+      if (a.folder) set.add(a.folder);
+    });
+    return [...set].sort();
+  }, [assets]);
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return assets;
     return assets.filter((a) => {
+      if (activeFolder && a.folder !== activeFolder) return false;
+      if (!q) return true;
       const tags = (sceneTags[a.id] ?? []).join(' ').toLowerCase();
       const speech = (transcripts[a.id]?.words.map((w) => w.text).join(' ') ?? '').toLowerCase();
-      return a.name.toLowerCase().includes(q) || a.kind.includes(q) || tags.includes(q) || speech.includes(q);
+      const folder = (a.folder ?? '').toLowerCase();
+      return a.name.toLowerCase().includes(q) || a.kind.includes(q) || tags.includes(q) || speech.includes(q) || folder.includes(q);
     });
-  }, [assets, query, sceneTags, transcripts]);
+  }, [assets, query, activeFolder, sceneTags, transcripts]);
 
   return (
     <div
@@ -60,6 +86,26 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           MEDIA
         </span>
         <div className="flex items-center gap-1">
+          {onAddText && (
+            <button
+              onClick={onAddText}
+              className="p-1 rounded hover:opacity-80"
+              style={{ color: 'var(--text-dim)' }}
+              title="Add Text at Playhead"
+            >
+              <Type size={13} strokeWidth={1.6} />
+            </button>
+          )}
+          {onAddSolid && (
+            <button
+              onClick={onAddSolid}
+              className="p-1 rounded hover:opacity-80"
+              style={{ color: 'var(--text-dim)' }}
+              title="Add Solid Color at Playhead"
+            >
+              <Square size={12} strokeWidth={1.6} />
+            </button>
+          )}
           {assets.length > 0 && (
             <button
               onClick={onAutoEdit}
@@ -68,6 +114,16 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
               title="Auto Edit Montage"
             >
               <Sparkles size={10} style={{ color: 'var(--accent)' }} /> Auto
+            </button>
+          )}
+          {onImportFolder && (
+            <button
+              onClick={onImportFolder}
+              className="p-1 rounded hover:opacity-80"
+              style={{ color: 'var(--text-dim)' }}
+              title="Import Folder"
+            >
+              <FolderOpen size={13} strokeWidth={1.6} />
             </button>
           )}
           <button
@@ -81,7 +137,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
         </div>
       </div>
 
-      <div className="px-2.5 py-2 shrink-0">
+      <div className="px-2.5 py-2 shrink-0 space-y-1.5">
         <div
           className="flex items-center gap-1.5 px-2 h-7 rounded"
           style={{ background: 'var(--field)', border: '1px solid var(--stroke)' }}
@@ -95,6 +151,34 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
             style={{ color: 'var(--text)' }}
           />
         </div>
+        {folders.length > 0 && (
+          <div className="flex flex-wrap gap-1">
+            <button
+              onClick={() => setActiveFolder(null)}
+              className="px-1.5 py-0.5 rounded text-[9px]"
+              style={{
+                background: activeFolder === null ? 'var(--accent)' : 'var(--button)',
+                color: activeFolder === null ? '#FFF' : 'var(--text-dim)',
+              }}
+            >
+              All
+            </button>
+            {folders.map((f) => (
+              <button
+                key={f}
+                onClick={() => setActiveFolder(activeFolder === f ? null : f)}
+                className="px-1.5 py-0.5 rounded text-[9px] truncate max-w-[110px]"
+                style={{
+                  background: activeFolder === f ? 'var(--accent)' : 'var(--button)',
+                  color: activeFolder === f ? '#FFF' : 'var(--text-dim)',
+                }}
+                title={f}
+              >
+                {f}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="flex-1 overflow-y-auto px-2.5 pb-3 space-y-2">
@@ -132,7 +216,12 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                   border: `1px solid ${isSourceSelected ? 'var(--accent)' : 'var(--stroke)'}`,
                 }}
                 onClick={() => {
+                  setContextMenu(null);
                   if (asset.kind === 'video' || asset.kind === 'image') onSelectSource?.(asset);
+                }}
+                onContextMenu={(e) => {
+                  e.preventDefault();
+                  setContextMenu({ x: e.clientX, y: e.clientY, asset });
                 }}
                 onDoubleClick={() => onAddAsset(asset)}
                 onMouseMove={(e) => {
@@ -224,9 +313,17 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
                     {asset.kind === 'video' ? `${asset.width}x${asset.height}` : asset.kind}
                   </span>
                 </div>
-                {(sceneTags[asset.id]?.length ?? 0) > 0 && (
+                {(asset.folder || (sceneTags[asset.id]?.length ?? 0) > 0) && (
                   <div className="px-2 pb-1.5 flex flex-wrap gap-1">
-                    {sceneTags[asset.id].slice(0, 3).map((tag) => (
+                    {asset.folder && (
+                      <span
+                        className="px-1.5 py-0.2 rounded text-[9px]"
+                        style={{ background: 'var(--button)', color: 'var(--accent)' }}
+                      >
+                        {asset.folder}
+                      </span>
+                    )}
+                    {(sceneTags[asset.id] ?? []).slice(0, 3).map((tag) => (
                       <span
                         key={tag}
                         className="px-1.5 py-0.2 rounded text-[9px]"
@@ -242,6 +339,50 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
           })
         )}
       </div>
+
+      {contextMenu && (
+        <div
+          className="fixed z-50 w-44 rounded-lg py-1 shadow-2xl text-[11px]"
+          style={{
+            left: Math.min(window.innerWidth - 190, contextMenu.x),
+            top: Math.min(window.innerHeight - 240, contextMenu.y),
+            background: 'var(--sheet)',
+            border: '1px solid var(--sheet-field-stroke)',
+          }}
+          onMouseLeave={() => setContextMenu(null)}
+        >
+          {[
+            { label: 'Add to Timeline', action: () => onAddAsset(contextMenu.asset) },
+            ...(contextMenu.asset.width > 0 && contextMenu.asset.height > 0 && onMatchSequence
+              ? [{ label: 'Match Sequence to Clip', action: () => onMatchSequence(contextMenu.asset) }]
+              : []),
+            ...((contextMenu.asset.kind === 'audio' || contextMenu.asset.hasAudio) && onTranscribeAsset
+              ? [{ label: 'Transcribe Speech', action: () => onTranscribeAsset(contextMenu.asset.id) }]
+              : []),
+            ...(onShowInExplorer
+              ? [{ label: 'Show in Explorer', action: () => onShowInExplorer(contextMenu.asset) }]
+              : []),
+            ...(onReloadAsset
+              ? [{ label: 'Reload from Disk', action: () => onReloadAsset(contextMenu.asset.id) }]
+              : []),
+            ...(onDeleteAsset
+              ? [{ label: 'Delete Item', danger: true, action: () => onDeleteAsset(contextMenu.asset.id) }]
+              : []),
+          ].map((item) => (
+            <button
+              key={item.label}
+              onClick={() => {
+                item.action();
+                setContextMenu(null);
+              }}
+              className="w-full text-left px-3 py-1.5 hover:opacity-90"
+              style={{ color: item.danger ? '#FF453A' : 'var(--text)' }}
+            >
+              {item.label}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

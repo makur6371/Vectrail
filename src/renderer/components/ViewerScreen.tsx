@@ -30,6 +30,7 @@ interface ViewerScreenProps {
   transcripts: Record<string, Transcript>;
   selectedClip?: Clip;
   shuttleRate?: number;
+  skimTime?: number | null;
   sourcePreview?: { asset: MediaAsset; time: number } | null;
   pinnedSource?: PinnedSourceState | null;
   onChangePinnedSource?: (next: PinnedSourceState | null) => void;
@@ -51,6 +52,7 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
   transcripts,
   selectedClip,
   shuttleRate = 1,
+  skimTime = null,
   sourcePreview = null,
   pinnedSource = null,
   onChangePinnedSource,
@@ -69,8 +71,9 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
   const [timeInput, setTimeInput] = useState('');
   const [snapGuides, setSnapGuides] = useState<{ x: boolean; y: boolean }>({ x: false, y: false });
   const activeSource = sourcePreview ?? (!playing ? pinnedSource : null);
-  const latestRef = useRef({ project, playhead, transcripts, activeSource });
-  latestRef.current = { project, playhead, transcripts, activeSource };
+  const viewTime = !playing && !activeSource && skimTime !== null ? skimTime : playhead;
+  const latestRef = useRef({ project, playhead: viewTime, transcripts, activeSource });
+  latestRef.current = { project, playhead: viewTime, transcripts, activeSource };
 
   if (!compositorRef.current) compositorRef.current = new PreviewCompositor();
 
@@ -96,8 +99,8 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
         if (activeSource) {
           compositorRef.current.renderSourcePreview(canvas, activeSource.asset, activeSource.time);
         } else {
-          compositorRef.current.syncMediaElements(project, playhead, playing);
-          compositorRef.current.renderFrame(canvas, project, playhead, transcripts);
+          compositorRef.current.syncMediaElements(project, viewTime, playing);
+          compositorRef.current.renderFrame(canvas, project, viewTime, transcripts);
         }
       }
       if (playing && !activeSource) raf = requestAnimationFrame(draw);
@@ -107,7 +110,7 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
       cancelAnimationFrame(raf);
       cancelAnimationFrame(readyRaf);
     };
-  }, [project, playhead, playing, transcripts, activeSource]);
+  }, [project, viewTime, playing, transcripts, activeSource]);
 
   const dur = Math.max(0.01, projectDuration(project));
   const hasClips = project.clips.length > 0;
@@ -279,6 +282,14 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
                 <div
                   className="absolute top-2.5 right-2.5 flex items-center gap-1.5 pointer-events-none"
                 >
+                  {!playing && skimTime !== null && (
+                    <span
+                      className="mono-num px-2 py-0.5 rounded-full text-[10px] font-semibold"
+                      style={{ background: 'rgba(255, 74, 28, 0.88)', color: '#FFFFFF' }}
+                    >
+                      SKIM · {formatTimecode(skimTime, project.fps, true)}
+                    </span>
+                  )}
                   {Math.abs(shuttleRate - 1) > 0.05 && playing && (
                     <span
                       className="mono-num px-2 py-0.5 rounded-full text-[10px] font-semibold"

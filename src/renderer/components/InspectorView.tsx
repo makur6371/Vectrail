@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { RotateCcw, Copy, ClipboardPaste } from 'lucide-react';
+import { ChevronDown, ChevronRight, ClipboardPaste, Copy, RotateCcw } from 'lucide-react';
 import { Clip, ColorGrade, FadeCurve, Project, TransitionKind, WheelPoint } from '../../shared/types';
 import { BUILT_IN_LOOKS } from '../../shared/colorGrade';
 import { clipName, formatDB, hexToRgba, rgbaToHex, snapFrame, STANDARD_FPS } from '../../shared/project';
@@ -89,21 +89,42 @@ const ColorWheel: React.FC<{
   );
 };
 
-const Section: React.FC<{ title: string; right?: React.ReactNode; children: React.ReactNode }> = ({
+const FONT_CHOICES = [
+  { label: 'System (Inter / Segoe)', value: '' },
+  { label: 'Segoe UI', value: 'Segoe UI' },
+  { label: 'Microsoft YaHei', value: 'Microsoft YaHei' },
+  { label: 'SimHei', value: 'SimHei' },
+  { label: 'Arial', value: 'Arial' },
+  { label: 'Georgia', value: 'Georgia' },
+  { label: 'Consolas', value: 'Consolas' },
+  { label: 'Impact', value: 'Impact' },
+  { label: 'Times New Roman', value: 'Times New Roman' },
+];
+
+const Section: React.FC<{ title: string; right?: React.ReactNode; defaultCollapsed?: boolean; children: React.ReactNode }> = ({
   title,
   right,
+  defaultCollapsed = false,
   children,
-}) => (
-  <div className="py-2.5 px-3" style={{ borderBottom: '1px solid var(--stroke)' }}>
-    <div className="flex items-center justify-between mb-2">
-      <span className="text-[10px] font-semibold tracking-[0.08em]" style={{ color: 'var(--text-dim)' }}>
-        {title}
-      </span>
-      {right}
+}) => {
+  const [collapsed, setCollapsed] = useState(defaultCollapsed);
+  return (
+    <div className="py-2.5 px-3" style={{ borderBottom: '1px solid var(--stroke)' }}>
+      <div className="flex items-center justify-between" style={{ marginBottom: collapsed ? 0 : 8 }}>
+        <button
+          onClick={() => setCollapsed((c) => !c)}
+          className="inline-flex items-center gap-1 text-[10px] font-semibold tracking-[0.08em]"
+          style={{ color: 'var(--text-dim)' }}
+        >
+          {collapsed ? <ChevronRight size={11} /> : <ChevronDown size={11} />}
+          {title}
+        </button>
+        {right}
+      </div>
+      {!collapsed && <div className="space-y-2">{children}</div>}
     </div>
-    <div className="space-y-2">{children}</div>
-  </div>
-);
+  );
+};
 
 const SliderRow: React.FC<{
   label: string;
@@ -680,6 +701,28 @@ export const InspectorView: React.FC<InspectorViewProps> = ({
             </>
           )}
 
+          {selectedClip.kind === 'solid' && (
+            <Section title="SOLID">
+              <div className="flex items-center justify-between">
+                <span className="text-[11px]" style={{ color: 'var(--text-dim)' }}>
+                  Color
+                </span>
+                <input
+                  type="color"
+                  value={rgbaToHex(selectedClip.color ?? { r: 0.07, g: 0.07, b: 0.09, a: 1 })}
+                  onChange={(e) => {
+                    const col = hexToRgba(e.target.value);
+                    if (col) {
+                      onUpdateClip(selectedClip.id, (c) => {
+                        c.color = col;
+                      });
+                    }
+                  }}
+                />
+              </div>
+            </Section>
+          )}
+
           {selectedClip.kind === 'text' && selectedClip.text && (
             <Section title="TITLE">
               <input
@@ -692,6 +735,39 @@ export const InspectorView: React.FC<InspectorViewProps> = ({
                 className="w-full px-2 py-1 rounded text-[11px] outline-none"
                 style={{ background: 'var(--field)', color: 'var(--text)', border: '1px solid var(--stroke)' }}
               />
+              <div className="flex items-center gap-1.5">
+                <select
+                  value={selectedClip.text.fontName ?? ''}
+                  onChange={(e) =>
+                    onUpdateClip(selectedClip.id, (c) => {
+                      if (c.text) c.text.fontName = e.target.value;
+                    })
+                  }
+                  className="flex-1 px-2 py-1 rounded text-[11px] outline-none"
+                  style={{ background: 'var(--field)', color: 'var(--text)', border: '1px solid var(--stroke)' }}
+                >
+                  {FONT_CHOICES.map((f) => (
+                    <option key={f.label} value={f.value}>
+                      {f.label}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  onClick={() =>
+                    onUpdateClip(selectedClip.id, (c) => {
+                      if (c.text) c.text.bold = !c.text.bold;
+                    })
+                  }
+                  className="px-2 py-1 rounded text-[11px] font-bold"
+                  style={{
+                    background: selectedClip.text.bold ? 'var(--accent)' : 'var(--button)',
+                    color: selectedClip.text.bold ? '#FFF' : 'var(--text)',
+                  }}
+                  title="Bold"
+                >
+                  B
+                </button>
+              </div>
               <SliderRow
                 label="Size"
                 value={selectedClip.text.size}

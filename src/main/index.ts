@@ -5,7 +5,7 @@ import path from 'node:path';
 import { CloudAiConfig, ExportSettings, Project } from '../shared/types';
 import { computeExportRenderSize } from '../shared/project';
 import { loadSavedShortcuts, ProjectStore, saveShortcutsConfig } from './state';
-import { checkForAppUpdates, getCloudAiConfig, saveCloudAiConfig } from './settings';
+import { checkForAppUpdates, getAutoSaveEnabled, getCloudAiConfig, saveCloudAiConfig, setAutoSaveEnabled } from './settings';
 import { downloadWhisperModel, getWhisperStatus, WhisperStatus } from './engine/analyzer';
 import { MCP_DEFAULT_PORT, MCPServer } from './mcp/server';
 import { runStdioMcpBridge } from './mcp/bridge';
@@ -335,6 +335,28 @@ async function serveMediaRequest(req: Request, filePath: string): Promise<Respon
     await store.importFiles(paths);
     return store.snapshot();
   });
+  ipcMain.handle('vectrail:import-folder-dialog', async () => {
+    if (!mainWindow) return store.snapshot();
+    const res = await dialog.showOpenDialog(mainWindow, {
+      title: 'Import Folder',
+      properties: ['openDirectory', 'multiSelections'],
+    });
+    if (!res.canceled && res.filePaths.length) {
+      await store.importFiles(res.filePaths);
+    }
+    return store.snapshot();
+  });
+  ipcMain.handle('vectrail:show-in-explorer', (_e, filePath: string) => {
+    if (filePath && fs.existsSync(filePath)) shell.showItemInFolder(filePath);
+  });
+  ipcMain.handle('vectrail:reload-asset', async (_e, assetID: string) => {
+    await store.reloadAsset(assetID);
+    return store.snapshot();
+  });
+  ipcMain.handle('vectrail:delete-asset', (_e, assetID: string) => {
+    store.deleteAsset(assetID);
+    return store.snapshot();
+  });
   ipcMain.handle('vectrail:open-dialog', async () => {
     if (!mainWindow) return store.snapshot();
     const res = await dialog.showOpenDialog(mainWindow, {
@@ -431,6 +453,8 @@ async function serveMediaRequest(req: Request, filePath: string): Promise<Respon
   ipcMain.handle('vectrail:get-cloud-ai', () => getCloudAiConfig());
   ipcMain.handle('vectrail:save-cloud-ai', (_e, cfg: Partial<CloudAiConfig>) => saveCloudAiConfig(cfg));
   ipcMain.handle('vectrail:test-cloud-ai', (_e, cfg: CloudAiConfig) => testCloudAiConnection(cfg));
+  ipcMain.handle('vectrail:get-auto-save', () => getAutoSaveEnabled());
+  ipcMain.handle('vectrail:set-auto-save', (_e, enabled: boolean) => setAutoSaveEnabled(enabled));
   ipcMain.handle('vectrail:check-updates', () => checkForAppUpdates(app.getVersion()));
   ipcMain.handle('vectrail:open-external', (_e, url: string) => {
     if (url.startsWith('https://')) void shell.openExternal(url);

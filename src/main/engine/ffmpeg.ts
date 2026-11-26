@@ -75,6 +75,53 @@ export function fileHashKey(filePath: string): string {
 
 const IMAGE_EXTS = new Set(['.png', '.jpg', '.jpeg', '.webp', '.bmp', '.gif', '.tiff', '.tif']);
 const AUDIO_EXTS = new Set(['.mp3', '.wav', '.m4a', '.aac', '.flac', '.ogg', '.opus', '.wma']);
+const VIDEO_EXTS = new Set(['.mp4', '.mov', '.m4v', '.mkv', '.webm', '.avi', '.wmv', '.ts', '.mts', '.m2ts']);
+
+export function isSupportedMediaFile(filePath: string): boolean {
+  const ext = path.extname(filePath).toLowerCase();
+  return VIDEO_EXTS.has(ext) || AUDIO_EXTS.has(ext) || IMAGE_EXTS.has(ext);
+}
+
+export function collectMediaFiles(inputPaths: string[]): Array<{ path: string; folder?: string }> {
+  const results: Array<{ path: string; folder?: string }> = [];
+  const seen = new Set<string>();
+
+  const walkDir = (dirPath: string, rootName: string, relDir: string) => {
+    const entries = fs
+      .readdirSync(dirPath, { withFileTypes: true })
+      .filter((e) => !e.name.startsWith('.'))
+      .sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }));
+    for (const entry of entries) {
+      const full = path.join(dirPath, entry.name);
+      if (entry.isFile() && isSupportedMediaFile(full)) {
+        const resolved = path.resolve(full);
+        if (seen.has(resolved)) continue;
+        seen.add(resolved);
+        const folder = relDir ? `${rootName}/${relDir}` : rootName;
+        results.push({ path: resolved, folder });
+      }
+    }
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        walkDir(path.join(dirPath, entry.name), rootName, relDir ? `${relDir}/${entry.name}` : entry.name);
+      }
+    }
+  };
+
+  for (const raw of inputPaths) {
+    const resolved = path.resolve(raw);
+    if (!fs.existsSync(resolved)) continue;
+    const st = fs.statSync(resolved);
+    if (st.isDirectory()) {
+      walkDir(resolved, path.basename(resolved), '');
+    } else if (st.isFile()) {
+      if (seen.has(resolved)) continue;
+      seen.add(resolved);
+      results.push({ path: resolved });
+    }
+  }
+  return results;
+}
 
 export async function probeMediaAsset(filePath: string): Promise<MediaAsset> {
   const resolved = path.resolve(filePath);

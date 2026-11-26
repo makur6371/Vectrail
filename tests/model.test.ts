@@ -1,3 +1,6 @@
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
 import { describe, expect, it } from 'vitest';
 import {
   BUILT_IN_LOOKS,
@@ -10,14 +13,17 @@ import { rampSource, rampSpan, retimeClip } from '../src/shared/speedRamp';
 import { starterZoomMove, transformAt, zoomAmountAt } from '../src/shared/zoomMove';
 import { buildCaptionBlocks } from '../src/shared/captions';
 import {
+  applyStickyEdgeShift,
   computeExportRenderSize,
   createEmptyProject,
+  createSolidClip,
   detachAudioLinks,
   duplicateClips,
   formatTimecode,
   freezeFrameClip,
   makeClipsForAsset,
   parseTimecode,
+  pasteClipGroup,
   removeClips,
   resolveOverlaps,
   reverseClipGroup,
@@ -25,6 +31,8 @@ import {
   splitClipsAt,
 } from '../src/shared/project';
 import { autoPlanEdit, findBestMoments } from '../src/shared/autoPlanner';
+import { mergeShortcutBindings } from '../src/shared/shortcuts';
+import { collectMediaFiles } from '../src/main/engine/ffmpeg';
 import { MediaAsset, Transcript } from '../src/shared/types';
 
 describe('ColorGrade & 3D LUT', () => {
@@ -220,5 +228,65 @@ describe('Project Timeline Ops, Timecode, Captions & AutoPlanner', () => {
     expect(plan).toBeDefined();
     expect(plan!.shots.length).toBeGreaterThan(0);
     expect(plan!.music).toBeDefined();
+  });
+
+  it('supports sticky edges, clip paste, solid clips, shortcut clearing, and folder import scanning', () => {
+    const proj = createEmptyProject();
+    const vTrack = proj.videoTracks[0].id;
+    const aTrack = proj.audioTracks[0].id;
+    const asset: MediaAsset = {
+      id: 'v1',
+      path: 'clip.mp4',
+      name: 'clip.mp4',
+      kind: 'video',
+      duration: 10,
+      width: 1280,
+      height: 720,
+      fps: 30,
+      hasAudio: true,
+    };
+    proj.assets.push(asset);
+    const first = makeClipsForAsset(proj, asset, 0, vTrack, aTrack, 0, 3);
+    const second = makeClipsForAsset(proj, asset, 3, vTrack, aTrack, 3, 2);
+    proj.clips.push(...first, ...second);
+
+    applyStickyEdgeShift(
+      proj,
+      new Set(first.map((c) => c.id)),
+      new Set([vTrack, aTrack]),
+      3,
+      -0.5
+    );
+    expect(proj.clips.find((c) => c.id === second[0].id)!.start).toBeCloseTo(2.5, 3);
+    expect(proj.clips.find((c) => c.id === second[1].id)!.start).toBeCloseTo(2.5, 3);
+
+    const pasted = pasteClipGroup(proj, first, 8);
+    expect(pasted.length).toBe(2);
+    expect(pasted[0].linkID).toBe(pasted[1].linkID);
+    expect(pasted[0].linkID).not.toBe(first[0].linkID);
+
+    const solid = createSolidClip(proj, '#FF4A1C', 12, 2);
+    expect(solid.kind).toBe('solid');
+    expect(solid.color?.r).toBeCloseTo(1, 2);
+
+    const cleared = mergeShortcutBindings({ toggleSnap: '' });
+    expect(cleared.find((b) => b.id === 'toggleSnap')?.combo).toBe('');
+
+    const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'vectrail-folder-'));
+    try {
+      const sub = path.join(tmpRoot, 'B-Roll');
+      fs.mkdirSync(sub, { recursive: true });
+      fs.writeFileSync(path.join(tmpRoot, 'intro.mp4'), 'x');
+      fs.writeFileSync(path.join(sub, 'shot1.mov'), 'x');
+      fs.writeFileSync(path.join(tmpRoot, '.hidden.mp4'), 'x');
+      fs.writeFileSync(path.join(tmpRoot, 'notes.txt'), 'x');
+      const found = collectMediaFiles([tmpRoot]);
+      const rootName = path.basename(tmpRoot);
+      expect(found.map((f) => path.basename(f.path))).toEqual(['intro.mp4', 'shot1.mov']);
+      expect(found[0].folder).toBe(rootName);
+      expect(found[1].folder).toBe(`${rootName}/B-Roll`);
+    } finally {
+      fs.rmSync(tmpRoot, { recursive: true, force: true });
+    }
   });
 });

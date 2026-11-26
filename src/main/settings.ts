@@ -6,6 +6,7 @@ import { getCacheDir } from './engine/ffmpeg';
 
 interface PersistedSettings {
   cloudAi?: Partial<CloudAiConfig>;
+  autoSave?: boolean;
 }
 
 const DEFAULT_CLOUD_AI: CloudAiConfig = {
@@ -52,6 +53,16 @@ export function saveCloudAiConfig(config: Partial<CloudAiConfig>): CloudAiConfig
   };
   writeSettingsFile({ ...current, cloudAi: next });
   return next;
+}
+
+export function getAutoSaveEnabled(): boolean {
+  return readSettingsFile().autoSave ?? true;
+}
+
+export function setAutoSaveEnabled(enabled: boolean): boolean {
+  const current = readSettingsFile();
+  writeSettingsFile({ ...current, autoSave: enabled });
+  return enabled;
 }
 
 function compareSemver(a: string, b: string): number {

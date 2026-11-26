@@ -1,23 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react';
 import {
   Bookmark,
+  Compass,
   Eye,
   EyeOff,
+  Film,
+  Link2,
   Lock,
   Magnet,
   MousePointer,
+  Maximize2,
   Plus,
   Scissors,
   Sparkles,
   Trash2,
   Type,
   Unlock,
+  X,
   ZoomIn,
   ZoomOut,
 } from 'lucide-react';
 import { AgentCursorState, Clip, ColorGrade, MarkerTint, Project, Track, TransitionKind } from '../../shared/types';
 import { WaveformData } from '../../main/engine/ffmpeg';
 import {
+  applyStickyEdgeShift,
   clipEnd,
   clipName,
   formatTimecode,
@@ -46,6 +52,9 @@ interface TimelinePanelProps {
   selectedIds: string[];
   tool: 'select' | 'cut';
   snapping: boolean;
+  sticky: boolean;
+  showStrip: boolean;
+  skim: boolean;
   zoomPx: number;
   height?: number;
   copiedGrade?: ColorGrade;
@@ -54,8 +63,13 @@ interface TimelinePanelProps {
   agentCursor?: AgentCursorState;
   onSetTool: (t: 'select' | 'cut') => void;
   onToggleSnap: () => void;
+  onToggleSticky: () => void;
+  onToggleStrip: () => void;
+  onToggleSkim: () => void;
   onSetZoom: (z: number) => void;
+  onZoomToFit: () => void;
   onSeek: (t: number) => void;
+  onSkimTime?: (t: number | null) => void;
   onSelectClips: (ids: string[]) => void;
   onMutate: (fn: (p: Project) => void, recordHistory?: boolean) => void;
   onSplitAtPlayhead: () => void;
@@ -82,6 +96,9 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   selectedIds,
   tool,
   snapping,
+  sticky,
+  showStrip,
+  skim,
   zoomPx,
   height = 320,
   copiedGrade,
@@ -90,8 +107,13 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   agentCursor,
   onSetTool,
   onToggleSnap,
+  onToggleSticky,
+  onToggleStrip,
+  onToggleSkim,
   onSetZoom,
+  onZoomToFit,
   onSeek,
+  onSkimTime,
   onSelectClips,
   onMutate,
   onSplitAtPlayhead,
@@ -112,6 +134,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
   const [snapGuide, setSnapGuide] = useState<number | null>(null);
   const [viewportW, setViewportW] = useState<number>(1100);
   const [hoverCursor, setHoverCursor] = useState<string>('default');
+  const [skimX, setSkimX] = useState<number | null>(null);
   const [marquee, setMarquee] = useState<{ x1: number; y1: number; x2: number; y2: number } | null>(null);
   const [contextMenu, setContextMenu] = useState<{ x: number; y: number; clip: Clip } | null>(null);
   const [editingMarkerId, setEditingMarkerId] = useState<string | null>(null);
@@ -157,8 +180,8 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     allRows.push({ track: audioRows[i], label: `A${i + 1}`, y: curY, h: AUDIO_LANE_H });
     curY += AUDIO_LANE_H + LANE_GAP;
   }
-  const latestDragHandlersRef = useRef({ onMutate, onSeek, onSelectClips, snapping, zoomPx, allRows });
-  latestDragHandlersRef.current = { onMutate, onSeek, onSelectClips, snapping, zoomPx, allRows };
+  const latestDragHandlersRef = useRef({ onMutate, onSeek, onSkimTime, onSelectClips, snapping, sticky, zoomPx, allRows });
+  latestDragHandlersRef.current = { onMutate, onSeek, onSkimTime, onSelectClips, snapping, sticky, zoomPx, allRows };
   const totalH = Math.max(240, curY + 12);
   const maxDur = Math.max(20, projectDuration(project) + 8);
   const totalW = Math.max(viewportW, Math.ceil(maxDur * zoomPx));
@@ -252,7 +275,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
         ctx.fillStyle = clip.kind === 'audio' ? colAudio : colVideo;
         ctx.fillRect(x, y, w, h);
 
-        if (clip.kind === 'video' || clip.kind === 'image') {
+        if (showStrip && (clip.kind === 'video' || clip.kind === 'image')) {
           const strip = clip.assetID ? thumbs[clip.assetID] ?? [] : [];
           if (strip.length > 0) {
             const tileW = 46;
@@ -269,6 +292,12 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
             ctx.fillStyle = 'rgba(0,0,0,0.3)';
             ctx.fillRect(x, y, w, 16);
           }
+        } else if (clip.kind === 'solid') {
+          ctx.fillStyle = `rgba(${Math.round((clip.color?.r ?? 0.2) * 255)},${Math.round((clip.color?.g ?? 0.2) * 255)},${Math.round((clip.color?.b ?? 0.25) * 255)},0.85)`;
+          ctx.fillRect(x, y, w, h);
+        } else if (clip.kind === 'text') {
+          ctx.fillStyle = 'rgba(255, 74, 28, 0.14)';
+          ctx.fillRect(x, y, w, h);
         }
 
         if (clip.kind === 'audio' && clip.assetID && waveforms[clip.assetID]) {
@@ -430,7 +459,19 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       ctx.lineWidth = 1;
       ctx.strokeRect(mx + 0.5, my + 0.5, Math.max(1, mw - 1), Math.max(1, mh - 1));
     }
-  }, [project, playhead, selectedIds, zoomPx, thumbs, waveforms, snapGuide, agentCursor, marquee, totalW, totalH]);
+
+    if (skim && skimX !== null) {
+      const sx = Math.round(skimX) + 0.5;
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.55)';
+      ctx.lineWidth = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.beginPath();
+      ctx.moveTo(sx, RULER_H);
+      ctx.lineTo(sx, totalH);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }, [project, playhead, selectedIds, zoomPx, showStrip, skim, skimX, thumbs, waveforms, snapGuide, agentCursor, marquee, totalW, totalH]);
 
   const hitTestClip = (x: number, y: number): { clip: Clip; edge: 'body' | 'left' | 'right' | 'trans' } | undefined => {
     for (const row of allRows) {
@@ -458,6 +499,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
     drag: NonNullable<typeof dragRef.current>,
     x: number,
     useSnap: boolean,
+    useSticky: boolean,
     pxPerSec: number,
     finalize: boolean
   ): number | null => {
@@ -524,8 +566,17 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
         const target = findSnap(origEnd + d);
         if (snappedAt !== null) d = Math.min(hi, Math.max(lo, target - origEnd));
       }
+      const newEnd = snapFrame(origEnd + d, p.fps);
+      const edgeDelta = newEnd - origEnd;
+      const trackIDs = new Set<string>();
       for (const c of p.clips) {
-        if (group.has(c.id)) trimClipTail(c, snapFrame(origEnd + d, p.fps));
+        if (group.has(c.id)) {
+          trackIDs.add(c.trackID);
+          trimClipTail(c, newEnd);
+        }
+      }
+      if (useSticky && Math.abs(edgeDelta) > 1e-4) {
+        applyStickyEdgeShift(p, group, trackIDs, origEnd, edgeDelta);
       }
     }
     if (finalize) resolveOverlaps(p, group);
@@ -543,8 +594,10 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       const {
         onMutate: mutateFn,
         onSeek: seekFn,
+        onSkimTime: skimFn,
         onSelectClips: selectFn,
         snapping: useSnap,
+        sticky: useSticky,
         zoomPx: pxPerSec,
         allRows: rows,
       } = latestDragHandlersRef.current;
@@ -579,10 +632,15 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       }
       if (!drag.clipID) return;
       let snappedAt: number | null = null;
+      let trimPreviewTime: number | null = null;
       mutateFn((p) => {
-        snappedAt = computeDragResult(p, drag, x, useSnap, pxPerSec, false);
+        snappedAt = computeDragResult(p, drag, x, useSnap, useSticky, pxPerSec, false);
+        const primary = p.clips.find((c) => c.id === drag.clipID);
+        if (primary && drag.mode === 'trimL') trimPreviewTime = primary.start + 0.01;
+        else if (primary && drag.mode === 'trimR') trimPreviewTime = Math.max(primary.start, clipEnd(primary) - 0.02);
       }, false);
       setSnapGuide(snappedAt);
+      if (trimPreviewTime !== null) skimFn?.(trimPreviewTime);
     };
 
     const onWinUp = () => {
@@ -592,8 +650,9 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       setSnapGuide(null);
       setMarquee(null);
       setHoverCursor(tool === 'cut' ? 'crosshair' : 'default');
-      const { onMutate: mutateFn, onSeek: seekFn, onSelectClips: selectFn, snapping: useSnap, zoomPx: pxPerSec } =
+      const { onMutate: mutateFn, onSeek: seekFn, onSkimTime: skimFn, onSelectClips: selectFn, snapping: useSnap, sticky: useSticky, zoomPx: pxPerSec } =
         latestDragHandlersRef.current;
+      skimFn?.(null);
       if (drag.mode === 'marquee') {
         if (!drag.moved) {
           if (!drag.additive) selectFn([]);
@@ -606,7 +665,7 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
           Object.assign(p, JSON.parse(JSON.stringify(drag.snapshot)) as Project);
         }, false);
         mutateFn((p) => {
-          computeDragResult(p, drag, drag.lastX, useSnap, pxPerSec, true);
+          computeDragResult(p, drag, drag.lastX, useSnap, useSticky, pxPerSec, true);
         }, true);
       }
     };
@@ -744,13 +803,20 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
 
   const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
     if (dragRef.current) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    if (skim) {
+      setSkimX(x);
+      onSkimTime?.(Math.max(0, x / zoomPx));
+    } else if (skimX !== null) {
+      setSkimX(null);
+      onSkimTime?.(null);
+    }
     if (tool === 'cut') {
       setHoverCursor('crosshair');
       return;
     }
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
     const hit = y > RULER_H ? hitTestClip(x, y) : undefined;
     if (!hit) setHoverCursor('default');
     else setHoverCursor(hit.edge === 'body' ? 'grab' : hit.edge === 'trans' ? 'col-resize' : 'ew-resize');
@@ -875,6 +941,50 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
               {agentCursor.activity ? ` · ${agentCursor.activity}` : ''}
             </div>
           )}
+          {project.playRange && (
+            <div
+              className="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px]"
+              style={{ background: 'var(--raised)', border: '1px solid var(--stroke)', color: 'var(--text-dim)' }}
+            >
+              <button
+                onClick={() => onSeek(project.playRange!.in)}
+                className="mono-num hover:underline"
+                title="Go to In (I)"
+              >
+                In {formatTimecode(project.playRange.in, project.fps, true)}
+              </button>
+              <span>–</span>
+              <button
+                onClick={() => onSeek(project.playRange!.out)}
+                className="mono-num hover:underline"
+                title="Go to Out (O)"
+              >
+                Out {formatTimecode(project.playRange.out, project.fps, true)}
+              </button>
+              <button
+                onClick={() =>
+                  onMutate((p) => {
+                    delete p.playRange;
+                  })
+                }
+                className="ml-0.5 hover:opacity-80"
+                title="Clear In / Out (Alt+X)"
+              >
+                <X size={10} />
+              </button>
+            </div>
+          )}
+          <button
+            onClick={onToggleStrip}
+            className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px]"
+            style={{
+              background: showStrip ? 'var(--raised)' : 'transparent',
+              color: showStrip ? 'var(--text)' : 'var(--text-faint)',
+            }}
+            title="Filmstrip Thumbnails (Shift+T)"
+          >
+            <Film size={12} strokeWidth={1.5} /> Strip
+          </button>
           <button
             onClick={onToggleSnap}
             className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px]"
@@ -882,9 +992,31 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
               background: snapping ? 'var(--raised)' : 'transparent',
               color: snapping ? 'var(--text)' : 'var(--text-faint)',
             }}
-            title="Snapping (S)"
+            title="Snapping (N)"
           >
             <Magnet size={12} strokeWidth={1.5} /> Snap
+          </button>
+          <button
+            onClick={onToggleSticky}
+            className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px]"
+            style={{
+              background: sticky ? 'var(--raised)' : 'transparent',
+              color: sticky ? 'var(--text)' : 'var(--text-faint)',
+            }}
+            title="Sticky Edges (R): move downstream clips when trimming"
+          >
+            <Link2 size={12} strokeWidth={1.5} /> Sticky
+          </button>
+          <button
+            onClick={onToggleSkim}
+            className="inline-flex items-center gap-1 px-2 py-1 rounded text-[11px]"
+            style={{
+              background: skim ? 'var(--raised)' : 'transparent',
+              color: skim ? 'var(--accent)' : 'var(--text-faint)',
+            }}
+            title="Skimming (Y): hover timeline to preview frames"
+          >
+            <Compass size={12} strokeWidth={1.5} /> Skim
           </button>
           <button
             onClick={() => onSetZoom(Math.max(12, zoomPx * 0.8))}
@@ -901,6 +1033,14 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
             title="Zoom In (+)"
           >
             <ZoomIn size={13} />
+          </button>
+          <button
+            onClick={onZoomToFit}
+            className="p-1 rounded"
+            style={{ color: 'var(--text-dim)' }}
+            title="Zoom to Fit (Shift+Z)"
+          >
+            <Maximize2 size={12} />
           </button>
         </div>
       </div>
@@ -1009,6 +1149,10 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
             onContextMenu={(e) => e.preventDefault()}
             onMouseDown={handleMouseDown}
             onMouseMove={handleMouseMove}
+            onMouseLeave={() => {
+              if (skimX !== null) setSkimX(null);
+              onSkimTime?.(null);
+            }}
           />
         </div>
       </div>

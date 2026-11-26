@@ -405,15 +405,12 @@ export function detachAudioLinks(p: Project, seedIds: string[]): string[] {
   return [...group];
 }
 
-export function duplicateClips(p: Project, seedIds: string[], startAt?: number): Clip[] {
-  const groupIds = linkedIds(p, seedIds);
-  const group = p.clips.filter((c) => groupIds.has(c.id));
+export function cloneClipGroup(group: Clip[], startAt: number, fps: number): Clip[] {
   if (!group.length) return [];
   const t0 = Math.min(...group.map((c) => c.start));
-  const defaultAt = Math.max(...group.map((c) => clipEnd(c)));
-  const at = snapFrame(Math.max(0, startAt ?? defaultAt), p.fps);
+  const at = snapFrame(Math.max(0, startAt), fps);
   const linkMap = new Map<string, string>();
-  const copies: Clip[] = group.map((orig) => {
+  return group.map((orig) => {
     const copy = JSON.parse(JSON.stringify(orig)) as Clip;
     copy.id = newId();
     if (copy.linkID) {
@@ -427,9 +424,75 @@ export function duplicateClips(p: Project, seedIds: string[], startAt?: number):
     copy.start = at + (orig.start - t0);
     return copy;
   });
+}
+
+export function duplicateClips(p: Project, seedIds: string[], startAt?: number): Clip[] {
+  const groupIds = linkedIds(p, seedIds);
+  const group = p.clips.filter((c) => groupIds.has(c.id));
+  if (!group.length) return [];
+  const defaultAt = Math.max(...group.map((c) => clipEnd(c)));
+  const copies = cloneClipGroup(group, startAt ?? defaultAt, p.fps);
   p.clips.push(...copies);
   resolveOverlaps(p, new Set(copies.map((c) => c.id)));
   return copies;
+}
+
+export function pasteClipGroup(p: Project, sourceClips: Clip[], startAt: number): Clip[] {
+  const copies = cloneClipGroup(sourceClips, startAt, p.fps);
+  for (const copy of copies) {
+    const list = copy.kind === 'audio' ? p.audioTracks : p.videoTracks;
+    if (!list.some((t) => t.id === copy.trackID) && list[0]) {
+      copy.trackID = list[0].id;
+    }
+  }
+  p.clips.push(...copies);
+  resolveOverlaps(p, new Set(copies.map((c) => c.id)));
+  return copies;
+}
+
+export function applyStickyEdgeShift(
+  p: Project,
+  excludeIds: Set<string>,
+  trackIDs: Set<string>,
+  edgeTime: number,
+  delta: number
+): void {
+  if (Math.abs(delta) < 1e-4) return;
+  const eps = 0.025;
+  const candidates = p.clips
+    .filter((c) => !excludeIds.has(c.id) && trackIDs.has(c.trackID) && c.start >= edgeTime - eps)
+    .map((c) => c.id);
+  if (!candidates.length) return;
+  const affected = linkedIds(p, candidates);
+  for (const c of p.clips) {
+    if (excludeIds.has(c.id) || !affected.has(c.id)) continue;
+    c.start = snapFrame(Math.max(0, c.start + delta), p.fps);
+  }
+}
+
+export function createSolidClip(
+  p: Project,
+  colorHex = '#111216',
+  start = 0,
+  duration = 3,
+  trackID?: string
+): Clip {
+  const rgba = hexToRgba(colorHex) ?? { r: 0.07, g: 0.07, b: 0.09, a: 1 };
+  const vTrack =
+    trackID && p.videoTracks.some((t) => t.id === trackID)
+      ? trackID
+      : p.videoTracks[0]?.id ?? addTrack(p, 'video').id;
+  const clip: Clip = {
+    id: newId(),
+    trackID: vTrack,
+    kind: 'solid',
+    start: snapFrame(Math.max(0, start), p.fps),
+    duration: Math.max(MIN_CLIP_SECONDS, duration),
+    color: rgba,
+  };
+  p.clips.push(clip);
+  resolveOverlaps(p, new Set([clip.id]));
+  return clip;
 }
 
 export function freezeFrameClip(p: Project, clipID: string, atTime?: number, holdSeconds = 2): Clip | undefined {

@@ -131,6 +131,7 @@ export interface MediaAsset {
   path: string;
   relativePath?: string;
   playablePath?: string;
+  folder?: string;
   name: string;
   kind: MediaKind;
   duration: number;

@@ -11,6 +11,7 @@ import {
 } from '../shared/types';
 import { cloneProject, createEmptyProject, sanitizeProject } from '../shared/project';
 import {
+  collectMediaFiles,
   ensurePlayableProxy,
   extractThumbnailStrip,
   extractWaveform,
@@ -18,6 +19,7 @@ import {
   probeMediaAsset,
   WaveformData,
 } from './engine/ffmpeg';
+import { getAutoSaveEnabled } from './settings';
 import {
   analyzeMusicAsset,
   analyzeVisualAsset,
@@ -62,6 +64,7 @@ export class ProjectStore {
   readonly exports: ExportManager;
   private listeners = new Set<(snap: EditorSnapshot) => void>();
   private agentClearTimer?: NodeJS.Timeout;
+  private autoSaveTimer?: NodeJS.Timeout;
   private pendingWarmups = new Set<Promise<void>>();
 
   constructor() {
@@ -112,6 +115,7 @@ export class ProjectStore {
     mutator(this.project);
     sanitizeProject(this.project);
     this.isDirty = true;
+    this.scheduleAutoSave();
     this.emit();
   }
 
@@ -124,7 +128,23 @@ export class ProjectStore {
     this.project = cloneProject(nextProject);
     sanitizeProject(this.project);
     this.isDirty = true;
+    this.scheduleAutoSave();
     this.emit();
+  }
+
+  private scheduleAutoSave(): void {
+    if (this.autoSaveTimer) clearTimeout(this.autoSaveTimer);
+    if (!this.filePath || !getAutoSaveEnabled()) return;
+    this.autoSaveTimer = setTimeout(() => {
+      this.autoSaveTimer = undefined;
+      if (this.filePath && this.isDirty && getAutoSaveEnabled()) {
+        try {
+          this.saveToFile();
+        } catch {
+          // ignore background autosave failure
+        }
+      }
+    }, 2500);
   }
 
   undo(): boolean {
@@ -240,15 +260,23 @@ export class ProjectStore {
 
   async importFiles(paths: string[]): Promise<MediaAsset[]> {
     const added: MediaAsset[] = [];
-    for (const rawPath of paths) {
-      const resolved = path.resolve(rawPath);
+    const expanded = collectMediaFiles(paths);
+    for (const entry of expanded) {
+      const resolved = entry.path;
       if (!fs.existsSync(resolved)) continue;
       const existing = this.project.assets.find((a) => path.resolve(a.path) === resolved);
       if (existing) {
+        if (entry.folder && existing.folder !== entry.folder) {
+          this.mutate((p) => {
+            const target = p.assets.find((a) => a.id === existing.id);
+            if (target) target.folder = entry.folder;
+          }, false);
+        }
         added.push(existing);
         continue;
       }
       const asset = await probeMediaAsset(resolved);
+      if (entry.folder) asset.folder = entry.folder;
       this.mutate((p) => {
         p.assets.push(asset);
         if (!p.settingsLocked && p.clips.length === 0 && asset.kind === 'video' && asset.width > 0 && asset.height > 0) {
@@ -261,6 +289,32 @@ export class ProjectStore {
       void this.warmAsset(asset);
     }
     return added;
+  }
+
+  async reloadAsset(assetID: string): Promise<MediaAsset | undefined> {
+    const existing = this.project.assets.find((a) => a.id === assetID);
+    if (!existing || !fs.existsSync(existing.path)) return undefined;
+    const probed = await probeMediaAsset(existing.path);
+    this.mutate((p) => {
+      const target = p.assets.find((a) => a.id === assetID);
+      if (!target) return;
+      target.duration = probed.duration;
+      target.width = probed.width;
+      target.height = probed.height;
+      target.fps = probed.fps;
+      target.hasAudio = probed.hasAudio;
+      delete target.playablePath;
+    }, false);
+    const updated = this.project.assets.find((a) => a.id === assetID);
+    if (updated) void this.warmAsset(updated);
+    return updated;
+  }
+
+  deleteAsset(assetID: string): void {
+    this.mutate((p) => {
+      p.assets = p.assets.filter((a) => a.id !== assetID);
+      p.clips = p.clips.filter((c) => c.assetID !== assetID);
+    }, true);
   }
 
   async warmAsset(asset: MediaAsset): Promise<void> {

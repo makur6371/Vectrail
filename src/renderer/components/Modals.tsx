@@ -1,35 +1,57 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Check, Plug, RefreshCw, RotateCcw, Sparkles, X } from 'lucide-react';
-import { AppUpdateInfo, CloudAiConfig, ExportSettings, MediaAsset, Project } from '../../shared/types';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Check, Copy, Plug, RefreshCw, RotateCcw, Sparkles, X } from 'lucide-react';
+import { AppUpdateInfo, CloudAiConfig, ExportSettings, MediaAsset, Project, Transcript } from '../../shared/types';
 import { AppThemeName, THEMES } from '../../shared/themes';
 import { AgentTarget, AgentTargetStatus, MagicBackend } from '../../main/magic/agentConnect';
 import { MCPStatusInfo } from '../../preload';
-import { computeExportRenderSize } from '../../shared/project';
+import { computeExportRenderSize, formatTimecode, projectDuration } from '../../shared/project';
 import { DEFAULT_SHORTCUTS, formatEventCombo, mergeShortcutBindings, ShortcutActionId } from '../../shared/shortcuts';
 import type { WhisperStatus } from '../../main/engine/analyzer';
+import { PreviewCompositor } from '../engine/compositor';
 
 export const ExportModal: React.FC<{
   project: Project;
   title: string;
+  transcripts?: Record<string, Transcript>;
   onClose: () => void;
   onStart: (s: ExportSettings) => void;
-}> = ({ project, title, onClose, onStart }) => {
+}> = ({ project, title, transcripts = {}, onClose, onStart }) => {
   const [format, setFormat] = useState<'video' | 'audio'>('video');
   const [shape, setShape] = useState<'original' | 'vertical' | 'square' | 'portrait'>('original');
   const [height, setHeight] = useState<number>(project.height);
   const [codec, setCodec] = useState<'h264' | 'hevc'>('h264');
   const [quality, setQuality] = useState<'high' | 'web'>('high');
+  const [includeAudio, setIncludeAudio] = useState(true);
   const [loudness, setLoudness] = useState<string>('-14');
   const [rangeOnly, setRangeOnly] = useState(false);
   const [enhanceDetail, setEnhanceDetail] = useState(false);
+  const [fileName, setFileName] = useState(title || 'Vectrail-Export');
+  const totalDur = Math.max(0.1, projectDuration(project));
+  const [previewTime, setPreviewTime] = useState<number>(Math.min(0.8, totalDur * 0.25));
+  const previewCanvasRef = useRef<HTMLCanvasElement | null>(null);
+  const previewCompRef = useRef<PreviewCompositor | null>(null);
+  if (!previewCompRef.current) previewCompRef.current = new PreviewCompositor();
 
   const size = computeExportRenderSize(project, shape, height);
   const isUpscaling = size.height > project.height;
 
+  useEffect(() => {
+    if (format === 'audio') return;
+    const draw = () => {
+      const canvas = previewCanvasRef.current;
+      if (!canvas || !previewCompRef.current) return;
+      const previewProj: Project = { ...project, width: size.width, height: size.height };
+      previewCompRef.current.syncMediaElements(previewProj, previewTime, false);
+      previewCompRef.current.renderFrame(canvas, previewProj, previewTime, transcripts);
+    };
+    previewCompRef.current?.setOnReady(draw);
+    draw();
+  }, [format, project, size.width, size.height, previewTime, transcripts]);
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
       <div
-        className="w-[420px] rounded-xl p-4 space-y-3"
+        className="w-[460px] rounded-xl p-4 space-y-3"
         style={{ background: 'var(--sheet)', border: '1px solid var(--sheet-field-stroke)' }}
       >
         <div className="flex items-center justify-between">
@@ -38,6 +60,44 @@ export const ExportModal: React.FC<{
             <X size={15} />
           </button>
         </div>
+
+        {format === 'video' && (
+          <div className="space-y-1.5">
+            <div
+              className="w-full h-40 rounded-lg flex items-center justify-center overflow-hidden"
+              style={{ background: '#050506', border: '1px solid var(--stroke)' }}
+            >
+              <canvas
+                ref={previewCanvasRef}
+                width={Math.max(240, Math.round((160 * size.width) / Math.max(1, size.height)))}
+                height={160}
+                className="max-w-full max-h-full object-contain"
+              />
+            </div>
+            <div className="flex items-center gap-2 text-[10px]" style={{ color: 'var(--text-dim)' }}>
+              <span className="mono-num w-16">{formatTimecode(previewTime, project.fps, true)}</span>
+              <input
+                type="range"
+                min={0}
+                max={totalDur}
+                step={0.05}
+                value={previewTime}
+                onChange={(e) => setPreviewTime(Number(e.target.value))}
+                className="flex-1"
+              />
+            </div>
+          </div>
+        )}
+
+        <label className="block text-[11px]">
+          File Name
+          <input
+            value={fileName}
+            onChange={(e) => setFileName(e.target.value)}
+            className="mt-1 w-full px-2 py-1.5 rounded outline-none"
+            style={{ background: 'var(--sheet-field)', border: '1px solid var(--sheet-field-stroke)', color: 'var(--text)' }}
+          />
+        </label>
 
         <div className="grid grid-cols-2 gap-2 text-[11px]">
           <label>
@@ -122,6 +182,12 @@ export const ExportModal: React.FC<{
             Export In/Out range only
           </label>
         )}
+        {format === 'video' && (
+          <label className="flex items-center gap-2 text-[11px]">
+            <input type="checkbox" checked={includeAudio} onChange={(e) => setIncludeAudio(e.target.checked)} />
+            Include audio track mix
+          </label>
+        )}
         <label className="flex items-center gap-2 text-[11px]">
           <input
             type="checkbox"
@@ -143,13 +209,13 @@ export const ExportModal: React.FC<{
                 height,
                 codec,
                 quality,
-                includeAudio: true,
+                includeAudio,
                 loudness: loudness ? Number(loudness) : undefined,
                 rangeOnly,
                 enhanceDetail: enhanceDetail || isUpscaling,
                 reframeX: 0.5,
                 reframeY: 0.5,
-                name: title,
+                name: fileName.trim() || title || 'Vectrail-Export',
               });
               onClose();
             }}
@@ -398,6 +464,8 @@ export const SettingsModal: React.FC<{
   const [updateBusy, setUpdateBusy] = useState(false);
   const [dlBusy, setDlBusy] = useState(false);
   const [dlErr, setDlErr] = useState('');
+  const [autoSave, setAutoSave] = useState(true);
+  const [copiedPrompt, setCopiedPrompt] = useState(false);
   const [recordingId, setRecordingId] = useState<ShortcutActionId | null>(null);
 
   useEffect(() => {
@@ -405,6 +473,7 @@ export const SettingsModal: React.FC<{
     void window.vectrail.getAgentStatuses().then(setAgents);
     void window.vectrail.getWhisperStatus().then(setWhisper);
     void window.vectrail.getCloudAiConfig().then(setCloudAi);
+    void window.vectrail.getAutoSave().then(setAutoSave);
   }, []);
 
   useEffect(() => {
@@ -618,6 +687,31 @@ export const SettingsModal: React.FC<{
               </div>
             ))}
           </div>
+          <div
+            className="flex items-center justify-between px-2.5 py-2 rounded mt-2"
+            style={{ background: 'var(--sheet-field)', border: '1px solid var(--sheet-field-stroke)' }}
+          >
+            <div>
+              <div className="text-[11px] font-medium">Connect another AI app</div>
+              <div className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                Copy MCP setup prompt for Cursor, Windsurf, or custom clients
+              </div>
+            </div>
+            <button
+              onClick={() => {
+                const endpoint = mcp?.endpoint ?? 'http://127.0.0.1:47920/mcp';
+                const text = `Connect to the local Vectrail MCP video editor server at ${endpoint} (HTTP JSON-RPC 2.0 POST, or check %APPDATA%\\Vectrail\\Runtime\\mcp-port.json for the active port) and call initialize + tools/list to start editing.`;
+                void navigator.clipboard.writeText(text);
+                setCopiedPrompt(true);
+                setTimeout(() => setCopiedPrompt(false), 1600);
+              }}
+              className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-[11px]"
+              style={{ background: 'var(--button)', color: 'var(--text)' }}
+            >
+              {copiedPrompt ? <Check size={11} /> : <Copy size={11} />}
+              {copiedPrompt ? 'Copied' : 'Copy Prompt'}
+            </button>
+          </div>
         </div>
 
             <div>
@@ -661,8 +755,24 @@ export const SettingsModal: React.FC<{
 
             <div>
               <div className="text-[10px] font-semibold tracking-[0.08em] mb-2" style={{ color: 'var(--text-dim)' }}>
-                ABOUT & UPDATES
+                PROJECT & UPDATES
               </div>
+              <label
+                className="flex items-center justify-between px-2.5 py-2 rounded mb-2 cursor-pointer"
+                style={{ background: 'var(--sheet-field)', border: '1px solid var(--sheet-field-stroke)' }}
+              >
+                <div>
+                  <div className="text-[11px] font-medium">Auto-save saved projects</div>
+                  <div className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                    Automatically writes edits to the opened .vectrail file
+                  </div>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={autoSave}
+                  onChange={async (e) => setAutoSave(await window.vectrail.setAutoSave(e.target.checked))}
+                />
+              </label>
               <div
                 className="flex items-center justify-between px-2.5 py-2 rounded"
                 style={{ background: 'var(--sheet-field)', border: '1px solid var(--sheet-field-stroke)' }}
@@ -732,16 +842,41 @@ export const SettingsModal: React.FC<{
                   style={{ background: 'var(--sheet-field)', border: '1px solid var(--sheet-field-stroke)' }}
                 >
                   <span className="text-[11px]">{b.label}</span>
-                  <button
-                    onClick={() => setRecordingId(b.id)}
-                    className="mono-num px-2 py-0.5 rounded text-[10px]"
-                    style={{
-                      background: recordingId === b.id ? 'var(--accent)' : 'var(--button)',
-                      color: recordingId === b.id ? '#FFF' : 'var(--text)',
-                    }}
-                  >
-                    {recordingId === b.id ? 'Press key...' : b.combo}
-                  </button>
+                  <div className="flex items-center gap-1">
+                    <button
+                      onClick={() => setRecordingId(b.id)}
+                      className="mono-num px-2 py-0.5 rounded text-[10px]"
+                      style={{
+                        background: recordingId === b.id ? 'var(--accent)' : 'var(--button)',
+                        color: recordingId === b.id ? '#FFF' : b.combo ? 'var(--text)' : 'var(--text-faint)',
+                      }}
+                    >
+                      {recordingId === b.id ? 'Press key...' : b.combo || 'None'}
+                    </button>
+                    {b.combo && (
+                      <button
+                        onClick={() => onUpdateShortcuts({ ...shortcutMap, [b.id]: '' })}
+                        className="p-1 rounded hover:opacity-80"
+                        style={{ color: 'var(--text-faint)' }}
+                        title="Clear shortcut"
+                      >
+                        <X size={11} />
+                      </button>
+                    )}
+                    {b.combo !== DEFAULT_SHORTCUTS.find((d) => d.id === b.id)?.combo && (
+                      <button
+                        onClick={() => {
+                          const defCombo = DEFAULT_SHORTCUTS.find((d) => d.id === b.id)?.combo ?? '';
+                          onUpdateShortcuts({ ...shortcutMap, [b.id]: defCombo });
+                        }}
+                        className="p-1 rounded hover:opacity-80"
+                        style={{ color: 'var(--text-dim)' }}
+                        title="Restore default"
+                      >
+                        <RotateCcw size={10} />
+                      </button>
+                    )}
+                  </div>
                 </div>
               ))}
             </div>
