@@ -186,15 +186,49 @@ export class ProjectStore {
     this.agentCursor = {
       name: cursor.name,
       activity: cursor.activity,
+      targetKind: cursor.targetKind,
+      assetID: cursor.assetID,
       clipID: cursor.clipID,
+      trackID: cursor.trackID,
       time: cursor.time,
+      toolName: cursor.toolName,
       updatedAt: Date.now(),
     };
     if (this.agentClearTimer) clearTimeout(this.agentClearTimer);
     this.agentClearTimer = setTimeout(() => {
       this.agentCursor = undefined;
       this.emit();
-    }, 5000);
+    }, 12000);
+    this.emit();
+  }
+
+  createDraftClone(): ProjectStore {
+    const draft = new ProjectStore();
+    draft.project = cloneProject(this.project);
+    draft.filePath = this.filePath;
+    draft.playhead = this.playhead;
+    draft.waveforms = { ...this.waveforms };
+    draft.thumbs = { ...this.thumbs };
+    draft.clipAnalyses = { ...this.clipAnalyses };
+    draft.musicAnalyses = { ...this.musicAnalyses };
+    draft.transcripts = { ...this.transcripts };
+    draft.sceneTags = { ...this.sceneTags };
+    return draft;
+  }
+
+  commitMagicProject(nextProject: Project, prompt?: string, tab?: string): void {
+    this.undoStack.push(cloneProject(this.project));
+    if (this.undoStack.length > 100) this.undoStack.shift();
+    this.redoStack = [];
+    this.project = cloneProject(nextProject);
+    if (prompt && prompt.trim()) {
+      const trimmed = prompt.trim();
+      const prev = (this.project.magicHistory ?? []).filter((h) => h.text !== trimmed);
+      this.project.magicHistory = [{ text: trimmed, tab: tab ?? 'local', timestamp: Date.now() }, ...prev].slice(0, 24);
+    }
+    sanitizeProject(this.project);
+    this.isDirty = true;
+    this.scheduleAutoSave();
     this.emit();
   }
 

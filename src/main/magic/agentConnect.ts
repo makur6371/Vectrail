@@ -1,15 +1,15 @@
-import { spawn } from 'node:child_process';
+import { ChildProcess, spawn } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { ProjectStore } from '../state';
 import { callMCPTool, MCP_TOOL_DEFINITIONS } from '../mcp/tools';
-import { MCP_DEFAULT_PORT } from '../mcp/server';
+import { MCP_DEFAULT_PORT, MCPServer } from '../mcp/server';
 import { getCacheDir } from '../engine/ffmpeg';
 import { getCloudAiConfig } from '../settings';
 import { BUILT_IN_LOOKS } from '../../shared/colorGrade';
-import { clipName } from '../../shared/project';
-import { CloudAiConfig } from '../../shared/types';
+import { clipName, cloneProject, snapFrame } from '../../shared/project';
+import { CloudAiConfig, MagicProgressEvent, MagicRunResult } from '../../shared/types';
 
 export type AgentTarget = 'codex' | 'claudeCode' | 'claudeDesktop';
 
@@ -271,6 +271,56 @@ export function disconnectAgent(target: AgentTarget): AgentTargetStatus[] {
 
 export type MagicBackend = 'cloud' | 'local' | 'codex' | 'claude';
 
+interface ActiveMagicControl {
+  runId: string;
+  aborted: boolean;
+  abortHandlers: Array<() => void>;
+}
+
+let activeMagicControl: ActiveMagicControl | undefined;
+
+export function cancelMagicRun(runId?: string): boolean {
+  if (!activeMagicControl) return false;
+  if (runId && activeMagicControl.runId !== runId) return false;
+  activeMagicControl.aborted = true;
+  for (const fn of activeMagicControl.abortHandlers) {
+    try {
+      fn();
+    } catch {
+      // ignore cleanup errors
+    }
+  }
+  activeMagicControl.abortHandlers = [];
+  return true;
+}
+
+function sleepMs(ms: number, ctrl?: ActiveMagicControl): Promise<void> {
+  return new Promise((resolve) => {
+    if (ctrl?.aborted) {
+      resolve();
+      return;
+    }
+    const timer = setTimeout(resolve, ms);
+    ctrl?.abortHandlers.push(() => {
+      clearTimeout(timer);
+      resolve();
+    });
+  });
+}
+
+function workerDisplayName(backend: MagicBackend): string {
+  switch (backend) {
+    case 'claude':
+      return 'Claude';
+    case 'codex':
+      return 'Codex';
+    case 'cloud':
+      return 'Cloud AI';
+    default:
+      return 'Local';
+  }
+}
+
 function extractJsonObject(text: string): Record<string, unknown> {
   const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/i);
   const candidate = (fenced ? fenced[1] : text).trim();
@@ -319,7 +369,9 @@ async function runCloudAiMagic(
   store: ProjectStore,
   matchedAssets: Array<{ id: string; name: string; kind: string; duration: number }>,
   targetClipIds: string[],
-  usesPlayhead: boolean
+  usesPlayhead: boolean,
+  ctrl?: ActiveMagicControl,
+  onProgress?: (ev: MagicProgressEvent) => void
 ): Promise<{ ok: boolean; summary: string; steps?: string[] }> {
   const cfg = getCloudAiConfig();
   if (!cfg.apiKey.trim()) {
@@ -356,10 +408,18 @@ async function runCloudAiMagic(
     toolDocs,
   ].join('\n');
 
-  store.setAgentCursor({ name: `Cloud (${cfg.model})`, activity: 'planning edit...' });
+  onProgress?.({
+    runId: ctrl?.runId ?? '',
+    stage: 'thinking',
+    worker: 'Cloud AI',
+    status: `Planning with ${cfg.model}`,
+  });
+  const abortController = new AbortController();
+  ctrl?.abortHandlers.push(() => abortController.abort());
   const baseUrl = cfg.baseUrl.replace(/\/+$/, '');
   const res = await fetch(`${baseUrl}/chat/completions`, {
     method: 'POST',
+    signal: abortController.signal,
     headers: {
       'Content-Type': 'application/json',
       Authorization: `Bearer ${cfg.apiKey.trim()}`,
@@ -373,6 +433,9 @@ async function runCloudAiMagic(
       ],
     }),
   });
+  if (ctrl?.aborted) {
+    return { ok: false, summary: 'Stopped.', steps: [] };
+  }
   const raw = await res.text();
   if (!res.ok) {
     throw new Error(`Cloud AI HTTP ${res.status}: ${raw.slice(0, 240)}`);
@@ -391,9 +454,17 @@ async function runCloudAiMagic(
 
   const ranSteps: string[] = [];
   for (const step of steps.slice(0, 16)) {
+    if (ctrl?.aborted) break;
     if (!step.tool) continue;
     await callMCPTool(step.tool, step.args ?? {}, store, `Cloud (${cfg.model})`);
     ranSteps.push(step.tool);
+    onProgress?.({
+      runId: ctrl?.runId ?? '',
+      stage: 'thinking',
+      worker: 'Cloud AI',
+      status: `Sketching ${step.tool.replace(/_/g, ' ')}`,
+      draftProject: cloneProject(store.project),
+    });
   }
   return {
     ok: true,
@@ -429,153 +500,381 @@ export async function runMagicPrompt(
   prompt: string,
   backend: MagicBackend,
   store: ProjectStore,
-  selectedClipIds: string[]
-): Promise<{ ok: boolean; summary: string; steps?: string[] }> {
-  const trimmed = prompt.trim();
-  if (!trimmed) throw new Error('Enter a Magic instruction first.');
-  const { matchedAssets, targetClipIds, usesPlayhead } = resolveMagicMentions(trimmed, store, selectedClipIds);
-
-  if (backend === 'cloud') {
-    return runCloudAiMagic(trimmed, store, matchedAssets, targetClipIds, usesPlayhead);
+  selectedClipIds: string[],
+  options?: {
+    runId?: string;
+    mcpServer?: MCPServer;
+    onProgress?: (ev: MagicProgressEvent) => void;
   }
+): Promise<MagicRunResult> {
+  const startedAt = Date.now();
+  const trimmed = prompt.trim();
+  const effectivePrompt =
+    trimmed ||
+    (store.project.clips.length > 0
+      ? 'Tighten and polish this edit with balanced pacing, look, and sound.'
+      : 'Make the best cut you can from the clips and music in Media.');
 
-  if (backend === 'local') {
-    const lower = trimmed.toLowerCase();
-    const actions: string[] = [];
+  const runId = options?.runId ?? `magic-${Date.now()}`;
+  const worker = workerDisplayName(backend);
+  const ctrl: ActiveMagicControl = { runId, aborted: false, abortHandlers: [] };
+  cancelMagicRun();
+  activeMagicControl = ctrl;
 
-    if (lower.includes('undo') || lower.includes('撤销')) {
-      await callMCPTool('history', { action: 'undo' }, store, 'Magic');
-      return { ok: true, summary: 'Undid the previous edit.' };
+  const onProgress = options?.onProgress;
+  const useDraft = Boolean(onProgress);
+  const beforeProject = cloneProject(store.project);
+  const draftStore = useDraft ? store.createDraftClone() : store;
+
+  const emitStage = (
+    stage: MagicProgressEvent['stage'],
+    status?: string,
+    focusAssetId?: string,
+    draftProject?: MagicProgressEvent['draftProject']
+  ) => {
+    if (ctrl.aborted) return;
+    onProgress?.({ runId, stage, worker, status, focusAssetId, draftProject });
+  };
+
+  try {
+    emitStage('looking', 'Going through your media');
+    await sleepMs(380, ctrl);
+    if (ctrl.aborted) return { ok: false, cancelled: true, summary: 'Stopped.', worker };
+
+    const visualAssets = draftStore.project.assets.filter((a) => a.kind !== 'audio');
+    if (visualAssets.length > 0) {
+      const scanCount = Math.min(visualAssets.length, 4);
+      for (let i = 0; i < scanCount; i++) {
+        if (ctrl.aborted) return { ok: false, cancelled: true, summary: 'Stopped.', worker };
+        emitStage('analyzing', `Analyzing ${i + 1} of ${visualAssets.length}`, visualAssets[i].id);
+        await sleepMs(260, ctrl);
+      }
+    } else {
+      emitStage('analyzing', 'Reading timeline');
+      await sleepMs(240, ctrl);
     }
-    if (lower.includes('redo') || lower.includes('重做')) {
-      await callMCPTool('history', { action: 'redo' }, store, 'Magic');
-      return { ok: true, summary: 'Redid the edit.' };
-    }
+    if (ctrl.aborted) return { ok: false, cancelled: true, summary: 'Stopped.', worker };
 
-    const wantsMontage =
-      lower.includes('auto') ||
-      lower.includes('montage') ||
-      lower.includes('beat') ||
-      lower.includes('cut') ||
-      lower.includes('混剪') ||
-      lower.includes('节奏') ||
-      store.project.clips.length === 0;
-    if (wantsMontage && store.project.assets.length > 0 && !lower.includes('only grade')) {
-      const onlyIds = matchedAssets.length ? matchedAssets.map((a) => a.id) : undefined;
-      await callMCPTool('auto_edit', onlyIds ? { only: onlyIds } : {}, store, 'Magic');
-      actions.push('Built montage cut');
-    }
+    const { matchedAssets, targetClipIds, usesPlayhead } = resolveMagicMentions(
+      effectivePrompt,
+      draftStore,
+      selectedClipIds
+    );
 
-    const activeTargets = targetClipIds.length
-      ? targetClipIds
-      : store.project.clips.filter((c) => c.kind !== 'audio').map((c) => c.id);
+    let outcome: { ok: boolean; summary: string; steps?: string[] };
 
-    if (lower.includes('slow') || lower.includes('ramp') || lower.includes('慢放') || lower.includes('变速')) {
-      const speedMatch = lower.match(/(\d+(?:\.\d+)?)\s*x/);
-      const spd = speedMatch ? Math.min(10, Math.max(0.1, Number(speedMatch[1]))) : 0.5;
-      for (const cid of activeTargets.slice(0, 3)) {
-        if (lower.includes('ramp') || lower.includes('变速')) {
-          await callMCPTool('set_speed_ramp', { clip_id: cid, speed: spd }, store, 'Magic');
-        } else {
-          await callMCPTool('set_speed', { clip_id: cid, speed: spd }, store, 'Magic');
+    if (backend === 'cloud') {
+      outcome = await runCloudAiMagic(
+        effectivePrompt,
+        draftStore,
+        matchedAssets,
+        targetClipIds,
+        usesPlayhead,
+        ctrl,
+        onProgress
+      );
+    } else if (backend === 'local') {
+      const lower = effectivePrompt.toLowerCase();
+      const actions: string[] = [];
+      emitStage('thinking', 'Sketching edit');
+
+      if (lower.includes('undo') || lower.includes('撤销')) {
+        await callMCPTool('history', { action: 'undo' }, store, 'Local');
+        return { ok: true, summary: 'Undid the previous edit.', worker, changed: false };
+      }
+      if (lower.includes('redo') || lower.includes('重做')) {
+        await callMCPTool('history', { action: 'redo' }, store, 'Local');
+        return { ok: true, summary: 'Redid the edit.', worker, changed: false };
+      }
+
+      // Frame shape adjustments (vertical 9:16, square 1:1, portrait 4:5, horizontal 16:9)
+      if (lower.includes('vertical') || lower.includes('9:16') || lower.includes('reel') || lower.includes('tiktok') || lower.includes('竖屏')) {
+        await callMCPTool('set_sequence', { width: 1080, height: 1920, lock: true }, draftStore, 'Local');
+        actions.push('Set 9:16 vertical frame');
+      } else if (lower.includes('square') || lower.includes('1:1') || lower.includes('方形')) {
+        await callMCPTool('set_sequence', { width: 1080, height: 1080, lock: true }, draftStore, 'Local');
+        actions.push('Set 1:1 square frame');
+      } else if (lower.includes('portrait') || lower.includes('4:5')) {
+        await callMCPTool('set_sequence', { width: 1080, height: 1350, lock: true }, draftStore, 'Local');
+        actions.push('Set 4:5 portrait frame');
+      } else if (lower.includes('horizontal') || lower.includes('16:9') || lower.includes('横屏')) {
+        await callMCPTool('set_sequence', { width: 1920, height: 1080, lock: true }, draftStore, 'Local');
+        actions.push('Set 16:9 widescreen frame');
+      }
+
+      const wantsNewCut =
+        lower.includes('auto') ||
+        lower.includes('montage') ||
+        lower.includes('highlight') ||
+        lower.includes('beat') ||
+        lower.includes('quick cut') ||
+        lower.includes('new ') ||
+        lower.includes('timelapse') ||
+        lower.includes('calm') ||
+        lower.includes('混剪') ||
+        lower.includes('节奏') ||
+        draftStore.project.clips.length === 0;
+
+      if (wantsNewCut && draftStore.project.assets.length > 0 && !lower.includes('only grade')) {
+        const secMatch = lower.match(/(\d{1,3})\s*(?:s|sec|second|seconds|秒)/);
+        const targetSec = secMatch ? Math.min(180, Math.max(5, Number(secMatch[1]))) : undefined;
+        const pace =
+          lower.includes('fast') || lower.includes('quick') || lower.includes('punchy')
+            ? 'fast'
+            : lower.includes('calm') || lower.includes('slow')
+            ? 'slow'
+            : undefined;
+        const onlyIds = matchedAssets.length ? matchedAssets.map((a) => a.id) : undefined;
+        await callMCPTool(
+          'auto_edit',
+          {
+            ...(onlyIds ? { only: onlyIds } : {}),
+            ...(targetSec ? { duration: targetSec } : {}),
+            ...(pace ? { pace } : {}),
+          },
+          draftStore,
+          'Local'
+        );
+        actions.push(targetSec ? `Built ${targetSec}s beat-synced cut` : 'Built beat-synced cut');
+        emitStage('thinking', 'Laying out timeline', undefined, cloneProject(draftStore.project));
+        await sleepMs(260, ctrl);
+      }
+
+      if (lower.includes('tighten') || lower.includes('shorter') || lower.includes('clean')) {
+        const vClips = draftStore.project.clips.filter((c) => c.kind !== 'audio').sort((a, b) => a.start - b.start);
+        if (vClips.length > 0) {
+          draftStore.mutate((draft) => {
+            const fps = draft.fps || 30;
+            for (const vt of draft.videoTracks) {
+              const lane = draft.clips.filter((c) => c.trackID === vt.id && c.kind !== 'text').sort((a, b) => a.start - b.start);
+              let cursor = lane[0]?.start ?? 0;
+              for (const c of lane) {
+                if (c.duration > 1.6) {
+                  const trimAmt = Math.min(0.35, c.duration * 0.16);
+                  c.sourceStart = (c.sourceStart ?? 0) + trimAmt * 0.5;
+                  c.duration = snapFrame(Math.max(0.7, c.duration - trimAmt), fps);
+                }
+                c.start = snapFrame(cursor, fps);
+                cursor = c.start + c.duration;
+              }
+            }
+          });
+          actions.push('Tightened shot pacing');
+          emitStage('thinking', 'Tightening pacing', undefined, cloneProject(draftStore.project));
         }
       }
-      if (activeTargets.length) actions.push(`Set speed ${spd}x`);
-    }
 
-    const matchedLook = BUILT_IN_LOOKS.find((l) => lower.includes(l.name.toLowerCase()));
-    if (matchedLook || lower.includes('warm') || lower.includes('film') || lower.includes('grade') || lower.includes('color') || lower.includes('调色')) {
-      const lookName = matchedLook?.name ?? (lower.includes('black') || lower.includes('bw') ? 'Black & White' : 'Warm film');
-      if (activeTargets.length) {
-        await callMCPTool('set_grade', { clip_ids: activeTargets, look: lookName }, store, 'Magic');
-        actions.push(`Applied ${lookName} grade`);
+      if (lower.includes('even out') || lower.includes('level') || lower.includes('normalize')) {
+        const aClips = draftStore.project.clips.filter((c) => c.kind === 'audio' || c.kind === 'video');
+        if (aClips.length > 0) {
+          draftStore.mutate((draft) => {
+            for (const c of draft.clips) {
+              if (c.kind === 'audio') c.gainDB = -6;
+            }
+          });
+          actions.push('Balanced audio levels');
+        }
       }
-    }
 
-    if (lower.includes('dissolve') || lower.includes('wipe') || lower.includes('dip') || lower.includes('transition') || lower.includes('转场')) {
-      const kind = lower.includes('wipe') ? 'wipe' : lower.includes('dip') ? 'dipToBlack' : 'dissolve';
-      const vClips = store.project.clips.filter((c) => c.kind !== 'audio').sort((a, b) => a.start - b.start);
-      for (let i = 1; i < vClips.length; i++) {
-        await callMCPTool('set_transition', { clip_id: vClips[i].id, kind, duration: 0.4 }, store, 'Magic');
+      const activeTargets = targetClipIds.length
+        ? targetClipIds
+        : draftStore.project.clips.filter((c) => c.kind !== 'audio').map((c) => c.id);
+
+      if (
+        lower.includes('timelapse') ||
+        lower.includes('slow') ||
+        lower.includes('ramp') ||
+        lower.includes('慢放') ||
+        lower.includes('变速') ||
+        /\d+(?:\.\d+)?\s*x/.test(lower)
+      ) {
+        const speedMatch = lower.match(/(\d+(?:\.\d+)?)\s*x/);
+        const spd = speedMatch
+          ? Math.min(16, Math.max(0.1, Number(speedMatch[1])))
+          : lower.includes('timelapse')
+          ? 8
+          : 0.5;
+        for (const cid of activeTargets.slice(0, 6)) {
+          if (lower.includes('ramp') || lower.includes('变速')) {
+            await callMCPTool('set_speed_ramp', { clip_id: cid, speed: spd }, draftStore, 'Local');
+          } else {
+            await callMCPTool('set_speed', { clip_id: cid, speed: spd }, draftStore, 'Local');
+          }
+        }
+        if (activeTargets.length) actions.push(`Set speed ${spd}x`);
       }
-      if (vClips.length > 1) actions.push(`Added ${kind} transitions`);
-    }
 
-    if (lower.includes('zoom') || lower.includes('推拉') || lower.includes('缩放')) {
-      const mode = lower.includes('out') ? 'out' : lower.includes('inout') ? 'inOut' : 'in';
-      for (const cid of activeTargets.slice(0, 3)) {
-        await callMCPTool('set_zoom', { clip_id: cid, mode, amount: 1.25 }, store, 'Magic');
+      const matchedLook = BUILT_IN_LOOKS.find((l) => lower.includes(l.name.toLowerCase()));
+      if (
+        matchedLook ||
+        lower.includes('warm') ||
+        lower.includes('film') ||
+        lower.includes('grade') ||
+        lower.includes('color') ||
+        lower.includes('black') ||
+        lower.includes('调色')
+      ) {
+        const lookName =
+          matchedLook?.name ??
+          (lower.includes('black') || lower.includes('bw') ? 'Black & White' : 'Film print');
+        if (activeTargets.length) {
+          await callMCPTool('set_grade', { clip_ids: activeTargets, look: lookName }, draftStore, 'Local');
+          actions.push(`Applied ${lookName} look`);
+        }
       }
-      if (activeTargets.length) actions.push(`Applied zoom ${mode}`);
+
+      if (
+        lower.includes('dissolve') ||
+        lower.includes('wipe') ||
+        lower.includes('dip') ||
+        lower.includes('transition') ||
+        lower.includes('smooth') ||
+        lower.includes('转场')
+      ) {
+        const kind = lower.includes('wipe') ? 'wipe' : lower.includes('dip') ? 'dipToBlack' : 'dissolve';
+        const vClips = draftStore.project.clips.filter((c) => c.kind !== 'audio').sort((a, b) => a.start - b.start);
+        for (let i = 1; i < vClips.length; i++) {
+          await callMCPTool('set_transition', { clip_id: vClips[i].id, kind, duration: 0.4 }, draftStore, 'Local');
+        }
+        if (vClips.length > 1) actions.push(`Added ${kind} transitions`);
+      }
+
+      if (lower.includes('zoom') || lower.includes('推拉') || lower.includes('缩放')) {
+        const mode = lower.includes('out') ? 'out' : lower.includes('inout') ? 'inOut' : 'in';
+        for (const cid of activeTargets.slice(0, 3)) {
+          await callMCPTool('set_zoom', { clip_id: cid, mode, amount: 1.25 }, draftStore, 'Local');
+        }
+        if (activeTargets.length) actions.push(`Applied zoom ${mode}`);
+      }
+
+      const titleMatch = effectivePrompt.match(/(?:title|标题)\s*[:：]?\s*["“]?([^"”\n]+)["”]?/i);
+      if (titleMatch && titleMatch[1]) {
+        await callMCPTool(
+          'add_title',
+          { text: titleMatch[1].trim(), start: usesPlayhead ? draftStore.playhead : 0, duration: 3 },
+          draftStore,
+          'Local'
+        );
+        actions.push(`Added title "${titleMatch[1].trim()}"`);
+      }
+
+      if (lower.includes('caption') || lower.includes('subtitle') || lower.includes('字幕')) {
+        await callMCPTool('set_captions', {}, draftStore, 'Local');
+        actions.push('Enabled captions');
+      }
+
+      if (lower.includes('export') || lower.includes('导出')) {
+        const shape =
+          lower.includes('vertical') || lower.includes('9:16') || lower.includes('竖屏')
+            ? 'vertical'
+            : lower.includes('square') || lower.includes('1:1')
+            ? 'square'
+            : 'original';
+        const res = await callMCPTool('export', { shape, wait: false }, draftStore, 'Local');
+        actions.push(res[0].type === 'text' ? res[0].text : 'Export started');
+      }
+
+      if (actions.length === 0 && draftStore.project.assets.length > 0) {
+        const res = await callMCPTool('auto_edit', {}, draftStore, 'Local');
+        actions.push(res[0].type === 'text' ? res[0].text : 'Built auto-cut');
+      }
+
+      emitStage('thinking', 'Preparing edit', undefined, cloneProject(draftStore.project));
+      await sleepMs(680, ctrl);
+      outcome = {
+        ok: true,
+        summary: actions.length ? actions.join(' · ') : 'Nothing needed changing.',
+        steps: actions,
+      };
+    } else {
+      const cli = backend === 'codex' ? findOnPath('codex') : findOnPath('claude');
+      if (!cli) {
+        throw new Error(`${worker} CLI was not found on PATH. Connect ${worker} in Settings -> AI Agents.`);
+      }
+
+      const mentionNote = matchedAssets.length
+        ? `Mentioned assets: ${matchedAssets.map((a) => `${a.name} (${a.id})`).join(', ')}. `
+        : '';
+      const contextLine = targetClipIds.length ? `Target clip ids: ${targetClipIds.join(', ')}. ` : '';
+      const fullPrompt = `You are editing in Vectrail for Windows via the vectrail MCP server. Playhead is at ${draftStore.playhead.toFixed(2)}s. ${contextLine}User request: ${effectivePrompt}`;
+      const fullPromptWithMentions = `${fullPrompt} ${mentionNote}`.trim();
+      const args =
+        backend === 'codex'
+          ? ['exec', '--skip-git-repo-check', fullPromptWithMentions]
+          : ['-p', fullPromptWithMentions];
+
+      emitStage('thinking', `${worker} is planning`);
+
+      if (useDraft && options?.mcpServer) {
+        options.mcpServer.setMagicDraft(draftStore, (toolName, toolArgs, activeDraft) => {
+          if (ctrl.aborted) return;
+          if (toolName === 'look_at_media' || toolName === 'analyze_media') {
+            const assetId = typeof toolArgs.asset_id === 'string' ? toolArgs.asset_id : undefined;
+            emitStage('analyzing', `${toolName.replace(/_/g, ' ')}`, assetId);
+          } else if (toolName === 'get_frame') {
+            emitStage('thinking', 'Inspecting frame', undefined, cloneProject(activeDraft.project));
+          } else {
+            emitStage('thinking', `Planning ${toolName.replace(/_/g, ' ')}`, undefined, cloneProject(activeDraft.project));
+          }
+        });
+      }
+
+      outcome = await new Promise<{ ok: boolean; summary: string; steps?: string[] }>((resolve, reject) => {
+        const needsShell = process.platform === 'win32' && /\.(cmd|bat)$/i.test(cli);
+        const proc: ChildProcess = spawn(cli, args, { windowsHide: true, shell: needsShell });
+        ctrl.abortHandlers.push(() => {
+          try {
+            proc.kill();
+          } catch {
+            // ignore kill error
+          }
+        });
+        let out = '';
+        let err = '';
+        proc.stdout?.on('data', (d: Buffer) => (out += d.toString('utf8')));
+        proc.stderr?.on('data', (d: Buffer) => (err += d.toString('utf8')));
+        proc.on('error', reject);
+        proc.on('close', (code) => {
+          if (ctrl.aborted) {
+            resolve({ ok: false, summary: 'Stopped.' });
+          } else if (code === 0) {
+            resolve({ ok: true, summary: out.trim() || `${worker} edit complete.` });
+          } else {
+            reject(new Error(err.trim() || out.trim() || `${worker} exited with code ${code}`));
+          }
+        });
+      });
     }
 
-    const titleMatch = trimmed.match(/(?:title|标题)\s*[:：]?\s*["“]?([^"”\n]+)["”]?/i);
-    if (titleMatch && titleMatch[1]) {
-      await callMCPTool(
-        'add_title',
-        { text: titleMatch[1].trim(), start: usesPlayhead ? store.playhead : 0, duration: 3 },
-        store,
-        'Magic'
-      );
-      actions.push(`Added title "${titleMatch[1].trim()}"`);
+    if (ctrl.aborted) {
+      return { ok: false, cancelled: true, summary: 'Stopped.', worker };
     }
 
-    if (lower.includes('caption') || lower.includes('subtitle') || lower.includes('字幕')) {
-      await callMCPTool('set_captions', {}, store, 'Magic');
-      actions.push('Enabled captions');
+    const afterProject = cloneProject(draftStore.project);
+    const changed = JSON.stringify(beforeProject) !== JSON.stringify(afterProject);
+    const durationMs = Date.now() - startedAt;
+    const detail = [
+      backend === 'cloud' ? getCloudAiConfig().model : backend === 'local' ? 'On this PC' : `${worker} MCP`,
+      `${Math.max(1, Math.round(durationMs / 1000))}s`,
+    ].join(' · ');
+
+    if (!useDraft && changed) {
+      store.commitMagicProject(afterProject, trimmed, backend);
     }
 
-    if (lower.includes('export') || lower.includes('导出')) {
-      const shape =
-        lower.includes('vertical') || lower.includes('9:16') || lower.includes('竖屏')
-          ? 'vertical'
-          : lower.includes('square') || lower.includes('1:1')
-          ? 'square'
-          : 'original';
-      const res = await callMCPTool('export', { shape, wait: false }, store, 'Magic');
-      actions.push(res[0].type === 'text' ? res[0].text : 'Export started');
+    return {
+      ...outcome,
+      worker,
+      detail,
+      changed,
+      durationMs,
+      beforeProject,
+      afterProject,
+    };
+  } finally {
+    options?.mcpServer?.setMagicDraft(undefined);
+    if (activeMagicControl?.runId === runId) {
+      activeMagicControl = undefined;
     }
-
-    if (actions.length > 0) {
-      return { ok: true, summary: actions.join(' · '), steps: actions };
-    }
-    const res = await callMCPTool('auto_edit', {}, store, 'Magic');
-    const msg = res[0].type === 'text' ? res[0].text : 'Built auto-cut.';
-    return { ok: true, summary: msg, steps: ['auto_edit'] };
   }
-
-  const cli = backend === 'codex' ? findOnPath('codex') : findOnPath('claude');
-  if (!cli) {
-    throw new Error(`${backend === 'codex' ? 'Codex' : 'Claude'} CLI was not found on PATH.`);
-  }
-
-  const mentionNote = matchedAssets.length
-    ? `Mentioned assets: ${matchedAssets.map((a) => `${a.name} (${a.id})`).join(', ')}. `
-    : '';
-  const contextLine = targetClipIds.length ? `Target clip ids: ${targetClipIds.join(', ')}. ` : '';
-  const fullPrompt = `You are editing in Vectrail for Windows via the vectrail MCP server. Playhead is at ${store.playhead.toFixed(2)}s. ${contextLine}User request: ${trimmed}`;
-  const fullPromptWithMentions = `${fullPrompt} ${mentionNote}`.trim();
-  const args =
-    backend === 'codex'
-      ? ['exec', '--skip-git-repo-check', fullPromptWithMentions]
-      : ['-p', fullPromptWithMentions];
-
-  store.setAgentCursor({ name: backend === 'codex' ? 'Codex' : 'Claude', activity: 'working on Magic edit' });
-
-  return new Promise((resolve, reject) => {
-    const needsShell = process.platform === 'win32' && /\.(cmd|bat)$/i.test(cli);
-    const proc = spawn(cli, args, { windowsHide: true, shell: needsShell });
-    let out = '';
-    let err = '';
-    proc.stdout.on('data', (d: Buffer) => (out += d.toString('utf8')));
-    proc.stderr.on('data', (d: Buffer) => (err += d.toString('utf8')));
-    proc.on('error', reject);
-    proc.on('close', (code) => {
-      if (code === 0) {
-        resolve({ ok: true, summary: out.trim() || 'Magic edit complete.' });
-      } else {
-        reject(new Error(err.trim() || out.trim() || `${backend} exited with code ${code}`));
-      }
-    });
-  });
 }

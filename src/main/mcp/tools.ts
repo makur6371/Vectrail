@@ -260,8 +260,30 @@ export async function callMCPTool(
   clientName = 'Agent'
 ): Promise<MCPContentBlock[]> {
   const p = store.project;
-  const touchCursor = (activity: string, clipID?: string, time?: number) => {
-    store.setAgentCursor({ name: clientName, activity, clipID, time });
+  const touchCursor = (
+    activity: string,
+    clipID?: string,
+    time?: number,
+    extra?: {
+      targetKind?: 'asset' | 'viewer' | 'clip' | 'track' | 'inspector' | 'timeline';
+      assetID?: string;
+      trackID?: string;
+    }
+  ) => {
+    const clip = clipID ? store.project.clips.find((c) => c.id === clipID) : undefined;
+    const inferredKind =
+      extra?.targetKind ??
+      (clipID ? 'clip' : extra?.assetID ? 'asset' : time !== undefined ? 'timeline' : undefined);
+    store.setAgentCursor({
+      name: clientName,
+      activity,
+      clipID,
+      trackID: extra?.trackID ?? clip?.trackID,
+      assetID: extra?.assetID ?? clip?.assetID,
+      targetKind: inferredKind,
+      time: time ?? clip?.start,
+      toolName: name,
+    });
   };
 
   switch (name) {
@@ -302,7 +324,10 @@ export async function callMCPTool(
 
     case 'analyze_media': {
       const asset = requireAsset(args, p);
-      touchCursor(`analyzing ${asset.name}`);
+      touchCursor(`analyzing ${asset.name}`, undefined, undefined, {
+        targetKind: 'asset',
+        assetID: asset.id,
+      });
       if (asset.kind === 'audio') {
         const m = await analyzeMusicAsset(asset);
         if (!m) throw new Error(`Could not analyze audio for ${asset.name}`);
@@ -338,7 +363,10 @@ export async function callMCPTool(
       if (asset.kind === 'image' || (!asset.hasAudio && asset.kind !== 'audio')) {
         return jsonOut({ asset_id: asset.id, status: 'no_sound', words: [] });
       }
-      touchCursor(`transcribing ${asset.name}`);
+      touchCursor(`transcribing ${asset.name}`, undefined, undefined, {
+        targetKind: 'asset',
+        assetID: asset.id,
+      });
       const tr = await store.transcribeAsset(asset.id, String(args.language ?? 'auto'));
       return jsonOut({
         asset_id: asset.id,
@@ -369,7 +397,10 @@ export async function callMCPTool(
     case 'look_at_media': {
       const asset = requireAsset(args, p);
       if (asset.kind === 'audio') throw new Error(`${asset.name} is audio-only; use analyze_media for beats.`);
-      touchCursor(`looking at ${asset.name}`);
+      touchCursor(`looking at ${asset.name}`, undefined, undefined, {
+        targetKind: 'asset',
+        assetID: asset.id,
+      });
       const frames = asNum(args.frames) ?? 6;
       const times = Array.isArray(args.times) ? args.times.map(Number).filter(Number.isFinite) : undefined;
       const sheet = await buildContactSheet(asset, frames, times);
@@ -396,6 +427,7 @@ export async function callMCPTool(
     case 'get_frame': {
       if (!p.clips.length) throw new Error('Timeline is empty.');
       const t = asNum(args.time) ?? store.playhead;
+      touchCursor(`inspecting frame at ${r3(t)}s`, undefined, t, { targetKind: 'viewer' });
       const activeClips = [...p.clips]
         .filter((c) => {
           if (c.kind === 'audio' || c.start > t || clipEnd(c) < t) return false;
@@ -747,7 +779,7 @@ export async function callMCPTool(
           c.grade = isGradeNeutral(g) ? undefined : g;
         }
       });
-      touchCursor('grading clips', ids[0]);
+      touchCursor('grading clips', ids[0], undefined, { targetKind: 'inspector' });
       return jsonOut(ids.map((id) => clipToJson(store.project.clips.find((x) => x.id === id)!, store.project)));
     }
 

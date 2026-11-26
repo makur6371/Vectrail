@@ -7,6 +7,7 @@ import { getCacheDir } from './engine/ffmpeg';
 interface PersistedSettings {
   cloudAi?: Partial<CloudAiConfig>;
   autoSave?: boolean;
+  magicAnimated?: boolean;
 }
 
 const DEFAULT_CLOUD_AI: CloudAiConfig = {
@@ -62,6 +63,16 @@ export function getAutoSaveEnabled(): boolean {
 export function setAutoSaveEnabled(enabled: boolean): boolean {
   const current = readSettingsFile();
   writeSettingsFile({ ...current, autoSave: enabled });
+  return enabled;
+}
+
+export function getMagicAnimated(): boolean {
+  return readSettingsFile().magicAnimated ?? true;
+}
+
+export function setMagicAnimated(enabled: boolean): boolean {
+  const current = readSettingsFile();
+  writeSettingsFile({ ...current, magicAnimated: enabled });
   return enabled;
 }
 

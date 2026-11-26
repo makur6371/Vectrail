@@ -1,6 +1,25 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Check, Copy, Plug, RefreshCw, RotateCcw, Sparkles, X } from 'lucide-react';
-import { AppUpdateInfo, CloudAiConfig, ExportSettings, MediaAsset, Project, Transcript } from '../../shared/types';
+import {
+  Check,
+  ChevronDown,
+  Copy,
+  History,
+  Lightbulb,
+  Plug,
+  RefreshCw,
+  RotateCcw,
+  Sparkles,
+  X,
+} from 'lucide-react';
+import {
+  AppUpdateInfo,
+  CloudAiConfig,
+  ExportSettings,
+  MagicHistoryEntry,
+  MediaAsset,
+  Project,
+  Transcript,
+} from '../../shared/types';
 import { AppThemeName, THEMES } from '../../shared/themes';
 import { AgentTarget, AgentTargetStatus, MagicBackend } from '../../main/magic/agentConnect';
 import { MCPStatusInfo } from '../../preload';
@@ -230,29 +249,107 @@ export const ExportModal: React.FC<{
   );
 };
 
+interface MagicIdea {
+  name: string;
+  prompt: string;
+}
+
+const IDEAS_IMPROVE: MagicIdea[] = [
+  {
+    name: 'Tighten it',
+    prompt: 'Make this shorter so people keep watching: trim slow starts and ends of shots.',
+  },
+  {
+    name: 'Cut to the beat',
+    prompt: 'Recut this to the beat of the music with energetic pacing.',
+  },
+  {
+    name: 'Smooth it out',
+    prompt: 'Smooth this out with clean dissolve transitions and balanced levels.',
+  },
+  {
+    name: 'One look',
+    prompt: 'Give every shot the Warm film look so it feels like one cohesive film.',
+  },
+];
+
+const IDEAS_CREATE: MagicIdea[] = [
+  {
+    name: 'Highlight reel',
+    prompt: 'Make a 30 second highlight cut of the best moments to the beat of the music.',
+  },
+  {
+    name: 'Vertical reel',
+    prompt: 'Make a fast 20 second vertical 9:16 video for Reels and TikTok, cut to the beat.',
+  },
+  {
+    name: 'Timelapse',
+    prompt: 'Make a timelapse over the music: speed every shot up 8x.',
+  },
+  {
+    name: 'Calm cut',
+    prompt: 'Make a calm 45 second story cut with Film print look and gentle dissolves.',
+  },
+];
+
+const IDEAS_SOUND: MagicIdea[] = [
+  {
+    name: 'Even out levels',
+    prompt: 'Make all audio clips the same output level.',
+  },
+];
+
+const MAGIC_TAB_STORAGE_KEY = 'vectrail.magicTab.v1';
+
+function loadSavedMagicTab(): MagicBackend {
+  try {
+    const v = localStorage.getItem(MAGIC_TAB_STORAGE_KEY);
+    if (v === 'claude' || v === 'codex' || v === 'cloud' || v === 'local') return v;
+  } catch {
+    // ignore storage errors
+  }
+  return 'local';
+}
+
 export const MagicPopover: React.FC<{
   assets: MediaAsset[];
   selectedIds: string[];
-  canUndo: boolean;
-  onUndo: () => void;
+  hasEdit: boolean;
+  prompt: string;
+  history: MagicHistoryEntry[];
+  onChangePrompt: (p: string) => void;
+  onSubmit: (prompt: string, backend: MagicBackend) => void;
   onOpenSettings: () => void;
   onClose: () => void;
-}> = ({ assets, selectedIds, canUndo, onUndo, onOpenSettings, onClose }) => {
-  const [prompt, setPrompt] = useState('');
-  const [backend, setBackend] = useState<MagicBackend>('local');
+}> = ({ assets, selectedIds, hasEdit, prompt, history, onChangePrompt, onSubmit, onOpenSettings, onClose }) => {
+  const [backend, setBackend] = useState<MagicBackend>(loadSavedMagicTab);
   const [cloudReady, setCloudReady] = useState(false);
-  const [busy, setBusy] = useState(false);
-  const [msg, setMsg] = useState('');
-  const [steps, setSteps] = useState<string[]>([]);
+  const [cloudModel, setCloudModel] = useState('gpt-4o-mini');
+  const [agents, setAgents] = useState<AgentTargetStatus[]>([]);
+  const [connecting, setConnecting] = useState(false);
+  const [ideasOpen, setIdeasOpen] = useState(false);
+  const [historyOpen, setHistoryOpen] = useState(false);
   const [mentionIndex, setMentionIndex] = useState(0);
 
   useEffect(() => {
     void window.vectrail.getCloudAiConfig().then((cfg) => {
       const ready = Boolean(cfg.apiKey.trim());
       setCloudReady(ready);
-      if (ready) setBackend('cloud');
+      setCloudModel(cfg.model || 'gpt-4o-mini');
     });
+    void window.vectrail.getAgentStatuses().then(setAgents);
   }, []);
+
+  const selectTab = (next: MagicBackend) => {
+    setBackend(next);
+    setIdeasOpen(false);
+    setHistoryOpen(false);
+    try {
+      localStorage.setItem(MAGIC_TAB_STORAGE_KEY, next);
+    } catch {
+      // ignore storage errors
+    }
+  };
 
   const mentionQuery = useMemo(() => {
     const m = prompt.match(/@([^\s]*)$/);
@@ -274,173 +371,385 @@ export const MagicPopover: React.FC<{
   }, [mentionQuery]);
 
   const insertMention = (label: string) => {
-    setPrompt((prev) => prev.replace(/@([^\s]*)$/, `@${label} `));
+    onChangePrompt(prompt.replace(/@([^\s]*)$/, `@${label} `));
   };
 
-  const run = async () => {
-    if (!prompt.trim() || busy) return;
-    setBusy(true);
-    setMsg('');
-    setSteps([]);
+  const claudeStatus = agents.find((a) => a.id === 'claudeCode');
+  const codexStatus = agents.find((a) => a.id === 'codex');
+  const activeExternalStatus = backend === 'claude' ? claudeStatus : backend === 'codex' ? codexStatus : undefined;
+  const needsExternalConnect =
+    (backend === 'claude' || backend === 'codex') && activeExternalStatus && !activeExternalStatus.connected;
+  const missingExternalCli =
+    (backend === 'claude' || backend === 'codex') && activeExternalStatus && !activeExternalStatus.installed;
+
+  const handleConnectExternal = async () => {
+    if (!activeExternalStatus || connecting) return;
+    setConnecting(true);
     try {
-      const res = await window.vectrail.runMagic(prompt, backend, selectedIds);
-      setMsg(res.summary);
-      setSteps(res.steps ?? []);
-    } catch (err) {
-      setMsg(err instanceof Error ? err.message : String(err));
+      const next = await window.vectrail.connectAgent(activeExternalStatus.id);
+      setAgents(next);
     } finally {
-      setBusy(false);
+      setConnecting(false);
     }
   };
 
-  const backends: Array<{ id: MagicBackend; label: string }> = [
-    { id: 'cloud', label: 'Cloud AI' },
-    { id: 'local', label: 'Rules' },
-    { id: 'codex', label: 'Codex' },
-    { id: 'claude', label: 'Claude' },
+  const backends: Array<{ id: MagicBackend; label: string; dot: string }> = [
+    { id: 'claude', label: 'Claude', dot: '#D97757' },
+    { id: 'codex', label: 'Codex', dot: '#10A37F' },
+    { id: 'cloud', label: 'Cloud AI', dot: '#FF6B35' },
+    { id: 'local', label: 'Local', dot: '#EAECEF' },
   ];
 
+  const placeholder = (() => {
+    const name = backends.find((b) => b.id === backend)?.label ?? 'Magic';
+    if (backend === 'local') {
+      return hasEdit
+        ? 'Describe what to change (length, pace, look, music, vertical), or leave empty to polish the cut.'
+        : 'Describe the video you want (length, pace, look, music, vertical), or leave empty for the best cut.';
+    }
+    return hasEdit
+      ? `Describe what to change, or leave empty and ${name} will make the best edit it can.`
+      : `Describe the video you want, or leave empty and ${name} will cut from your Media.`;
+  })();
+
   return (
-    <div className="fixed top-11 right-4 z-50 w-[410px]">
+    <div className="fixed top-11 right-[112px] z-50 w-[392px]">
       <div
         className="rounded-xl p-3.5 space-y-2.5 shadow-2xl backdrop-blur-md"
-        style={{ background: 'rgba(18, 19, 22, 0.96)', border: '1px solid var(--sheet-field-stroke)' }}
+        style={{ background: 'var(--panel)', border: '1px solid var(--sheet-field-stroke)' }}
       >
-        <div className="flex items-center justify-between">
-          <span className="inline-flex items-center gap-1.5 text-[12px] font-semibold">
-            <Sparkles size={13} style={{ color: 'var(--accent)' }} /> Magic
-          </span>
-          <div className="flex items-center gap-2">
-            {backend === 'cloud' && !cloudReady && (
-              <button
-                onClick={onOpenSettings}
-                className="text-[10px] underline"
-                style={{ color: 'var(--accent)' }}
-              >
-                Set API Key
-              </button>
-            )}
-            <button onClick={onClose} style={{ color: 'var(--text-dim)' }} title="Close (Esc)">
-              <X size={14} />
-            </button>
-          </div>
-        </div>
-
-        <textarea
-          autoFocus
-          rows={3}
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder="Cut @clip to the beat, warm film grade, zoom in, or add title at @playhead..."
-          className="w-full p-2.5 rounded-lg text-[12px] outline-none resize-none"
-          style={{ background: 'var(--sheet-field)', color: 'var(--text)', border: '1px solid var(--sheet-field-stroke)' }}
-          onKeyDown={(e) => {
-            if (mentionOptions.length > 0) {
-              if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                setMentionIndex((i) => (i + 1) % mentionOptions.length);
-                return;
-              }
-              if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                setMentionIndex((i) => (i - 1 + mentionOptions.length) % mentionOptions.length);
-                return;
-              }
-              if (e.key === 'Tab' || (e.key === 'Enter' && !e.ctrlKey && !e.metaKey)) {
-                e.preventDefault();
-                insertMention(mentionOptions[mentionIndex].label);
-                return;
-              }
-            }
-            if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) void run();
-            if (e.key === 'Escape') onClose();
-          }}
-        />
-
-        {mentionOptions.length > 0 && (
-          <div
-            className="rounded-lg p-1 space-y-0.5 max-h-36 overflow-y-auto"
-            style={{ background: 'var(--field)', border: '1px solid var(--stroke)' }}
-          >
-            {mentionOptions.map((opt, idx) => (
-              <button
-                key={opt.id}
-                onClick={() => insertMention(opt.label)}
-                className="w-full flex items-center justify-between px-2 py-1 rounded text-[11px]"
-                style={{
-                  background: idx === mentionIndex ? 'var(--hover)' : 'transparent',
-                  color: 'var(--text)',
-                }}
-              >
-                <span>@{opt.label}</span>
-                <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
-                  {opt.sub}
-                </span>
-              </button>
-            ))}
-          </div>
-        )}
-
-        <div className="flex items-center justify-between">
-          <div className="flex gap-1">
-            {backends.map((b) => (
+        <div
+          className="grid grid-cols-4 gap-0.5 p-0.5 rounded-lg"
+          style={{ background: 'var(--bg)' }}
+        >
+          {backends.map((b) => {
+            const active = backend === b.id;
+            return (
               <button
                 key={b.id}
-                onClick={() => setBackend(b.id)}
-                className="px-2 py-1 rounded-full text-[10px] font-medium"
+                onClick={() => selectTab(b.id)}
+                className="inline-flex items-center justify-center gap-1.5 h-7 rounded-md text-[11px] font-semibold transition-colors"
                 style={{
-                  background: backend === b.id ? 'var(--accent)' : 'var(--button)',
-                  color: backend === b.id ? '#FFF' : 'var(--chip)',
+                  background: active ? 'var(--raised)' : 'transparent',
+                  color: active ? 'var(--text)' : 'var(--text-dim)',
+                  border: active ? '1px solid rgba(255,255,255,0.08)' : '1px solid transparent',
                 }}
               >
+                <span className="w-1.5 h-1.5 rounded-full shrink-0" style={{ background: b.dot }} />
                 {b.label}
               </button>
-            ))}
+            );
+          })}
+        </div>
+
+        {missingExternalCli ? (
+          <div className="py-4 px-3 text-center space-y-2.5">
+            <div className="text-[13px] font-semibold">
+              Install {backend === 'claude' ? 'Claude Code' : 'Codex CLI'}
+            </div>
+            <div className="text-[11px] leading-relaxed" style={{ color: 'var(--text-dim)' }}>
+              {backend === 'claude'
+                ? 'Claude Code CLI was not detected on PATH. Install it, then connect Vectrail in one click.'
+                : 'Codex CLI was not detected on PATH. Install it, then connect Vectrail in one click.'}
+            </div>
+            <div className="flex justify-center gap-2 pt-1">
+              <button
+                onClick={onOpenSettings}
+                className="px-3.5 py-1.5 rounded-full text-[11px] font-semibold"
+                style={{ background: 'var(--text)', color: 'var(--on-text)' }}
+              >
+                Open AI Agents
+              </button>
+            </div>
           </div>
+        ) : needsExternalConnect ? (
+          <div className="py-4 px-3 text-center space-y-2.5">
+            <div className="text-[13px] font-semibold">
+              Connect {backend === 'claude' ? 'Claude' : 'Codex'}
+            </div>
+            <div className="text-[11px] leading-relaxed" style={{ color: 'var(--text-dim)' }}>
+              Let {backend === 'claude' ? 'Claude' : 'Codex'} edit directly through Vectrail&apos;s MCP server using your own plan.
+            </div>
+            <div className="flex flex-col items-center gap-1.5 pt-1">
+              <button
+                disabled={connecting}
+                onClick={() => void handleConnectExternal()}
+                className="px-4 py-1.5 rounded-full text-[11px] font-semibold"
+                style={{ background: 'var(--text)', color: 'var(--on-text)' }}
+              >
+                {connecting ? 'Connecting...' : `Connect ${backend === 'claude' ? 'Claude' : 'Codex'}`}
+              </button>
+              <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                No extra API key needed
+              </span>
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="flex items-center justify-between pt-0.5">
+              <span className="text-[12.5px] font-semibold">
+                {hasEdit ? 'What should change?' : 'What should it make?'}
+              </span>
+              <div className="flex items-center gap-1 relative">
+                <button
+                  onClick={() => {
+                    setIdeasOpen((v) => !v);
+                    setHistoryOpen(false);
+                  }}
+                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10.5px]"
+                  style={{ background: 'var(--button)', color: 'var(--text-dim)' }}
+                >
+                  <Lightbulb size={11} /> Ideas <ChevronDown size={10} />
+                </button>
+                {history.length > 0 && (
+                  <button
+                    onClick={() => {
+                      setHistoryOpen((v) => !v);
+                      setIdeasOpen(false);
+                    }}
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10.5px]"
+                    style={{ background: 'var(--button)', color: 'var(--text-dim)' }}
+                    title="Prompt history"
+                  >
+                    <History size={11} />
+                  </button>
+                )}
+                <button onClick={onClose} className="p-0.5 rounded" style={{ color: 'var(--text-dim)' }} title="Close (Esc)">
+                  <X size={13} />
+                </button>
+
+                {ideasOpen && (
+                  <div
+                    className="absolute right-0 top-7 z-50 w-64 rounded-lg p-1.5 shadow-2xl space-y-1 max-h-72 overflow-y-auto"
+                    style={{ background: 'var(--sheet)', border: '1px solid var(--sheet-field-stroke)' }}
+                  >
+                    {hasEdit && (
+                      <>
+                        <div className="px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-faint)' }}>
+                          Improve
+                        </div>
+                        {IDEAS_IMPROVE.map((idea) => (
+                          <button
+                            key={idea.name}
+                            onClick={() => {
+                              onChangePrompt(idea.prompt);
+                              setIdeasOpen(false);
+                            }}
+                            className="w-full text-left px-2 py-1 rounded text-[11px] hover:bg-white/5"
+                            style={{ color: 'var(--text)' }}
+                          >
+                            {idea.name}
+                          </button>
+                        ))}
+                      </>
+                    )}
+                    <div className="px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-faint)' }}>
+                      Create
+                    </div>
+                    {IDEAS_CREATE.map((idea) => (
+                      <button
+                        key={idea.name}
+                        onClick={() => {
+                          onChangePrompt(idea.prompt);
+                          setIdeasOpen(false);
+                        }}
+                        className="w-full text-left px-2 py-1 rounded text-[11px] hover:bg-white/5"
+                        style={{ color: 'var(--text)' }}
+                      >
+                        {idea.name}
+                      </button>
+                    ))}
+                    <div className="px-2 py-0.5 text-[9.5px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-faint)' }}>
+                      Sound
+                    </div>
+                    {IDEAS_SOUND.map((idea) => (
+                      <button
+                        key={idea.name}
+                        onClick={() => {
+                          onChangePrompt(idea.prompt);
+                          setIdeasOpen(false);
+                        }}
+                        className="w-full text-left px-2 py-1 rounded text-[11px] hover:bg-white/5"
+                        style={{ color: 'var(--text)' }}
+                      >
+                        {idea.name}
+                      </button>
+                    ))}
+                  </div>
+                )}
+
+                {historyOpen && (
+                  <div
+                    className="absolute right-0 top-7 z-50 w-72 rounded-lg p-1.5 shadow-2xl space-y-0.5 max-h-64 overflow-y-auto"
+                    style={{ background: 'var(--sheet)', border: '1px solid var(--sheet-field-stroke)' }}
+                  >
+                    {history.map((h, i) => (
+                      <button
+                        key={`${h.timestamp}-${i}`}
+                        onClick={() => {
+                          onChangePrompt(h.text);
+                          setHistoryOpen(false);
+                        }}
+                        className="w-full flex items-center justify-between gap-2 px-2 py-1.5 rounded text-left text-[11px] hover:bg-white/5"
+                      >
+                        <span className="truncate" style={{ color: 'var(--text)' }}>
+                          {h.text}
+                        </span>
+                        <span
+                          className="shrink-0 px-1.5 py-0.5 rounded-full text-[9px] font-semibold capitalize"
+                          style={{ background: 'var(--raised)', color: 'var(--text-dim)' }}
+                        >
+                          {h.tab}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <textarea
+              autoFocus
+              rows={3}
+              value={prompt}
+              onChange={(e) => onChangePrompt(e.target.value)}
+              placeholder={placeholder}
+              className="w-full p-2.5 rounded-lg text-[12px] outline-none resize-none"
+              style={{ background: 'var(--sheet-field)', color: 'var(--text)', border: '1px solid var(--sheet-field-stroke)' }}
+              onKeyDown={(e) => {
+                if (mentionOptions.length > 0) {
+                  if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    setMentionIndex((i) => (i + 1) % mentionOptions.length);
+                    return;
+                  }
+                  if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    setMentionIndex((i) => (i - 1 + mentionOptions.length) % mentionOptions.length);
+                    return;
+                  }
+                  if (e.key === 'Tab' || (e.key === 'Enter' && !e.shiftKey)) {
+                    e.preventDefault();
+                    insertMention(mentionOptions[mentionIndex].label);
+                    return;
+                  }
+                }
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  onSubmit(prompt, backend);
+                  return;
+                }
+                if (e.key === 'Escape') onClose();
+              }}
+            />
+
+            {mentionOptions.length > 0 && (
+              <div
+                className="rounded-lg p-1 space-y-0.5 max-h-36 overflow-y-auto"
+                style={{ background: 'var(--field)', border: '1px solid var(--stroke)' }}
+              >
+                {mentionOptions.map((opt, idx) => (
+                  <button
+                    key={opt.id}
+                    onClick={() => insertMention(opt.label)}
+                    className="w-full flex items-center justify-between px-2 py-1 rounded text-[11px]"
+                    style={{
+                      background: idx === mentionIndex ? 'var(--hover)' : 'transparent',
+                      color: 'var(--text)',
+                    }}
+                  >
+                    <span>@{opt.label}</span>
+                    <span className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                      {opt.sub}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <div className="flex items-center justify-between pt-0.5">
+              <div className="text-[10.5px]" style={{ color: 'var(--text-faint)' }}>
+                {backend === 'cloud' ? (
+                  cloudReady ? (
+                    <span>Model: {cloudModel}</span>
+                  ) : (
+                    <button onClick={onOpenSettings} className="underline" style={{ color: 'var(--accent)' }}>
+                      Configure API Key in Settings
+                    </button>
+                  )
+                ) : backend === 'local' ? (
+                  <span>Instant beat &amp; rule planner · On this PC</span>
+                ) : (
+                  <button onClick={onOpenSettings} className="hover:underline">
+                    Connected via MCP · Manage AI Agents
+                  </button>
+                )}
+              </div>
+              <button
+                disabled={backend === 'cloud' && !cloudReady}
+                onClick={() => onSubmit(prompt, backend)}
+                className="px-4 py-1.5 rounded-full text-[11px] font-semibold disabled:opacity-40"
+                style={{ background: 'var(--text)', color: 'var(--on-text)' }}
+              >
+                Make it
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export const MagicNotePopover: React.FC<{
+  worker: string;
+  detail?: string;
+  summary: string;
+  changed: boolean;
+  onUndo: () => void;
+  onClose: () => void;
+}> = ({ worker, detail, summary, changed, onUndo, onClose }) => {
+  return (
+    <div className="fixed top-11 right-[112px] z-50 w-[340px]">
+      <div
+        className="rounded-xl p-3.5 space-y-2.5 shadow-2xl backdrop-blur-md"
+        style={{ background: 'var(--panel)', border: '1px solid var(--sheet-field-stroke)' }}
+      >
+        <div className="flex items-center gap-2">
+          <Sparkles size={13} style={{ color: 'var(--accent)' }} />
+          <span className="text-[12px] font-semibold">{worker}</span>
+          {detail && (
+            <span className="text-[10.5px]" style={{ color: 'var(--text-faint)' }}>
+              {detail}
+            </span>
+          )}
+        </div>
+        <div className="text-[12px] leading-relaxed select-text" style={{ color: 'var(--text)' }}>
+          {summary || 'Done.'}
+        </div>
+        <div className="flex items-center justify-between pt-0.5">
+          {changed ? (
+            <button
+              onClick={() => {
+                onClose();
+                onUndo();
+              }}
+              className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-[11px] font-medium"
+              style={{ background: 'var(--button)', color: 'var(--text)' }}
+            >
+              <RotateCcw size={11} /> Undo
+            </button>
+          ) : (
+            <span />
+          )}
           <button
-            disabled={busy || !prompt.trim()}
-            onClick={() => void run()}
+            onClick={onClose}
             className="px-3.5 py-1 rounded-full text-[11px] font-semibold"
             style={{ background: 'var(--text)', color: 'var(--on-text)' }}
           >
-            {busy ? 'Cutting...' : 'Cut (Ctrl+↵)'}
+            Done
           </button>
         </div>
-
-        {msg && (
-          <div
-            className="p-2.5 rounded text-[11px] space-y-1.5 max-h-36 overflow-y-auto"
-            style={{ background: 'var(--field)', color: 'var(--text-dim)', border: '1px solid var(--stroke)' }}
-          >
-            <div className="flex items-start justify-between gap-2">
-              <span>{msg}</span>
-              {canUndo && (
-                <button
-                  onClick={onUndo}
-                  className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] shrink-0"
-                  style={{ background: 'var(--button)', color: 'var(--text)' }}
-                >
-                  <RotateCcw size={10} /> Undo
-                </button>
-              )}
-            </div>
-            {steps.some((st) => st !== msg) && (
-              <div className="flex flex-wrap gap-1">
-                {steps
-                  .filter((st) => st !== msg)
-                  .map((st, idx) => (
-                  <span
-                    key={idx}
-                    className="mono-num px-1.5 py-0.5 rounded text-[9px]"
-                    style={{ background: 'var(--raised)', color: 'var(--text-faint)' }}
-                  >
-                    {st}
-                  </span>
-                  ))}
-              </div>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
@@ -449,10 +758,12 @@ export const MagicPopover: React.FC<{
 export const SettingsModal: React.FC<{
   theme: AppThemeName;
   shortcutMap: Record<string, string>;
+  magicAnimated?: boolean;
+  onChangeMagicAnimated?: (enabled: boolean) => void;
   onUpdateShortcuts: (next: Record<string, string>) => void;
   onChangeTheme: (t: AppThemeName) => void;
   onClose: () => void;
-}> = ({ theme, shortcutMap, onUpdateShortcuts, onChangeTheme, onClose }) => {
+}> = ({ theme, shortcutMap, magicAnimated = true, onChangeMagicAnimated, onUpdateShortcuts, onChangeTheme, onClose }) => {
   const [tab, setTab] = useState<'general' | 'shortcuts'>('general');
   const [mcp, setMcp] = useState<MCPStatusInfo | null>(null);
   const [agents, setAgents] = useState<AgentTargetStatus[]>([]);
@@ -771,6 +1082,25 @@ export const SettingsModal: React.FC<{
                   type="checkbox"
                   checked={autoSave}
                   onChange={async (e) => setAutoSave(await window.vectrail.setAutoSave(e.target.checked))}
+                />
+              </label>
+              <label
+                className="flex items-center justify-between px-2.5 py-2 rounded mb-2 cursor-pointer"
+                style={{ background: 'var(--sheet-field)', border: '1px solid var(--sheet-field-stroke)' }}
+              >
+                <div>
+                  <div className="text-[11px] font-medium">Show AI animations &amp; cursors</div>
+                  <div className="text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                    Scan brackets, shimmer dots, ghost previews, and live AI cursors
+                  </div>
+                </div>
+                <input
+                  type="checkbox"
+                  checked={magicAnimated}
+                  onChange={async (e) => {
+                    const val = await window.vectrail.setMagicAnimated(e.target.checked);
+                    onChangeMagicAnimated?.(val);
+                  }}
                 />
               </label>
               <div

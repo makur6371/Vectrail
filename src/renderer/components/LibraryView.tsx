@@ -75,6 +75,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
 
   return (
     <div
+      data-magic-anchor="library"
       className="flex flex-col h-full shrink-0"
       style={{ width, background: 'var(--panel)' }}
     >
@@ -205,6 +206,7 @@ export const LibraryView: React.FC<LibraryViewProps> = ({
             return (
               <div
                 key={asset.id}
+                data-magic-asset={asset.id}
                 draggable
                 onDragStart={(e) => {
                   e.dataTransfer.setData('application/x-vectrail-asset', asset.id);

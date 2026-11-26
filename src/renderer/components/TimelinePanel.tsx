@@ -406,21 +406,6 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
       ctx.fill();
     }
 
-    if (agentCursor && agentCursor.time !== undefined) {
-      const ax = agentCursor.time * zoomPx;
-      ctx.strokeStyle = '#30D158';
-      ctx.lineWidth = 1.5;
-      ctx.beginPath();
-      ctx.moveTo(ax, RULER_H);
-      ctx.lineTo(ax, totalH);
-      ctx.stroke();
-      ctx.fillStyle = '#30D158';
-      ctx.fillRect(ax - 2, 2, 54, 15);
-      ctx.fillStyle = '#0A0A0A';
-      ctx.font = '600 9px Inter, sans-serif';
-      ctx.fillText(agentCursor.name, ax + 3, 4);
-    }
-
     const px = playhead * zoomPx;
     ctx.strokeStyle = colAccent;
     ctx.lineWidth = 1.5;
@@ -1120,6 +1105,8 @@ export const TimelinePanel: React.FC<TimelinePanelProps> = ({
 
         <div
           ref={scrollerRef}
+          data-magic-anchor="timeline-canvas"
+          data-magic-zoom={zoomPx}
           className="flex-1 overflow-auto"
           onWheel={handleWheel}
           onDragOver={(e) => {

@@ -1,5 +1,13 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import type { AppUpdateInfo, CloudAiConfig, ExportSettings, Project, Transcript } from '../shared/types';
+import type {
+  AppUpdateInfo,
+  CloudAiConfig,
+  ExportSettings,
+  MagicProgressEvent,
+  MagicRunResult,
+  Project,
+  Transcript,
+} from '../shared/types';
 import type { EditorSnapshot } from '../main/state';
 import type { WhisperStatus } from '../main/engine/analyzer';
 import type { AgentTarget, AgentTargetStatus, MagicBackend } from '../main/magic/agentConnect';
@@ -41,8 +49,14 @@ export interface VectrailBridgeAPI {
   runMagic: (
     prompt: string,
     backend: MagicBackend,
-    selectedClipIds: string[]
-  ) => Promise<{ ok: boolean; summary: string; steps?: string[] }>;
+    selectedClipIds: string[],
+    runId?: string
+  ) => Promise<MagicRunResult>;
+  cancelMagic: (runId?: string) => Promise<boolean>;
+  commitMagic: (nextProject: Project, prompt?: string, tab?: string) => Promise<EditorSnapshot>;
+  onMagicProgress: (cb: (ev: MagicProgressEvent) => void) => () => void;
+  getMagicAnimated: () => Promise<boolean>;
+  setMagicAnimated: (enabled: boolean) => Promise<boolean>;
   autoEdit: () => Promise<void>;
   transcribeAsset: (assetID: string, language?: string) => Promise<Transcript>;
   getWhisperStatus: () => Promise<WhisperStatus>;
@@ -92,8 +106,17 @@ const api: VectrailBridgeAPI = {
   getAgentStatuses: () => ipcRenderer.invoke('vectrail:agent-statuses'),
   connectAgent: (target) => ipcRenderer.invoke('vectrail:connect-agent', target),
   disconnectAgent: (target) => ipcRenderer.invoke('vectrail:disconnect-agent', target),
-  runMagic: (prompt, backend, selectedClipIds) =>
-    ipcRenderer.invoke('vectrail:run-magic', prompt, backend, selectedClipIds),
+  runMagic: (prompt, backend, selectedClipIds, runId) =>
+    ipcRenderer.invoke('vectrail:run-magic', prompt, backend, selectedClipIds, runId),
+  cancelMagic: (runId) => ipcRenderer.invoke('vectrail:cancel-magic', runId),
+  commitMagic: (nextProject, prompt, tab) => ipcRenderer.invoke('vectrail:commit-magic', nextProject, prompt, tab),
+  onMagicProgress: (cb) => {
+    const listener = (_e: Electron.IpcRendererEvent, ev: MagicProgressEvent) => cb(ev);
+    ipcRenderer.on('vectrail:magic-progress', listener);
+    return () => ipcRenderer.removeListener('vectrail:magic-progress', listener);
+  },
+  getMagicAnimated: () => ipcRenderer.invoke('vectrail:get-magic-animated'),
+  setMagicAnimated: (enabled) => ipcRenderer.invoke('vectrail:set-magic-animated', enabled),
   autoEdit: () => ipcRenderer.invoke('vectrail:auto-edit'),
   transcribeAsset: (assetID, language) => ipcRenderer.invoke('vectrail:transcribe-asset', assetID, language),
   getWhisperStatus: () => ipcRenderer.invoke('vectrail:whisper-status'),

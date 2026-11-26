@@ -211,6 +211,13 @@ export interface Project {
   captionFixes?: Record<string, CaptionFix[]>;
   exportDir?: string;
   exportName?: string;
+  magicHistory?: MagicHistoryEntry[];
+}
+
+export interface MagicHistoryEntry {
+  text: string;
+  tab: string;
+  timestamp: number;
 }
 
 export interface ClipSample {
@@ -241,9 +248,37 @@ export interface MusicAnalysis {
 export interface AgentCursorState {
   name: string;
   activity?: string;
+  targetKind?: 'asset' | 'viewer' | 'clip' | 'track' | 'inspector' | 'timeline';
+  assetID?: string;
   clipID?: string;
+  trackID?: string;
   time?: number;
+  toolName?: string;
   updatedAt: number;
+}
+
+export type MagicStage = 'looking' | 'analyzing' | 'thinking' | 'editing';
+
+export interface MagicProgressEvent {
+  runId: string;
+  stage: MagicStage;
+  worker: string;
+  status?: string;
+  focusAssetId?: string;
+  draftProject?: Project;
+}
+
+export interface MagicRunResult {
+  ok: boolean;
+  cancelled?: boolean;
+  summary: string;
+  steps?: string[];
+  worker?: string;
+  detail?: string;
+  changed?: boolean;
+  durationMs?: number;
+  beforeProject?: Project;
+  afterProject?: Project;
 }
 
 export type ExportFormat = 'video' | 'audio';

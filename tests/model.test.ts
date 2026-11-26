@@ -14,6 +14,7 @@ import { starterZoomMove, transformAt, zoomAmountAt } from '../src/shared/zoomMo
 import { buildCaptionBlocks } from '../src/shared/captions';
 import {
   applyStickyEdgeShift,
+  cloneProject,
   computeExportRenderSize,
   createEmptyProject,
   createSolidClip,
@@ -33,6 +34,7 @@ import {
 import { autoPlanEdit, findBestMoments } from '../src/shared/autoPlanner';
 import { mergeShortcutBindings } from '../src/shared/shortcuts';
 import { collectMediaFiles } from '../src/main/engine/ffmpeg';
+import { applyMagicStep, buildMagicPlan } from '../src/shared/magicPlan';
 import { MediaAsset, Transcript } from '../src/shared/types';
 
 describe('ColorGrade & 3D LUT', () => {
@@ -288,5 +290,42 @@ describe('Project Timeline Ops, Timecode, Captions & AutoPlanner', () => {
     } finally {
       fs.rmSync(tmpRoot, { recursive: true, force: true });
     }
+  });
+
+  it('choreographs Magic before/after diffs into swarm steps and converges cleanly', () => {
+    const before = createEmptyProject();
+    const after = cloneProject(before);
+    const vTrack = after.videoTracks[0].id;
+    const aTrack = after.audioTracks[0].id;
+    const asset = {
+      id: 'asset-magic-1',
+      path: '/tmp/clip.mp4',
+      name: 'clip.mp4',
+      kind: 'video' as const,
+      duration: 8,
+      width: 1920,
+      height: 1080,
+      fps: 30,
+      hasAudio: true,
+    };
+    after.assets.push(asset);
+    const placed = makeClipsForAsset(after, asset, 0, vTrack, aTrack, 0, 4);
+    placed[0].grade = { look: 'Film print', exposure: 0.2 };
+    placed[0].transitionIn = { kind: 'dissolve', duration: 0.5 };
+    after.clips.push(...placed);
+
+    const plan = buildMagicPlan(before, after, 'Claude');
+    expect(plan.steps.length).toBeGreaterThanOrEqual(4);
+    expect(plan.steps.some((s) => s.kind === 'place')).toBe(true);
+    expect(plan.steps.some((s) => s.kind === 'grade')).toBe(true);
+    expect(plan.steps.some((s) => s.kind === 'transition')).toBe(true);
+
+    let working = cloneProject(before);
+    for (const step of plan.steps) {
+      working = applyMagicStep(working, step, after);
+    }
+    expect(working.clips.length).toBe(after.clips.length);
+    expect(working.clips[0].grade?.look).toBe('Film print');
+    expect(working.clips[0].transitionIn?.kind).toBe('dissolve');
   });
 });

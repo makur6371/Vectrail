@@ -173,6 +173,7 @@ export const InspectorView: React.FC<InspectorViewProps> = ({
 
   return (
     <div
+      data-magic-anchor="inspector"
       className="flex flex-col h-full shrink-0 overflow-y-auto"
       style={{ width, background: 'var(--panel)' }}
     >

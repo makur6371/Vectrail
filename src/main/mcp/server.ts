@@ -29,6 +29,10 @@ export class MCPServer {
   private server?: http.Server;
   private store: ProjectStore;
   private onStatusChange?: () => void;
+  private magicDraft?: {
+    store: ProjectStore;
+    onTool?: (name: string, args: Record<string, unknown>, draftStore: ProjectStore) => void;
+  };
   running = false;
   listeningPort?: number;
   problem?: string;
@@ -38,6 +42,13 @@ export class MCPServer {
   constructor(store: ProjectStore, onStatusChange?: () => void) {
     this.store = store;
     this.onStatusChange = onStatusChange;
+  }
+
+  setMagicDraft(
+    draftStore?: ProjectStore,
+    onTool?: (name: string, args: Record<string, unknown>, draftStore: ProjectStore) => void
+  ): void {
+    this.magicDraft = draftStore ? { store: draftStore, onTool } : undefined;
   }
 
   get endpoint(): string {
@@ -134,7 +145,8 @@ export class MCPServer {
       return;
     }
 
-    const clientHeader = String(req.headers['x-vectrail-client'] ?? req.headers['x-editroom-client'] ?? 'Agent');
+    const rawHeader = req.headers['x-vectrail-client'] ?? req.headers['x-editroom-client'];
+    const clientHeader = typeof rawHeader === 'string' && rawHeader.trim() ? rawHeader.trim() : '';
     const response = await this.handleRpc(rpc, clientHeader);
     if (response === null) {
       res.writeHead(202);
@@ -145,7 +157,7 @@ export class MCPServer {
     res.end(JSON.stringify(response));
   }
 
-  async handleRpc(rpc: JsonRpcRequest, fallbackClient = 'Agent'): Promise<Record<string, unknown> | null> {
+  async handleRpc(rpc: JsonRpcRequest, fallbackClient = ''): Promise<Record<string, unknown> | null> {
     const id = rpc.id ?? null;
     const method = rpc.method ?? '';
     const params = rpc.params ?? {};
@@ -155,7 +167,7 @@ export class MCPServer {
     }
 
     if (method === 'initialize') {
-      const clientInfo = (params.clientInfo as { name?: string } | undefined)?.name ?? fallbackClient;
+      const clientInfo = (params.clientInfo as { name?: string } | undefined)?.name ?? (fallbackClient || 'Agent');
       const normalized = clientInfo.toLowerCase().includes('claude')
         ? 'Claude'
         : clientInfo.toLowerCase().includes('codex') || clientInfo.toLowerCase().includes('chatgpt')
@@ -194,7 +206,11 @@ export class MCPServer {
       this.clients.set(clientName, { id: clientName, name: clientName, lastSeen: Date.now() });
       this.onStatusChange?.();
       try {
-        const content = await callMCPTool(name, args, this.store, clientName);
+        const activeStore = this.magicDraft?.store ?? this.store;
+        const content = await callMCPTool(name, args, activeStore, clientName);
+        if (this.magicDraft) {
+          this.magicDraft.onTool?.(name, args, activeStore);
+        }
         return { jsonrpc: '2.0', id, result: { content, isError: false } };
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);

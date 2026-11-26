@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Clip, ColorGrade, ExportSettings, MediaAsset, Project } from '../shared/types';
+import { Clip, ColorGrade, ExportSettings, MagicProgressEvent, MediaAsset, Project } from '../shared/types';
+import { buildMagicPlan } from '../shared/magicPlan';
+import { MagicBackend } from '../main/magic/agentConnect';
 import { AppThemeName, THEMES } from '../shared/themes';
 import {
   addTrack,
@@ -28,7 +30,8 @@ import { LibraryView } from './components/LibraryView';
 import { PinnedSourceState, ViewerScreen } from './components/ViewerScreen';
 import { InspectorView } from './components/InspectorView';
 import { TimelinePanel } from './components/TimelinePanel';
-import { ExportModal, MagicPopover, SettingsModal } from './components/Modals';
+import { ExportModal, MagicNotePopover, MagicPopover, SettingsModal } from './components/Modals';
+import { MagicOverlay, MagicShowSession } from './components/MagicOverlay';
 
 const DEFAULT_LAYOUT = { libraryW: 268, inspectorW: 300, timelineH: 320 };
 
@@ -71,6 +74,18 @@ export const App: React.FC = () => {
   const [sourcePreview, setSourcePreview] = useState<{ asset: MediaAsset; time: number } | null>(null);
   const [pinnedSource, setPinnedSource] = useState<PinnedSourceState | null>(null);
   const [toast, setToast] = useState<{ text: string; kind: 'info' | 'error' } | null>(null);
+  const [magicPrompt, setMagicPrompt] = useState('');
+  const [magicThinking, setMagicThinking] = useState<MagicProgressEvent | null>(null);
+  const [magicShow, setMagicShow] = useState<MagicShowSession | null>(null);
+  const [magicPreviewProj, setMagicPreviewProj] = useState<Project | null>(null);
+  const [magicNote, setMagicNote] = useState<{
+    worker: string;
+    detail?: string;
+    summary: string;
+    changed: boolean;
+  } | null>(null);
+  const [magicAnimated, setMagicAnimated] = useState(true);
+  const activeMagicRunIdRef = useRef<string | null>(null);
 
   const mixerRef = useRef<AudioMixer | null>(null);
   if (!mixerRef.current) mixerRef.current = new AudioMixer();
@@ -87,8 +102,17 @@ export const App: React.FC = () => {
     void window.vectrail.getSnapshot().then(setSnap);
     void window.vectrail.getMcpStatus().then((m) => setMcpRunning(m.running));
     void window.vectrail.getShortcuts().then(setShortcutMap);
+    void window.vectrail.getMagicAnimated().then(setMagicAnimated);
     const unsub = window.vectrail.onSnapshot(setSnap);
-    return unsub;
+    const unsubMagic = window.vectrail.onMagicProgress((ev) => {
+      if (ev.runId === activeMagicRunIdRef.current) {
+        setMagicThinking(ev);
+      }
+    });
+    return () => {
+      unsub();
+      unsubMagic();
+    };
   }, []);
 
   useEffect(() => {
@@ -471,6 +495,96 @@ export const App: React.FC = () => {
   }
 
   const selectedClip = snap.project.clips.find((c) => c.id === selectedIds[0]);
+  const displayProject = magicPreviewProj ?? snap.project;
+
+  const workerNameFor = (b: MagicBackend): string =>
+    b === 'claude' ? 'Claude' : b === 'codex' ? 'Codex' : b === 'cloud' ? 'Cloud AI' : 'Local';
+
+  const handleStopMagic = () => {
+    const rid = activeMagicRunIdRef.current;
+    activeMagicRunIdRef.current = null;
+    if (rid) void window.vectrail.cancelMagic(rid);
+    setMagicThinking(null);
+    setMagicShow(null);
+    setMagicPreviewProj(null);
+  };
+
+  const handleRunMagic = async (promptText: string, backend: MagicBackend) => {
+    const runId = `magic-${Date.now()}`;
+    activeMagicRunIdRef.current = runId;
+    const worker = workerNameFor(backend);
+    setModal(null);
+    setMagicNote(null);
+    setMagicPrompt('');
+    setMagicThinking({ runId, stage: 'looking', worker, status: 'Looking at media' });
+
+    try {
+      const res = await window.vectrail.runMagic(promptText, backend, selectedIds, runId);
+      if (activeMagicRunIdRef.current !== runId || res.cancelled) {
+        setMagicThinking(null);
+        return;
+      }
+      setMagicThinking(null);
+      if (res.changed && res.beforeProject && res.afterProject) {
+        const dur = Math.max(4, projectDuration(res.afterProject));
+        const avail = Math.max(400, window.innerWidth - 110);
+        setZoomPx(Math.min(200, Math.max(14, avail / dur)));
+        const choreography = buildMagicPlan(res.beforeProject, res.afterProject, res.worker ?? worker);
+        setMagicPreviewProj(res.beforeProject);
+        setMagicShow({
+          choreography,
+          summary: res.summary,
+          detail: res.detail ?? '',
+          worker: res.worker ?? worker,
+          prompt: promptText,
+          tab: backend,
+          changed: true,
+        });
+      } else {
+        activeMagicRunIdRef.current = null;
+        setMagicNote({
+          worker: res.worker ?? worker,
+          detail: res.detail,
+          summary: res.summary,
+          changed: Boolean(res.changed),
+        });
+      }
+    } catch (err) {
+      if (activeMagicRunIdRef.current === runId) {
+        activeMagicRunIdRef.current = null;
+        setMagicThinking(null);
+        setMagicShow(null);
+        setMagicPreviewProj(null);
+        setMagicNote({
+          worker,
+          summary: err instanceof Error ? err.message : String(err),
+          changed: false,
+        });
+      }
+    }
+  };
+
+  const handleMagicShowComplete = (session: MagicShowSession) => {
+    activeMagicRunIdRef.current = null;
+    setMagicShow(null);
+    setMagicPreviewProj(null);
+    void window.vectrail.commitMagic(session.choreography.after, session.prompt, session.tab).then((nextSnap) => {
+      setSnap(nextSnap);
+      void window.vectrail.setPlayhead(0);
+      setMagicNote({
+        worker: session.worker,
+        detail: session.detail,
+        summary: session.summary,
+        changed: session.changed,
+      });
+    });
+  };
+
+  const activeMagicStatus = magicShow
+    ? { worker: magicShow.worker, stage: 'editing' as const, status: 'Editing' }
+    : magicThinking
+    ? { worker: magicThinking.worker, stage: magicThinking.stage, status: magicThinking.status }
+    : null;
 
   const startSplitDrag = (axis: 'library' | 'inspector' | 'timeline', e: React.MouseEvent) => {
     e.preventDefault();
@@ -521,16 +635,22 @@ export const App: React.FC = () => {
         exportsList={snap.exports}
         mcpRunning={mcpRunning}
         magicOpen={modal === 'magic'}
+        magicStatus={activeMagicStatus}
         onNew={() => void window.vectrail.newProject()}
         onOpen={() => void window.vectrail.openProjectDialog()}
         onSave={() => void window.vectrail.saveProjectDialog(false)}
         onImport={() => void window.vectrail.importFilesDialog()}
         onUndo={() => void window.vectrail.undo()}
         onRedo={() => void window.vectrail.redo()}
-        onOpenMagic={() => setModal((m) => (m === 'magic' ? null : 'magic'))}
+        onOpenMagic={() => {
+          setMagicNote(null);
+          setModal((m) => (m === 'magic' ? null : 'magic'));
+        }}
+        onStopMagic={handleStopMagic}
         onOpenExport={() => setModal('export')}
         onOpenSettings={() => setModal('settings')}
         onCancelExport={(id) => void window.vectrail.cancelExport(id)}
+        onShowExportInExplorer={(file) => void window.vectrail.showInExplorer(file)}
       />
 
       <div className="flex-1 flex min-h-0">
@@ -567,7 +687,7 @@ export const App: React.FC = () => {
           }}
           onHoverPreview={setSourcePreview}
           onSelectSource={(asset) => setPinnedSource({ asset, time: 0 })}
-          onAutoEdit={() => void window.vectrail.autoEdit()}
+          onAutoEdit={() => void handleRunMagic('Make a beat-synced highlight cut.', 'local')}
           onTranscribeAsset={(id) => void handleTranscribeAsset(id)}
         />
         <div
@@ -578,7 +698,7 @@ export const App: React.FC = () => {
           title="Drag to resize Library (double-click to reset)"
         />
         <ViewerScreen
-          project={snap.project}
+          project={displayProject}
           playhead={snap.playhead}
           playing={snap.playing}
           loop={loop}
@@ -608,7 +728,7 @@ export const App: React.FC = () => {
           title="Drag to resize Inspector (double-click to reset)"
         />
         <InspectorView
-          project={snap.project}
+          project={displayProject}
           selectedClip={selectedClip}
           copiedGrade={copiedGrade}
           width={layout.inspectorW}
@@ -651,7 +771,7 @@ export const App: React.FC = () => {
       />
 
       <TimelinePanel
-        project={snap.project}
+        project={displayProject}
         playhead={snap.playhead}
         selectedIds={selectedIds}
         tool={tool}
@@ -685,7 +805,7 @@ export const App: React.FC = () => {
             p.markers.push({ id: newId(), time: snap.playhead, name: 'Marker', color: 'orange' });
           })
         }
-        onAutoEdit={() => void window.vectrail.autoEdit()}
+        onAutoEdit={() => void handleRunMagic('Make a beat-synced highlight cut.', 'local')}
         onDropAsset={handleDropAssetOnTimeline}
         onCopyGrade={setCopiedGrade}
         onDuplicateClip={(clipID) =>
@@ -747,16 +867,31 @@ export const App: React.FC = () => {
         <MagicPopover
           assets={snap.project.assets}
           selectedIds={selectedIds}
-          canUndo={snap.canUndo}
-          onUndo={() => void window.vectrail.undo()}
+          hasEdit={snap.project.clips.some((c) => c.kind !== 'audio')}
+          prompt={magicPrompt}
+          history={snap.project.magicHistory ?? []}
+          onChangePrompt={setMagicPrompt}
+          onSubmit={(p, b) => void handleRunMagic(p, b)}
           onOpenSettings={() => setModal('settings')}
           onClose={() => setModal(null)}
+        />
+      )}
+      {magicNote && modal !== 'magic' && !activeMagicStatus && (
+        <MagicNotePopover
+          worker={magicNote.worker}
+          detail={magicNote.detail}
+          summary={magicNote.summary}
+          changed={magicNote.changed}
+          onUndo={() => void window.vectrail.undo()}
+          onClose={() => setMagicNote(null)}
         />
       )}
       {modal === 'settings' && (
         <SettingsModal
           theme={theme}
           shortcutMap={shortcutMap}
+          magicAnimated={magicAnimated}
+          onChangeMagicAnimated={setMagicAnimated}
           onUpdateShortcuts={(next) => {
             setShortcutMap(next);
             void window.vectrail.saveShortcuts(next);
@@ -765,6 +900,18 @@ export const App: React.FC = () => {
           onClose={() => setModal(null)}
         />
       )}
+      <MagicOverlay
+        project={displayProject}
+        zoomPx={zoomPx}
+        thinking={magicThinking}
+        show={magicShow}
+        agentCursor={snap.agentCursor}
+        animationsEnabled={magicAnimated}
+        onStopMagic={handleStopMagic}
+        onTogglePlay={() => void window.vectrail.setPlaying(!snap.playing)}
+        onShowProjectUpdate={setMagicPreviewProj}
+        onShowComplete={handleMagicShowComplete}
+      />
     </div>
   );
 };

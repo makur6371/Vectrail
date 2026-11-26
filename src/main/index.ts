@@ -5,12 +5,21 @@ import path from 'node:path';
 import { CloudAiConfig, ExportSettings, Project } from '../shared/types';
 import { computeExportRenderSize } from '../shared/project';
 import { loadSavedShortcuts, ProjectStore, saveShortcutsConfig } from './state';
-import { checkForAppUpdates, getAutoSaveEnabled, getCloudAiConfig, saveCloudAiConfig, setAutoSaveEnabled } from './settings';
+import {
+  checkForAppUpdates,
+  getAutoSaveEnabled,
+  getCloudAiConfig,
+  getMagicAnimated,
+  saveCloudAiConfig,
+  setAutoSaveEnabled,
+  setMagicAnimated,
+} from './settings';
 import { downloadWhisperModel, getWhisperStatus, WhisperStatus } from './engine/analyzer';
 import { MCP_DEFAULT_PORT, MCPServer } from './mcp/server';
 import { runStdioMcpBridge } from './mcp/bridge';
 import { callMCPTool } from './mcp/tools';
 import {
+  cancelMagicRun,
   connectAgent,
   disconnectAgent,
   getAgentStatuses,
@@ -430,9 +439,26 @@ async function serveMediaRequest(req: Request, filePath: string): Promise<Respon
   ipcMain.handle('vectrail:agent-statuses', () => getAgentStatuses());
   ipcMain.handle('vectrail:connect-agent', (_e, target) => connectAgent(target));
   ipcMain.handle('vectrail:disconnect-agent', (_e, target) => disconnectAgent(target));
-  ipcMain.handle('vectrail:run-magic', (_e, prompt: string, backend: MagicBackend, selectedClipIds: string[]) =>
-    runMagicPrompt(prompt, backend, store, selectedClipIds)
+  ipcMain.handle(
+    'vectrail:run-magic',
+    (_e, prompt: string, backend: MagicBackend, selectedClipIds: string[], runId?: string) =>
+      runMagicPrompt(prompt, backend, store, selectedClipIds, {
+        runId,
+        mcpServer,
+        onProgress: (ev) => {
+          if (mainWindow && !mainWindow.isDestroyed()) {
+            mainWindow.webContents.send('vectrail:magic-progress', ev);
+          }
+        },
+      })
   );
+  ipcMain.handle('vectrail:cancel-magic', (_e, runId?: string) => cancelMagicRun(runId));
+  ipcMain.handle('vectrail:commit-magic', (_e, nextProject: Project, prompt?: string, tab?: string) => {
+    store.commitMagicProject(nextProject, prompt, tab);
+    return store.snapshot();
+  });
+  ipcMain.handle('vectrail:get-magic-animated', () => getMagicAnimated());
+  ipcMain.handle('vectrail:set-magic-animated', (_e, enabled: boolean) => setMagicAnimated(enabled));
   ipcMain.handle('vectrail:auto-edit', async () => {
     await callMCPTool('auto_edit', {}, store, 'Vectrail');
   });

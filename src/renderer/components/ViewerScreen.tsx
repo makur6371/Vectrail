@@ -252,6 +252,7 @@ export const ViewerScreen: React.FC<ViewerScreenProps> = ({
             style={{ maxWidth: '100%', maxHeight: '100%' }}
           >
             <div
+              data-magic-anchor="viewer"
               className="relative max-w-full max-h-full"
               style={{ aspectRatio: `${project.width} / ${project.height}`, height: '100%', maxHeight: '100%' }}
             >
