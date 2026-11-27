@@ -1,1 +1,24 @@
-aW1wb3J0IHsgZGVmaW5lQ29uZmlnIH0gZnJvbSAndml0ZSc7CmltcG9ydCByZWFjdCBmcm9tICdAdml0ZWpzL3BsdWdpbi1yZWFjdCc7CmltcG9ydCBmcyBmcm9tICdub2RlOmZzJzsKaW1wb3J0IHBhdGggZnJvbSAnbm9kZTpwYXRoJzsKCmNvbnN0IHBrZyA9IEpTT04ucGFyc2UoZnMucmVhZEZpbGVTeW5jKHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUsICdwYWNrYWdlLmpzb24nKSwgJ3V0ZjgnKSkgYXMgeyB2ZXJzaW9uOiBzdHJpbmcgfTsKCmV4cG9ydCBkZWZhdWx0IGRlZmluZUNvbmZpZyh7CiAgcGx1Z2luczogW3JlYWN0KCldLAogIGRlZmluZTogewogICAgX19WRUNUUkFJTF9WRVJTSU9OX186IEpTT04uc3RyaW5naWZ5KHBrZy52ZXJzaW9uKSwKICB9LAogIGJhc2U6ICcuLycsCiAgcm9vdDogcGF0aC5yZXNvbHZlKF9fZGlybmFtZSwgJ3NyYy9yZW5kZXJlcicpLAogIGJ1aWxkOiB7CiAgICBvdXREaXI6IHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUsICdkaXN0JyksCiAgICBlbXB0eU91dERpcjogdHJ1ZSwKICB9LAogIHJlc29sdmU6IHsKICAgIGFsaWFzOiB7CiAgICAgICdAc2hhcmVkJzogcGF0aC5yZXNvbHZlKF9fZGlybmFtZSwgJ3NyYy9zaGFyZWQnKSwKICAgIH0sCiAgfSwKfSk7Cg==
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const pkg = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf8')) as { version: string };
+
+export default defineConfig({
+  plugins: [react()],
+  define: {
+    __VECTRAIL_VERSION__: JSON.stringify(pkg.version),
+  },
+  base: './',
+  root: path.resolve(__dirname, 'src/renderer'),
+  build: {
+    outDir: path.resolve(__dirname, 'dist'),
+    emptyOutDir: true,
+  },
+  resolve: {
+    alias: {
+      '@shared': path.resolve(__dirname, 'src/shared'),
+    },
+  },
+});
