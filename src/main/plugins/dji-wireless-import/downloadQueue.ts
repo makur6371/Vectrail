@@ -1,1 +1,390 @@
-aW1wb3J0IGNyeXB0byBmcm9tICdub2RlOmNyeXB0byc7CmltcG9ydCBmcyBmcm9tICdub2RlOmZzJzsKaW1wb3J0IGh0dHAgZnJvbSAnbm9kZTpodHRwJzsKaW1wb3J0IHBhdGggZnJvbSAnbm9kZTpwYXRoJzsKaW1wb3J0IHR5cGUgeyBEamlEb3dubG9hZFRhc2ssIERqaVJlbW90ZU1lZGlhSXRlbSB9IGZyb20gJy4uLy4uLy4uL3NoYXJlZC9kamlUeXBlcyc7CmltcG9ydCB7IHJlY29yZFRyYW5zZmVyU3VjY2VzcywgcmVzb2x2ZVVuaXF1ZURlc3RQYXRoIH0gZnJvbSAnLi9pbnRlZ3JpdHknOwppbXBvcnQgdHlwZSB7IERqaUxpYnJhcnlJbXBvcnRlciB9IGZyb20gJy4vbGlicmFyeUltcG9ydGVyJzsKCmV4cG9ydCBpbnRlcmZhY2UgRG93bmxvYWRRdWV1ZU9wdGlvbnMgewogIGdldEJhc2VVcmw6ICgpID0+IHN0cmluZzsKICBnZXREb3dubG9hZERpcjogKCkgPT4gc3RyaW5nOwogIGdldENvbmN1cnJlbmN5OiAoKSA9PiAxIHwgMjsKICBnZXRBdXRvSW1wb3J0OiAoKSA9PiBib29sZWFuOwogIGltcG9ydGVyOiBEamlMaWJyYXJ5SW1wb3J0ZXI7CiAgb25VcGRhdGU6ICgpID0+IHZvaWQ7CiAgb25JbXBvcnRlZD86ICh0YXNrOiBEamlEb3dubG9hZFRhc2spID0+IHZvaWQ7Cn0KCmV4cG9ydCBjbGFzcyBEamlEb3dubG9hZFF1ZXVlIHsKICBwcml2YXRlIHRhc2tzOiBEamlEb3dubG9hZFRhc2tbXSA9IFtdOwogIHByaXZhdGUgYWN0aXZlID0gMDsKICBwcml2YXRlIGNhbmNlbGxlZElkcyA9IG5ldyBTZXQ8c3RyaW5nPigpOwogIHByaXZhdGUgYWN0aXZlQWJvcnRzID0gbmV3IE1hcDxzdHJpbmcsICgpID0+IHZvaWQ+KCk7CgogIGNvbnN0cnVjdG9yKHByaXZhdGUgcmVhZG9ubHkgb3B0czogRG93bmxvYWRRdWV1ZU9wdGlvbnMpIHt9CgogIHN0YXRpYyBidWlsZFJlbGF0aXZlTWVkaWFVcmwoc3RvcmFnZTogMCB8IDEsIG1lZGlhUGF0aDogc3RyaW5nKTogc3RyaW5nIHsKICAgIHJldHVybiBgL3YyP3N0b3JhZ2U9JHtzdG9yYWdlfSZwYXRoPSR7ZW5jb2RlVVJJQ29tcG9uZW50KG1lZGlhUGF0aCkucmVwbGFjZSgvJTJGL2dpLCAnLycpfWA7CiAgfQoKICBzdGF0aWMgcmVtb3RlTWVkaWFDYW5kaWRhdGVzKGl0ZW06IFBpY2s8RGppUmVtb3RlTWVkaWFJdGVtLCAnbWVkaWFQYXRoJyB8ICdleHQnIHwgJ3RodW1iUGF0aCc+KTogc3RyaW5nW10gewogICAgY29uc3QgY2FuZGlkYXRlcyA9IFsKICAgICAgaXRlbS5tZWRpYVBhdGgsCiAgICAgIGl0ZW0uZXh0ID8gYCR7aXRlbS5tZWRpYVBhdGh9LiR7aXRlbS5leHR9YCA6IGl0ZW0ubWVkaWFQYXRoLAogICAgICBpdGVtLnRodW1iUGF0aCwKICAgIF0uZmlsdGVyKCh2YWx1ZSk6IHZhbHVlIGlzIHN0cmluZyA9PiBCb29sZWFuKHZhbHVlKSk7CiAgICByZXR1cm4gWy4uLm5ldyBTZXQoY2FuZGlkYXRlcyldOwogIH0KCiAgc3RhdGljIG9yaWdpbmFsTWVkaWFDYW5kaWRhdGVzKGl0ZW06IFBpY2s8RGppUmVtb3RlTWVkaWFJdGVtLCAnbWVkaWFQYXRoJyB8ICdleHQnIHwgJ3RodW1iUGF0aCc+KTogc3RyaW5nW10gewogICAgY29uc3QgY2FuZGlkYXRlcyA9IFsKICAgICAgaXRlbS5leHQgPyBgJHtpdGVtLm1lZGlhUGF0aH0uJHtpdGVtLmV4dH1gIDogaXRlbS5tZWRpYVBhdGgsCiAgICAgIGl0ZW0ubWVkaWFQYXRoLAogICAgICBpdGVtLnRodW1iUGF0aCwKICAgIF0uZmlsdGVyKCh2YWx1ZSk6IHZhbHVlIGlzIHN0cmluZyA9PiBCb29sZWFuKHZhbHVlKSk7CiAgICByZXR1cm4gWy4uLm5ldyBTZXQoY2FuZGlkYXRlcyldOwogIH0KCiAgbGlzdCgpOiBEamlEb3dubG9hZFRhc2tbXSB7CiAgICByZXR1cm4gdGhpcy50YXNrcy5tYXAoKHQpID0+ICh7IC4uLnQgfSkpOwogIH0KCiAgZW5xdWV1ZShpdGVtczogRGppUmVtb3RlTWVkaWFJdGVtW10pOiBEamlEb3dubG9hZFRhc2tbXSB7CiAgICBjb25zdCBkaXIgPSB0aGlzLm9wdHMuZ2V0RG93bmxvYWREaXIoKTsKICAgIGZzLm1rZGlyU3luYyhkaXIsIHsgcmVjdXJzaXZlOiB0cnVlIH0pOwogICAgY29uc3QgcmVzZXJ2ZWRQYXRocyA9IG5ldyBTZXQoCiAgICAgIHRoaXMudGFza3MKICAgICAgICAuZmlsdGVyKCh0KSA9PiB0LnN0YXR1cyA9PT0gJ3F1ZXVlZCcgfHwgdC5zdGF0dXMgPT09ICdkb3dubG9hZGluZycgfHwgdC5zdGF0dXMgPT09ICd2ZXJpZnlpbmcnIHx8IHQuc3RhdHVzID09PSAnaW1wb3J0aW5nJykKICAgICAgICAubWFwKCh0KSA9PiBwYXRoLnJlc29sdmUodC5kZXN0UGF0aCkpCiAgICApOwogICAgY29uc3QgYWRkZWQ6IERqaURvd25sb2FkVGFza1tdID0gW107CiAgICBmb3IgKGNvbnN0IGl0ZW0gb2YgaXRlbXMpIHsKICAgICAgY29uc3QgZXhpc3RpbmcgPSB0aGlzLnRhc2tzLmZpbmQoCiAgICAgICAgKHQpID0+CiAgICAgICAgICB0Lm1lZGlhSWQgPT09IGl0ZW0uaWQgJiYKICAgICAgICAgICh0LnN0YXR1cyA9PT0gJ3F1ZXVlZCcgfHwgdC5zdGF0dXMgPT09ICdkb3dubG9hZGluZycgfHwgdC5zdGF0dXMgPT09ICd2ZXJpZnlpbmcnIHx8IHQuc3RhdHVzID09PSAnaW1wb3J0aW5nJykKICAgICAgKTsKICAgICAgaWYgKGV4aXN0aW5nKSBjb250aW51ZTsKICAgICAgY29uc3QgZGVzdFBhdGggPSByZXNvbHZlVW5pcXVlRGVzdFBhdGgoZGlyLCBpdGVtLm5hbWUsIGl0ZW0ubWVkaWFQYXRoLCBpdGVtLnN0b3JhZ2UsIHJlc2VydmVkUGF0aHMpOwogICAgICByZXNlcnZlZFBhdGhzLmFkZChwYXRoLnJlc29sdmUoZGVzdFBhdGgpKTsKICAgICAgY29uc3QgdGFzazogRGppRG93bmxvYWRUYXNrID0gewogICAgICAgIGlkOiBgZGppLWRsLSR7RGF0ZS5ub3coKX0tJHtNYXRoLnJhbmRvbSgpLnRvU3RyaW5nKDM2KS5zbGljZSgyLCA3KX1gLAogICAgICAgIG1lZGlhSWQ6IGl0ZW0uaWQsCiAgICAgICAgbmFtZTogaXRlbS5uYW1lLAogICAgICAgIG1lZGlhUGF0aDogaXRlbS5tZWRpYVBhdGgsCiAgICAgICAgZXh0OiBpdGVtLmV4dCwKICAgICAgICBzdG9yYWdlOiBpdGVtLnN0b3JhZ2UsCiAgICAgICAgc2l6ZTogaXRlbS5zaXplLAogICAgICAgIGRvd25sb2FkZWRCeXRlczogMCwKICAgICAgICBzcGVlZEJ5dGVzUGVyU2VjOiAwLAogICAgICAgIGV0YVNlY29uZHM6IG51bGwsCiAgICAgICAgc3RhdHVzOiAncXVldWVkJywKICAgICAgICBkZXN0UGF0aCwKICAgICAgfTsKICAgICAgdGhpcy50YXNrcy51bnNoaWZ0KHRhc2spOwogICAgICBhZGRlZC5wdXNoKHRhc2spOwogICAgfQogICAgdGhpcy5vcHRzLm9uVXBkYXRlKCk7CiAgICB2b2lkIHRoaXMucHVtcCgpOwogICAgcmV0dXJuIGFkZGVkOwogIH0KCiAgY2FuY2VsKHRhc2tJZDogc3RyaW5nKTogdm9pZCB7CiAgICB0aGlzLmNhbmNlbGxlZElkcy5hZGQodGFza0lkKTsKICAgIGNvbnN0IGFib3J0ID0gdGhpcy5hY3RpdmVBYm9ydHMuZ2V0KHRhc2tJZCk7CiAgICBpZiAoYWJvcnQpIGFib3J0KCk7CiAgICBjb25zdCB0YXNrID0gdGhpcy50YXNrcy5maW5kKCh0KSA9PiB0LmlkID09PSB0YXNrSWQpOwogICAgaWYgKHRhc2sgJiYgKHRhc2suc3RhdHVzID09PSAncXVldWVkJyB8fCB0YXNrLnN0YXR1cyA9PT0gJ2Rvd25sb2FkaW5nJykpIHsKICAgICAgdGFzay5zdGF0dXMgPSAnY2FuY2VsbGVkJzsKICAgICAgdGFzay5zcGVlZEJ5dGVzUGVyU2VjID0gMDsKICAgICAgdGFzay5ldGFTZWNvbmRzID0gbnVsbDsKICAgICAgdGhpcy5vcHRzLm9uVXBkYXRlKCk7CiAgICB9CiAgfQoKICByZXRyeSh0YXNrSWQ6IHN0cmluZyk6IHZvaWQgewogICAgY29uc3QgdGFzayA9IHRoaXMudGFza3MuZmluZCgodCkgPT4gdC5pZCA9PT0gdGFza0lkKTsKICAgIGlmICghdGFzaykgcmV0dXJuOwogICAgaWYgKHRhc2suc3RhdHVzID09PSAnZmFpbGVkJyB8fCB0YXNrLnN0YXR1cyA9PT0gJ2NhbmNlbGxlZCcpIHsKICAgICAgdGhpcy5jYW5jZWxsZWRJZHMuZGVsZXRlKHRhc2tJZCk7CiAgICAgIHRhc2suc3RhdHVzID0gJ3F1ZXVlZCc7CiAgICAgIHRhc2suZXJyb3IgPSB1bmRlZmluZWQ7CiAgICAgIHRhc2suc3BlZWRCeXRlc1BlclNlYyA9IDA7CiAgICAgIHRhc2suZXRhU2Vjb25kcyA9IG51bGw7CiAgICAgIHRoaXMub3B0cy5vblVwZGF0ZSgpOwogICAgICB2b2lkIHRoaXMucHVtcCgpOwogICAgfQogIH0KCiAgY2xlYXJGaW5pc2hlZCgpOiB2b2lkIHsKICAgIHRoaXMudGFza3MgPSB0aGlzLnRhc2tzLmZpbHRlcigodCkgPT4gdC5zdGF0dXMgPT09ICdxdWV1ZWQnIHx8IHQuc3RhdHVzID09PSAnZG93bmxvYWRpbmcnIHx8IHQuc3RhdHVzID09PSAndmVyaWZ5aW5nJyB8fCB0LnN0YXR1cyA9PT0gJ2ltcG9ydGluZycpOwogICAgdGhpcy5vcHRzLm9uVXBkYXRlKCk7CiAgfQoKICBjYW5jZWxBbGwoKTogdm9pZCB7CiAgICBmb3IgKGNvbnN0IHRhc2sgb2YgdGhpcy50YXNrcykgewogICAgICBpZiAodGFzay5zdGF0dXMgPT09ICdxdWV1ZWQnIHx8IHRhc2suc3RhdHVzID09PSAnZG93bmxvYWRpbmcnKSB7CiAgICAgICAgdGhpcy5jYW5jZWxsZWRJZHMuYWRkKHRhc2suaWQpOwogICAgICAgIGNvbnN0IGFib3J0ID0gdGhpcy5hY3RpdmVBYm9ydHMuZ2V0KHRhc2suaWQpOwogICAgICAgIGlmIChhYm9ydCkgYWJvcnQoKTsKICAgICAgICB0YXNrLnN0YXR1cyA9ICdjYW5jZWxsZWQnOwogICAgICAgIHRhc2suc3BlZWRCeXRlc1BlclNlYyA9IDA7CiAgICAgICAgdGFzay5ldGFTZWNvbmRzID0gbnVsbDsKICAgICAgfQogICAgfQogICAgdGhpcy5vcHRzLm9uVXBkYXRlKCk7CiAgfQoKICBwcml2YXRlIGFzeW5jIHB1bXAoKTogUHJvbWlzZTx2b2lkPiB7CiAgICBjb25zdCBsaW1pdCA9IHRoaXMub3B0cy5nZXRDb25jdXJyZW5jeSgpOwogICAgd2hpbGUgKHRoaXMuYWN0aXZlIDwgbGltaXQpIHsKICAgICAgY29uc3QgbmV4dCA9IHRoaXMudGFza3MuZmluZCgodCkgPT4gdC5zdGF0dXMgPT09ICdxdWV1ZWQnKTsKICAgICAgaWYgKCFuZXh0KSBicmVhazsKICAgICAgdGhpcy5hY3RpdmUrKzsKICAgICAgdm9pZCB0aGlzLnJ1blRhc2sobmV4dCkuZmluYWxseSgoKSA9PiB7CiAgICAgICAgdGhpcy5hY3RpdmUtLTsKICAgICAgICB2b2lkIHRoaXMucHVtcCgpOwogICAgICB9KTsKICAgIH0KICB9CgogIHByaXZhdGUgYXN5bmMgcnVuVGFzayh0YXNrOiBEamlEb3dubG9hZFRhc2spOiBQcm9taXNlPHZvaWQ+IHsKICAgIGlmICh0aGlzLmNhbmNlbGxlZElkcy5oYXModGFzay5pZCkpIHsKICAgICAgdGFzay5zdGF0dXMgPSAnY2FuY2VsbGVkJzsKICAgICAgdGhpcy5vcHRzLm9uVXBkYXRlKCk7CiAgICAgIHJldHVybjsKICAgIH0KICAgIGNvbnN0IGJhc2VVcmwgPSB0aGlzLm9wdHMuZ2V0QmFzZVVybCgpOwogICAgY29uc3QgY2FuZGlkYXRlcyA9IERqaURvd25sb2FkUXVldWUucmVtb3RlTWVkaWFDYW5kaWRhdGVzKHRhc2spOwogICAgY29uc3QgcGFydFBhdGggPSBgJHt0YXNrLmRlc3RQYXRofS5wYXJ0YDsKICAgIGZzLm1rZGlyU3luYyhwYXRoLmRpcm5hbWUodGFzay5kZXN0UGF0aCksIHsgcmVjdXJzaXZlOiB0cnVlIH0pOwoKICAgIHRhc2suc3RhdHVzID0gJ2Rvd25sb2FkaW5nJzsKICAgIHRhc2suZXJyb3IgPSB1bmRlZmluZWQ7CiAgICB0aGlzLm9wdHMub25VcGRhdGUoKTsKCiAgICBjb25zdCBtYXhSZXRyaWVzID0gNDsKICAgIGxldCBhdHRlbXB0ID0gMDsKICAgIHdoaWxlIChhdHRlbXB0IDw9IG1heFJldHJpZXMpIHsKICAgICAgaWYgKHRoaXMuY2FuY2VsbGVkSWRzLmhhcyh0YXNrLmlkKSkgewogICAgICAgIHRhc2suc3RhdHVzID0gJ2NhbmNlbGxlZCc7CiAgICAgICAgdGhpcy5vcHRzLm9uVXBkYXRlKCk7CiAgICAgICAgcmV0dXJuOwogICAgICB9CiAgICAgIHRyeSB7CiAgICAgICAgbGV0IHJlc3VsdDogQXdhaXRlZDxSZXR1cm5UeXBlPERqaURvd25sb2FkUXVldWVbJ2Rvd25sb2FkV2l0aFJlc3VtZSddPj4gfCB1bmRlZmluZWQ7CiAgICAgICAgbGV0IGxhc3RFcnJvcjogdW5rbm93biA9IG5ldyBFcnJvcignTm8gcmVtb3RlIG1lZGlhIHBhdGggc3VjY2VlZGVkLicpOwogICAgICAgIGZvciAoY29uc3QgY2FuZGlkYXRlIG9mIGNhbmRpZGF0ZXMpIHsKICAgICAgICAgIHRyeSB7CiAgICAgICAgICAgIHJlc3VsdCA9IGF3YWl0IHRoaXMuZG93bmxvYWRXaXRoUmVzdW1lKAogICAgICAgICAgICAgIGJhc2VVcmwsCiAgICAgICAgICAgICAgRGppRG93bmxvYWRRdWV1ZS5idWlsZFJlbGF0aXZlTWVkaWFVcmwodGFzay5zdG9yYWdlLCBjYW5kaWRhdGUpLAogICAgICAgICAgICAgIHRhc2ssCiAgICAgICAgICAgICAgcGFydFBhdGgKICAgICAgICAgICAgKTsKICAgICAgICAgICAgYnJlYWs7CiAgICAgICAgICB9IGNhdGNoIChlcnIpIHsKICAgICAgICAgICAgbGFzdEVycm9yID0gZXJyOwogICAgICAgICAgICBpZiAoZnMuZXhpc3RzU3luYyhwYXJ0UGF0aCkpIGZzLnVubGlua1N5bmMocGFydFBhdGgpOwogICAgICAgICAgICBpZiAoIVN0cmluZyhlcnIgaW5zdGFuY2VvZiBFcnJvciA/IGVyci5tZXNzYWdlIDogZXJyKS5pbmNsdWRlcygnSFRUUCBlcnJvciA0MDQnKSkgdGhyb3cgZXJyOwogICAgICAgICAgfQogICAgICAgIH0KICAgICAgICBpZiAoIXJlc3VsdCkgdGhyb3cgbGFzdEVycm9yOwogICAgICAgIGlmICh0aGlzLmNhbmNlbGxlZElkcy5oYXModGFzay5pZCkpIHsKICAgICAgICAgIHRhc2suc3RhdHVzID0gJ2NhbmNlbGxlZCc7CiAgICAgICAgICB0aGlzLm9wdHMub25VcGRhdGUoKTsKICAgICAgICAgIHJldHVybjsKICAgICAgICB9CiAgICAgICAgdGFzay5zdGF0dXMgPSAndmVyaWZ5aW5nJzsKICAgICAgICB0aGlzLm9wdHMub25VcGRhdGUoKTsKICAgICAgICBpZiAodGFzay5zaXplID4gMCAmJiByZXN1bHQuc2l6ZSAhPT0gdGFzay5zaXplKSB7CiAgICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYFNpemUgbWlzbWF0Y2g6IGV4cGVjdGVkICR7dGFzay5zaXplfSwgZ290ICR7cmVzdWx0LnNpemV9YCk7CiAgICAgICAgfQogICAgICAgIGlmIChmcy5leGlzdHNTeW5jKHRhc2suZGVzdFBhdGgpKSBmcy51bmxpbmtTeW5jKHRhc2suZGVzdFBhdGgpOwogICAgICAgIGZzLnJlbmFtZVN5bmMocGFydFBhdGgsIHRhc2suZGVzdFBhdGgpOwogICAgICAgIHRhc2suaGFzaEhleCA9IHJlc3VsdC5oYXNoSGV4OwogICAgICAgIHRhc2sucmVzdW1lZEZyb20gPSByZXN1bHQucmVzdW1lZEZyb207CgogICAgICAgIHJlY29yZFRyYW5zZmVyU3VjY2Vzcyh7CiAgICAgICAgICBtZWRpYVBhdGg6IHRhc2subWVkaWFQYXRoLAogICAgICAgICAgc3RvcmFnZTogdGFzay5zdG9yYWdlLAogICAgICAgICAgc2l6ZTogcmVzdWx0LnNpemUsCiAgICAgICAgICBoYXNoSGV4OiByZXN1bHQuaGFzaEhleCwKICAgICAgICAgIGxvY2FsUGF0aDogdGFzay5kZXN0UGF0aCwKICAgICAgICAgIGltcG9ydGVkQXQ6IERhdGUubm93KCksCiAgICAgICAgfSk7CgogICAgICAgIGlmICh0aGlzLm9wdHMuZ2V0QXV0b0ltcG9ydCgpKSB7CiAgICAgICAgICB0YXNrLnN0YXR1cyA9ICdpbXBvcnRpbmcnOwogICAgICAgICAgdGhpcy5vcHRzLm9uVXBkYXRlKCk7CiAgICAgICAgICB0YXNrLmltcG9ydGVkQXNzZXRJZHMgPSBhd2FpdCB0aGlzLm9wdHMuaW1wb3J0ZXIuaW1wb3J0TG9jYWxGaWxlKHRhc2suZGVzdFBhdGgpOwogICAgICAgIH0KCiAgICAgICAgdGFzay5zdGF0dXMgPSAnZG9uZSc7CiAgICAgICAgdGFzay5zcGVlZEJ5dGVzUGVyU2VjID0gMDsKICAgICAgICB0YXNrLmV0YVNlY29uZHMgPSAwOwogICAgICAgIHRoaXMub3B0cy5vblVwZGF0ZSgpOwogICAgICAgIHRoaXMub3B0cy5vbkltcG9ydGVkPy4odGFzayk7CiAgICAgICAgcmV0dXJuOwogICAgICB9IGNhdGNoIChlcnIpIHsKICAgICAgICBpZiAodGhpcy5jYW5jZWxsZWRJZHMuaGFzKHRhc2suaWQpKSB7CiAgICAgICAgICB0YXNrLnN0YXR1cyA9ICdjYW5jZWxsZWQnOwogICAgICAgICAgdGhpcy5vcHRzLm9uVXBkYXRlKCk7CiAgICAgICAgICByZXR1cm47CiAgICAgICAgfQogICAgICAgIGF0dGVtcHQrKzsKICAgICAgICBpZiAoYXR0ZW1wdCA+IG1heFJldHJpZXMpIHsKICAgICAgICAgIHRhc2suc3RhdHVzID0gJ2ZhaWxlZCc7CiAgICAgICAgICB0YXNrLnNwZWVkQnl0ZXNQZXJTZWMgPSAwOwogICAgICAgICAgdGFzay5ldGFTZWNvbmRzID0gbnVsbDsKICAgICAgICAgIHRhc2suZXJyb3IgPSBlcnIgaW5zdGFuY2VvZiBFcnJvciA/IGVyci5tZXNzYWdlIDogU3RyaW5nKGVycik7CiAgICAgICAgICB0aGlzLm9wdHMub25VcGRhdGUoKTsKICAgICAgICAgIHJldHVybjsKICAgICAgICB9CiAgICAgICAgYXdhaXQgbmV3IFByb21pc2UoKHIpID0+IHNldFRpbWVvdXQociwgTWF0aC5taW4oNDAwMCwgYXR0ZW1wdCAqIDgwMCkpKTsKICAgICAgfQogICAgfQogIH0KCiAgcHJpdmF0ZSBhc3luYyBkb3dubG9hZFdpdGhSZXN1bWUoCiAgICBiYXNlVXJsOiBzdHJpbmcsCiAgICB1cmxQYXRoOiBzdHJpbmcsCiAgICB0YXNrOiBEamlEb3dubG9hZFRhc2ssCiAgICBwYXJ0UGF0aDogc3RyaW5nCiAgKTogUHJvbWlzZTx7IHNpemU6IG51bWJlcjsgaGFzaEhleDogc3RyaW5nOyByZXN1bWVkRnJvbTogbnVtYmVyIH0+IHsKICAgIGxldCBoYXNoID0gY3J5cHRvLmNyZWF0ZUhhc2goJ3NoYTI1NicpOwogICAgbGV0IHBvcyA9IDA7CiAgICBpZiAoZnMuZXhpc3RzU3luYyhwYXJ0UGF0aCkpIHsKICAgICAgY29uc3QgZXhpc3RpbmdTaXplID0gZnMuc3RhdFN5bmMocGFydFBhdGgpLnNpemU7CiAgICAgIGlmICh0YXNrLnNpemUgPiAwICYmIGV4aXN0aW5nU2l6ZSA+IHRhc2suc2l6ZSkgewogICAgICAgIGZzLnVubGlua1N5bmMocGFydFBhdGgpOwogICAgICB9IGVsc2UgaWYgKGV4aXN0aW5nU2l6ZSA+IDApIHsKICAgICAgICBhd2FpdCBuZXcgUHJvbWlzZTx2b2lkPigocmVzb2x2ZSwgcmVqZWN0KSA9PiB7CiAgICAgICAgICBjb25zdCBycyA9IGZzLmNyZWF0ZVJlYWRTdHJlYW0ocGFydFBhdGgpOwogICAgICAgICAgcnMub24oJ2RhdGEnLCAoY2h1bms6IEJ1ZmZlciB8IHN0cmluZykgPT4gewogICAgICAgICAgICBjb25zdCBidWYgPSB0eXBlb2YgY2h1bmsgPT09ICdzdHJpbmcnID8gQnVmZmVyLmZyb20oY2h1bmspIDogY2h1bms7CiAgICAgICAgICAgIGhhc2gudXBkYXRlKGJ1Zik7CiAgICAgICAgICAgIHBvcyArPSBidWYubGVuZ3RoOwogICAgICAgICAgfSk7CiAgICAgICAgICBycy5vbignZXJyb3InLCByZWplY3QpOwogICAgICAgICAgcnMub24oJ2VuZCcsIHJlc29sdmUpOwogICAgICAgIH0pOwogICAgICB9CiAgICB9CiAgICBjb25zdCByZXN1bWVkRnJvbSA9IHBvczsKICAgIHRhc2suZG93bmxvYWRlZEJ5dGVzID0gcG9zOwoKICAgIGlmICh0YXNrLnNpemUgPiAwICYmIHBvcyA+PSB0YXNrLnNpemUpIHsKICAgICAgcmV0dXJuIHsgc2l6ZTogcG9zLCBoYXNoSGV4OiBoYXNoLmRpZ2VzdCgnaGV4JyksIHJlc3VtZWRGcm9tIH07CiAgICB9CgogICAgY29uc3QgdGFyZ2V0ID0gbmV3IFVSTCh1cmxQYXRoLCBiYXNlVXJsKTsKICAgIHJldHVybiBuZXcgUHJvbWlzZSgocmVzb2x2ZSwgcmVqZWN0KSA9PiB7CiAgICAgIGNvbnN0IGhlYWRlcnM6IFJlY29yZDxzdHJpbmcsIHN0cmluZz4gPSBwb3MgPiAwID8geyBSYW5nZTogYGJ5dGVzPSR7cG9zfS1gIH0gOiB7fTsKICAgICAgbGV0IGVmZmVjdGl2ZVJlc3VtZWRGcm9tID0gcmVzdW1lZEZyb207CiAgICAgIGNvbnN0IHJlcSA9IGh0dHAucmVxdWVzdCgKICAgICAgICB0YXJnZXQsCiAgICAgICAgeyBtZXRob2Q6ICdHRVQnLCBoZWFkZXJzLCB0aW1lb3V0OiAxNTAwMCB9LAogICAgICAgIChyZXMpID0+IHsKICAgICAgICAgIGNvbnN0IHN0YXR1cyA9IHJlcy5zdGF0dXNDb2RlID8/IDA7CiAgICAgICAgICBpZiAoc3RhdHVzID09PSA0MTYpIHsKICAgICAgICAgICAgcmVzLnJlc3VtZSgpOwogICAgICAgICAgICBpZiAodGFzay5zaXplID4gMCAmJiBwb3MgPT09IHRhc2suc2l6ZSkgewogICAgICAgICAgICAgIHJlc29sdmUoeyBzaXplOiBwb3MsIGhhc2hIZXg6IGhhc2guZGlnZXN0KCdoZXgnKSwgcmVzdW1lZEZyb206IGVmZmVjdGl2ZVJlc3VtZWRGcm9tIH0pOwogICAgICAgICAgICAgIHJldHVybjsKICAgICAgICAgICAgfQogICAgICAgICAgICBpZiAoZnMuZXhpc3RzU3luYyhwYXJ0UGF0aCkpIGZzLnVubGlua1N5bmMocGFydFBhdGgpOwogICAgICAgICAgICByZWplY3QobmV3IEVycm9yKCdIVFRQIDQxNiByYW5nZSBtaXNtYXRjaCwgcmVzdGFydGluZycpKTsKICAgICAgICAgICAgcmV0dXJuOwogICAgICAgICAgfQogICAgICAgICAgaWYgKHN0YXR1cyAhPT0gMjAwICYmIHN0YXR1cyAhPT0gMjA2KSB7CiAgICAgICAgICAgIHJlcy5yZXN1bWUoKTsKICAgICAgICAgICAgaWYgKGZzLmV4aXN0c1N5bmMocGFydFBhdGgpKSBmcy51bmxpbmtTeW5jKHBhcnRQYXRoKTsKICAgICAgICAgICAgcmVqZWN0KG5ldyBFcnJvcihgQ2FtZXJhIEhUVFAgZXJyb3IgJHtzdGF0dXN9YCkpOwogICAgICAgICAgICByZXR1cm47CiAgICAgICAgICB9CiAgICAgICAgICBpZiAoc3RhdHVzID09PSAyMDAgJiYgcG9zID4gMCkgewogICAgICAgICAgICBpZiAoZnMuZXhpc3RzU3luYyhwYXJ0UGF0aCkpIGZzLnVubGlua1N5bmMocGFydFBhdGgpOwogICAgICAgICAgICBwb3MgPSAwOwogICAgICAgICAgICBlZmZlY3RpdmVSZXN1bWVkRnJvbSA9IDA7CiAgICAgICAgICAgIHRhc2suZG93bmxvYWRlZEJ5dGVzID0gMDsKICAgICAgICAgICAgaGFzaCA9IGNyeXB0by5jcmVhdGVIYXNoKCdzaGEyNTYnKTsKICAgICAgICAgIH0KICAgICAgICAgIGNvbnN0IGNsSGVhZGVyID0gcmVzLmhlYWRlcnNbJ2NvbnRlbnQtbGVuZ3RoJ107CiAgICAgICAgICBpZiAoc3RhdHVzID09PSAyMDAgJiYgY2xIZWFkZXIgJiYgdGFzay5zaXplIDw9IDApIHsKICAgICAgICAgICAgY29uc3QgcGFyc2VkID0gTnVtYmVyLnBhcnNlSW50KFN0cmluZyhjbEhlYWRlciksIDEwKTsKICAgICAgICAgICAgaWYgKE51bWJlci5pc0Zpbml0ZShwYXJzZWQpICYmIHBhcnNlZCA+IDApIHRhc2suc2l6ZSA9IHBhcnNlZDsKICAgICAgICAgIH0KCiAgICAgICAgICBjb25zdCB3cyA9IGZzLmNyZWF0ZVdyaXRlU3RyZWFtKHBhcnRQYXRoLCB7IGZsYWdzOiBwb3MgPiAwID8gJ2EnIDogJ3cnIH0pOwogICAgICAgICAgbGV0IGxhc3RUaWNrID0gRGF0ZS5ub3coKTsKICAgICAgICAgIGxldCB3aW5kb3dCeXRlcyA9IDA7CiAgICAgICAgICBsZXQgc2V0dGxlZCA9IGZhbHNlOwoKICAgICAgICAgIGNvbnN0IGNsZWFudXAgPSAoKSA9PiB7CiAgICAgICAgICAgIHRoaXMuYWN0aXZlQWJvcnRzLmRlbGV0ZSh0YXNrLmlkKTsKICAgICAgICAgIH07CiAgICAgICAgICB0aGlzLmFjdGl2ZUFib3J0cy5zZXQodGFzay5pZCwgKCkgPT4gewogICAgICAgICAgICByZXEuZGVzdHJveSgpOwogICAgICAgICAgICB3cy5kZXN0cm95KCk7CiAgICAgICAgICB9KTsKCiAgICAgICAgICByZXMub24oJ2RhdGEnLCAoY2h1bms6IEJ1ZmZlcikgPT4gewogICAgICAgICAgICBpZiAodGhpcy5jYW5jZWxsZWRJZHMuaGFzKHRhc2suaWQpKSB7CiAgICAgICAgICAgICAgcmVxLmRlc3Ryb3koKTsKICAgICAgICAgICAgICByZXR1cm47CiAgICAgICAgICAgIH0KICAgICAgICAgICAgd3Mud3JpdGUoY2h1bmspOwogICAgICAgICAgICBoYXNoLnVwZGF0ZShjaHVuayk7CiAgICAgICAgICAgIHBvcyArPSBjaHVuay5sZW5ndGg7CiAgICAgICAgICAgIHdpbmRvd0J5dGVzICs9IGNodW5rLmxlbmd0aDsKICAgICAgICAgICAgdGFzay5kb3dubG9hZGVkQnl0ZXMgPSBwb3M7CiAgICAgICAgICAgIGNvbnN0IG5vdyA9IERhdGUubm93KCk7CiAgICAgICAgICAgIGNvbnN0IGR0ID0gKG5vdyAtIGxhc3RUaWNrKSAvIDEwMDA7CiAgICAgICAgICAgIGlmIChkdCA+PSAwLjI1KSB7CiAgICAgICAgICAgICAgY29uc3Qgc3BlZWQgPSB3aW5kb3dCeXRlcyAvIGR0OwogICAgICAgICAgICAgIHRhc2suc3BlZWRCeXRlc1BlclNlYyA9IE1hdGgucm91bmQoc3BlZWQpOwogICAgICAgICAgICAgIHRhc2suZXRhU2Vjb25kcyA9CiAgICAgICAgICAgICAgICB0YXNrLnNpemUgPiAwICYmIHNwZWVkID4gMCA/IE1hdGgubWF4KDAsIE1hdGguY2VpbCgodGFzay5zaXplIC0gcG9zKSAvIHNwZWVkKSkgOiBudWxsOwogICAgICAgICAgICAgIGxhc3RUaWNrID0gbm93OwogICAgICAgICAgICAgIHdpbmRvd0J5dGVzID0gMDsKICAgICAgICAgICAgICB0aGlzLm9wdHMub25VcGRhdGUoKTsKICAgICAgICAgICAgfQogICAgICAgICAgfSk7CgogICAgICAgICAgcmVzLm9uKCdlbmQnLCAoKSA9PiB7CiAgICAgICAgICAgIHdzLmVuZCgoKSA9PiB7CiAgICAgICAgICAgICAgY2xlYW51cCgpOwogICAgICAgICAgICAgIGlmIChzZXR0bGVkKSByZXR1cm47CiAgICAgICAgICAgICAgc2V0dGxlZCA9IHRydWU7CiAgICAgICAgICAgICAgaWYgKHRhc2suc2l6ZSA+IDAgJiYgcG9zIDwgdGFzay5zaXplKSB7CiAgICAgICAgICAgICAgICByZWplY3QobmV3IEVycm9yKGBTaG9ydCByZWFkIGF0ICR7cG9zfS8ke3Rhc2suc2l6ZX1gKSk7CiAgICAgICAgICAgICAgICByZXR1cm47CiAgICAgICAgICAgICAgfQogICAgICAgICAgICAgIHJlc29sdmUoeyBzaXplOiBwb3MsIGhhc2hIZXg6IGhhc2guZGlnZXN0KCdoZXgnKSwgcmVzdW1lZEZyb206IGVmZmVjdGl2ZVJlc3VtZWRGcm9tIH0pOwogICAgICAgICAgICB9KTsKICAgICAgICAgIH0pOwoKICAgICAgICAgIHJlcy5vbignZXJyb3InLCAoZXJyKSA9PiB7CiAgICAgICAgICAgIHdzLmRlc3Ryb3koKTsKICAgICAgICAgICAgY2xlYW51cCgpOwogICAgICAgICAgICBpZiAoIXNldHRsZWQpIHsKICAgICAgICAgICAgICBzZXR0bGVkID0gdHJ1ZTsKICAgICAgICAgICAgICByZWplY3QoZXJyKTsKICAgICAgICAgICAgfQogICAgICAgICAgfSk7CiAgICAgICAgfQogICAgICApOwoKICAgICAgcmVxLm9uKCd0aW1lb3V0JywgKCkgPT4gewogICAgICAgIHJlcS5kZXN0cm95KG5ldyBFcnJvcignSFRUUCBjYW1lcmEgY29ubmVjdGlvbiB0aW1lZCBvdXQnKSk7CiAgICAgIH0pOwogICAgICByZXEub24oJ2Vycm9yJywgKGVycikgPT4gewogICAgICAgIHRoaXMuYWN0aXZlQWJvcnRzLmRlbGV0ZSh0YXNrLmlkKTsKICAgICAgICByZWplY3QoZXJyKTsKICAgICAgfSk7CiAgICAgIHJlcS5lbmQoKTsKICAgIH0pOwogIH0KfQo=
+import crypto from 'node:crypto';
+import fs from 'node:fs';
+import http from 'node:http';
+import path from 'node:path';
+import type { DjiDownloadTask, DjiRemoteMediaItem } from '../../../shared/djiTypes';
+import { recordTransferSuccess, resolveUniqueDestPath } from './integrity';
+import type { DjiLibraryImporter } from './libraryImporter';
+
+export interface DownloadQueueOptions {
+  getBaseUrl: () => string;
+  getDownloadDir: () => string;
+  getConcurrency: () => 1 | 2;
+  getAutoImport: () => boolean;
+  importer: DjiLibraryImporter;
+  onUpdate: () => void;
+  onImported?: (task: DjiDownloadTask) => void;
+}
+
+export class DjiDownloadQueue {
+  private tasks: DjiDownloadTask[] = [];
+  private active = 0;
+  private cancelledIds = new Set<string>();
+  private activeAborts = new Map<string, () => void>();
+
+  constructor(private readonly opts: DownloadQueueOptions) {}
+
+  static buildRelativeMediaUrl(storage: 0 | 1, mediaPath: string): string {
+    return `/v2?storage=${storage}&path=${encodeURIComponent(mediaPath).replace(/%2F/gi, '/')}`;
+  }
+
+  static remoteMediaCandidates(item: Pick<DjiRemoteMediaItem, 'mediaPath' | 'ext' | 'thumbPath'>): string[] {
+    const candidates = [
+      item.mediaPath,
+      item.ext ? `${item.mediaPath}.${item.ext}` : item.mediaPath,
+      item.thumbPath,
+    ].filter((value): value is string => Boolean(value));
+    return [...new Set(candidates)];
+  }
+
+  static originalMediaCandidates(item: Pick<DjiRemoteMediaItem, 'mediaPath' | 'ext' | 'thumbPath'>): string[] {
+    const candidates = [
+      item.ext ? `${item.mediaPath}.${item.ext}` : item.mediaPath,
+      item.mediaPath,
+      item.thumbPath,
+    ].filter((value): value is string => Boolean(value));
+    return [...new Set(candidates)];
+  }
+
+  list(): DjiDownloadTask[] {
+    return this.tasks.map((t) => ({ ...t }));
+  }
+
+  enqueue(items: DjiRemoteMediaItem[]): DjiDownloadTask[] {
+    const dir = this.opts.getDownloadDir();
+    fs.mkdirSync(dir, { recursive: true });
+    const reservedPaths = new Set(
+      this.tasks
+        .filter((t) => t.status === 'queued' || t.status === 'downloading' || t.status === 'verifying' || t.status === 'importing')
+        .map((t) => path.resolve(t.destPath))
+    );
+    const added: DjiDownloadTask[] = [];
+    for (const item of items) {
+      const existing = this.tasks.find(
+        (t) =>
+          t.mediaId === item.id &&
+          (t.status === 'queued' || t.status === 'downloading' || t.status === 'verifying' || t.status === 'importing')
+      );
+      if (existing) continue;
+      const destPath = resolveUniqueDestPath(dir, item.name, item.mediaPath, item.storage, reservedPaths);
+      reservedPaths.add(path.resolve(destPath));
+      const task: DjiDownloadTask = {
+        id: `dji-dl-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        mediaId: item.id,
+        name: item.name,
+        mediaPath: item.mediaPath,
+        ext: item.ext,
+        storage: item.storage,
+        size: item.size,
+        downloadedBytes: 0,
+        speedBytesPerSec: 0,
+        etaSeconds: null,
+        status: 'queued',
+        destPath,
+      };
+      this.tasks.unshift(task);
+      added.push(task);
+    }
+    this.opts.onUpdate();
+    void this.pump();
+    return added;
+  }
+
+  cancel(taskId: string): void {
+    this.cancelledIds.add(taskId);
+    const abort = this.activeAborts.get(taskId);
+    if (abort) abort();
+    const task = this.tasks.find((t) => t.id === taskId);
+    if (task && (task.status === 'queued' || task.status === 'downloading')) {
+      task.status = 'cancelled';
+      task.speedBytesPerSec = 0;
+      task.etaSeconds = null;
+      this.opts.onUpdate();
+    }
+  }
+
+  retry(taskId: string): void {
+    const task = this.tasks.find((t) => t.id === taskId);
+    if (!task) return;
+    if (task.status === 'failed' || task.status === 'cancelled') {
+      this.cancelledIds.delete(taskId);
+      task.status = 'queued';
+      task.error = undefined;
+      task.speedBytesPerSec = 0;
+      task.etaSeconds = null;
+      this.opts.onUpdate();
+      void this.pump();
+    }
+  }
+
+  clearFinished(): void {
+    this.tasks = this.tasks.filter((t) => t.status === 'queued' || t.status === 'downloading' || t.status === 'verifying' || t.status === 'importing');
+    this.opts.onUpdate();
+  }
+
+  cancelAll(): void {
+    for (const task of this.tasks) {
+      if (task.status === 'queued' || task.status === 'downloading') {
+        this.cancelledIds.add(task.id);
+        const abort = this.activeAborts.get(task.id);
+        if (abort) abort();
+        task.status = 'cancelled';
+        task.speedBytesPerSec = 0;
+        task.etaSeconds = null;
+      }
+    }
+    this.opts.onUpdate();
+  }
+
+  private async pump(): Promise<void> {
+    const limit = this.opts.getConcurrency();
+    while (this.active < limit) {
+      const next = this.tasks.find((t) => t.status === 'queued');
+      if (!next) break;
+      this.active++;
+      void this.runTask(next).finally(() => {
+        this.active--;
+        void this.pump();
+      });
+    }
+  }
+
+  private async runTask(task: DjiDownloadTask): Promise<void> {
+    if (this.cancelledIds.has(task.id)) {
+      task.status = 'cancelled';
+      this.opts.onUpdate();
+      return;
+    }
+    const baseUrl = this.opts.getBaseUrl();
+    const candidates = DjiDownloadQueue.remoteMediaCandidates(task);
+    const partPath = `${task.destPath}.part`;
+    fs.mkdirSync(path.dirname(task.destPath), { recursive: true });
+
+    task.status = 'downloading';
+    task.error = undefined;
+    this.opts.onUpdate();
+
+    const maxRetries = 4;
+    let attempt = 0;
+    while (attempt <= maxRetries) {
+      if (this.cancelledIds.has(task.id)) {
+        task.status = 'cancelled';
+        this.opts.onUpdate();
+        return;
+      }
+      try {
+        let result: Awaited<ReturnType<DjiDownloadQueue['downloadWithResume']>> | undefined;
+        let lastError: unknown = new Error('No remote media path succeeded.');
+        for (const candidate of candidates) {
+          try {
+            result = await this.downloadWithResume(
+              baseUrl,
+              DjiDownloadQueue.buildRelativeMediaUrl(task.storage, candidate),
+              task,
+              partPath
+            );
+            break;
+          } catch (err) {
+            lastError = err;
+            if (fs.existsSync(partPath)) fs.unlinkSync(partPath);
+            if (!String(err instanceof Error ? err.message : err).includes('HTTP error 404')) throw err;
+          }
+        }
+        if (!result) throw lastError;
+        if (this.cancelledIds.has(task.id)) {
+          task.status = 'cancelled';
+          this.opts.onUpdate();
+          return;
+        }
+        task.status = 'verifying';
+        this.opts.onUpdate();
+        if (task.size > 0 && result.size !== task.size) {
+          throw new Error(`Size mismatch: expected ${task.size}, got ${result.size}`);
+        }
+        if (fs.existsSync(task.destPath)) fs.unlinkSync(task.destPath);
+        fs.renameSync(partPath, task.destPath);
+        task.hashHex = result.hashHex;
+        task.resumedFrom = result.resumedFrom;
+
+        recordTransferSuccess({
+          mediaPath: task.mediaPath,
+          storage: task.storage,
+          size: result.size,
+          hashHex: result.hashHex,
+          localPath: task.destPath,
+          importedAt: Date.now(),
+        });
+
+        if (this.opts.getAutoImport()) {
+          task.status = 'importing';
+          this.opts.onUpdate();
+          task.importedAssetIds = await this.opts.importer.importLocalFile(task.destPath);
+        }
+
+        task.status = 'done';
+        task.speedBytesPerSec = 0;
+        task.etaSeconds = 0;
+        this.opts.onUpdate();
+        this.opts.onImported?.(task);
+        return;
+      } catch (err) {
+        if (this.cancelledIds.has(task.id)) {
+          task.status = 'cancelled';
+          this.opts.onUpdate();
+          return;
+        }
+        attempt++;
+        if (attempt > maxRetries) {
+          task.status = 'failed';
+          task.speedBytesPerSec = 0;
+          task.etaSeconds = null;
+          task.error = err instanceof Error ? err.message : String(err);
+          this.opts.onUpdate();
+          return;
+        }
+        await new Promise((r) => setTimeout(r, Math.min(4000, attempt * 800)));
+      }
+    }
+  }
+
+  private async downloadWithResume(
+    baseUrl: string,
+    urlPath: string,
+    task: DjiDownloadTask,
+    partPath: string
+  ): Promise<{ size: number; hashHex: string; resumedFrom: number }> {
+    let hash = crypto.createHash('sha256');
+    let pos = 0;
+    if (fs.existsSync(partPath)) {
+      const existingSize = fs.statSync(partPath).size;
+      if (task.size > 0 && existingSize > task.size) {
+        fs.unlinkSync(partPath);
+      } else if (existingSize > 0) {
+        await new Promise<void>((resolve, reject) => {
+          const rs = fs.createReadStream(partPath);
+          rs.on('data', (chunk: Buffer | string) => {
+            const buf = typeof chunk === 'string' ? Buffer.from(chunk) : chunk;
+            hash.update(buf);
+            pos += buf.length;
+          });
+          rs.on('error', reject);
+          rs.on('end', resolve);
+        });
+      }
+    }
+    const resumedFrom = pos;
+    task.downloadedBytes = pos;
+
+    if (task.size > 0 && pos >= task.size) {
+      return { size: pos, hashHex: hash.digest('hex'), resumedFrom };
+    }
+
+    const target = new URL(urlPath, baseUrl);
+    return new Promise((resolve, reject) => {
+      const headers: Record<string, string> = pos > 0 ? { Range: `bytes=${pos}-` } : {};
+      let effectiveResumedFrom = resumedFrom;
+      const req = http.request(
+        target,
+        { method: 'GET', headers, timeout: 15000 },
+        (res) => {
+          const status = res.statusCode ?? 0;
+          if (status === 416) {
+            res.resume();
+            if (task.size > 0 && pos === task.size) {
+              resolve({ size: pos, hashHex: hash.digest('hex'), resumedFrom: effectiveResumedFrom });
+              return;
+            }
+            if (fs.existsSync(partPath)) fs.unlinkSync(partPath);
+            reject(new Error('HTTP 416 range mismatch, restarting'));
+            return;
+          }
+          if (status !== 200 && status !== 206) {
+            res.resume();
+            if (fs.existsSync(partPath)) fs.unlinkSync(partPath);
+            reject(new Error(`Camera HTTP error ${status}`));
+            return;
+          }
+          if (status === 200 && pos > 0) {
+            if (fs.existsSync(partPath)) fs.unlinkSync(partPath);
+            pos = 0;
+            effectiveResumedFrom = 0;
+            task.downloadedBytes = 0;
+            hash = crypto.createHash('sha256');
+          }
+          const clHeader = res.headers['content-length'];
+          if (status === 200 && clHeader && task.size <= 0) {
+            const parsed = Number.parseInt(String(clHeader), 10);
+            if (Number.isFinite(parsed) && parsed > 0) task.size = parsed;
+          }
+
+          const ws = fs.createWriteStream(partPath, { flags: pos > 0 ? 'a' : 'w' });
+          let lastTick = Date.now();
+          let windowBytes = 0;
+          let settled = false;
+
+          const cleanup = () => {
+            this.activeAborts.delete(task.id);
+          };
+          this.activeAborts.set(task.id, () => {
+            req.destroy();
+            ws.destroy();
+          });
+
+          res.on('data', (chunk: Buffer) => {
+            if (this.cancelledIds.has(task.id)) {
+              req.destroy();
+              return;
+            }
+            ws.write(chunk);
+            hash.update(chunk);
+            pos += chunk.length;
+            windowBytes += chunk.length;
+            task.downloadedBytes = pos;
+            const now = Date.now();
+            const dt = (now - lastTick) / 1000;
+            if (dt >= 0.25) {
+              const speed = windowBytes / dt;
+              task.speedBytesPerSec = Math.round(speed);
+              task.etaSeconds =
+                task.size > 0 && speed > 0 ? Math.max(0, Math.ceil((task.size - pos) / speed)) : null;
+              lastTick = now;
+              windowBytes = 0;
+              this.opts.onUpdate();
+            }
+          });
+
+          res.on('end', () => {
+            ws.end(() => {
+              cleanup();
+              if (settled) return;
+              settled = true;
+              if (task.size > 0 && pos < task.size) {
+                reject(new Error(`Short read at ${pos}/${task.size}`));
+                return;
+              }
+              resolve({ size: pos, hashHex: hash.digest('hex'), resumedFrom: effectiveResumedFrom });
+            });
+          });
+
+          res.on('error', (err) => {
+            ws.destroy();
+            cleanup();
+            if (!settled) {
+              settled = true;
+              reject(err);
+            }
+          });
+        }
+      );
+
+      req.on('timeout', () => {
+        req.destroy(new Error('HTTP camera connection timed out'));
+      });
+      req.on('error', (err) => {
+        this.activeAborts.delete(task.id);
+        reject(err);
+      });
+      req.end();
+    });
+  }
+}
