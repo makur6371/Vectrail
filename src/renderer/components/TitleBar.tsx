@@ -1,1 +1,529 @@
-aW1wb3J0IFJlYWN0LCB7IHVzZVN0YXRlIH0gZnJvbSAncmVhY3QnOwppbXBvcnQgewogIEFsZXJ0VHJpYW5nbGUsCiAgQmxvY2tzLAogIENoZWNrQ2lyY2xlMiwKICBDaGV2cm9uRG93biwKICBDbG9jaywKICBEb3dubG9hZCwKICBGb2xkZXJPcGVuLAogIExhbmd1YWdlcywKICBMb2FkZXIyLAogIE1pbnVzLAogIE1vb24sCiAgUGx1cywKICBSZWRvMiwKICBTYXZlLAogIFNldHRpbmdzLAogIFNwYXJrbGVzLAogIFNxdWFyZSwKICBTdW4sCiAgVW5kbzIsCiAgWCwKfSBmcm9tICdsdWNpZGUtcmVhY3QnOwppbXBvcnQgeyBFeHBvcnRKb2JJbmZvLCBNYWdpY0JhY2tlbmQsIE1hZ2ljU3RhZ2UgfSBmcm9tICcuLi8uLi9zaGFyZWQvdHlwZXMnOwppbXBvcnQgeyB1c2VJMThuIH0gZnJvbSAnLi4vaTE4bic7CgppbnRlcmZhY2UgVGl0bGVCYXJQcm9wcyB7CiAgdGl0bGU6IHN0cmluZzsKICBpc0RpcnR5OiBib29sZWFuOwogIGNhblVuZG86IGJvb2xlYW47CiAgY2FuUmVkbzogYm9vbGVhbjsKICBleHBvcnRzTGlzdDogRXhwb3J0Sm9iSW5mb1tdOwogIG1jcFJ1bm5pbmc6IGJvb2xlYW47CiAgaXNMaWdodFRoZW1lPzogYm9vbGVhbjsKICBtYWdpY09wZW4/OiBib29sZWFuOwogIG1hZ2ljQmFja2VuZD86IE1hZ2ljQmFja2VuZDsKICBtYWdpY1N0YXR1cz86IHsgd29ya2VyOiBzdHJpbmc7IHN0YWdlOiBNYWdpY1N0YWdlOyBzdGF0dXM/OiBzdHJpbmcgfSB8IG51bGw7CiAgcmVjZW50UHJvamVjdHM/OiBzdHJpbmdbXTsKICBvbk5ldzogKCkgPT4gdm9pZDsKICBvbk9wZW46ICgpID0+IHZvaWQ7CiAgb25PcGVuUmVjZW50PzogKGZpbGVQYXRoOiBzdHJpbmcpID0+IHZvaWQ7CiAgb25DbGVhclJlY2VudHM/OiAoKSA9PiB2b2lkOwogIG9uU2F2ZTogKCkgPT4gdm9pZDsKICBvbkltcG9ydDogKCkgPT4gdm9pZDsKICBvblVuZG86ICgpID0+IHZvaWQ7CiAgb25SZWRvOiAoKSA9PiB2b2lkOwogIG9uT3Blbk1hZ2ljOiAoKSA9PiB2b2lkOwogIG9uU3RvcE1hZ2ljPzogKCkgPT4gdm9pZDsKICBvbk9wZW5FeHBvcnQ6ICgpID0+IHZvaWQ7CiAgb25PcGVuU2V0dGluZ3M6ICgpID0+IHZvaWQ7CiAgb25PcGVuTWFya2V0cGxhY2U/OiAoKSA9PiB2b2lkOwogIG9uVG9nZ2xlTGlnaHREYXJrPzogKCkgPT4gdm9pZDsKICBvbkNhbmNlbEV4cG9ydDogKGlkOiBzdHJpbmcpID0+IHZvaWQ7CiAgb25TaG93RXhwb3J0SW5FeHBsb3Jlcj86IChmaWxlOiBzdHJpbmcpID0+IHZvaWQ7Cn0KCmV4cG9ydCBjb25zdCBUaXRsZUJhcjogUmVhY3QuRkM8VGl0bGVCYXJQcm9wcz4gPSAoewogIHRpdGxlLAogIGlzRGlydHksCiAgY2FuVW5kbywKICBjYW5SZWRvLAogIGV4cG9ydHNMaXN0LAogIG1jcFJ1bm5pbmcsCiAgaXNMaWdodFRoZW1lID0gZmFsc2UsCiAgbWFnaWNPcGVuID0gZmFsc2UsCiAgbWFnaWNCYWNrZW5kID0gJ2xvY2FsJywKICBtYWdpY1N0YXR1cyA9IG51bGwsCiAgcmVjZW50UHJvamVjdHMgPSBbXSwKICBvbk5ldywKICBvbk9wZW4sCiAgb25PcGVuUmVjZW50LAogIG9uQ2xlYXJSZWNlbnRzLAogIG9uU2F2ZSwKICBvbkltcG9ydCwKICBvblVuZG8sCiAgb25SZWRvLAogIG9uT3Blbk1hZ2ljLAogIG9uU3RvcE1hZ2ljLAogIG9uT3BlbkV4cG9ydCwKICBvbk9wZW5TZXR0aW5ncywKICBvbk9wZW5NYXJrZXRwbGFjZSwKICBvblRvZ2dsZUxpZ2h0RGFyaywKICBvbkNhbmNlbEV4cG9ydCwKICBvblNob3dFeHBvcnRJbkV4cGxvcmVyLAp9KSA9PiB7CiAgY29uc3QgeyBsb2NhbGUsIHRvZ2dsZUxvY2FsZSwgTCB9ID0gdXNlSTE4bigpOwogIGNvbnN0IFtleHBvcnRzT3Blbiwgc2V0RXhwb3J0c09wZW5dID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFtyZWNlbnRzT3Blbiwgc2V0UmVjZW50c09wZW5dID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IFtkaXNtaXNzZWRGaW5pc2hlZCwgc2V0RGlzbWlzc2VkRmluaXNoZWRdID0gdXNlU3RhdGUoZmFsc2UpOwogIGNvbnN0IGFjdGl2ZUV4cG9ydCA9IGV4cG9ydHNMaXN0LmZpbmQoKGopID0+IGouc3RhdHVzID09PSAncnVubmluZycpOwogIGNvbnN0IHdhaXRpbmdDb3VudCA9IGV4cG9ydHNMaXN0LmZpbHRlcigoaikgPT4gai5zdGF0dXMgPT09ICd3YWl0aW5nJykubGVuZ3RoOwogIGNvbnN0IGhhc0ZhaWxlZCA9IGV4cG9ydHNMaXN0LnNvbWUoKGopID0+IGouc3RhdHVzID09PSAnZmFpbGVkJyk7CiAgY29uc3QgaGFzRG9uZSA9IGV4cG9ydHNMaXN0LnNvbWUoKGopID0+IGouc3RhdHVzID09PSAnZG9uZScpOwogIGNvbnN0IHZpc2libGVFeHBvcnRzID0gYWN0aXZlRXhwb3J0IHx8ICghZGlzbWlzc2VkRmluaXNoZWQgJiYgKGhhc0ZhaWxlZCB8fCBoYXNEb25lKSk7CgogIGNvbnN0IG1hZ2ljQWN0aXZpdHlUZXh0ID0gKCgpID0+IHsKICAgIGlmICghbWFnaWNTdGF0dXMpIHJldHVybiAnJzsKICAgIGNvbnN0IHJhdyA9CiAgICAgIG1hZ2ljU3RhdHVzLnN0YWdlID09PSAnZWRpdGluZycKICAgICAgICA/IEwoJ+ato+WcqOWJqui+kScsICdFZGl0aW5nJykKICAgICAgICA6IG1hZ2ljU3RhdHVzLnN0YXR1cz8udHJpbSgpIHx8CiAgICAgICAgICBtYWdpY1N0YXR1cy5zdGFnZS5jaGFyQXQoMCkudG9VcHBlckNhc2UoKSArIG1hZ2ljU3RhdHVzLnN0YWdlLnNsaWNlKDEpOwogICAgcmV0dXJuIHJhdy5sZW5ndGggPiAzOCA/IGAke3Jhdy5zbGljZSgwLCAzNyl94oCmYCA6IHJhdzsKICB9KSgpOwogIGNvbnN0IG1hZ2ljTW9kZU1ldGEgPSAoKCkgPT4gewogICAgc3dpdGNoIChtYWdpY0JhY2tlbmQpIHsKICAgICAgY2FzZSAnY2xhdWRlJzoKICAgICAgICByZXR1cm4geyBsYWJlbDogJ0NsYXVkZScsIGRvdDogJyNEOTc3NTcnIH07CiAgICAgIGNhc2UgJ2NvZGV4JzoKICAgICAgICByZXR1cm4geyBsYWJlbDogJ0NvZGV4JywgZG90OiAnIzEwQTM3RicgfTsKICAgICAgY2FzZSAnY2xvdWQnOgogICAgICAgIHJldHVybiB7IGxhYmVsOiBMKCfkupHnq68gQUknLCAnQ2xvdWQgQUknKSwgZG90OiAnI0ZGNkIzNScgfTsKICAgICAgZGVmYXVsdDoKICAgICAgICByZXR1cm4geyBsYWJlbDogTCgn5pys5ZywJywgJ0xvY2FsJyksIGRvdDogJ3ZhcigtLXRleHQpJyB9OwogICAgfQogIH0pKCk7CiAgY29uc3QgYnRuQ2xhc3MgPQogICAgJ3RpdGxlYmFyLW5vZHJhZyB2dC1ob3ZlciBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTEuNSBweC0yLjUgcHktMSByb3VuZGVkIHRleHQtWzExcHhdIHRyYW5zaXRpb24tY29sb3JzJzsKCiAgcmV0dXJuICgKICAgIDxkaXYKICAgICAgY2xhc3NOYW1lPSJ0aXRsZWJhci1kcmFnIGdyaWQgZ3JpZC1jb2xzLVttaW5tYXgoMCwxZnIpX2F1dG9fbWlubWF4KDAsMWZyKV0gaXRlbXMtY2VudGVyIGdhcC0yIHB4LTMgaC0xMCBzaHJpbmstMCIKICAgICAgc3R5bGU9e3sKICAgICAgICBiYWNrZ3JvdW5kOiAndmFyKC0tcGFuZWwpJywKICAgICAgICBib3JkZXJCb3R0b206ICcxcHggc29saWQgdmFyKC0tc3Ryb2tlKScsCiAgICAgIH19CiAgICA+CiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMS41IG1pbi13LTAganVzdGlmeS1zZWxmLXN0YXJ0IHdoaXRlc3BhY2Utbm93cmFwIj4KICAgICAgICA8c3BhbgogICAgICAgICAgY2xhc3NOYW1lPSJ0ZXh0LVsxMnB4XSBmb250LXNlbWlib2xkIHRyYWNraW5nLXRpZ2h0IG1yLTEuNSBmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMS41IHNocmluay0wIgogICAgICAgICAgc3R5bGU9e3sgY29sb3I6ICd2YXIoLS10ZXh0KScgfX0KICAgICAgICA+CiAgICAgICAgICA8c3ZnCiAgICAgICAgICAgIHdpZHRoPSIxNSIKICAgICAgICAgICAgaGVpZ2h0PSIxNSIKICAgICAgICAgICAgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIKICAgICAgICAgICAgZmlsbD0ibm9uZSIKICAgICAgICAgICAgYXJpYS1sYWJlbD0iVmVjdHJhaWwiCiAgICAgICAgICAgIGNsYXNzTmFtZT0ic2hyaW5rLTAiCiAgICAgICAgICA+CiAgICAgICAgICAgIDxwYXRoCiAgICAgICAgICAgICAgZD0iTSAxNTQgMzA4IEwgMzY4IDMwOCBRIDM5MCAzMDggNDAzIDMzMCBMIDQ4OCA0NzcgUSA0OTggNDk0IDQ5OCA1MTIgTCA0OTggNzQyIFEgNDk4IDc2NCA0NzYgNzY0IEwgNDQ2IDc2NCBRIDQyNiA3NjQgNDExIDc0OCBMIDE0OSA0NzkgUSAxMjggNDU4IDEyOCA0MzIgTCAxMjggMzM1IFEgMTI4IDMwOCAxNTQgMzA4IFoiCiAgICAgICAgICAgICAgZmlsbD0idmFyKC0tYWNjZW50KSIKICAgICAgICAgICAgLz4KICAgICAgICAgICAgPHBhdGgKICAgICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxMDI0IDApIHNjYWxlKC0xIDEpIgogICAgICAgICAgICAgIGQ9Ik0gMTU0IDMwOCBMIDM2OCAzMDggUSAzOTAgMzA4IDQwMyAzMzAgTCA0ODggNDc3IFEgNDk4IDQ5NCA0OTggNTEyIEwgNDk4IDc0MiBRIDQ5OCA3NjQgNDc2IDc2NCBMIDQ0NiA3NjQgUSA0MjYgNzY0IDQxMSA3NDggTCAxNDkgNDc5IFEgMTI4IDQ1OCAxMjggNDMyIEwgMTI4IDMzNSBRIDEyOCAzMDggMTU0IDMwOCBaIgogICAgICAgICAgICAgIGZpbGw9InZhcigtLWFjY2VudCkiCiAgICAgICAgICAgIC8+CiAgICAgICAgICA8L3N2Zz4KICAgICAgICAgIFZlY3RyYWlsCiAgICAgICAgPC9zcGFuPgogICAgICAgIDxidXR0b24KICAgICAgICAgIGNsYXNzTmFtZT17YnRuQ2xhc3N9CiAgICAgICAgICBzdHlsZT17eyBiYWNrZ3JvdW5kOiAndHJhbnNwYXJlbnQnLCBjb2xvcjogJ3ZhcigtLXRleHQtZGltKScgfX0KICAgICAgICAgIG9uQ2xpY2s9e29uTmV3fQogICAgICAgICAgdGl0bGU9e0woJ+aWsOW7uumhueebricsICdOZXcgUHJvamVjdCcpfQogICAgICAgID4KICAgICAgICAgIHtMKCfmlrDlu7onLCAnTmV3Jyl9CiAgICAgICAgPC9idXR0b24+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9InJlbGF0aXZlIHRpdGxlYmFyLW5vZHJhZyBmbGV4IGl0ZW1zLWNlbnRlciI+CiAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgIGNsYXNzTmFtZT17YnRuQ2xhc3N9CiAgICAgICAgICAgIHN0eWxlPXt7IGJhY2tncm91bmQ6ICd0cmFuc3BhcmVudCcsIGNvbG9yOiAndmFyKC0tdGV4dC1kaW0pJyB9fQogICAgICAgICAgICBvbkNsaWNrPXtvbk9wZW59CiAgICAgICAgICAgIHRpdGxlPXtMKCfmiZPlvIDpobnnm64nLCAnT3BlbiBQcm9qZWN0Jyl9CiAgICAgICAgICA+CiAgICAgICAgICAgIDxGb2xkZXJPcGVuIHNpemU9ezEzfSBzdHJva2VXaWR0aD17MS41fSAvPiB7TCgn5omT5byAJywgJ09wZW4nKX0KICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAge3JlY2VudFByb2plY3RzLmxlbmd0aCA+IDAgJiYgb25PcGVuUmVjZW50ICYmICgKICAgICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICAgIGNsYXNzTmFtZT0icC0xIHJvdW5kZWQgdnQtaG92ZXIiCiAgICAgICAgICAgICAgc3R5bGU9e3sgY29sb3I6ICd2YXIoLS10ZXh0LWZhaW50KScgfX0KICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRSZWNlbnRzT3BlbigodikgPT4gIXYpfQogICAgICAgICAgICAgIHRpdGxlPXtMKCfmnIDov5Hpobnnm64nLCAnUmVjZW50IFByb2plY3RzJyl9CiAgICAgICAgICAgID4KICAgICAgICAgICAgICA8Q2hldnJvbkRvd24gc2l6ZT17MTF9IC8+CiAgICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgKX0KICAgICAgICAgIHtyZWNlbnRzT3BlbiAmJiByZWNlbnRQcm9qZWN0cy5sZW5ndGggPiAwICYmICgKICAgICAgICAgICAgPGRpdgogICAgICAgICAgICAgIGNsYXNzTmFtZT0iYWJzb2x1dGUgbGVmdC0wIHRvcC04IHotNTAgdy02MCByb3VuZGVkLWxnIHB5LTEgc2hhZG93LTJ4bCB0ZXh0LVsxMXB4XSIKICAgICAgICAgICAgICBzdHlsZT17eyBiYWNrZ3JvdW5kOiAndmFyKC0tc2hlZXQpJywgYm9yZGVyOiAnMXB4IHNvbGlkIHZhcigtLXNoZWV0LWZpZWxkLXN0cm9rZSknIH19CiAgICAgICAgICAgICAgb25Nb3VzZUxlYXZlPXsoKSA9PiBzZXRSZWNlbnRzT3BlbihmYWxzZSl9CiAgICAgICAgICAgID4KICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0icHgtMyBweS0xIHRleHQtWzkuNXB4XSBmb250LXNlbWlib2xkIHVwcGVyY2FzZSB0cmFja2luZy13aWRlciIgc3R5bGU9e3sgY29sb3I6ICd2YXIoLS10ZXh0LWZhaW50KScgfX0+CiAgICAgICAgICAgICAgICB7TCgn5pyA6L+R5omT5byAJywgJ09wZW4gUmVjZW50Jyl9CiAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAge3JlY2VudFByb2plY3RzLm1hcCgoZnApID0+IHsKICAgICAgICAgICAgICAgIGNvbnN0IG5hbWUgPSBmcC5zcGxpdCgvW1xcL10vKS5wb3AoKSB8fCBmcDsKICAgICAgICAgICAgICAgIHJldHVybiAoCiAgICAgICAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICAgICAgICBrZXk9e2ZwfQogICAgICAgICAgICAgICAgICAgIG9uQ2xpY2s9eygpID0+IHsKICAgICAgICAgICAgICAgICAgICAgIHNldFJlY2VudHNPcGVuKGZhbHNlKTsKICAgICAgICAgICAgICAgICAgICAgIG9uT3BlblJlY2VudD8uKGZwKTsKICAgICAgICAgICAgICAgICAgICB9fQogICAgICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idy1mdWxsIHRleHQtbGVmdCBweC0zIHB5LTEuNSB0cnVuY2F0ZSB2dC1ob3ZlciIKICAgICAgICAgICAgICAgICAgICBzdHlsZT17eyBjb2xvcjogJ3ZhcigtLXRleHQpJyB9fQogICAgICAgICAgICAgICAgICAgIHRpdGxlPXtmcH0KICAgICAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAgICAgIHtuYW1lfQogICAgICAgICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgICAgICAgICk7CiAgICAgICAgICAgICAgfSl9CiAgICAgICAgICAgICAge29uQ2xlYXJSZWNlbnRzICYmICgKICAgICAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gewogICAgICAgICAgICAgICAgICAgIHNldFJlY2VudHNPcGVuKGZhbHNlKTsKICAgICAgICAgICAgICAgICAgICBvbkNsZWFyUmVjZW50cygpOwogICAgICAgICAgICAgICAgICB9fQogICAgICAgICAgICAgICAgICBjbGFzc05hbWU9InctZnVsbCB0ZXh0LWxlZnQgcHgtMyBweS0xLjUgdGV4dC1bMTAuNXB4XSB2dC1ob3ZlciIKICAgICAgICAgICAgICAgICAgc3R5bGU9e3sgY29sb3I6ICd2YXIoLS10ZXh0LWRpbSknLCBib3JkZXJUb3A6ICcxcHggc29saWQgdmFyKC0tc3Ryb2tlKScgfX0KICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAge0woJ+a4heepuuWOhuWPsicsICdDbGVhciBNZW51Jyl9CiAgICAgICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgICAgICApfQogICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICl9CiAgICAgICAgPC9kaXY+CiAgICAgICAgPGJ1dHRvbgogICAgICAgICAgY2xhc3NOYW1lPXtidG5DbGFzc30KICAgICAgICAgIHN0eWxlPXt7IGJhY2tncm91bmQ6ICd0cmFuc3BhcmVudCcsIGNvbG9yOiAndmFyKC0tdGV4dC1kaW0pJyB9fQogICAgICAgICAgb25DbGljaz17b25TYXZlfQogICAgICAgICAgdGl0bGU9e0woJ+S/neWtmOmhueebriAoQ3RybCtTKScsICdTYXZlIFByb2plY3QgKEN0cmwrUyknKX0KICAgICAgICA+CiAgICAgICAgICA8U2F2ZSBzaXplPXsxM30gc3Ryb2tlV2lkdGg9ezEuNX0gLz4ge0woJ+S/neWtmCcsICdTYXZlJyl9CiAgICAgICAgPC9idXR0b24+CiAgICAgICAgPGJ1dHRvbgogICAgICAgICAgY2xhc3NOYW1lPSJ0aXRsZWJhci1ub2RyYWcgdnQtYnRuIGlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBnYXAtMS41IHB4LTIuNSBweS0xIHJvdW5kZWQgdGV4dC1bMTFweF0gdHJhbnNpdGlvbi1jb2xvcnMiCiAgICAgICAgICBzdHlsZT17eyBiYWNrZ3JvdW5kOiAndmFyKC0tYnV0dG9uKScsIGNvbG9yOiAndmFyKC0tdGV4dCknIH19CiAgICAgICAgICBvbkNsaWNrPXtvbkltcG9ydH0KICAgICAgICAgIHRpdGxlPXtMKCflr7zlhaXlqpLkvZMgKEN0cmwrSSknLCAnSW1wb3J0IE1lZGlhIChDdHJsK0kpJyl9CiAgICAgICAgPgogICAgICAgICAgPFBsdXMgc2l6ZT17MTN9IHN0cm9rZVdpZHRoPXsxLjZ9IC8+IHtMKCflr7zlhaUnLCAnSW1wb3J0Jyl9CiAgICAgICAgPC9idXR0b24+CiAgICAgICAgPGRpdiBjbGFzc05hbWU9ImgtMy41IHctcHggbXgtMSIgc3R5bGU9e3sgYmFja2dyb3VuZDogJ3ZhcigtLXN0cm9rZSknIH19IC8+CiAgICAgICAgPGJ1dHRvbgogICAgICAgICAgY2xhc3NOYW1lPXtidG5DbGFzc30KICAgICAgICAgIHN0eWxlPXt7IGNvbG9yOiBjYW5VbmRvID8gJ3ZhcigtLXRleHQpJyA6ICd2YXIoLS10ZXh0LWZhaW50KScgfX0KICAgICAgICAgIGRpc2FibGVkPXshY2FuVW5kb30KICAgICAgICAgIG9uQ2xpY2s9e29uVW5kb30KICAgICAgICAgIHRpdGxlPXtMKCfmkqTplIAgKEN0cmwrWiknLCAnVW5kbyAoQ3RybCtaKScpfQogICAgICAgID4KICAgICAgICAgIDxVbmRvMiBzaXplPXsxM30gc3Ryb2tlV2lkdGg9ezEuNX0gLz4KICAgICAgICA8L2J1dHRvbj4KICAgICAgICA8YnV0dG9uCiAgICAgICAgICBjbGFzc05hbWU9e2J0bkNsYXNzfQogICAgICAgICAgc3R5bGU9e3sgY29sb3I6IGNhblJlZG8gPyAndmFyKC0tdGV4dCknIDogJ3ZhcigtLXRleHQtZmFpbnQpJyB9fQogICAgICAgICAgZGlzYWJsZWQ9eyFjYW5SZWRvfQogICAgICAgICAgb25DbGljaz17b25SZWRvfQogICAgICAgICAgdGl0bGU9e0woJ+mHjeWBmiAoQ3RybCtTaGlmdCtaKScsICdSZWRvIChDdHJsK1NoaWZ0K1opJyl9CiAgICAgICAgPgogICAgICAgICAgPFJlZG8yIHNpemU9ezEzfSBzdHJva2VXaWR0aD17MS41fSAvPgogICAgICAgIDwvYnV0dG9uPgogICAgICA8L2Rpdj4KCiAgICAgIDxkaXYgY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBqdXN0aWZ5LWNlbnRlciBnYXAtMS41IHRleHQtWzEycHhdIGZvbnQtbWVkaXVtIGp1c3RpZnktc2VsZi1jZW50ZXIgbWluLXctMCBtYXgtdy1bMjYwcHhdIiBzdHlsZT17eyBjb2xvcjogJ3ZhcigtLXRleHQtZGltKScgfX0+CiAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ0cnVuY2F0ZSI+e3RpdGxlfTwvc3Bhbj4KICAgICAgICB7aXNEaXJ0eSAmJiAoCiAgICAgICAgICA8c3BhbgogICAgICAgICAgICBjbGFzc05hbWU9ImlubGluZS1ibG9jayB3LTEuNSBoLTEuNSByb3VuZGVkLWZ1bGwgc2hyaW5rLTAiCiAgICAgICAgICAgIHN0eWxlPXt7IGJhY2tncm91bmQ6ICd2YXIoLS10ZXh0LWZhaW50KScgfX0KICAgICAgICAgIC8+CiAgICAgICAgKX0KICAgICAgPC9kaXY+CgogICAgICA8ZGl2IGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTEuNSBqdXN0aWZ5LXNlbGYtZW5kIHdoaXRlc3BhY2Utbm93cmFwIHNocmluay0wIj4KICAgICAgICB7dmlzaWJsZUV4cG9ydHMgJiYgKAogICAgICAgICAgPGRpdiBjbGFzc05hbWU9InJlbGF0aXZlIHRpdGxlYmFyLW5vZHJhZyI+CiAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBzZXRFeHBvcnRzT3BlbigodikgPT4gIXYpfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0iZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTIgcHgtMi41IHB5LTEgcm91bmRlZC1mdWxsIHRleHQtWzExcHhdIHRyYW5zaXRpb24tY29sb3JzIgogICAgICAgICAgICAgIHN0eWxlPXt7IGJhY2tncm91bmQ6ICd2YXIoLS1maWVsZCknLCBib3JkZXI6ICcxcHggc29saWQgdmFyKC0tc3Ryb2tlKScsIGNvbG9yOiAndmFyKC0tdGV4dCknIH19CiAgICAgICAgICAgICAgdGl0bGU9e0woJ+WvvOWHuuS7u+WKoScsICdFeHBvcnRzJyl9CiAgICAgICAgICAgID4KICAgICAgICAgICAgICB7YWN0aXZlRXhwb3J0ID8gKAogICAgICAgICAgICAgICAgPD4KICAgICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJ3LTE2IGgtMSByb3VuZGVkLWZ1bGwgb3ZlcmZsb3ctaGlkZGVuIiBzdHlsZT17eyBiYWNrZ3JvdW5kOiAndmFyKC0td2VsbCknIH19PgogICAgICAgICAgICAgICAgICAgIDxzcGFuCiAgICAgICAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImJsb2NrIGgtZnVsbCByb3VuZGVkLWZ1bGwgdHJhbnNpdGlvbi1hbGwiCiAgICAgICAgICAgICAgICAgICAgICBzdHlsZT17eyB3aWR0aDogYCR7TWF0aC5tYXgoNiwgTWF0aC5yb3VuZChhY3RpdmVFeHBvcnQucHJvZ3Jlc3MgKiAxMDApKX0lYCwgYmFja2dyb3VuZDogJ3ZhcigtLWFjY2VudCknIH19CiAgICAgICAgICAgICAgICAgICAgLz4KICAgICAgICAgICAgICAgICAgPC9zcGFuPgogICAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9Im1vbm8tbnVtIHRleHQtWzEwcHhdIj57TWF0aC5yb3VuZChhY3RpdmVFeHBvcnQucHJvZ3Jlc3MgKiAxMDApfSU8L3NwYW4+CiAgICAgICAgICAgICAgICA8Lz4KICAgICAgICAgICAgICApIDogaGFzRmFpbGVkID8gKAogICAgICAgICAgICAgICAgPD4KICAgICAgICAgICAgICAgICAgPEFsZXJ0VHJpYW5nbGUgc2l6ZT17MTJ9IHN0eWxlPXt7IGNvbG9yOiAnI0ZGN0E2QicgfX0gLz4KICAgICAgICAgICAgICAgICAgPHNwYW4+e0woJ+WvvOWHuuWksei0pScsICdFeHBvcnQgZmFpbGVkJyl9PC9zcGFuPgogICAgICAgICAgICAgICAgPC8+CiAgICAgICAgICAgICAgKSA6ICgKICAgICAgICAgICAgICAgIDw+CiAgICAgICAgICAgICAgICAgIDxDaGVja0NpcmNsZTIgc2l6ZT17MTJ9IHN0eWxlPXt7IGNvbG9yOiAnIzNEREM5NycgfX0gLz4KICAgICAgICAgICAgICAgICAgPHNwYW4+e0woJ+W3suWvvOWHuicsICdFeHBvcnRlZCcpfTwvc3Bhbj4KICAgICAgICAgICAgICAgIDwvPgogICAgICAgICAgICAgICl9CiAgICAgICAgICAgICAge3dhaXRpbmdDb3VudCA+IDAgJiYgKAogICAgICAgICAgICAgICAgPHNwYW4gY2xhc3NOYW1lPSJtb25vLW51bSB0ZXh0LVsxMHB4XSIgc3R5bGU9e3sgY29sb3I6ICd2YXIoLS10ZXh0LWRpbSknIH19PgogICAgICAgICAgICAgICAgICAre3dhaXRpbmdDb3VudH0KICAgICAgICAgICAgICAgIDwvc3Bhbj4KICAgICAgICAgICAgICApfQogICAgICAgICAgICA8L2J1dHRvbj4KCiAgICAgICAgICAgIHtleHBvcnRzT3BlbiAmJiAoCiAgICAgICAgICAgICAgPGRpdgogICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJhYnNvbHV0ZSByaWdodC0wIHRvcC05IHotNTAgdy03MiByb3VuZGVkLXhsIHNoYWRvdy0yeGwgb3ZlcmZsb3ctaGlkZGVuIgogICAgICAgICAgICAgICAgc3R5bGU9e3sgYmFja2dyb3VuZDogJ3ZhcigtLXBhbmVsKScsIGJvcmRlcjogJzFweCBzb2xpZCB2YXIoLS1zdHJva2UpJyB9fQogICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJtYXgtaC02MCBvdmVyZmxvdy15LWF1dG8gZGl2aWRlLXkiIHN0eWxlPXt7IGJvcmRlckNvbG9yOiAndmFyKC0tc3Ryb2tlKScgfX0+CiAgICAgICAgICAgICAgICAgIHtleHBvcnRzTGlzdC5tYXAoKGl0ZW0pID0+ICgKICAgICAgICAgICAgICAgICAgICA8ZGl2IGtleT17aXRlbS5pZH0gY2xhc3NOYW1lPSJmbGV4IGl0ZW1zLWNlbnRlciBnYXAtMi41IHB4LTMgcHktMiB0ZXh0LVsxMXB4XSI+CiAgICAgICAgICAgICAgICAgICAgICB7aXRlbS5zdGF0dXMgPT09ICdydW5uaW5nJyA/ICgKICAgICAgICAgICAgICAgICAgICAgICAgPExvYWRlcjIgc2l6ZT17MTN9IGNsYXNzTmFtZT0iYW5pbWF0ZS1zcGluIHNocmluay0wIiBzdHlsZT17eyBjb2xvcjogJ3ZhcigtLWFjY2VudCknIH19IC8+CiAgICAgICAgICAgICAgICAgICAgICApIDogaXRlbS5zdGF0dXMgPT09ICd3YWl0aW5nJyA/ICgKICAgICAgICAgICAgICAgICAgICAgICAgPENsb2NrIHNpemU9ezEzfSBjbGFzc05hbWU9InNocmluay0wIiBzdHlsZT17eyBjb2xvcjogJ3ZhcigtLXRleHQtZGltKScgfX0gLz4KICAgICAgICAgICAgICAgICAgICAgICkgOiBpdGVtLnN0YXR1cyA9PT0gJ2RvbmUnID8gKAogICAgICAgICAgICAgICAgICAgICAgICA8Q2hlY2tDaXJjbGUyIHNpemU9ezEzfSBjbGFzc05hbWU9InNocmluay0wIiBzdHlsZT17eyBjb2xvcjogJyMzRERDOTcnIH19IC8+CiAgICAgICAgICAgICAgICAgICAgICApIDogKAogICAgICAgICAgICAgICAgICAgICAgICA8QWxlcnRUcmlhbmdsZSBzaXplPXsxM30gY2xhc3NOYW1lPSJzaHJpbmstMCIgc3R5bGU9e3sgY29sb3I6ICcjRkY3QTZCJyB9fSAvPgogICAgICAgICAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJtaW4tdy0wIGZsZXgtMSI+CiAgICAgICAgICAgICAgICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ0cnVuY2F0ZSBmb250LW1lZGl1bSIgc3R5bGU9e3sgY29sb3I6ICd2YXIoLS10ZXh0KScgfX0+CiAgICAgICAgICAgICAgICAgICAgICAgICAge2l0ZW0uZmlsZS5zcGxpdCgvW1xcL10vKS5wb3AoKSB8fCBpdGVtLmZpbGV9CiAgICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idGV4dC1bMTBweF0gdHJ1bmNhdGUiIHN0eWxlPXt7IGNvbG9yOiAndmFyKC0tdGV4dC1mYWludCknIH19PgogICAgICAgICAgICAgICAgICAgICAgICAgIHtpdGVtLnN0YXR1cyA9PT0gJ3J1bm5pbmcnCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA/IGAke2l0ZW0uc2l6ZUxhYmVsfSDCtyAke01hdGgucm91bmQoaXRlbS5wcm9ncmVzcyAqIDEwMCl9JWAKICAgICAgICAgICAgICAgICAgICAgICAgICAgIDogaXRlbS5zdGF0dXMgPT09ICdmYWlsZWQnCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA/IGl0ZW0uZXJyb3IgfHwgTCgn5aSx6LSlJywgJ0ZhaWxlZCcpCiAgICAgICAgICAgICAgICAgICAgICAgICAgICA6IGAke2l0ZW0uc2l6ZUxhYmVsfSDCtyAke2l0ZW0uc3RhdHVzfWB9CiAgICAgICAgICAgICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICAgICAgICB7KGl0ZW0uc3RhdHVzID09PSAncnVubmluZycgfHwgaXRlbS5zdGF0dXMgPT09ICd3YWl0aW5nJykgJiYgKAogICAgICAgICAgICAgICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gb25DYW5jZWxFeHBvcnQoaXRlbS5pZCl9CiAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJwLTEgcm91bmRlZCBob3ZlcjpvcGFjaXR5LTgwIgogICAgICAgICAgICAgICAgICAgICAgICAgIHN0eWxlPXt7IGNvbG9yOiAndmFyKC0tdGV4dC1kaW0pJyB9fQogICAgICAgICAgICAgICAgICAgICAgICAgIHRpdGxlPXtMKCflj5bmtognLCAnQ2FuY2VsJyl9CiAgICAgICAgICAgICAgICAgICAgICAgID4KICAgICAgICAgICAgICAgICAgICAgICAgICA8WCBzaXplPXsxMn0gLz4KICAgICAgICAgICAgICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgICAgICAgICAge2l0ZW0uc3RhdHVzID09PSAnZG9uZScgJiYgb25TaG93RXhwb3J0SW5FeHBsb3JlciAmJiAoCiAgICAgICAgICAgICAgICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiBvblNob3dFeHBvcnRJbkV4cGxvcmVyKGl0ZW0uZmlsZSl9CiAgICAgICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJwLTEgcm91bmRlZCBob3ZlcjpvcGFjaXR5LTgwIgogICAgICAgICAgICAgICAgICAgICAgICAgIHN0eWxlPXt7IGNvbG9yOiAndmFyKC0tdGV4dC1kaW0pJyB9fQogICAgICAgICAgICAgICAgICAgICAgICAgIHRpdGxlPXtMKCflnKjotYTmupDnrqHnkIblmajkuK3mmL7npLonLCAnU2hvdyBpbiBFeHBsb3JlcicpfQogICAgICAgICAgICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICAgICAgICAgICAgPEZvbGRlck9wZW4gc2l6ZT17MTJ9IC8+CiAgICAgICAgICAgICAgICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgICAgICAgICAgICAgKX0KICAgICAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgICAgKSl9CiAgICAgICAgICAgICAgICA8L2Rpdj4KICAgICAgICAgICAgICAgIHshYWN0aXZlRXhwb3J0ICYmICgKICAgICAgICAgICAgICAgICAgPGRpdiBjbGFzc05hbWU9InB4LTMgcHktMS41IGZsZXgganVzdGlmeS1lbmQiIHN0eWxlPXt7IGJvcmRlclRvcDogJzFweCBzb2xpZCB2YXIoLS1zdHJva2UpJyB9fT4KICAgICAgICAgICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB7CiAgICAgICAgICAgICAgICAgICAgICAgIHNldERpc21pc3NlZEZpbmlzaGVkKHRydWUpOwogICAgICAgICAgICAgICAgICAgICAgICBzZXRFeHBvcnRzT3BlbihmYWxzZSk7CiAgICAgICAgICAgICAgICAgICAgICB9fQogICAgICAgICAgICAgICAgICAgICAgY2xhc3NOYW1lPSJ0ZXh0LVsxMHB4XSBob3Zlcjp1bmRlcmxpbmUiCiAgICAgICAgICAgICAgICAgICAgICBzdHlsZT17eyBjb2xvcjogJ3ZhcigtLXRleHQtZGltKScgfX0KICAgICAgICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICAgICAgICB7TCgn5riF6ZmkJywgJ0Rpc21pc3MnKX0KICAgICAgICAgICAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgICAgICAgICAgPC9kaXY+CiAgICAgICAgICAgICAgICApfQogICAgICAgICAgICAgIDwvZGl2PgogICAgICAgICAgICApfQogICAgICAgICAgPC9kaXY+CiAgICAgICAgKX0KCiAgICAgICAge21hZ2ljU3RhdHVzICYmICgKICAgICAgICAgIDxkaXYgY2xhc3NOYW1lPSJ0aXRsZWJhci1ub2RyYWcgaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIGdhcC0xIj4KICAgICAgICAgICAge21hZ2ljQWN0aXZpdHlUZXh0ICYmICgKICAgICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgICBvbkNsaWNrPXtvbk9wZW5NYWdpY30KICAgICAgICAgICAgICAgIGNsYXNzTmFtZT0idGV4dC1bMTFweF0gZm9udC1tZWRpdW0gcHgtMS41IHRydW5jYXRlIG1heC13LVsxODBweF0gaG92ZXI6dW5kZXJsaW5lIgogICAgICAgICAgICAgICAgc3R5bGU9e3sgY29sb3I6ICd2YXIoLS10ZXh0LWRpbSknIH19CiAgICAgICAgICAgICAgICB0aXRsZT17TCgn5omT5byA5pON5L2c6Z2i5p2/5p+l55yL5a6e5pe26L+H56iLJywgJ09wZW4gTWFnaWMgb3BlcmF0aW9uIHBhbmVsJyl9CiAgICAgICAgICAgICAgPgogICAgICAgICAgICAgICAge21hZ2ljQWN0aXZpdHlUZXh0fQogICAgICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgICApfQogICAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgICAgb25DbGljaz17KCkgPT4gb25TdG9wTWFnaWM/LigpfQogICAgICAgICAgICAgIGNsYXNzTmFtZT0iaW5saW5lLWZsZXggaXRlbXMtY2VudGVyIGdhcC0xIHB4LTIgcHktMSByb3VuZGVkLWZ1bGwgdGV4dC1bMTAuNXB4XSBmb250LXNlbWlib2xkIHRyYW5zaXRpb24tY29sb3JzIgogICAgICAgICAgICAgIHN0eWxlPXt7CiAgICAgICAgICAgICAgICBiYWNrZ3JvdW5kOiAndmFyKC0tYnV0dG9uKScsCiAgICAgICAgICAgICAgICBjb2xvcjogJ3ZhcigtLXRleHQpJywKICAgICAgICAgICAgICAgIGJvcmRlcjogJzFweCBzb2xpZCB2YXIoLS1zdHJva2UpJywKICAgICAgICAgICAgICB9fQogICAgICAgICAgICAgIHRpdGxlPXtMKCflgZzmraIgQUkg5Ymq6L6RIChFc2MpJywgJ1N0b3AgTWFnaWMgKEVzYyknKX0KICAgICAgICAgICAgPgogICAgICAgICAgICAgIDxTcXVhcmUgc2l6ZT17OH0gZmlsbD0idmFyKC0tYWNjZW50KSIgc3Ryb2tlPSJ2YXIoLS1hY2NlbnQpIiAvPgogICAgICAgICAgICAgIDxzcGFuPntMKCflgZzmraInLCAnU3RvcCcpfTwvc3Bhbj4KICAgICAgICAgICAgPC9idXR0b24+CiAgICAgICAgICA8L2Rpdj4KICAgICAgICApfQoKICAgICAgICA8YnV0dG9uCiAgICAgICAgICBkYXRhLW1hZ2ljLWFuY2hvcj0ibWFnaWNCdXR0b24iCiAgICAgICAgICBjbGFzc05hbWU9InRpdGxlYmFyLW5vZHJhZyBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTEuNSBweC0yLjUgcHktMSByb3VuZGVkLWZ1bGwgdGV4dC1bMTFweF0gZm9udC1zZW1pYm9sZCB0cmFuc2l0aW9uLWNvbG9ycyIKICAgICAgICAgIHN0eWxlPXt7CiAgICAgICAgICAgIGJhY2tncm91bmQ6IG1hZ2ljT3BlbgogICAgICAgICAgICAgID8gJ3ZhcigtLWFjY2VudCknCiAgICAgICAgICAgICAgOiAndmFyKC0tYnV0dG9uKScsCiAgICAgICAgICAgIGNvbG9yOiBtYWdpY09wZW4gPyAnI0ZGRkZGRicgOiAndmFyKC0tdGV4dCknLAogICAgICAgICAgICBib3JkZXI6IGAxcHggc29saWQgJHttYWdpY09wZW4gPyAndmFyKC0tYWNjZW50KScgOiAndmFyKC0tc3Ryb2tlKSd9YCwKICAgICAgICAgIH19CiAgICAgICAgICBvbkNsaWNrPXtvbk9wZW5NYWdpY30KICAgICAgICAgIHRpdGxlPXttYWdpY09wZW4gPyBMKCfmlLbotbcgTWFnaWMg5L6n6L656Z2i5p2/JywgJ0NvbGxhcHNlIE1hZ2ljIFNpZGUgUGFuZWwnKSA6IEwoJ+aJk+W8gCBNYWdpYyDkvqfovrnpnaLmnb8nLCAnT3BlbiBNYWdpYyBTaWRlIFBhbmVsJyl9CiAgICAgICAgPgogICAgICAgICAge21hZ2ljU3RhdHVzID8gKAogICAgICAgICAgICA8PgogICAgICAgICAgICAgIDxMb2FkZXIyIHNpemU9ezEyfSBjbGFzc05hbWU9ImFuaW1hdGUtc3BpbiIgc3R5bGU9e3sgY29sb3I6IG1hZ2ljT3BlbiA/ICcjRkZGRkZGJyA6ICd2YXIoLS1hY2NlbnQpJyB9fSAvPgogICAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0ibWF4LXctWzcycHhdIHRydW5jYXRlIj57bWFnaWNTdGF0dXMud29ya2VyfTwvc3Bhbj4KICAgICAgICAgICAgPC8+CiAgICAgICAgICApIDogKAogICAgICAgICAgICA8PgogICAgICAgICAgICAgIDxTcGFya2xlcyBzaXplPXsxMn0gc3Ryb2tlV2lkdGg9ezEuNn0gc3R5bGU9e3sgY29sb3I6IG1hZ2ljT3BlbiA/ICcjRkZGRkZGJyA6ICd2YXIoLS1hY2NlbnQpJyB9fSAvPgogICAgICAgICAgICAgIDxzcGFuPk1hZ2ljPC9zcGFuPgogICAgICAgICAgICAgIDxzcGFuCiAgICAgICAgICAgICAgICBjbGFzc05hbWU9ImlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBnYXAtMSBweC0xLjUgcHktMC4yIHJvdW5kZWQtZnVsbCB0ZXh0LVsxMHB4XSBmb250LW1lZGl1bSIKICAgICAgICAgICAgICAgIHN0eWxlPXt7CiAgICAgICAgICAgICAgICAgIGJhY2tncm91bmQ6IG1hZ2ljT3BlbiA/ICdyZ2JhKDI1NSwyNTUsMjU1LDAuMTgpJyA6ICd2YXIoLS1yYWlzZWQpJywKICAgICAgICAgICAgICAgICAgY29sb3I6IG1hZ2ljT3BlbiA/ICcjRkZGRkZGJyA6ICd2YXIoLS10ZXh0LWRpbSknLAogICAgICAgICAgICAgICAgfX0KICAgICAgICAgICAgICA+CiAgICAgICAgICAgICAgICA8c3BhbgogICAgICAgICAgICAgICAgICBjbGFzc05hbWU9InctMS41IGgtMS41IHJvdW5kZWQtZnVsbCBzaHJpbmstMCIKICAgICAgICAgICAgICAgICAgc3R5bGU9e3sgYmFja2dyb3VuZDogbWFnaWNPcGVuID8gJyNGRkZGRkYnIDogbWFnaWNNb2RlTWV0YS5kb3QgfX0KICAgICAgICAgICAgICAgIC8+CiAgICAgICAgICAgICAgICA8c3BhbiBjbGFzc05hbWU9Im1pbi13LVsyOHB4XSB0ZXh0LWNlbnRlciI+e21hZ2ljTW9kZU1ldGEubGFiZWx9PC9zcGFuPgogICAgICAgICAgICAgIDwvc3Bhbj4KICAgICAgICAgICAgPC8+CiAgICAgICAgICApfQogICAgICAgIDwvYnV0dG9uPgoKICAgICAgICA8YnV0dG9uCiAgICAgICAgICBjbGFzc05hbWU9InRpdGxlYmFyLW5vZHJhZyBpbmxpbmUtZmxleCBpdGVtcy1jZW50ZXIgZ2FwLTEuNSBweC0zIHB5LTEgcm91bmRlZC1mdWxsIHRleHQtWzExcHhdIGZvbnQtc2VtaWJvbGQiCiAgICAgICAgICBzdHlsZT17ewogICAgICAgICAgICBiYWNrZ3JvdW5kOiAndmFyKC0tdGV4dCknLAogICAgICAgICAgICBjb2xvcjogJ3ZhcigtLW9uLXRleHQpJywKICAgICAgICAgIH19CiAgICAgICAgICBvbkNsaWNrPXtvbk9wZW5FeHBvcnR9CiAgICAgICAgICB0aXRsZT17TCgn5a+85Ye66KeG6aKRIChDdHJsK0UpJywgJ0V4cG9ydCAoQ3RybCtFKScpfQogICAgICAgID4KICAgICAgICAgIDxEb3dubG9hZCBzaXplPXsxMn0gc3Ryb2tlV2lkdGg9ezEuOH0gLz4KICAgICAgICAgIHtMKCflr7zlh7onLCAnRXhwb3J0Jyl9CiAgICAgICAgPC9idXR0b24+CgogICAgICAgIDxidXR0b24KICAgICAgICAgIGNsYXNzTmFtZT0idGl0bGViYXItbm9kcmFnIHZ0LWhvdmVyIGlubGluZS1mbGV4IGl0ZW1zLWNlbnRlciBnYXAtMSBweC0yIHB5LTEgcm91bmRlZC1mdWxsIHRleHQtWzEwLjVweF0gZm9udC1tZWRpdW0gdHJhbnNpdGlvbi1jb2xvcnMiCiAgICAgICAgICBzdHlsZT17eyBiYWNrZ3JvdW5kOiAndmFyKC0tZmllbGQpJywgY29sb3I6ICd2YXIoLS10ZXh0LWRpbSknLCBib3JkZXI6ICcxcHggc29saWQgdmFyKC0tc3Ryb2tlKScgfX0KICAgICAgICAgIG9uQ2xpY2s9e3RvZ2dsZUxvY2FsZX0KICAgICAgICAgIHRpdGxlPXtMKCdTd2l0Y2ggdG8gRW5nbGlzaCcsICfliIfmjaLkuLrkuK3mlocnKX0KICAgICAgICA+CiAgICAgICAgICA8TGFuZ3VhZ2VzIHNpemU9ezEyfSBzdHJva2VXaWR0aD17MS42fSAvPgogICAgICAgICAgPHNwYW4+e2xvY2FsZSA9PT0gJ3poJyA/ICfkuK3mlocnIDogJ0VOJ308L3NwYW4+CiAgICAgICAgPC9idXR0b24+CgogICAgICAgIHtvblRvZ2dsZUxpZ2h0RGFyayAmJiAoCiAgICAgICAgICA8YnV0dG9uCiAgICAgICAgICAgIGNsYXNzTmFtZT17YnRuQ2xhc3N9CiAgICAgICAgICAgIHN0eWxlPXt7IGNvbG9yOiAndmFyKC0tdGV4dC1kaW0pJyB9fQogICAgICAgICAgICBvbkNsaWNrPXtvblRvZ2dsZUxpZ2h0RGFya30KICAgICAgICAgICAgdGl0bGU9e2lzTGlnaHRUaGVtZSA/IEwoJ+WIh+aNoua3seiJsuS4u+mimCcsICdTd2l0Y2ggdG8gRGFyayBUaGVtZScpIDogTCgn5YiH5o2i5rWF6Imy5Li76aKYJywgJ1N3aXRjaCB0byBMaWdodCBUaGVtZScpfQogICAgICAgICAgPgogICAgICAgICAgICB7aXNMaWdodFRoZW1lID8gPE1vb24gc2l6ZT17MTN9IHN0cm9rZVdpZHRoPXsxLjZ9IC8+IDogPFN1biBzaXplPXsxM30gc3Ryb2tlV2lkdGg9ezEuNn0gLz59CiAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICApfQoKICAgICAgICB7b25PcGVuTWFya2V0cGxhY2UgJiYgKAogICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICBjbGFzc05hbWU9e2J0bkNsYXNzfQogICAgICAgICAgICBzdHlsZT17eyBjb2xvcjogJ3ZhcigtLXRleHQtZGltKScgfX0KICAgICAgICAgICAgb25DbGljaz17b25PcGVuTWFya2V0cGxhY2V9CiAgICAgICAgICAgIHRpdGxlPXtMKCfmj5Lku7bluILlnLrvvIhESkkgLyBpUGhvbmUgLyDmqKHmnb8gLyDmlbDlrZfkurrvvIknLCAnUGx1Z2luIE1hcmtldHBsYWNlIChESkkgLyBpUGhvbmUgLyBUZW1wbGF0ZXMgLyBBdmF0YXIpJyl9CiAgICAgICAgICA+CiAgICAgICAgICAgIDxCbG9ja3Mgc2l6ZT17MTN9IHN0cm9rZVdpZHRoPXsxLjZ9IC8+CiAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICApfQoKICAgICAgICA8YnV0dG9uCiAgICAgICAgICBjbGFzc05hbWU9e2J0bkNsYXNzfQogICAgICAgICAgc3R5bGU9e3sgY29sb3I6IG1jcFJ1bm5pbmcgPyAndmFyKC0tdGV4dCknIDogJ3ZhcigtLXRleHQtZGltKScgfX0KICAgICAgICAgIG9uQ2xpY2s9e29uT3BlblNldHRpbmdzfQogICAgICAgICAgdGl0bGU9e0woJ+iuvue9ruS4jiBNQ1AnLCAnU2V0dGluZ3MgJiBNQ1AnKX0KICAgICAgICA+CiAgICAgICAgICA8U2V0dGluZ3Mgc2l6ZT17MTR9IHN0cm9rZVdpZHRoPXsxLjV9IC8+CiAgICAgICAgICB7bWNwUnVubmluZyAmJiAoCiAgICAgICAgICAgIDxzcGFuIGNsYXNzTmFtZT0iaW5saW5lLWJsb2NrIHctMS41IGgtMS41IHJvdW5kZWQtZnVsbCIgc3R5bGU9e3sgYmFja2dyb3VuZDogJyMzMEQxNTgnIH19IC8+CiAgICAgICAgICApfQogICAgICAgIDwvYnV0dG9uPgoKICAgICAgICA8ZGl2IGNsYXNzTmFtZT0idGl0bGViYXItbm9kcmFnIGZsZXggaXRlbXMtY2VudGVyIG1sLTEiPgogICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICBjbGFzc05hbWU9InAtMS41IHJvdW5kZWQgdnQtaG92ZXIgdHJhbnNpdGlvbi1jb2xvcnMiCiAgICAgICAgICAgIHN0eWxlPXt7IGNvbG9yOiAndmFyKC0tdGV4dC1kaW0pJyB9fQogICAgICAgICAgICBvbkNsaWNrPXsoKSA9PiB3aW5kb3cudmVjdHJhaWwubWluaW1pemVXaW5kb3coKX0KICAgICAgICAgICAgdGl0bGU9e0woJ+acgOWwj+WMlicsICdNaW5pbWl6ZScpfQogICAgICAgICAgPgogICAgICAgICAgICA8TWludXMgc2l6ZT17MTN9IC8+CiAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICAgIDxidXR0b24KICAgICAgICAgICAgY2xhc3NOYW1lPSJwLTEuNSByb3VuZGVkIHZ0LWhvdmVyIHRyYW5zaXRpb24tY29sb3JzIgogICAgICAgICAgICBzdHlsZT17eyBjb2xvcjogJ3ZhcigtLXRleHQtZGltKScgfX0KICAgICAgICAgICAgb25DbGljaz17KCkgPT4gd2luZG93LnZlY3RyYWlsLm1heGltaXplV2luZG93KCl9CiAgICAgICAgICAgIHRpdGxlPXtMKCfmnIDlpKfljJYnLCAnTWF4aW1pemUnKX0KICAgICAgICAgID4KICAgICAgICAgICAgPFNxdWFyZSBzaXplPXsxMX0gLz4KICAgICAgICAgIDwvYnV0dG9uPgogICAgICAgICAgPGJ1dHRvbgogICAgICAgICAgICBjbGFzc05hbWU9InAtMS41IHJvdW5kZWQgdnQtd2luLWNsb3NlIHRyYW5zaXRpb24tY29sb3JzIgogICAgICAgICAgICBzdHlsZT17eyBjb2xvcjogJ3ZhcigtLXRleHQtZGltKScgfX0KICAgICAgICAgICAgb25DbGljaz17KCkgPT4gd2luZG93LnZlY3RyYWlsLmNsb3NlV2luZG93KCl9CiAgICAgICAgICAgIHRpdGxlPXtMKCflhbPpl60nLCAnQ2xvc2UnKX0KICAgICAgICAgID4KICAgICAgICAgICAgPFggc2l6ZT17MTN9IC8+CiAgICAgICAgICA8L2J1dHRvbj4KICAgICAgICA8L2Rpdj4KICAgICAgPC9kaXY+CiAgICA8L2Rpdj4KICApOwp9Owo=
+import React, { useState } from 'react';
+import {
+  AlertTriangle,
+  Blocks,
+  CheckCircle2,
+  ChevronDown,
+  Clock,
+  Download,
+  FolderOpen,
+  Languages,
+  Loader2,
+  Minus,
+  Moon,
+  Plus,
+  Redo2,
+  Save,
+  Settings,
+  Sparkles,
+  Square,
+  Sun,
+  Undo2,
+  X,
+} from 'lucide-react';
+import { ExportJobInfo, MagicBackend, MagicStage } from '../../shared/types';
+import { useI18n } from '../i18n';
+
+interface TitleBarProps {
+  title: string;
+  isDirty: boolean;
+  canUndo: boolean;
+  canRedo: boolean;
+  exportsList: ExportJobInfo[];
+  mcpRunning: boolean;
+  isLightTheme?: boolean;
+  magicOpen?: boolean;
+  magicBackend?: MagicBackend;
+  magicStatus?: { worker: string; stage: MagicStage; status?: string } | null;
+  recentProjects?: string[];
+  onNew: () => void;
+  onOpen: () => void;
+  onOpenRecent?: (filePath: string) => void;
+  onClearRecents?: () => void;
+  onSave: () => void;
+  onImport: () => void;
+  onUndo: () => void;
+  onRedo: () => void;
+  onOpenMagic: () => void;
+  onStopMagic?: () => void;
+  onOpenExport: () => void;
+  onOpenSettings: () => void;
+  onOpenMarketplace?: () => void;
+  onToggleLightDark?: () => void;
+  onCancelExport: (id: string) => void;
+  onShowExportInExplorer?: (file: string) => void;
+}
+
+export const TitleBar: React.FC<TitleBarProps> = ({
+  title,
+  isDirty,
+  canUndo,
+  canRedo,
+  exportsList,
+  mcpRunning,
+  isLightTheme = false,
+  magicOpen = false,
+  magicBackend = 'local',
+  magicStatus = null,
+  recentProjects = [],
+  onNew,
+  onOpen,
+  onOpenRecent,
+  onClearRecents,
+  onSave,
+  onImport,
+  onUndo,
+  onRedo,
+  onOpenMagic,
+  onStopMagic,
+  onOpenExport,
+  onOpenSettings,
+  onOpenMarketplace,
+  onToggleLightDark,
+  onCancelExport,
+  onShowExportInExplorer,
+}) => {
+  const { locale, toggleLocale, L } = useI18n();
+  const [exportsOpen, setExportsOpen] = useState(false);
+  const [recentsOpen, setRecentsOpen] = useState(false);
+  const [dismissedFinished, setDismissedFinished] = useState(false);
+  const activeExport = exportsList.find((j) => j.status === 'running');
+  const waitingCount = exportsList.filter((j) => j.status === 'waiting').length;
+  const hasFailed = exportsList.some((j) => j.status === 'failed');
+  const hasDone = exportsList.some((j) => j.status === 'done');
+  const visibleExports = activeExport || (!dismissedFinished && (hasFailed || hasDone));
+
+  const magicActivityText = (() => {
+    if (!magicStatus) return '';
+    const raw =
+      magicStatus.stage === 'editing'
+        ? L('正在剪辑', 'Editing')
+        : magicStatus.status?.trim() ||
+          magicStatus.stage.charAt(0).toUpperCase() + magicStatus.stage.slice(1);
+    return raw.length > 38 ? `${raw.slice(0, 37)}…` : raw;
+  })();
+  const magicModeMeta = (() => {
+    switch (magicBackend) {
+      case 'claude':
+        return { label: 'Claude', dot: '#D97757' };
+      case 'codex':
+        return { label: 'Codex', dot: '#10A37F' };
+      case 'cloud':
+        return { label: L('云端 AI', 'Cloud AI'), dot: '#FF6B35' };
+      default:
+        return { label: L('本地', 'Local'), dot: 'var(--text)' };
+    }
+  })();
+  const btnClass =
+    'titlebar-nodrag vt-hover inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] transition-colors';
+
+  return (
+    <div
+      className="titlebar-drag grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-2 px-3 h-10 shrink-0"
+      style={{
+        background: 'var(--panel)',
+        borderBottom: '1px solid var(--stroke)',
+      }}
+    >
+      <div className="flex items-center gap-1.5 min-w-0 justify-self-start whitespace-nowrap">
+        <span
+          className="text-[12px] font-semibold tracking-tight mr-1.5 flex items-center gap-1.5 shrink-0"
+          style={{ color: 'var(--text)' }}
+        >
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 1024 1024"
+            fill="none"
+            aria-label="Vectrail"
+            className="shrink-0"
+          >
+            <path
+              d="M 154 308 L 368 308 Q 390 308 403 330 L 488 477 Q 498 494 498 512 L 498 742 Q 498 764 476 764 L 446 764 Q 426 764 411 748 L 149 479 Q 128 458 128 432 L 128 335 Q 128 308 154 308 Z"
+              fill="var(--accent)"
+            />
+            <path
+              transform="translate(1024 0) scale(-1 1)"
+              d="M 154 308 L 368 308 Q 390 308 403 330 L 488 477 Q 498 494 498 512 L 498 742 Q 498 764 476 764 L 446 764 Q 426 764 411 748 L 149 479 Q 128 458 128 432 L 128 335 Q 128 308 154 308 Z"
+              fill="var(--accent)"
+            />
+          </svg>
+          Vectrail
+        </span>
+        <button
+          className={btnClass}
+          style={{ background: 'transparent', color: 'var(--text-dim)' }}
+          onClick={onNew}
+          title={L('新建项目', 'New Project')}
+        >
+          {L('新建', 'New')}
+        </button>
+        <div className="relative titlebar-nodrag flex items-center">
+          <button
+            className={btnClass}
+            style={{ background: 'transparent', color: 'var(--text-dim)' }}
+            onClick={onOpen}
+            title={L('打开项目', 'Open Project')}
+          >
+            <FolderOpen size={13} strokeWidth={1.5} /> {L('打开', 'Open')}
+          </button>
+          {recentProjects.length > 0 && onOpenRecent && (
+            <button
+              className="p-1 rounded vt-hover"
+              style={{ color: 'var(--text-faint)' }}
+              onClick={() => setRecentsOpen((v) => !v)}
+              title={L('最近项目', 'Recent Projects')}
+            >
+              <ChevronDown size={11} />
+            </button>
+          )}
+          {recentsOpen && recentProjects.length > 0 && (
+            <div
+              className="absolute left-0 top-8 z-50 w-60 rounded-lg py-1 shadow-2xl text-[11px]"
+              style={{ background: 'var(--sheet)', border: '1px solid var(--sheet-field-stroke)' }}
+              onMouseLeave={() => setRecentsOpen(false)}
+            >
+              <div className="px-3 py-1 text-[9.5px] font-semibold uppercase tracking-wider" style={{ color: 'var(--text-faint)' }}>
+                {L('最近打开', 'Open Recent')}
+              </div>
+              {recentProjects.map((fp) => {
+                const name = fp.split(/[\\/]/).pop() || fp;
+                return (
+                  <button
+                    key={fp}
+                    onClick={() => {
+                      setRecentsOpen(false);
+                      onOpenRecent?.(fp);
+                    }}
+                    className="w-full text-left px-3 py-1.5 truncate vt-hover"
+                    style={{ color: 'var(--text)' }}
+                    title={fp}
+                  >
+                    {name}
+                  </button>
+                );
+              })}
+              {onClearRecents && (
+                <button
+                  onClick={() => {
+                    setRecentsOpen(false);
+                    onClearRecents();
+                  }}
+                  className="w-full text-left px-3 py-1.5 text-[10.5px] vt-hover"
+                  style={{ color: 'var(--text-dim)', borderTop: '1px solid var(--stroke)' }}
+                >
+                  {L('清空历史', 'Clear Menu')}
+                </button>
+              )}
+            </div>
+          )}
+        </div>
+        <button
+          className={btnClass}
+          style={{ background: 'transparent', color: 'var(--text-dim)' }}
+          onClick={onSave}
+          title={L('保存项目 (Ctrl+S)', 'Save Project (Ctrl+S)')}
+        >
+          <Save size={13} strokeWidth={1.5} /> {L('保存', 'Save')}
+        </button>
+        <button
+          className="titlebar-nodrag vt-btn inline-flex items-center gap-1.5 px-2.5 py-1 rounded text-[11px] transition-colors"
+          style={{ background: 'var(--button)', color: 'var(--text)' }}
+          onClick={onImport}
+          title={L('导入媒体 (Ctrl+I)', 'Import Media (Ctrl+I)')}
+        >
+          <Plus size={13} strokeWidth={1.6} /> {L('导入', 'Import')}
+        </button>
+        <div className="h-3.5 w-px mx-1" style={{ background: 'var(--stroke)' }} />
+        <button
+          className={btnClass}
+          style={{ color: canUndo ? 'var(--text)' : 'var(--text-faint)' }}
+          disabled={!canUndo}
+          onClick={onUndo}
+          title={L('撤销 (Ctrl+Z)', 'Undo (Ctrl+Z)')}
+        >
+          <Undo2 size={13} strokeWidth={1.5} />
+        </button>
+        <button
+          className={btnClass}
+          style={{ color: canRedo ? 'var(--text)' : 'var(--text-faint)' }}
+          disabled={!canRedo}
+          onClick={onRedo}
+          title={L('重做 (Ctrl+Shift+Z)', 'Redo (Ctrl+Shift+Z)')}
+        >
+          <Redo2 size={13} strokeWidth={1.5} />
+        </button>
+      </div>
+
+      <div className="flex items-center justify-center gap-1.5 text-[12px] font-medium justify-self-center min-w-0 max-w-[260px]" style={{ color: 'var(--text-dim)' }}>
+        <span className="truncate">{title}</span>
+        {isDirty && (
+          <span
+            className="inline-block w-1.5 h-1.5 rounded-full shrink-0"
+            style={{ background: 'var(--text-faint)' }}
+          />
+        )}
+      </div>
+
+      <div className="flex items-center gap-1.5 justify-self-end whitespace-nowrap shrink-0">
+        {visibleExports && (
+          <div className="relative titlebar-nodrag">
+            <button
+              onClick={() => setExportsOpen((v) => !v)}
+              className="flex items-center gap-2 px-2.5 py-1 rounded-full text-[11px] transition-colors"
+              style={{ background: 'var(--field)', border: '1px solid var(--stroke)', color: 'var(--text)' }}
+              title={L('导出任务', 'Exports')}
+            >
+              {activeExport ? (
+                <>
+                  <span className="w-16 h-1 rounded-full overflow-hidden" style={{ background: 'var(--well)' }}>
+                    <span
+                      className="block h-full rounded-full transition-all"
+                      style={{ width: `${Math.max(6, Math.round(activeExport.progress * 100))}%`, background: 'var(--accent)' }}
+                    />
+                  </span>
+                  <span className="mono-num text-[10px]">{Math.round(activeExport.progress * 100)}%</span>
+                </>
+              ) : hasFailed ? (
+                <>
+                  <AlertTriangle size={12} style={{ color: '#FF7A6B' }} />
+                  <span>{L('导出失败', 'Export failed')}</span>
+                </>
+              ) : (
+                <>
+                  <CheckCircle2 size={12} style={{ color: '#3DDC97' }} />
+                  <span>{L('已导出', 'Exported')}</span>
+                </>
+              )}
+              {waitingCount > 0 && (
+                <span className="mono-num text-[10px]" style={{ color: 'var(--text-dim)' }}>
+                  +{waitingCount}
+                </span>
+              )}
+            </button>
+
+            {exportsOpen && (
+              <div
+                className="absolute right-0 top-9 z-50 w-72 rounded-xl shadow-2xl overflow-hidden"
+                style={{ background: 'var(--panel)', border: '1px solid var(--stroke)' }}
+              >
+                <div className="max-h-60 overflow-y-auto divide-y" style={{ borderColor: 'var(--stroke)' }}>
+                  {exportsList.map((item) => (
+                    <div key={item.id} className="flex items-center gap-2.5 px-3 py-2 text-[11px]">
+                      {item.status === 'running' ? (
+                        <Loader2 size={13} className="animate-spin shrink-0" style={{ color: 'var(--accent)' }} />
+                      ) : item.status === 'waiting' ? (
+                        <Clock size={13} className="shrink-0" style={{ color: 'var(--text-dim)' }} />
+                      ) : item.status === 'done' ? (
+                        <CheckCircle2 size={13} className="shrink-0" style={{ color: '#3DDC97' }} />
+                      ) : (
+                        <AlertTriangle size={13} className="shrink-0" style={{ color: '#FF7A6B' }} />
+                      )}
+                      <div className="min-w-0 flex-1">
+                        <div className="truncate font-medium" style={{ color: 'var(--text)' }}>
+                          {item.file.split(/[\\/]/).pop() || item.file}
+                        </div>
+                        <div className="text-[10px] truncate" style={{ color: 'var(--text-faint)' }}>
+                          {item.status === 'running'
+                            ? `${item.sizeLabel} · ${Math.round(item.progress * 100)}%`
+                            : item.status === 'failed'
+                            ? item.error || L('失败', 'Failed')
+                            : `${item.sizeLabel} · ${item.status}`}
+                        </div>
+                      </div>
+                      {(item.status === 'running' || item.status === 'waiting') && (
+                        <button
+                          onClick={() => onCancelExport(item.id)}
+                          className="p-1 rounded hover:opacity-80"
+                          style={{ color: 'var(--text-dim)' }}
+                          title={L('取消', 'Cancel')}
+                        >
+                          <X size={12} />
+                        </button>
+                      )}
+                      {item.status === 'done' && onShowExportInExplorer && (
+                        <button
+                          onClick={() => onShowExportInExplorer(item.file)}
+                          className="p-1 rounded hover:opacity-80"
+                          style={{ color: 'var(--text-dim)' }}
+                          title={L('在资源管理器中显示', 'Show in Explorer')}
+                        >
+                          <FolderOpen size={12} />
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                {!activeExport && (
+                  <div className="px-3 py-1.5 flex justify-end" style={{ borderTop: '1px solid var(--stroke)' }}>
+                    <button
+                      onClick={() => {
+                        setDismissedFinished(true);
+                        setExportsOpen(false);
+                      }}
+                      className="text-[10px] hover:underline"
+                      style={{ color: 'var(--text-dim)' }}
+                    >
+                      {L('清除', 'Dismiss')}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {magicStatus && (
+          <div className="titlebar-nodrag inline-flex items-center gap-1">
+            {magicActivityText && (
+              <button
+                onClick={onOpenMagic}
+                className="text-[11px] font-medium px-1.5 truncate max-w-[180px] hover:underline"
+                style={{ color: 'var(--text-dim)' }}
+                title={L('打开操作面板查看实时过程', 'Open Magic operation panel')}
+              >
+                {magicActivityText}
+              </button>
+            )}
+            <button
+              onClick={() => onStopMagic?.()}
+              className="inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10.5px] font-semibold transition-colors"
+              style={{
+                background: 'var(--button)',
+                color: 'var(--text)',
+                border: '1px solid var(--stroke)',
+              }}
+              title={L('停止 AI 剪辑 (Esc)', 'Stop Magic (Esc)')}
+            >
+              <Square size={8} fill="var(--accent)" stroke="var(--accent)" />
+              <span>{L('停止', 'Stop')}</span>
+            </button>
+          </div>
+        )}
+
+        <button
+          data-magic-anchor="magicButton"
+          className="titlebar-nodrag inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold transition-colors"
+          style={{
+            background: magicOpen
+              ? 'var(--accent)'
+              : 'var(--button)',
+            color: magicOpen ? '#FFFFFF' : 'var(--text)',
+            border: `1px solid ${magicOpen ? 'var(--accent)' : 'var(--stroke)'}`,
+          }}
+          onClick={onOpenMagic}
+          title={magicOpen ? L('收起 Magic 侧边面板', 'Collapse Magic Side Panel') : L('打开 Magic 侧边面板', 'Open Magic Side Panel')}
+        >
+          {magicStatus ? (
+            <>
+              <Loader2 size={12} className="animate-spin" style={{ color: magicOpen ? '#FFFFFF' : 'var(--accent)' }} />
+              <span className="max-w-[72px] truncate">{magicStatus.worker}</span>
+            </>
+          ) : (
+            <>
+              <Sparkles size={12} strokeWidth={1.6} style={{ color: magicOpen ? '#FFFFFF' : 'var(--accent)' }} />
+              <span>Magic</span>
+              <span
+                className="inline-flex items-center gap-1 px-1.5 py-0.2 rounded-full text-[10px] font-medium"
+                style={{
+                  background: magicOpen ? 'rgba(255,255,255,0.18)' : 'var(--raised)',
+                  color: magicOpen ? '#FFFFFF' : 'var(--text-dim)',
+                }}
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full shrink-0"
+                  style={{ background: magicOpen ? '#FFFFFF' : magicModeMeta.dot }}
+                />
+                <span className="min-w-[28px] text-center">{magicModeMeta.label}</span>
+              </span>
+            </>
+          )}
+        </button>
+
+        <button
+          className="titlebar-nodrag inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[11px] font-semibold"
+          style={{
+            background: 'var(--text)',
+            color: 'var(--on-text)',
+          }}
+          onClick={onOpenExport}
+          title={L('导出视频 (Ctrl+E)', 'Export (Ctrl+E)')}
+        >
+          <Download size={12} strokeWidth={1.8} />
+          {L('导出', 'Export')}
+        </button>
+
+        <button
+          className="titlebar-nodrag vt-hover inline-flex items-center gap-1 px-2 py-1 rounded-full text-[10.5px] font-medium transition-colors"
+          style={{ background: 'var(--field)', color: 'var(--text-dim)', border: '1px solid var(--stroke)' }}
+          onClick={toggleLocale}
+          title={L('Switch to English', '切换为中文')}
+        >
+          <Languages size={12} strokeWidth={1.6} />
+          <span>{locale === 'zh' ? '中文' : 'EN'}</span>
+        </button>
+
+        {onToggleLightDark && (
+          <button
+            className={btnClass}
+            style={{ color: 'var(--text-dim)' }}
+            onClick={onToggleLightDark}
+            title={isLightTheme ? L('切换深色主题', 'Switch to Dark Theme') : L('切换浅色主题', 'Switch to Light Theme')}
+          >
+            {isLightTheme ? <Moon size={13} strokeWidth={1.6} /> : <Sun size={13} strokeWidth={1.6} />}
+          </button>
+        )}
+
+        {onOpenMarketplace && (
+          <button
+            className={btnClass}
+            style={{ color: 'var(--text-dim)' }}
+            onClick={onOpenMarketplace}
+            title={L('插件市场（DJI / iPhone / 模板 / 数字人）', 'Plugin Marketplace (DJI / iPhone / Templates / Avatar)')}
+          >
+            <Blocks size={13} strokeWidth={1.6} />
+          </button>
+        )}
+
+        <button
+          className={btnClass}
+          style={{ color: mcpRunning ? 'var(--text)' : 'var(--text-dim)' }}
+          onClick={onOpenSettings}
+          title={L('设置与 MCP', 'Settings & MCP')}
+        >
+          <Settings size={14} strokeWidth={1.5} />
+          {mcpRunning && (
+            <span className="inline-block w-1.5 h-1.5 rounded-full" style={{ background: '#30D158' }} />
+          )}
+        </button>
+
+        <div className="titlebar-nodrag flex items-center ml-1">
+          <button
+            className="p-1.5 rounded vt-hover transition-colors"
+            style={{ color: 'var(--text-dim)' }}
+            onClick={() => window.vectrail.minimizeWindow()}
+            title={L('最小化', 'Minimize')}
+          >
+            <Minus size={13} />
+          </button>
+          <button
+            className="p-1.5 rounded vt-hover transition-colors"
+            style={{ color: 'var(--text-dim)' }}
+            onClick={() => window.vectrail.maximizeWindow()}
+            title={L('最大化', 'Maximize')}
+          >
+            <Square size={11} />
+          </button>
+          <button
+            className="p-1.5 rounded vt-win-close transition-colors"
+            style={{ color: 'var(--text-dim)' }}
+            onClick={() => window.vectrail.closeWindow()}
+            title={L('关闭', 'Close')}
+          >
+            <X size={13} />
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
