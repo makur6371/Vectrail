@@ -1,1 +1,15 @@
-bm9kZV9tb2R1bGVzLwpkaXN0LwpkaXN0LWVsZWN0cm9uLwpyZWxlYXNlLwpyZWxlYXNlLWxhdGVzdC8KLnZpdGUvCmNvdmVyYWdlLwoqLnRzYnVpbGRpbmZvCioubG9nCi5lbnYKLmVudi4qCi5EU19TdG9yZQpUaHVtYnMuZGIKX19weWNhY2hlX18vCioucHljCg==
+node_modules/
+dist/
+dist-electron/
+release/
+release-latest/
+.vite/
+coverage/
+*.tsbuildinfo
+*.log
+.env
+.env.*
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
