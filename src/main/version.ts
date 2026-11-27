@@ -1,1 +1,28 @@
-aW1wb3J0IGZzIGZyb20gJ25vZGU6ZnMnOwppbXBvcnQgcGF0aCBmcm9tICdub2RlOnBhdGgnOwoKbGV0IGNhY2hlZFZlcnNpb246IHN0cmluZyB8IG51bGwgPSBudWxsOwoKLyoqIFJlc29sdmUgdGhlIHNpbmdsZS1zb3VyY2UgYXBwbGljYXRpb24gdmVyc2lvbiBmcm9tIHBhY2thZ2UuanNvbi4gKi8KZXhwb3J0IGZ1bmN0aW9uIGdldFZlY3RyYWlsVmVyc2lvbigpOiBzdHJpbmcgewogIGlmIChjYWNoZWRWZXJzaW9uKSByZXR1cm4gY2FjaGVkVmVyc2lvbjsKICBjb25zdCBjYW5kaWRhdGVzID0gWwogICAgcGF0aC5yZXNvbHZlKHByb2Nlc3MuY3dkKCksICdwYWNrYWdlLmpzb24nKSwKICAgIHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUsICcuLi8uLi9wYWNrYWdlLmpzb24nKSwKICAgIHBhdGgucmVzb2x2ZShfX2Rpcm5hbWUsICcuLi8uLi8uLi9wYWNrYWdlLmpzb24nKSwKICBdOwogIGZvciAoY29uc3QgZmlsZSBvZiBjYW5kaWRhdGVzKSB7CiAgICBpZiAoIWZzLmV4aXN0c1N5bmMoZmlsZSkpIGNvbnRpbnVlOwogICAgdHJ5IHsKICAgICAgY29uc3QgcGFyc2VkID0gSlNPTi5wYXJzZShmcy5yZWFkRmlsZVN5bmMoZmlsZSwgJ3V0ZjgnKSkgYXMgeyB2ZXJzaW9uPzogc3RyaW5nIH07CiAgICAgIGlmIChwYXJzZWQudmVyc2lvbiAmJiBwYXJzZWQudmVyc2lvbi50cmltKCkpIHsKICAgICAgICBjYWNoZWRWZXJzaW9uID0gcGFyc2VkLnZlcnNpb24udHJpbSgpOwogICAgICAgIHJldHVybiBjYWNoZWRWZXJzaW9uOwogICAgICB9CiAgICB9IGNhdGNoIHsKICAgICAgLy8gdHJ5IG5leHQgcGFja2FnZS5qc29uIGNhbmRpZGF0ZQogICAgfQogIH0KICBjYWNoZWRWZXJzaW9uID0gJzEuMS4wJzsKICByZXR1cm4gY2FjaGVkVmVyc2lvbjsKfQo=
+import fs from 'node:fs';
+import path from 'node:path';
+
+let cachedVersion: string | null = null;
+
+/** Resolve the single-source application version from package.json. */
+export function getVectrailVersion(): string {
+  if (cachedVersion) return cachedVersion;
+  const candidates = [
+    path.resolve(process.cwd(), 'package.json'),
+    path.resolve(__dirname, '../../package.json'),
+    path.resolve(__dirname, '../../../package.json'),
+  ];
+  for (const file of candidates) {
+    if (!fs.existsSync(file)) continue;
+    try {
+      const parsed = JSON.parse(fs.readFileSync(file, 'utf8')) as { version?: string };
+      if (parsed.version && parsed.version.trim()) {
+        cachedVersion = parsed.version.trim();
+        return cachedVersion;
+      }
+    } catch {
+      // try next package.json candidate
+    }
+  }
+  cachedVersion = '1.1.0';
+  return cachedVersion;
+}
