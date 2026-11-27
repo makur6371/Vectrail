@@ -3,6 +3,7 @@ dist/
 dist-electron/
 release/
 release-latest/
+resources/ffmpeg/yt-dlp.exe
 .vite/
 coverage/
 *.tsbuildinfo
