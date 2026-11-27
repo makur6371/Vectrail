@@ -1,1 +1,67 @@
-IyBESkkg5peg57q/57Sg5p2Q5a+85YWl5o+S5Lu277yIYGRqaS13aXJlbGVzcy1pbXBvcnRg77yJ6YCJ5Z6L44CB5p625p6E5LiO6aqM5pS25oql5ZGKCgojIyAxLiDlvIDmupDpobnnm67lr7nmr5TkuI7pgInlnovnu5PorroKCnwg6aG555uuIHwgR2l0SHViIOWcsOWdgCB8IOWNj+iuriAvIOivreiogCB8IFdpbmRvd3Mg5YW85a655oCnIHwg55yf5a6e6IO95Yqb5qC45a6eIHwg6YCJ5Z6L57uT6K66IHwKfCAtLS0gfCAtLS0gfCAtLS0gfCAtLS0gfCAtLS0gfCAtLS0gfAp8ICoqT3Ntb09mZmxvYWQqKiB8IGBpbnRlcm1pdHRlY2gvT3Ntb09mZmxvYWRgIHwgKipNSVQqKiAvIFB5dGhvbiAzLjEzICsgYGJsZWFrYCB8IOWOn+eUnyBXaW5kb3dzIDEwLzEx77yIV2luUlQgQkxFICsgYG5ldHNoIHdsYW5gICsgYENSRUFURV9OT19XSU5ET1dg77yJIHwg5bey5qC45a6e77yaQkxFIOmFjeWvueWUpOmGkuOAgVdQQTIgV2ktRmkg5Yqg5YWl5LiO5oGi5aSN44CBVURQIDkwMDQvMTAwMDQgRGF0YWxpbmvjgIFIVFRQIGAvdjJgIFJhbmdlIOaWreeCueS4i+i9veOAgWhhc2gg5qCh6aqMIHwgKirmoLjlv4PljY/orq7kuI4gV2luZG93cyDkvqfovabok53mnKwqKiB8CnwgKipvc21vc2lzKiogfCBgS29ucmFkSVQvb3Ntb3Npc2AgfCAqKk1JVCoqIC8gS290bGluIChBbmRyb2lkKSB8IOWNj+iuruaWh+aho+mAmueUqCB8IOaPkOS+m+WujOaVtCBgTUVESUFfUFJPVE9DT0wubWRg77yaQkxFIEdBVFQgYGZmZjRgL2BmZmY1YCDmj6HmiYvkuI4gTVRVIDUwMOOAgURVTUwg5bin5qC85byP44CB5ZCE5py65Z6L56uv5Y+j5LiO5Y+l5p+E6KeE5b6LIHwgKirlupXlsYLljY/orq7op4TojIPmnYPlqIHlj4LogIMqKiB8CnwgKipPc21vdGljKiogfCBgc21pdGhwbHVzL09zbW90aWNgIHwgKipPdGhlciAoTk9BU1NFUlRJT04pKiogLyBTd2lmdCB8IOS7hSBtYWNPU++8iFN3aWZ0VUkgKyBDb3JlQmx1ZXRvb3Ro77yJIHwg5LuF6YCC6YWNIG1hY09T77yM5LiU6K645Y+v6K+B5Li66Ieq5a6a5LmJIGBPdGhlcmAgfCAqKuaOkumZpCoq77yI5LiN5YW85a65IFdpbmRvd3Mg5LiU5ZWG55So5ZCI6KeE5LiN5piO56Gu77yJIHwKfCAqKm9zbW8tY2xpZW50LXdpbmRvd3MqKiB8IGBsdWlzcmV5c2FuL29zbW8tY2xpZW50LXdpbmRvd3NgIHwg5LuT5bqT6L+U5ZueIGAzMDEgTW92ZWQgUGVybWFuZW50bHlgIHwg5pyq55+lIHwg5peg5rOV55u05o6l6I635Y+W56iz5a6a5rqQ56CB5LiO57u05oqk54q25oCBIHwgKirmjpLpmaQqKiB8CgoqKue7vOWQiOmAieWeiyoq77ya5Z+65LqOICoqTUlUIOWNj+iurioqIOeahCBgT3Ntb09mZmxvYWRgIOS4jiBgS29ucmFkSVQvb3Ntb3Npc2AgYE1FRElBX1BST1RPQ09MLm1kYO+8jOmHh+eUqCAqKlR5cGVTY3JpcHQg5o+S5Lu25YaF5qC4ICsgTm9kZSDmtYHlvI8gSFRUUCDmlq3ngrnkuIvovb0gKyBQeXRob24gYGJsZWFrYCBXaW5kb3dzIOS+p+i9pioqIOeahOa3t+WQiOaetuaehOOAggoKIyMgMi4g5o+S5Lu25p625p6E5LiO5YWr5aSn6Kej6ICm5qih5Z2XCgrmj5Lku7bmoIfor4bkuLogYGRqaS13aXJlbGVzcy1pbXBvcnRg77yM6YCa6L+HIGBzcmMvbWFpbi9wbHVnaW5zL21hbmFnZXIudHNg77yIYFBsdWdpbk1hbmFnZXJg77yJ5Lul5pyA5bCP5L615YWl5pa55byP5o6l5YWlIFZlY3RyYWls77yM5pSv5oyB54us56uL5ZCv55SoL+emgeeUqOS4juW8guW4uOmalOemu++8iOaPkuS7tuW8guW4uOS4jeS8muW9seWTjeS4u+WJqui+keeoi+W6j++8ie+8mgoKMS4gKirorr7lpIflj5HnjrDkuI7lnovlj7fop6PmnpAqKu+8iGBzcmMvbWFpbi9wbHVnaW5zL2RqaS13aXJlbGVzcy1pbXBvcnQvbW9kZWxzLnRzYOOAgWBwbHVnaW5zL2RqaS13aXJlbGVzcy1pbXBvcnQvZGppX3NpZGVjYXIucHlg77yJCjIuICoq6JOd54mZ6YWN5a+55LiO6Ym05p2DKirvvIhgZGppX3NpZGVjYXIucHlgIOWunueOsCBgZmZmNGAvYGZmZjVgIOiuoumYheOAgWAwMSAwMGAgYXJtaW5n44CBYDB4MDcvMHg0NWAg6YWN5a+55LiOIGAweDA3LzB4NDZgIOehruiupO+8iQozLiAqKldpLUZpIOi/nuaOpeS4juWPjOe9keWNoeajgOa1iyoq77yIYHNyYy9tYWluL3BsdWdpbnMvZGppLXdpcmVsZXNzLWltcG9ydC93aWZpTWFuYWdlci50c2AgKyBgZGppX3NpZGVjYXIucHlgIOeahCBgbmV0c2ggd2xhbmAg5peg5by556qX6LCD55So5Y+KIFdpbmRvd3Mg5a6a5L2N5pyN5Yqh5YWz6Zet5pe255qEIERIQ1Ag5Zue6YCA77yJCjQuICoqREpJIERVTUwg5Y2P6K6u57yW6Kej56CBKirvvIhgc3JjL21haW4vcGx1Z2lucy9kamktd2lyZWxlc3MtaW1wb3J0L2R1bWwudHNg77yaQ1JDOC9DUkMxNuOAgWBEdW1sRnJhbWVQYXJzZXJg44CBQ29tcG9zaXRlUGFjayBNYW5pZmVzdCDph43nu4TvvIkKNS4gKirov5znqIvlqpLkvZPntKLlvJUqKu+8iGBkdW1sLnRzYCBgZGVjb2RlTWFuaWZlc3RCdWZmZXJgICsgYHNlcnZpY2UudHNgIOafpemHjeagh+iusO+8iQo2LiAqKua1geW8j+aWreeCueS4i+i9vemYn+WIlyoq77yIYHNyYy9tYWluL3BsdWdpbnMvZGppLXdpcmVsZXNzLWltcG9ydC9kb3dubG9hZFF1ZXVlLnRzYO+8muW5tuWPkeS4iumZkCAx4oCTMuOAgWAucGFydGAg5Li05pe25paH5Lu244CBYFJhbmdlOiBieXRlcz1gIOe7reS8oOOAgeWunuaXtumAn+W6puS4jiBFVEHvvIkKNy4gKirlrozmlbTmgKfmoKHpqozkuI7ljoblj7Lljrvph40qKu+8iGBzcmMvbWFpbi9wbHVnaW5zL2RqaS13aXJlbGVzcy1pbXBvcnQvaW50ZWdyaXR5LnRzYO+8mua1geW8jyBTSEEtMjU2IOS4juWtl+iKgumVv+W6puagoemqjOOAgeWOn+WtkOmHjeWRveWQjeOAgWBoaXN0b3J5Lmpzb25g77yJCjguICoqVmVjdHJhaWwg5aqS5L2T5bqT5a+85YWlKirvvIhgc3JjL21haW4vcGx1Z2lucy9kamktd2lyZWxlc3MtaW1wb3J0L2xpYnJhcnlJbXBvcnRlci50c2DvvJrosIPnlKggYFByb2plY3RTdG9yZS5pbXBvcnRGaWxlc2Ag5Y6f54mH5peg5o2f5a+85YWl77yJCgojIyAzLiDnrKzkuInmlrnkvp3otZbkuI7orrjlj6/or4HmuIXljZUKCi0gKirkuLvnqIvluo/mlrDlop7kvp3otZYqKu+8muaXoOaWsOWiniBucG0g56ys5LiJ5pa56L+Q6KGM5pe25L6d6LWW77yISFRUUCDkuIvovb3kuI4gU0hBLTI1NiDmoKHpqoznm7TmjqXkvb/nlKggTm9kZS5qcyDlhoXnva4gYGh0dHBg44CBYGNyeXB0b2DjgIFgZnNg44CBYGNoaWxkX3Byb2Nlc3Ng77yJ44CCCi0gKipXaW5kb3dzIOS+p+i9puWPr+mAiei/kOihjOaXtioq77yaUHl0aG9uIDMuMTArIOS4jiBgYmxlYWs+PTMuMGDvvIhNSVQgTGljZW5zZe+8jOeUqOS6jiBXaW5kb3dzIFdpblJUIOiTneeJmSBMRSDmiavmj4/kuI4gR0FUVCDpgJrkv6HvvInjgIIKLSAqKuWNj+iuruWPguiAg+adpea6kCoq77yaYGludGVybWl0dGVjaC9Pc21vT2ZmbG9hZGDvvIhNSVQgTGljZW5zZe+8ieOAgWBLb25yYWRJVC9vc21vc2lzYO+8iE1JVCBMaWNlbnNl77yJ44CCCgojIyA0LiDmlK/mjIHorr7lpIflnovlj7fkuI7lhbzlrrnmgKfnn6npmLUKCnwg5py65Z6LIHwgTW9kZWwgSUQgfCBCTEUg5pys5Zyw5ZCN5YmN57yAIHwgRGF0YWxpbmsgVURQIHwgVENQLTcwMDEgUG9rZSB8IFdpLUZpIHwg5Y2P6K6u5pSv5oyB54q25oCBIHwKfCAtLS0gfCAtLS0gfCAtLS0gfCAtLS0gfCAtLS0gfCAtLS0gfCAtLS0gfAp8IE9zbW8gUG9ja2V0IDQgUHJvIHwgYDB4MDAyMmAgKFByb2RUeXBlIGAyMThgKSB8IGBPc21vUG9ja2V0NFBgIHwgYDkwMDRgIHwg5pivIHwgV1BBMiB8IOW3suWNj+iurumAgumFje+8iOW+heWunuacuuehruiupO+8iSB8CnwgT3NtbyBQb2NrZXQgNCB8IGAweDAwMjFgIHwgYE9zbW9Qb2NrZXQ0YCB8IGA5MDA0YCB8IOaYryB8IFdQQTIgfCDlt7LljY/orq7pgILphY3vvIjlvoXlrp7mnLrnoa7orqTvvIkgfAp8IE9zbW8gUG9ja2V0IDMgfCBgMHgwMDIwYCB8IGBPc21vUG9ja2V0M2AgfCBgOTAwNGAgfCDmmK8gfCBXUEEyIHwg5bey5Y2P6K6u6YCC6YWN77yI5b6F5a6e5py656Gu6K6k77yJIHwKfCBPc21vIEFjdGlvbiA2IHwgYDB4MDAxOGAgfCBgT3Ntb0FjdGlvbjZgIHwgYDkwMDRgIHwg5pivIHwgV1BBMiB8IOW3suWNj+iurumAgumFje+8iOW+heWunuacuuehruiupO+8iSB8CnwgT3NtbyBBY3Rpb24gNSBQcm8gfCBgMHgwMDE1YCB8IGBPc21vQWN0aW9uNVByb2AgfCBgOTAwNGAgfCDmmK8gfCBXUEEyIHwg5bey5Y2P6K6u6YCC6YWN77yI5b6F5a6e5py656Gu6K6k77yJIHwKfCBYdHJhIEVkZ2UgUHJvIHwgYDB4MDAxNWAgfCBgWHRyYUVkZ2VQcm9gIHwgYDEwMDA0YCB8IOWQpiB8IFdQQTIgfCDlt7LljY/orq7pgILphY3vvIjlvoXlrp7mnLrnoa7orqTvvIkgfAp8IE9zbW8gQWN0aW9uIDQgLyAzIC8gMiAvIDEgfCBgMHgwMDE0YC9gMTJgL2AxMGAvYDA2YCB8IGBPc21vQWN0aW9uKmAgfCBgOTAwNGAgfCDmmK8gfCBXUEEyIHwgNCDlt7LmlofmoaPnoa7orqTvvJsxLTMg5Li65Zue6YCA6YCC6YWNIHwKfCBPc21vIE5hbm8gfCBgMHgwMDE5YCB8IGBPc21vTmFub2AgfCBgOTAwNGAgfCDmmK8gfCBXUEEyIHwg5Y2V5py66Lqr5a2Y5YKo6YCC6YWN77yI5b6F5a6e5py656Gu6K6k77yJIHwKfCBPc21vIDM2MCB8IGAweDAwMTdgIHwgYE9zbW8zNjBgIHwgYDkwMDRgIHwg5pivIHwgKipXUEEzKiogfCAqKuW3suefpemZkOWItioq77ya5LiK5ri456Gu6K6k5YW254Ot54K55LiOIGBmZmY3YCDmmoLkuI3lj6/nlKggfAoKIyMgNS4gV2luZG93cyDlj4znvZHljaHkuI7lronoo4Xkvb/nlKjor7TmmI4KCi0gKirnjq/looPliY3mj5AqKu+8mldpbmRvd3MgMTAvMTEg6ZyA5YW35aSH6JOd54mZIExFIOS4juaUr+aMgSA1IEdIeiDnmoTml6Dnur/nvZHljaHvvJvoi6XopoHmiavmj4/nnJ/lrp7nm7jmnLrvvIzpnIDmnKzmnLogUHl0aG9uIOWuieijhSBgYmxlYWtg77yIYHBpcCBpbnN0YWxsIGJsZWFrYO+8ieOAggotICoq572R57uc5YWx5a2Y6K+05piOKirvvJrnm7jmnLrng63ngrnmnKzouqvml6DkupLogZTnvZHmjqXlhaXjgILoi6XnlLXohJHlkIzml7bmj5LmnInnvZHnur/vvIjku6XlpKrnvZHvvInvvIxXaW5kb3dzIOS8muS/neaMgeWklue9keS4jeaWre+8m+iLpeS4uuWNleaXoOe6v+e9keWNoeeslOiusOacrO+8jOi/nuWFpeebuOacuueDreeCueacn+mXtOS8muaaguaXtuaWreWklue9ke+8jOaWreW8gOebuOacuuWQjuaPkuS7tuWPr+iHquWKqOaBouWkjeWOnyBXaS1GaeOAggotICoq5YaF572u5qih5ouf6aqM6K+BKirvvJrngrnlh7vlqpLkvZPlupPlj7PkuIrop5IgV2ktRmkg5Zu+5qCH77yI5oiW56m654q25oCB44CM5LuOIERKSSDnm7jmnLrlr7zlhaXjgI3vvInmiZPlvIDlr7zlhaXlvLnnqpfvvIzmlK/mjIHngrnlh7vjgIzmqKHmi5/nm7jmnLrmtYvor5XjgI3nm7TmjqXpqozor4HmtY/op4jjgIHnrZvpgInjgIHmlq3ngrnnu63kvKDjgIHmoKHpqozkuI7lhaXlupPlhajmtYHnqIvjgIIKCiMjIDYuIOa1i+ivleS4jumqjOivgeeKtuaAge+8iOaYjuehruWMuuWIhuaooeaLn+a1i+ivleS4juWunuacuua1i+ivle+8iQoKLSAqKuiHquWKqOWMluaooeaLn+a1i+ivle+8iOW3sumAmui/h++8jOmdnuWunuacuuehrOS7tu+8iSoq77yaCiAgLSBEVU1MIENSQzgvQ1JDMTbjgIHmtYHlvI/luKfph43nu4TjgIFgMHgwMC8weDI3YCBNYW5pZmVzdCDop6PmnpDjgIHnu4/lhbjkuI4gUG9ja2V0IDQgUHJvIOaWsOeJiOW5v+aSreagvOW8j+ino+aekOOAggogIC0gYE1vY2tEamlDYW1lcmFTZXJ2ZXJgIOaooeaLn+ebuOacuu+8mkhUVFAgYC92MmAg5LiL6L2944CBYC5wYXJ0YCBgUmFuZ2UgMjA2YCDmlq3ngrnnu63kvKDjgIFTSEEtMjU2IOagoemqjOOAgemHjeWkjeWvvOWFpeWOu+mHjeOAgeiHquWKqOWFpeW6kyBgUHJvamVjdFN0b3JlYOOAgeaPkuS7tuemgeeUqOaVhemanOmalOemu+OAggotICoq5pyA5bCP5YyW5a6e5py66aqM6K+B5riF5Y2V77yI6ZyA55yf5py65omn6KGM77yJKirvvJoKICAxLiDmnKzmnLrmiafooYwgYHBpcCBpbnN0YWxsIGJsZWFrYCDlubbmiZPlvIAgV2luZG93cyDok53niZnjgIHlrprkvY3mnYPpmZDjgIIKICAyLiDlvIDmnLogREpJIE9zbW8gUG9ja2V0IDMvNC9BY3Rpb24gNC81LzbvvIzngrnlh7vjgIzmiavmj4/pmYTov5EgREpJIOebuOacuuOAjeehruiupOWPr+ivhuWIq+ato+ehruWei+WPt+OAggogIDMuIOmmluasoei/nuaOpeaXtuWcqOebuOacuuWxj+W5leeCueWHu+ehruiupOaOiOadg++8jOaguOWvueiHquWKqOi/nuWFpeebuOacuiBXaS1GaSDlkI7mmK/lkKbmi4nlh7rlrozmlbTlqpLkvZPliJfooajjgIIKICA0LiDli77pgIkgMSDkuKogMUdCKyDlpKfop4bpopHkuI4gMSDlvKDnhafniYfkuIvovb3vvIznoa7orqTpgJ/luqbjgIFFVEHjgIHmoKHpqozlj4roh6rliqjov5vlhaXml7bpl7TovbTntKDmnZDlupPvvIzlubblnKjmlq3lvIDlkI7mgaLlpI3ljp8gV2ktRmnjgIIKCiMjIDcuIOW3suefpemXrumimOS4juWQjue7reS8mOWMlgoKLSBgZGppX3NpZGVjYXIucHlgIOW9k+WJjemdouWQkSBQMCDmoLjlv4PliJfooajkuI7kuIvovb3pk77ot6/vvIzlsJrmnKrlhoXnva7ov5znqIvnvKnnlaXlm77mi4nlj5bvvIhQMe+8ieS4jueLrOeri+aJk+WMheW1jOWFpeW8jyBQeXRob24gcnVudGltZe+8iOW9k+WJjeWkjeeUqOezu+e7nyBQeXRob24gMy4xMiArIGBibGVha2DvvInjgIIKLSBgT3NtbyAzNjBgIOWboCBXUEEzIOS4jiBBUCDkuIrmuLjpmZDliLbmmoLmoIforrDkuLrkuI3mlK/mjIHjgIIK
+# DJI 无线素材导入插件（`dji-wireless-import`）选型、架构与验收报告
+
+## 1. 开源项目对比与选型结论
+
+| 项目 | GitHub 地址 | 协议 / 语言 | Windows 兼容性 | 真实能力核实 | 选型结论 |
+| --- | --- | --- | --- | --- | --- |
+| **OsmoOffload** | `intermittech/OsmoOffload` | **MIT** / Python 3.13 + `bleak` | 原生 Windows 10/11（WinRT BLE + `netsh wlan` + `CREATE_NO_WINDOW`） | 已核实：BLE 配对唤醒、WPA2 Wi-Fi 加入与恢复、UDP 9004/10004 Datalink、HTTP `/v2` Range 断点下载、hash 校验 | **核心协议与 Windows 侧车蓝本** |
+| **osmosis** | `KonradIT/osmosis` | **MIT** / Kotlin (Android) | 协议文档通用 | 提供完整 `MEDIA_PROTOCOL.md`：BLE GATT `fff4`/`fff5` 握手与 MTU 500、DUML 帧格式、各机型端口与句柄规律 | **底层协议规范权威参考** |
+| **Osmotic** | `smithplus/Osmotic` | **Other (NOASSERTION)** / Swift | 仅 macOS（SwiftUI + CoreBluetooth） | 仅适配 macOS，且许可证为自定义 `Other` | **排除**（不兼容 Windows 且商用合规不明确） |
+| **osmo-client-windows** | `luisreysan/osmo-client-windows` | 仓库返回 `301 Moved Permanently` | 未知 | 无法直接获取稳定源码与维护状态 | **排除** |
+
+**综合选型**：基于 **MIT 协议** 的 `OsmoOffload` 与 `KonradIT/osmosis` `MEDIA_PROTOCOL.md`，采用 **TypeScript 插件内核 + Node 流式 HTTP 断点下载 + Python `bleak` Windows 侧车** 的混合架构。
+
+## 2. 插件架构与八大解耦模块
+
+插件标识为 `dji-wireless-import`，通过 `src/main/plugins/manager.ts`（`PluginManager`）以最小侵入方式接入 Vectrail，支持独立启用/禁用与异常隔离（插件异常不会影响主剪辑程序）：
+
+1. **设备发现与型号解析**（`src/main/plugins/dji-wireless-import/models.ts`、`plugins/dji-wireless-import/dji_sidecar.py`）
+2. **蓝牙配对与鉴权**（`dji_sidecar.py` 实现 `fff4`/`fff5` 订阅、`01 00` arming、`0x07/0x45` 配对与 `0x07/0x46` 确认）
+3. **Wi-Fi 连接与双网卡检测**（`src/main/plugins/dji-wireless-import/wifiManager.ts` + `dji_sidecar.py` 的 `netsh wlan` 无弹窗调用及 Windows 定位服务关闭时的 DHCP 回退）
+4. **DJI DUML 协议编解码**（`src/main/plugins/dji-wireless-import/duml.ts`：CRC8/CRC16、`DumlFrameParser`、CompositePack Manifest 重组）
+5. **远程媒体索引**（`duml.ts` `decodeManifestBuffer` + `service.ts` 查重标记）
+6. **流式断点下载队列**（`src/main/plugins/dji-wireless-import/downloadQueue.ts`：并发上限 1–2、`.part` 临时文件、`Range: bytes=` 续传、实时速度与 ETA）
+7. **完整性校验与历史去重**（`src/main/plugins/dji-wireless-import/integrity.ts`：流式 SHA-256 与字节长度校验、原子重命名、`history.json`）
+8. **Vectrail 媒体库导入**（`src/main/plugins/dji-wireless-import/libraryImporter.ts`：调用 `ProjectStore.importFiles` 原片无损导入）
+
+## 3. 第三方依赖与许可证清单
+
+- **主程序新增依赖**：无新增 npm 第三方运行时依赖（HTTP 下载与 SHA-256 校验直接使用 Node.js 内置 `http`、`crypto`、`fs`、`child_process`）。
+- **Windows 侧车可选运行时**：Python 3.10+ 与 `bleak>=3.0`（MIT License，用于 Windows WinRT 蓝牙 LE 扫描与 GATT 通信）。
+- **协议参考来源**：`intermittech/OsmoOffload`（MIT License）、`KonradIT/osmosis`（MIT License）。
+
+## 4. 支持设备型号与兼容性矩阵
+
+| 机型 | Model ID | BLE 本地名前缀 | Datalink UDP | TCP-7001 Poke | Wi-Fi | 协议支持状态 |
+| --- | --- | --- | --- | --- | --- | --- |
+| Osmo Pocket 4 Pro | `0x0022` (ProdType `218`) | `OsmoPocket4P` | `9004` | 是 | WPA2 | 已协议适配（待实机确认） |
+| Osmo Pocket 4 | `0x0021` | `OsmoPocket4` | `9004` | 是 | WPA2 | 已协议适配（待实机确认） |
+| Osmo Pocket 3 | `0x0020` | `OsmoPocket3` | `9004` | 是 | WPA2 | 已协议适配（待实机确认） |
+| Osmo Action 6 | `0x0018` | `OsmoAction6` | `9004` | 是 | WPA2 | 已协议适配（待实机确认） |
+| Osmo Action 5 Pro | `0x0015` | `OsmoAction5Pro` | `9004` | 是 | WPA2 | 已协议适配（待实机确认） |
+| Xtra Edge Pro | `0x0015` | `XtraEdgePro` | `10004` | 否 | WPA2 | 已协议适配（待实机确认） |
+| Osmo Action 4 / 3 / 2 / 1 | `0x0014`/`12`/`10`/`06` | `OsmoAction*` | `9004` | 是 | WPA2 | 4 已文档确认；1-3 为回退适配 |
+| Osmo Nano | `0x0019` | `OsmoNano` | `9004` | 是 | WPA2 | 单机身存储适配（待实机确认） |
+| Osmo 360 | `0x0017` | `Osmo360` | `9004` | 是 | **WPA3** | **已知限制**：上游确认其热点与 `fff7` 暂不可用 |
+
+## 5. Windows 双网卡与安装使用说明
+
+- **环境前提**：Windows 10/11 需具备蓝牙 LE 与支持 5 GHz 的无线网卡；若要扫描真实相机，需本机 Python 安装 `bleak`（`pip install bleak`）。
+- **网络共存说明**：相机热点本身无互联网接入。若电脑同时插有网线（以太网），Windows 会保持外网不断；若为单无线网卡笔记本，连入相机热点期间会暂时断外网，断开相机后插件可自动恢复原 Wi-Fi。
+- **内置模拟验证**：点击媒体库右上角 Wi-Fi 图标（或空状态「从 DJI 相机导入」）打开导入弹窗，支持点击「模拟相机测试」直接验证浏览、筛选、断点续传、校验与入库全流程。
+
+## 6. 测试与验证状态（明确区分模拟测试与实机测试）
+
+- **自动化模拟测试（已通过，非实机硬件）**：
+  - DUML CRC8/CRC16、流式帧重组、`0x00/0x27` Manifest 解析、经典与 Pocket 4 Pro 新版广播格式解析。
+  - `MockDjiCameraServer` 模拟相机：HTTP `/v2` 下载、`.part` `Range 206` 断点续传、SHA-256 校验、重复导入去重、自动入库 `ProjectStore`、插件禁用故障隔离。
+- **最小化实机验证清单（需真机执行）**：
+  1. 本机执行 `pip install bleak` 并打开 Windows 蓝牙、定位权限。
+  2. 开机 DJI Osmo Pocket 3/4/Action 4/5/6，点击「扫描附近 DJI 相机」确认可识别正确型号。
+  3. 首次连接时在相机屏幕点击确认授权，核对自动连入相机 Wi-Fi 后是否拉出完整媒体列表。
+  4. 勾选 1 个 1GB+ 大视频与 1 张照片下载，确认速度、ETA、校验及自动进入时间轴素材库，并在断开后恢复原 Wi-Fi。
+
+## 7. 已知问题与后续优化
+
+- `dji_sidecar.py` 当前面向 P0 核心列表与下载链路，尚未内置远程缩略图拉取（P1）与独立打包嵌入式 Python runtime（当前复用系统 Python 3.12 + `bleak`）。
+- `Osmo 360` 因 WPA3 与 AP 上游限制暂标记为不支持。
