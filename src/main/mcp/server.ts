@@ -1,1 +1,277 @@
-aW1wb3J0IGh0dHAgZnJvbSAnbm9kZTpodHRwJzsKaW1wb3J0IGZzIGZyb20gJ25vZGU6ZnMnOwppbXBvcnQgcGF0aCBmcm9tICdub2RlOnBhdGgnOwppbXBvcnQgeyBBZGRyZXNzSW5mbyB9IGZyb20gJ25vZGU6bmV0JzsKaW1wb3J0IHsgUHJvamVjdFN0b3JlIH0gZnJvbSAnLi4vc3RhdGUnOwppbXBvcnQgeyBnZXRDYWNoZURpciB9IGZyb20gJy4uL2VuZ2luZS9mZm1wZWcnOwppbXBvcnQgeyBnZXRWZWN0cmFpbFZlcnNpb24gfSBmcm9tICcuLi92ZXJzaW9uJzsKaW1wb3J0IHsgRXh0ZXJuYWxNY3BBY3Rpdml0eUV2ZW50IH0gZnJvbSAnLi4vLi4vc2hhcmVkL3R5cGVzJzsKaW1wb3J0IHsgY2FsbE1DUFRvb2wsIE1DUF9JTlNUUlVDVElPTlMsIE1DUF9UT09MX0RFRklOSVRJT05TIH0gZnJvbSAnLi90b29scyc7CgpleHBvcnQgY29uc3QgTUNQX0RFRkFVTFRfUE9SVCA9IDQ3OTIwOwoKZnVuY3Rpb24gcnVudGltZVBvcnRGaWxlKCk6IHN0cmluZyB7CiAgcmV0dXJuIHBhdGguam9pbihnZXRDYWNoZURpcignUnVudGltZScpLCAnbWNwLXBvcnQuanNvbicpOwp9CgppbnRlcmZhY2UgSnNvblJwY1JlcXVlc3QgewogIGpzb25ycGM/OiBzdHJpbmc7CiAgaWQ/OiBzdHJpbmcgfCBudW1iZXIgfCBudWxsOwogIG1ldGhvZD86IHN0cmluZzsKICBwYXJhbXM/OiBSZWNvcmQ8c3RyaW5nLCB1bmtub3duPjsKfQoKZXhwb3J0IGludGVyZmFjZSBNQ1BDbGllbnRJbmZvIHsKICBpZDogc3RyaW5nOwogIG5hbWU6IHN0cmluZzsKICBsYXN0U2VlbjogbnVtYmVyOwp9CgpleHBvcnQgY2xhc3MgTUNQU2VydmVyIHsKICBwcml2YXRlIHNlcnZlcj86IGh0dHAuU2VydmVyOwogIHByaXZhdGUgc3RvcmU6IFByb2plY3RTdG9yZTsKICBwcml2YXRlIG9uU3RhdHVzQ2hhbmdlPzogKCkgPT4gdm9pZDsKICBwcml2YXRlIG9uRXh0ZXJuYWxUb29sPzogKGV2OiBFeHRlcm5hbE1jcEFjdGl2aXR5RXZlbnQpID0+IHZvaWQ7CiAgcHJpdmF0ZSBtYWdpY0RyYWZ0PzogewogICAgc3RvcmU6IFByb2plY3RTdG9yZTsKICAgIG9uVG9vbD86ICgKICAgICAgbmFtZTogc3RyaW5nLAogICAgICBhcmdzOiBSZWNvcmQ8c3RyaW5nLCB1bmtub3duPiwKICAgICAgZHJhZnRTdG9yZTogUHJvamVjdFN0b3JlLAogICAgICByZXN1bHRUZXh0OiBzdHJpbmcsCiAgICAgIGlzRXJyb3I6IGJvb2xlYW4KICAgICkgPT4gdm9pZDsKICB9OwogIHJ1bm5pbmcgPSBmYWxzZTsKICBsaXN0ZW5pbmdQb3J0PzogbnVtYmVyOwogIHByb2JsZW0/OiBzdHJpbmc7CiAgY2xpZW50cyA9IG5ldyBNYXA8c3RyaW5nLCBNQ1BDbGllbnRJbmZvPigpOwogIGVuYWJsZWQgPSB0cnVlOwoKICBjb25zdHJ1Y3RvcihzdG9yZTogUHJvamVjdFN0b3JlLCBvblN0YXR1c0NoYW5nZT86ICgpID0+IHZvaWQpIHsKICAgIHRoaXMuc3RvcmUgPSBzdG9yZTsKICAgIHRoaXMub25TdGF0dXNDaGFuZ2UgPSBvblN0YXR1c0NoYW5nZTsKICB9CgogIHNldE1hZ2ljRHJhZnQoCiAgICBkcmFmdFN0b3JlPzogUHJvamVjdFN0b3JlLAogICAgb25Ub29sPzogKAogICAgICBuYW1lOiBzdHJpbmcsCiAgICAgIGFyZ3M6IFJlY29yZDxzdHJpbmcsIHVua25vd24+LAogICAgICBkcmFmdFN0b3JlOiBQcm9qZWN0U3RvcmUsCiAgICAgIHJlc3VsdFRleHQ6IHN0cmluZywKICAgICAgaXNFcnJvcjogYm9vbGVhbgogICAgKSA9PiB2b2lkCiAgKTogdm9pZCB7CiAgICB0aGlzLm1hZ2ljRHJhZnQgPSBkcmFmdFN0b3JlID8geyBzdG9yZTogZHJhZnRTdG9yZSwgb25Ub29sIH0gOiB1bmRlZmluZWQ7CiAgfQoKICBzZXRFeHRlcm5hbFRvb2xMaXN0ZW5lcihjYj86IChldjogRXh0ZXJuYWxNY3BBY3Rpdml0eUV2ZW50KSA9PiB2b2lkKTogdm9pZCB7CiAgICB0aGlzLm9uRXh0ZXJuYWxUb29sID0gY2I7CiAgfQoKICBnZXQgZW5kcG9pbnQoKTogc3RyaW5nIHsKICAgIHJldHVybiBgaHR0cDovLzEyNy4wLjAuMToke3RoaXMubGlzdGVuaW5nUG9ydCA/PyBNQ1BfREVGQVVMVF9QT1JUfS9tY3BgOwogIH0KCiAgc3RhcnQocG9ydCA9IE1DUF9ERUZBVUxUX1BPUlQpOiB2b2lkIHsKICAgIGlmICh0aGlzLnNlcnZlciB8fCAhdGhpcy5lbmFibGVkKSByZXR1cm47CiAgICBjb25zdCBzcnYgPSBodHRwLmNyZWF0ZVNlcnZlcigocmVxLCByZXMpID0+IHsKICAgICAgdm9pZCB0aGlzLmhhbmRsZUh0dHAocmVxLCByZXMpOwogICAgfSk7CiAgICBzcnYub24oJ2Vycm9yJywgKGVycjogTm9kZUpTLkVycm5vRXhjZXB0aW9uKSA9PiB7CiAgICAgIGlmIChlcnIuY29kZSA9PT0gJ0VBRERSSU5VU0UnICYmIHBvcnQgIT09IDApIHsKICAgICAgICB0aGlzLnNlcnZlciA9IHVuZGVmaW5lZDsKICAgICAgICB0aGlzLnByb2JsZW0gPSAnQW5vdGhlciBjb3B5IG9mIFZlY3RyYWlsIGlzIHVzaW5nIHBvcnQgNDc5MjA7IHJ1bm5pbmcgb24gZHluYW1pYyBwb3J0Lic7CiAgICAgICAgdGhpcy5zdGFydCgwKTsKICAgICAgfSBlbHNlIHsKICAgICAgICB0aGlzLnJ1bm5pbmcgPSBmYWxzZTsKICAgICAgICB0aGlzLnByb2JsZW0gPSBlcnIubWVzc2FnZTsKICAgICAgICB0aGlzLm9uU3RhdHVzQ2hhbmdlPy4oKTsKICAgICAgfQogICAgfSk7CiAgICBzcnYubGlzdGVuKHBvcnQsICcxMjcuMC4wLjEnLCAoKSA9PiB7CiAgICAgIGNvbnN0IGFkZHIgPSBzcnYuYWRkcmVzcygpIGFzIEFkZHJlc3NJbmZvIHwgbnVsbDsKICAgICAgdGhpcy5saXN0ZW5pbmdQb3J0ID0gYWRkcj8ucG9ydCA/PyBwb3J0OwogICAgICB0aGlzLnJ1bm5pbmcgPSB0cnVlOwogICAgICBpZiAocG9ydCA9PT0gTUNQX0RFRkFVTFRfUE9SVCkgdGhpcy5wcm9ibGVtID0gdW5kZWZpbmVkOwogICAgICB0cnkgewogICAgICAgIGZzLndyaXRlRmlsZVN5bmMoCiAgICAgICAgICBydW50aW1lUG9ydEZpbGUoKSwKICAgICAgICAgIEpTT04uc3RyaW5naWZ5KHsgcG9ydDogdGhpcy5saXN0ZW5pbmdQb3J0LCBwaWQ6IHByb2Nlc3MucGlkIH0pLAogICAgICAgICAgJ3V0ZjgnCiAgICAgICAgKTsKICAgICAgfSBjYXRjaCB7CiAgICAgICAgLy8gaWdub3JlIHJ1bnRpbWUgZmlsZSB3cml0ZSBlcnJvcnMKICAgICAgfQogICAgICB0aGlzLm9uU3RhdHVzQ2hhbmdlPy4oKTsKICAgIH0pOwogICAgdGhpcy5zZXJ2ZXIgPSBzcnY7CiAgfQoKICBzdG9wKCk6IHZvaWQgewogICAgaWYgKCF0aGlzLnNlcnZlcikgcmV0dXJuOwogICAgdGhpcy5zZXJ2ZXIuY2xvc2UoKTsKICAgIHRoaXMuc2VydmVyID0gdW5kZWZpbmVkOwogICAgdGhpcy5ydW5uaW5nID0gZmFsc2U7CiAgICB0aGlzLmxpc3RlbmluZ1BvcnQgPSB1bmRlZmluZWQ7CiAgICB0cnkgewogICAgICBjb25zdCBwZiA9IHJ1bnRpbWVQb3J0RmlsZSgpOwogICAgICBpZiAoZnMuZXhpc3RzU3luYyhwZikpIHsKICAgICAgICBjb25zdCBkYXRhID0gSlNPTi5wYXJzZShmcy5yZWFkRmlsZVN5bmMocGYsICd1dGY4JykpIGFzIHsgcGlkPzogbnVtYmVyIH07CiAgICAgICAgaWYgKGRhdGEucGlkID09PSBwcm9jZXNzLnBpZCkgZnMudW5saW5rU3luYyhwZik7CiAgICAgIH0KICAgIH0gY2F0Y2ggewogICAgICAvLyBpZ25vcmUgY2xlYW51cCBlcnJvcgogICAgfQogICAgdGhpcy5vblN0YXR1c0NoYW5nZT8uKCk7CiAgfQoKICBzZXRFbmFibGVkKHZhbDogYm9vbGVhbik6IHZvaWQgewogICAgdGhpcy5lbmFibGVkID0gdmFsOwogICAgaWYgKHZhbCkgdGhpcy5zdGFydCgpOwogICAgZWxzZSB0aGlzLnN0b3AoKTsKICB9CgogIHByaXZhdGUgYXN5bmMgaGFuZGxlSHR0cChyZXE6IGh0dHAuSW5jb21pbmdNZXNzYWdlLCByZXM6IGh0dHAuU2VydmVyUmVzcG9uc2UpOiBQcm9taXNlPHZvaWQ+IHsKICAgIHJlcy5zZXRIZWFkZXIoJ0FjY2Vzcy1Db250cm9sLUFsbG93LU9yaWdpbicsICdodHRwOi8vMTI3LjAuMC4xJyk7CiAgICByZXMuc2V0SGVhZGVyKCdBY2Nlc3MtQ29udHJvbC1BbGxvdy1IZWFkZXJzJywgJ0NvbnRlbnQtVHlwZSwgTWNwLVNlc3Npb24tSWQsIFgtVmVjdHJhaWwtQ2xpZW50LCBYLUVkaXRyb29tLUNsaWVudCcpOwogICAgaWYgKHJlcS5tZXRob2QgPT09ICdPUFRJT05TJykgewogICAgICByZXMud3JpdGVIZWFkKDIwNCk7CiAgICAgIHJlcy5lbmQoKTsKICAgICAgcmV0dXJuOwogICAgfQogICAgaWYgKHJlcS5tZXRob2QgPT09ICdHRVQnICYmIHJlcS51cmwgPT09ICcvaGVhbHRoJykgewogICAgICByZXMud3JpdGVIZWFkKDIwMCwgeyAnQ29udGVudC1UeXBlJzogJ2FwcGxpY2F0aW9uL2pzb24nIH0pOwogICAgICByZXMuZW5kKEpTT04uc3RyaW5naWZ5KHsgb2s6IHRydWUsIHBvcnQ6IHRoaXMubGlzdGVuaW5nUG9ydCwgdG9vbHM6IE1DUF9UT09MX0RFRklOSVRJT05TLmxlbmd0aCB9KSk7CiAgICAgIHJldHVybjsKICAgIH0KICAgIGlmIChyZXEubWV0aG9kICE9PSAnUE9TVCcgfHwgIXJlcS51cmw/LnN0YXJ0c1dpdGgoJy9tY3AnKSkgewogICAgICByZXMud3JpdGVIZWFkKDQwNCk7CiAgICAgIHJlcy5lbmQoJ05vdCBmb3VuZCcpOwogICAgICByZXR1cm47CiAgICB9CgogICAgY29uc3QgY2h1bmtzOiBCdWZmZXJbXSA9IFtdOwogICAgZm9yIGF3YWl0IChjb25zdCBjIG9mIHJlcSkgY2h1bmtzLnB1c2goYyBhcyBCdWZmZXIpOwogICAgY29uc3QgcmF3ID0gQnVmZmVyLmNvbmNhdChjaHVua3MpLnRvU3RyaW5nKCd1dGY4Jyk7CiAgICBsZXQgcnBjOiBKc29uUnBjUmVxdWVzdDsKICAgIHRyeSB7CiAgICAgIHJwYyA9IEpTT04ucGFyc2UocmF3KSBhcyBKc29uUnBjUmVxdWVzdDsKICAgIH0gY2F0Y2ggewogICAgICByZXMud3JpdGVIZWFkKDQwMCwgeyAnQ29udGVudC1UeXBlJzogJ2FwcGxpY2F0aW9uL2pzb24nIH0pOwogICAgICByZXMuZW5kKEpTT04uc3RyaW5naWZ5KHsganNvbnJwYzogJzIuMCcsIGlkOiBudWxsLCBlcnJvcjogeyBjb2RlOiAtMzI3MDAsIG1lc3NhZ2U6ICdQYXJzZSBlcnJvcicgfSB9KSk7CiAgICAgIHJldHVybjsKICAgIH0KCiAgICBjb25zdCByYXdIZWFkZXIgPSByZXEuaGVhZGVyc1sneC12ZWN0cmFpbC1jbGllbnQnXSA/PyByZXEuaGVhZGVyc1sneC1lZGl0cm9vbS1jbGllbnQnXTsKICAgIGNvbnN0IGNsaWVudEhlYWRlciA9IHR5cGVvZiByYXdIZWFkZXIgPT09ICdzdHJpbmcnICYmIHJhd0hlYWRlci50cmltKCkgPyByYXdIZWFkZXIudHJpbSgpIDogJyc7CiAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IHRoaXMuaGFuZGxlUnBjKHJwYywgY2xpZW50SGVhZGVyKTsKICAgIGlmIChyZXNwb25zZSA9PT0gbnVsbCkgewogICAgICByZXMud3JpdGVIZWFkKDIwMik7CiAgICAgIHJlcy5lbmQoKTsKICAgICAgcmV0dXJuOwogICAgfQogICAgcmVzLndyaXRlSGVhZCgyMDAsIHsgJ0NvbnRlbnQtVHlwZSc6ICdhcHBsaWNhdGlvbi9qc29uJyB9KTsKICAgIHJlcy5lbmQoSlNPTi5zdHJpbmdpZnkocmVzcG9uc2UpKTsKICB9CgogIGFzeW5jIGhhbmRsZVJwYyhycGM6IEpzb25ScGNSZXF1ZXN0LCBmYWxsYmFja0NsaWVudCA9ICcnKTogUHJvbWlzZTxSZWNvcmQ8c3RyaW5nLCB1bmtub3duPiB8IG51bGw+IHsKICAgIGNvbnN0IGlkID0gcnBjLmlkID8/IG51bGw7CiAgICBjb25zdCBtZXRob2QgPSBycGMubWV0aG9kID8/ICcnOwogICAgY29uc3QgcGFyYW1zID0gcnBjLnBhcmFtcyA/PyB7fTsKCiAgICBpZiAobWV0aG9kID09PSAnbm90aWZpY2F0aW9ucy9pbml0aWFsaXplZCcgfHwgbWV0aG9kLnN0YXJ0c1dpdGgoJ25vdGlmaWNhdGlvbnMvJykpIHsKICAgICAgcmV0dXJuIG51bGw7CiAgICB9CgogICAgaWYgKG1ldGhvZCA9PT0gJ2luaXRpYWxpemUnKSB7CiAgICAgIGNvbnN0IGNsaWVudEluZm8gPSAocGFyYW1zLmNsaWVudEluZm8gYXMgeyBuYW1lPzogc3RyaW5nIH0gfCB1bmRlZmluZWQpPy5uYW1lID8/IChmYWxsYmFja0NsaWVudCB8fCAnQWdlbnQnKTsKICAgICAgY29uc3Qgbm9ybWFsaXplZCA9IGNsaWVudEluZm8udG9Mb3dlckNhc2UoKS5pbmNsdWRlcygnY2xhdWRlJykKICAgICAgICA/ICdDbGF1ZGUnCiAgICAgICAgOiBjbGllbnRJbmZvLnRvTG93ZXJDYXNlKCkuaW5jbHVkZXMoJ2NvZGV4JykgfHwgY2xpZW50SW5mby50b0xvd2VyQ2FzZSgpLmluY2x1ZGVzKCdjaGF0Z3B0JykKICAgICAgICA/ICdDb2RleCcKICAgICAgICA6IGNsaWVudEluZm87CiAgICAgIHRoaXMuY2xpZW50cy5zZXQobm9ybWFsaXplZCwgeyBpZDogbm9ybWFsaXplZCwgbmFtZTogbm9ybWFsaXplZCwgbGFzdFNlZW46IERhdGUubm93KCkgfSk7CiAgICAgIHRoaXMub25TdGF0dXNDaGFuZ2U/LigpOwogICAgICByZXR1cm4gewogICAgICAgIGpzb25ycGM6ICcyLjAnLAogICAgICAgIGlkLAogICAgICAgIHJlc3VsdDogewogICAgICAgICAgcHJvdG9jb2xWZXJzaW9uOiAnMjAyNS0wMy0yNicsCiAgICAgICAgICBjYXBhYmlsaXRpZXM6IHsgdG9vbHM6IHsgbGlzdENoYW5nZWQ6IGZhbHNlIH0gfSwKICAgICAgICAgIHNlcnZlckluZm86IHsgbmFtZTogJ3ZlY3RyYWlsJywgdmVyc2lvbjogZ2V0VmVjdHJhaWxWZXJzaW9uKCkgfSwKICAgICAgICAgIGluc3RydWN0aW9uczogTUNQX0lOU1RSVUNUSU9OUywKICAgICAgICB9LAogICAgICB9OwogICAgfQoKICAgIGlmIChtZXRob2QgPT09ICdwaW5nJykgewogICAgICByZXR1cm4geyBqc29ucnBjOiAnMi4wJywgaWQsIHJlc3VsdDoge30gfTsKICAgIH0KCiAgICBpZiAobWV0aG9kID09PSAndG9vbHMvbGlzdCcpIHsKICAgICAgcmV0dXJuIHsKICAgICAgICBqc29ucnBjOiAnMi4wJywKICAgICAgICBpZCwKICAgICAgICByZXN1bHQ6IHsgdG9vbHM6IE1DUF9UT09MX0RFRklOSVRJT05TIH0sCiAgICAgIH07CiAgICB9CgogICAgaWYgKG1ldGhvZCA9PT0gJ3Rvb2xzL2NhbGwnKSB7CiAgICAgIGNvbnN0IG5hbWUgPSBTdHJpbmcocGFyYW1zLm5hbWUgPz8gJycpOwogICAgICBjb25zdCBhcmdzID0gKHBhcmFtcy5hcmd1bWVudHMgYXMgUmVjb3JkPHN0cmluZywgdW5rbm93bj4gfCB1bmRlZmluZWQpID8/IHt9OwogICAgICBjb25zdCBjbGllbnROYW1lID0gZmFsbGJhY2tDbGllbnQgfHwgWy4uLnRoaXMuY2xpZW50cy52YWx1ZXMoKV0ucG9wKCk/Lm5hbWUgfHwgJ0FnZW50JzsKICAgICAgdGhpcy5jbGllbnRzLnNldChjbGllbnROYW1lLCB7IGlkOiBjbGllbnROYW1lLCBuYW1lOiBjbGllbnROYW1lLCBsYXN0U2VlbjogRGF0ZS5ub3coKSB9KTsKICAgICAgdGhpcy5vblN0YXR1c0NoYW5nZT8uKCk7CiAgICAgIHRyeSB7CiAgICAgICAgY29uc3QgYWN0aXZlU3RvcmUgPSB0aGlzLm1hZ2ljRHJhZnQ/LnN0b3JlID8/IHRoaXMuc3RvcmU7CiAgICAgICAgY29uc3QgY29udGVudCA9IGF3YWl0IGNhbGxNQ1BUb29sKG5hbWUsIGFyZ3MsIGFjdGl2ZVN0b3JlLCBjbGllbnROYW1lKTsKICAgICAgICBjb25zdCByZXN1bHRUZXh0ID0gY29udGVudAogICAgICAgICAgLmZpbHRlcigoYyk6IGMgaXMgeyB0eXBlOiAndGV4dCc7IHRleHQ6IHN0cmluZyB9ID0+IGMudHlwZSA9PT0gJ3RleHQnKQogICAgICAgICAgLm1hcCgoYykgPT4gYy50ZXh0KQogICAgICAgICAgLmpvaW4oJyAnKQogICAgICAgICAgLnJlcGxhY2UoL1xzKy9nLCAnICcpCiAgICAgICAgICAudHJpbSgpOwogICAgICAgIGlmICh0aGlzLm1hZ2ljRHJhZnQpIHsKICAgICAgICAgIHRoaXMubWFnaWNEcmFmdC5vblRvb2w/LihuYW1lLCBhcmdzLCBhY3RpdmVTdG9yZSwgcmVzdWx0VGV4dCwgZmFsc2UpOwogICAgICAgIH0gZWxzZSB7CiAgICAgICAgICB0aGlzLm9uRXh0ZXJuYWxUb29sPy4oewogICAgICAgICAgICBpZDogYGV4dC0ke0RhdGUubm93KCl9LSR7TWF0aC5yYW5kb20oKS50b1N0cmluZygzNikuc2xpY2UoMiwgNil9YCwKICAgICAgICAgICAgdGltZXN0YW1wOiBEYXRlLm5vdygpLAogICAgICAgICAgICBjbGllbnROYW1lLAogICAgICAgICAgICB0b29sTmFtZTogbmFtZSwKICAgICAgICAgICAgZGV0YWlsOiByZXN1bHRUZXh0LnNsaWNlKDAsIDE0MCkgfHwgdW5kZWZpbmVkLAogICAgICAgICAgICBzdGF0dXM6ICdkb25lJywKICAgICAgICAgIH0pOwogICAgICAgIH0KICAgICAgICByZXR1cm4geyBqc29ucnBjOiAnMi4wJywgaWQsIHJlc3VsdDogeyBjb250ZW50LCBpc0Vycm9yOiBmYWxzZSB9IH07CiAgICAgIH0gY2F0Y2ggKGVycikgewogICAgICAgIGNvbnN0IG1zZyA9IGVyciBpbnN0YW5jZW9mIEVycm9yID8gZXJyLm1lc3NhZ2UgOiBTdHJpbmcoZXJyKTsKICAgICAgICBpZiAodGhpcy5tYWdpY0RyYWZ0KSB7CiAgICAgICAgICB0aGlzLm1hZ2ljRHJhZnQub25Ub29sPy4obmFtZSwgYXJncywgdGhpcy5tYWdpY0RyYWZ0LnN0b3JlLCBtc2csIHRydWUpOwogICAgICAgIH0gZWxzZSB7CiAgICAgICAgICB0aGlzLm9uRXh0ZXJuYWxUb29sPy4oewogICAgICAgICAgICBpZDogYGV4dC0ke0RhdGUubm93KCl9LSR7TWF0aC5yYW5kb20oKS50b1N0cmluZygzNikuc2xpY2UoMiwgNil9YCwKICAgICAgICAgICAgdGltZXN0YW1wOiBEYXRlLm5vdygpLAogICAgICAgICAgICBjbGllbnROYW1lLAogICAgICAgICAgICB0b29sTmFtZTogbmFtZSwKICAgICAgICAgICAgZGV0YWlsOiBtc2cuc2xpY2UoMCwgMTQwKSwKICAgICAgICAgICAgc3RhdHVzOiAnZXJyb3InLAogICAgICAgICAgfSk7CiAgICAgICAgfQogICAgICAgIHJldHVybiB7CiAgICAgICAgICBqc29ucnBjOiAnMi4wJywKICAgICAgICAgIGlkLAogICAgICAgICAgcmVzdWx0OiB7IGNvbnRlbnQ6IFt7IHR5cGU6ICd0ZXh0JywgdGV4dDogbXNnIH1dLCBpc0Vycm9yOiB0cnVlIH0sCiAgICAgICAgfTsKICAgICAgfQogICAgfQoKICAgIHJldHVybiB7CiAgICAgIGpzb25ycGM6ICcyLjAnLAogICAgICBpZCwKICAgICAgZXJyb3I6IHsgY29kZTogLTMyNjAxLCBtZXNzYWdlOiBgTWV0aG9kIG5vdCBmb3VuZDogJHttZXRob2R9YCB9LAogICAgfTsKICB9Cn0K
+import http from 'node:http';
+import fs from 'node:fs';
+import path from 'node:path';
+import { AddressInfo } from 'node:net';
+import { ProjectStore } from '../state';
+import { getCacheDir } from '../engine/ffmpeg';
+import { getVectrailVersion } from '../version';
+import { ExternalMcpActivityEvent } from '../../shared/types';
+import { callMCPTool, MCP_INSTRUCTIONS, MCP_TOOL_DEFINITIONS } from './tools';
+
+export const MCP_DEFAULT_PORT = 47920;
+
+function runtimePortFile(): string {
+  return path.join(getCacheDir('Runtime'), 'mcp-port.json');
+}
+
+interface JsonRpcRequest {
+  jsonrpc?: string;
+  id?: string | number | null;
+  method?: string;
+  params?: Record<string, unknown>;
+}
+
+export interface MCPClientInfo {
+  id: string;
+  name: string;
+  lastSeen: number;
+}
+
+export class MCPServer {
+  private server?: http.Server;
+  private store: ProjectStore;
+  private onStatusChange?: () => void;
+  private onExternalTool?: (ev: ExternalMcpActivityEvent) => void;
+  private magicDraft?: {
+    store: ProjectStore;
+    onTool?: (
+      name: string,
+      args: Record<string, unknown>,
+      draftStore: ProjectStore,
+      resultText: string,
+      isError: boolean
+    ) => void;
+  };
+  running = false;
+  listeningPort?: number;
+  problem?: string;
+  clients = new Map<string, MCPClientInfo>();
+  enabled = true;
+
+  constructor(store: ProjectStore, onStatusChange?: () => void) {
+    this.store = store;
+    this.onStatusChange = onStatusChange;
+  }
+
+  setMagicDraft(
+    draftStore?: ProjectStore,
+    onTool?: (
+      name: string,
+      args: Record<string, unknown>,
+      draftStore: ProjectStore,
+      resultText: string,
+      isError: boolean
+    ) => void
+  ): void {
+    this.magicDraft = draftStore ? { store: draftStore, onTool } : undefined;
+  }
+
+  setExternalToolListener(cb?: (ev: ExternalMcpActivityEvent) => void): void {
+    this.onExternalTool = cb;
+  }
+
+  get endpoint(): string {
+    return `http://127.0.0.1:${this.listeningPort ?? MCP_DEFAULT_PORT}/mcp`;
+  }
+
+  start(port = MCP_DEFAULT_PORT): void {
+    if (this.server || !this.enabled) return;
+    const srv = http.createServer((req, res) => {
+      void this.handleHttp(req, res);
+    });
+    srv.on('error', (err: NodeJS.ErrnoException) => {
+      if (err.code === 'EADDRINUSE' && port !== 0) {
+        this.server = undefined;
+        this.problem = 'Another copy of Vectrail is using port 47920; running on dynamic port.';
+        this.start(0);
+      } else {
+        this.running = false;
+        this.problem = err.message;
+        this.onStatusChange?.();
+      }
+    });
+    srv.listen(port, '127.0.0.1', () => {
+      const addr = srv.address() as AddressInfo | null;
+      this.listeningPort = addr?.port ?? port;
+      this.running = true;
+      if (port === MCP_DEFAULT_PORT) this.problem = undefined;
+      try {
+        fs.writeFileSync(
+          runtimePortFile(),
+          JSON.stringify({ port: this.listeningPort, pid: process.pid }),
+          'utf8'
+        );
+      } catch {
+        // ignore runtime file write errors
+      }
+      this.onStatusChange?.();
+    });
+    this.server = srv;
+  }
+
+  stop(): void {
+    if (!this.server) return;
+    this.server.close();
+    this.server = undefined;
+    this.running = false;
+    this.listeningPort = undefined;
+    try {
+      const pf = runtimePortFile();
+      if (fs.existsSync(pf)) {
+        const data = JSON.parse(fs.readFileSync(pf, 'utf8')) as { pid?: number };
+        if (data.pid === process.pid) fs.unlinkSync(pf);
+      }
+    } catch {
+      // ignore cleanup error
+    }
+    this.onStatusChange?.();
+  }
+
+  setEnabled(val: boolean): void {
+    this.enabled = val;
+    if (val) this.start();
+    else this.stop();
+  }
+
+  private async handleHttp(req: http.IncomingMessage, res: http.ServerResponse): Promise<void> {
+    res.setHeader('Access-Control-Allow-Origin', 'http://127.0.0.1');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Mcp-Session-Id, X-Vectrail-Client, X-Editroom-Client');
+    if (req.method === 'OPTIONS') {
+      res.writeHead(204);
+      res.end();
+      return;
+    }
+    if (req.method === 'GET' && req.url === '/health') {
+      res.writeHead(200, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ ok: true, port: this.listeningPort, tools: MCP_TOOL_DEFINITIONS.length }));
+      return;
+    }
+    if (req.method !== 'POST' || !req.url?.startsWith('/mcp')) {
+      res.writeHead(404);
+      res.end('Not found');
+      return;
+    }
+
+    const chunks: Buffer[] = [];
+    for await (const c of req) chunks.push(c as Buffer);
+    const raw = Buffer.concat(chunks).toString('utf8');
+    let rpc: JsonRpcRequest;
+    try {
+      rpc = JSON.parse(raw) as JsonRpcRequest;
+    } catch {
+      res.writeHead(400, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ jsonrpc: '2.0', id: null, error: { code: -32700, message: 'Parse error' } }));
+      return;
+    }
+
+    const rawHeader = req.headers['x-vectrail-client'] ?? req.headers['x-editroom-client'];
+    const clientHeader = typeof rawHeader === 'string' && rawHeader.trim() ? rawHeader.trim() : '';
+    const response = await this.handleRpc(rpc, clientHeader);
+    if (response === null) {
+      res.writeHead(202);
+      res.end();
+      return;
+    }
+    res.writeHead(200, { 'Content-Type': 'application/json' });
+    res.end(JSON.stringify(response));
+  }
+
+  async handleRpc(rpc: JsonRpcRequest, fallbackClient = ''): Promise<Record<string, unknown> | null> {
+    const id = rpc.id ?? null;
+    const method = rpc.method ?? '';
+    const params = rpc.params ?? {};
+
+    if (method === 'notifications/initialized' || method.startsWith('notifications/')) {
+      return null;
+    }
+
+    if (method === 'initialize') {
+      const clientInfo = (params.clientInfo as { name?: string } | undefined)?.name ?? (fallbackClient || 'Agent');
+      const normalized = clientInfo.toLowerCase().includes('claude')
+        ? 'Claude'
+        : clientInfo.toLowerCase().includes('codex') || clientInfo.toLowerCase().includes('chatgpt')
+        ? 'Codex'
+        : clientInfo;
+      this.clients.set(normalized, { id: normalized, name: normalized, lastSeen: Date.now() });
+      this.onStatusChange?.();
+      return {
+        jsonrpc: '2.0',
+        id,
+        result: {
+          protocolVersion: '2025-03-26',
+          capabilities: { tools: { listChanged: false } },
+          serverInfo: { name: 'vectrail', version: getVectrailVersion() },
+          instructions: MCP_INSTRUCTIONS,
+        },
+      };
+    }
+
+    if (method === 'ping') {
+      return { jsonrpc: '2.0', id, result: {} };
+    }
+
+    if (method === 'tools/list') {
+      return {
+        jsonrpc: '2.0',
+        id,
+        result: { tools: MCP_TOOL_DEFINITIONS },
+      };
+    }
+
+    if (method === 'tools/call') {
+      const name = String(params.name ?? '');
+      const args = (params.arguments as Record<string, unknown> | undefined) ?? {};
+      const clientName = fallbackClient || [...this.clients.values()].pop()?.name || 'Agent';
+      this.clients.set(clientName, { id: clientName, name: clientName, lastSeen: Date.now() });
+      this.onStatusChange?.();
+      try {
+        const activeStore = this.magicDraft?.store ?? this.store;
+        const content = await callMCPTool(name, args, activeStore, clientName);
+        const resultText = content
+          .filter((c): c is { type: 'text'; text: string } => c.type === 'text')
+          .map((c) => c.text)
+          .join(' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        if (this.magicDraft) {
+          this.magicDraft.onTool?.(name, args, activeStore, resultText, false);
+        } else {
+          this.onExternalTool?.({
+            id: `ext-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+            timestamp: Date.now(),
+            clientName,
+            toolName: name,
+            detail: resultText.slice(0, 140) || undefined,
+            status: 'done',
+          });
+        }
+        return { jsonrpc: '2.0', id, result: { content, isError: false } };
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        if (this.magicDraft) {
+          this.magicDraft.onTool?.(name, args, this.magicDraft.store, msg, true);
+        } else {
+          this.onExternalTool?.({
+            id: `ext-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+            timestamp: Date.now(),
+            clientName,
+            toolName: name,
+            detail: msg.slice(0, 140),
+            status: 'error',
+          });
+        }
+        return {
+          jsonrpc: '2.0',
+          id,
+          result: { content: [{ type: 'text', text: msg }], isError: true },
+        };
+      }
+    }
+
+    return {
+      jsonrpc: '2.0',
+      id,
+      error: { code: -32601, message: `Method not found: ${method}` },
+    };
+  }
+}
