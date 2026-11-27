@@ -4,6 +4,8 @@
 
 Fast, open-source **AI-native video editor for Windows**, built from the ground up with Electron, React, TypeScript, WebGL2, FFmpeg, Cloud AI planning, and a built-in 45-tool Model Context Protocol (MCP) server.
 
+https://github.com/user-attachments/assets/vectrail-teaser
+
 *Built by Makur · Inspired by [robbietilton/Editroom](https://github.com/robbietilton/Editroom) for macOS.*
 
 ## Features
@@ -15,6 +17,8 @@ Fast, open-source **AI-native video editor for Windows**, built from the ground 
 - **Non-linear Multi-track Timeline**: Video (`V1`, `V2`, ...) and audio (`A1`, `A2`, ...) tracks, continuous filmstrip tiling, linked pairs, snapping, right-click clip context menu, marker tint/rename popover, ripple delete (`Shift+Delete`), split (`S`), `J`/`K`/`L` shuttle with rate badge, freeze frame, piecewise speed ramps, reverse playback, track ducking, editable shortcuts, and undo/redo (`Ctrl+Z` / `Ctrl+Shift+Z`).
 - **Local Whisper Transcription & Scene Tags**: Built-in `whisper.cpp` speech transcription via FFmpeg (`ggml-tiny`/`ggml-base` download in Settings) and automatic visual scene tagging (`bright`, `night`, `action`, `people`, `vivid`, `sharp`) for instant media search.
 - **Magic AI Bar (Cloud OpenAI-Compatible API + Codex/Claude + 45-Tool MCP)**: Floating Magic popover with `@` mention autocomplete, live execution steps, one-click undo, configurable **OpenAI-compatible Cloud AI** (`Base URL`, `API Key`, `Model`), and local HTTP/stdio MCP server (`127.0.0.1:47920/mcp`, port file at `%APPDATA%\Vectrail\Runtime\mcp-port.json`).
+- **16/32 Editing Skills & Composable Templates**: Built-in `Core 16` / `Pro 32` editing skills (`src/shared/editingTemplates.ts`) and curated workflow templates directly accessible from the Magic panel.
+- **DJI Camera Import, USB Fast Transfer & Extension Marketplace**: Isolated plugin manager (`src/main/plugins/`) featuring `dji-wireless-import` (BLE/Wi-Fi camera discovery, live connection diagnostics, resumable original-file downloads, SHA-256 verification, automatic project import, simulated camera mode, and DJI USB mass-storage ingest with progress/cancel) plus a built-in Extension Marketplace modal for managing ready and upcoming ecosystem extensions (iPhone import, Digital Human, Voice Cloning, Watch-Folder).
 - **FFmpeg Export Engine**: Hardware-probed H.264/HEVC MP4 (NVENC / QSV / AMF with `libx264` / `libx265` fallback), Lanczos + Contrast Adaptive Sharpen (`cas`) detail enhancement on upscales, audio-only WAV, aspect ratio presets (`16:9`, `9:16`, `1:1`, `4:5`), EBU R128 loudness normalization, `.cube` LUT bake, and caption burn-in.
 
 ## Prerequisites
@@ -22,6 +26,14 @@ Fast, open-source **AI-native video editor for Windows**, built from the ground 
 - **Windows 10 / 11 (x64)**
 - **Node.js 20+** (for building from source)
 - **FFmpeg & FFprobe** on `PATH` (for example `winget install Gyan.FFmpeg`, or placed under `resources/ffmpeg/ffmpeg.exe`)
+
+## Download
+
+Grab the latest Windows installer or portable executable from [Releases](https://github.com/makur6371/Vectrail/releases). Each release includes:
+
+- `Vectrail Setup <version>.exe`
+- `Vectrail-Windows-Portable-<version>-x64.exe`
+- `vectrail-teaser-v2.0.0.mp4` — 4K 60fps product teaser
 
 ## AI Agent Integration (MCP & Cloud AI)
 
@@ -53,8 +65,8 @@ npm run dist:win:offline
 ```
 
 Outputs are generated in `release/`:
-- `Vectrail Setup 1.0.0.exe` (NSIS installer)
-- `Vectrail-Windows-Portable-1.0.0-x64.exe` (single-file portable executable)
+- `Vectrail Setup <version>.exe` (NSIS installer)
+- `Vectrail-Windows-Portable-<version>-x64.exe` (single-file portable executable)
 - `win-unpacked/Vectrail.exe`
 
 ## Live QA
