@@ -1,1 +1,138 @@
-aW1wb3J0IHsgQ2xpcCwgU3BlZWRSYW1wIH0gZnJvbSAnLi90eXBlcyc7Cgpjb25zdCBlYXNlID0gKHU6IG51bWJlcik6IG51bWJlciA9PiB1ICogdSAqICgzIC0gMiAqIHUpOwoKZXhwb3J0IGZ1bmN0aW9uIHJhbXBTcGVlZEF0KHJhbXA6IFNwZWVkUmFtcCwgczogbnVtYmVyLCBtaWQ6IG51bWJlcik6IG51bWJlciB7CiAgaWYgKHMgPD0gcmFtcC5pbkZyb20pIHJldHVybiByYW1wLnN0YXJ0U3BlZWQ7CiAgaWYgKHMgPCByYW1wLmluVG8pIHsKICAgIGNvbnN0IHUgPSAocyAtIHJhbXAuaW5Gcm9tKSAvIE1hdGgubWF4KDFlLTksIHJhbXAuaW5UbyAtIHJhbXAuaW5Gcm9tKTsKICAgIHJldHVybiByYW1wLnN0YXJ0U3BlZWQgKyAobWlkIC0gcmFtcC5zdGFydFNwZWVkKSAqIGVhc2UodSk7CiAgfQogIGlmIChzIDw9IHJhbXAub3V0RnJvbSkgcmV0dXJuIG1pZDsKICBpZiAocyA8IHJhbXAub3V0VG8pIHsKICAgIGNvbnN0IHUgPSAocyAtIHJhbXAub3V0RnJvbSkgLyBNYXRoLm1heCgxZS05LCByYW1wLm91dFRvIC0gcmFtcC5vdXRGcm9tKTsKICAgIHJldHVybiBtaWQgKyAocmFtcC5lbmRTcGVlZCAtIG1pZCkgKiBlYXNlKHUpOwogIH0KICByZXR1cm4gcmFtcC5lbmRTcGVlZDsKfQoKZXhwb3J0IGZ1bmN0aW9uIHJhbXBTcGFuKHJhbXA6IFNwZWVkUmFtcCwgYTogbnVtYmVyLCBiOiBudW1iZXIsIG1pZDogbnVtYmVyKTogbnVtYmVyIHsKICBpZiAoTWF0aC5hYnMoYiAtIGEpIDw9IDFlLTEyKSByZXR1cm4gMDsKICBjb25zdCBzdGVwcyA9IDQ4OwogIGNvbnN0IGggPSAoYiAtIGEpIC8gc3RlcHM7CiAgbGV0IHN1bSA9IDA7CiAgZm9yIChsZXQgaSA9IDA7IGkgPCBzdGVwczsgaSsrKSB7CiAgICBjb25zdCB0MCA9IGEgKyBpICogaDsKICAgIGNvbnN0IHQxID0gdDAgKyBoOwogICAgY29uc3QgdG0gPSAodDAgKyB0MSkgLyAyOwogICAgc3VtICs9CiAgICAgICgxIC8gTWF0aC5tYXgoMWUtNCwgcmFtcFNwZWVkQXQocmFtcCwgdDAsIG1pZCkpICsKICAgICAgICA0IC8gTWF0aC5tYXgoMWUtNCwgcmFtcFNwZWVkQXQocmFtcCwgdG0sIG1pZCkpICsKICAgICAgICAxIC8gTWF0aC5tYXgoMWUtNCwgcmFtcFNwZWVkQXQocmFtcCwgdDEsIG1pZCkpKSAqCiAgICAgIChoIC8gNik7CiAgfQogIHJldHVybiBzdW07Cn0KCmZ1bmN0aW9uIHNvbHZlUmFtcChyYW1wOiBTcGVlZFJhbXAsIGE6IG51bWJlciwgYjogbnVtYmVyLCB0aW1lOiBudW1iZXIsIG1pZDogbnVtYmVyKTogbnVtYmVyIHsKICBsZXQgbG8gPSAwOwogIGxldCBoaSA9IDE7CiAgZm9yIChsZXQgaSA9IDA7IGkgPCA0MDsgaSsrKSB7CiAgICBjb25zdCBtID0gKGxvICsgaGkpIC8gMjsKICAgIGlmIChNYXRoLmFicyhyYW1wU3BhbihyYW1wLCBhLCBhICsgKGIgLSBhKSAqIG0sIG1pZCkpIDwgdGltZSkgbG8gPSBtOwogICAgZWxzZSBoaSA9IG07CiAgfQogIHJldHVybiBhICsgKGIgLSBhKSAqICgobG8gKyBoaSkgLyAyKTsKfQoKZXhwb3J0IGZ1bmN0aW9uIHJhbXBTb3VyY2UocmFtcDogU3BlZWRSYW1wLCBzMDogbnVtYmVyLCBkdDogbnVtYmVyLCBtaWQ6IG51bWJlcik6IG51bWJlciB7CiAgaWYgKE1hdGguYWJzKGR0KSA8PSAxZS0xMikgcmV0dXJuIHMwOwogIGNvbnN0IGZvcndhcmQgPSBkdCA+IDA7CiAgbGV0IGxlZnQgPSBNYXRoLmFicyhkdCk7CiAgbGV0IGEgPSBzMDsKICBjb25zdCBtYXJrcyA9IFtyYW1wLmluRnJvbSwgcmFtcC5pblRvLCByYW1wLm91dEZyb20sIHJhbXAub3V0VG9dOwogIGNvbnN0IHN0b3BzID0gZm9yd2FyZAogICAgPyBtYXJrcy5maWx0ZXIoKG0pID0+IG0gPiBzMCkuc29ydCgoeCwgeSkgPT4geCAtIHkpCiAgICA6IG1hcmtzLmZpbHRlcigobSkgPT4gbSA8IHMwKS5zb3J0KCh4LCB5KSA9PiB5IC0geCk7CiAgZm9yIChjb25zdCBtIG9mIHN0b3BzKSB7CiAgICBjb25zdCB0ID0gTWF0aC5hYnMocmFtcFNwYW4ocmFtcCwgYSwgbSwgbWlkKSk7CiAgICBpZiAodCA+PSBsZWZ0KSByZXR1cm4gc29sdmVSYW1wKHJhbXAsIGEsIG0sIGxlZnQsIG1pZCk7CiAgICBsZWZ0IC09IHQ7CiAgICBhID0gbTsKICB9CiAgY29uc3QgdiA9IHJhbXBTcGVlZEF0KHJhbXAsIGZvcndhcmQgPyBhICsgMWUtOSA6IGEgLSAxZS05LCBtaWQpOwogIHJldHVybiBhICsgKGZvcndhcmQgPyAxIDogLTEpICogbGVmdCAqIHY7Cn0KCmV4cG9ydCBmdW5jdGlvbiBzaGlmdFJhbXAocmFtcDogU3BlZWRSYW1wLCBkOiBudW1iZXIpOiBTcGVlZFJhbXAgewogIHJldHVybiB7CiAgICBpbkZyb206IHJhbXAuaW5Gcm9tICsgZCwKICAgIGluVG86IHJhbXAuaW5UbyArIGQsCiAgICBvdXRGcm9tOiByYW1wLm91dEZyb20gKyBkLAogICAgb3V0VG86IHJhbXAub3V0VG8gKyBkLAogICAgc3RhcnRTcGVlZDogcmFtcC5zdGFydFNwZWVkLAogICAgZW5kU3BlZWQ6IHJhbXAuZW5kU3BlZWQsCiAgfTsKfQoKZXhwb3J0IGZ1bmN0aW9uIG1pcnJvclJhbXAocmFtcDogU3BlZWRSYW1wLCBsZW5ndGg6IG51bWJlcik6IFNwZWVkUmFtcCB7CiAgcmV0dXJuIHsKICAgIGluRnJvbTogbGVuZ3RoIC0gcmFtcC5vdXRUbywKICAgIGluVG86IGxlbmd0aCAtIHJhbXAub3V0RnJvbSwKICAgIG91dEZyb206IGxlbmd0aCAtIHJhbXAuaW5UbywKICAgIG91dFRvOiBsZW5ndGggLSByYW1wLmluRnJvbSwKICAgIHN0YXJ0U3BlZWQ6IHJhbXAuZW5kU3BlZWQsCiAgICBlbmRTcGVlZDogcmFtcC5zdGFydFNwZWVkLAogIH07Cn0KCmV4cG9ydCBmdW5jdGlvbiBjbGlwUGxheXNTb3VyY2UoY2xpcDogQ2xpcCk6IGJvb2xlYW4gewogIHJldHVybiAoY2xpcC5raW5kID09PSAndmlkZW8nIHx8IGNsaXAua2luZCA9PT0gJ2F1ZGlvJykgJiYgIWNsaXAuZnJlZXplOwp9CgpleHBvcnQgZnVuY3Rpb24gY2xpcFNvdXJjZVRpbWVBdChjbGlwOiBDbGlwLCB0OiBudW1iZXIpOiBudW1iZXIgewogIGNvbnN0IHMwID0gY2xpcC5zb3VyY2VTdGFydCA/PyAwOwogIGNvbnN0IHNwZCA9IGNsaXAuc3BlZWQgPz8gMTsKICBpZiAoIWNsaXBQbGF5c1NvdXJjZShjbGlwKSkgcmV0dXJuIHMwOwogIGlmICghY2xpcC5yYW1wKSByZXR1cm4gczAgKyAodCAtIGNsaXAuc3RhcnQpICogc3BkOwogIHJldHVybiByYW1wU291cmNlKGNsaXAucmFtcCwgczAsIHQgLSBjbGlwLnN0YXJ0LCBzcGQpOwp9CgpleHBvcnQgZnVuY3Rpb24gY2xpcFNwZWVkQXQoY2xpcDogQ2xpcCwgbG9jYWxUaW1lOiBudW1iZXIpOiBudW1iZXIgewogIGNvbnN0IHNwZCA9IGNsaXAuc3BlZWQgPz8gMTsKICBpZiAoIWNsaXBQbGF5c1NvdXJjZShjbGlwKSkgcmV0dXJuIDA7CiAgaWYgKCFjbGlwLnJhbXApIHJldHVybiBzcGQ7CiAgY29uc3QgcyA9IGNsaXBTb3VyY2VUaW1lQXQoY2xpcCwgY2xpcC5zdGFydCArIE1hdGgubWF4KDAsIGxvY2FsVGltZSkpOwogIHJldHVybiByYW1wU3BlZWRBdChjbGlwLnJhbXAsIHMsIHNwZCk7Cn0KCmV4cG9ydCBmdW5jdGlvbiBjbGlwU291cmNlTGVuZ3RoKGNsaXA6IENsaXApOiBudW1iZXIgewogIGlmICghY2xpcC5yYW1wIHx8ICFjbGlwUGxheXNTb3VyY2UoY2xpcCkpIHJldHVybiBjbGlwLmR1cmF0aW9uICogKGNsaXAuc3BlZWQgPz8gMSk7CiAgcmV0dXJuIGNsaXBTb3VyY2VUaW1lQXQoY2xpcCwgY2xpcC5zdGFydCArIGNsaXAuZHVyYXRpb24pIC0gKGNsaXAuc291cmNlU3RhcnQgPz8gMCk7Cn0KCmV4cG9ydCBmdW5jdGlvbiBjbGlwVGltZWxpbmVTcGFuKGNsaXA6IENsaXAsIHMwOiBudW1iZXIsIHMxOiBudW1iZXIpOiBudW1iZXIgewogIGNvbnN0IHNwZCA9IGNsaXAuc3BlZWQgPz8gMTsKICBpZiAoIWNsaXAucmFtcCB8fCAhY2xpcFBsYXlzU291cmNlKGNsaXApKSByZXR1cm4gKHMxIC0gczApIC8gc3BkOwogIHJldHVybiByYW1wU3BhbihjbGlwLnJhbXAsIHMwLCBzMSwgc3BkKTsKfQoKZXhwb3J0IGZ1bmN0aW9uIHJldGltZUNsaXAoCiAgY2xpcDogQ2xpcCwKICBzbmFwOiAodDogbnVtYmVyKSA9PiBudW1iZXIsCiAgbWluaW11bTogbnVtYmVyLAogIGNoYW5nZTogKGM6IENsaXApID0+IHZvaWQKKTogdm9pZCB7CiAgaWYgKCFjbGlwUGxheXNTb3VyY2UoY2xpcCkpIHsKICAgIGNoYW5nZShjbGlwKTsKICAgIHJldHVybjsKICB9CiAgY29uc3QgczAgPSBjbGlwLnNvdXJjZVN0YXJ0ID8/IDA7CiAgY29uc3QgbGVuZ3RoID0gY2xpcFNvdXJjZUxlbmd0aChjbGlwKTsKICBjaGFuZ2UoY2xpcCk7CiAgY2xpcC5kdXJhdGlvbiA9IE1hdGgubWF4KHNuYXAoY2xpcFRpbWVsaW5lU3BhbihjbGlwLCBzMCwgczAgKyBsZW5ndGgpKSwgbWluaW11bSk7CiAgY29uc3QgZmFkZUluID0gTWF0aC5taW4oTWF0aC5tYXgoMCwgY2xpcC5mYWRlSW4gPz8gMCksIGNsaXAuZHVyYXRpb24pOwogIGNvbnN0IGZhZGVPdXQgPSBNYXRoLm1pbihNYXRoLm1heCgwLCBjbGlwLmZhZGVPdXQgPz8gMCksIGNsaXAuZHVyYXRpb24gLSBmYWRlSW4pOwogIGNsaXAuZmFkZUluID0gZmFkZUluOwogIGNsaXAuZmFkZU91dCA9IGZhZGVPdXQ7Cn0K
+import { Clip, SpeedRamp } from './types';
+
+const ease = (u: number): number => u * u * (3 - 2 * u);
+
+export function rampSpeedAt(ramp: SpeedRamp, s: number, mid: number): number {
+  if (s <= ramp.inFrom) return ramp.startSpeed;
+  if (s < ramp.inTo) {
+    const u = (s - ramp.inFrom) / Math.max(1e-9, ramp.inTo - ramp.inFrom);
+    return ramp.startSpeed + (mid - ramp.startSpeed) * ease(u);
+  }
+  if (s <= ramp.outFrom) return mid;
+  if (s < ramp.outTo) {
+    const u = (s - ramp.outFrom) / Math.max(1e-9, ramp.outTo - ramp.outFrom);
+    return mid + (ramp.endSpeed - mid) * ease(u);
+  }
+  return ramp.endSpeed;
+}
+
+export function rampSpan(ramp: SpeedRamp, a: number, b: number, mid: number): number {
+  if (Math.abs(b - a) <= 1e-12) return 0;
+  const steps = 48;
+  const h = (b - a) / steps;
+  let sum = 0;
+  for (let i = 0; i < steps; i++) {
+    const t0 = a + i * h;
+    const t1 = t0 + h;
+    const tm = (t0 + t1) / 2;
+    sum +=
+      (1 / Math.max(1e-4, rampSpeedAt(ramp, t0, mid)) +
+        4 / Math.max(1e-4, rampSpeedAt(ramp, tm, mid)) +
+        1 / Math.max(1e-4, rampSpeedAt(ramp, t1, mid))) *
+      (h / 6);
+  }
+  return sum;
+}
+
+function solveRamp(ramp: SpeedRamp, a: number, b: number, time: number, mid: number): number {
+  let lo = 0;
+  let hi = 1;
+  for (let i = 0; i < 40; i++) {
+    const m = (lo + hi) / 2;
+    if (Math.abs(rampSpan(ramp, a, a + (b - a) * m, mid)) < time) lo = m;
+    else hi = m;
+  }
+  return a + (b - a) * ((lo + hi) / 2);
+}
+
+export function rampSource(ramp: SpeedRamp, s0: number, dt: number, mid: number): number {
+  if (Math.abs(dt) <= 1e-12) return s0;
+  const forward = dt > 0;
+  let left = Math.abs(dt);
+  let a = s0;
+  const marks = [ramp.inFrom, ramp.inTo, ramp.outFrom, ramp.outTo];
+  const stops = forward
+    ? marks.filter((m) => m > s0).sort((x, y) => x - y)
+    : marks.filter((m) => m < s0).sort((x, y) => y - x);
+  for (const m of stops) {
+    const t = Math.abs(rampSpan(ramp, a, m, mid));
+    if (t >= left) return solveRamp(ramp, a, m, left, mid);
+    left -= t;
+    a = m;
+  }
+  const v = rampSpeedAt(ramp, forward ? a + 1e-9 : a - 1e-9, mid);
+  return a + (forward ? 1 : -1) * left * v;
+}
+
+export function shiftRamp(ramp: SpeedRamp, d: number): SpeedRamp {
+  return {
+    inFrom: ramp.inFrom + d,
+    inTo: ramp.inTo + d,
+    outFrom: ramp.outFrom + d,
+    outTo: ramp.outTo + d,
+    startSpeed: ramp.startSpeed,
+    endSpeed: ramp.endSpeed,
+  };
+}
+
+export function mirrorRamp(ramp: SpeedRamp, length: number): SpeedRamp {
+  return {
+    inFrom: length - ramp.outTo,
+    inTo: length - ramp.outFrom,
+    outFrom: length - ramp.inTo,
+    outTo: length - ramp.inFrom,
+    startSpeed: ramp.endSpeed,
+    endSpeed: ramp.startSpeed,
+  };
+}
+
+export function clipPlaysSource(clip: Clip): boolean {
+  return (clip.kind === 'video' || clip.kind === 'audio') && !clip.freeze;
+}
+
+export function clipSourceTimeAt(clip: Clip, t: number): number {
+  const s0 = clip.sourceStart ?? 0;
+  const spd = clip.speed ?? 1;
+  if (!clipPlaysSource(clip)) return s0;
+  if (!clip.ramp) return s0 + (t - clip.start) * spd;
+  return rampSource(clip.ramp, s0, t - clip.start, spd);
+}
+
+export function clipSpeedAt(clip: Clip, localTime: number): number {
+  const spd = clip.speed ?? 1;
+  if (!clipPlaysSource(clip)) return 0;
+  if (!clip.ramp) return spd;
+  const s = clipSourceTimeAt(clip, clip.start + Math.max(0, localTime));
+  return rampSpeedAt(clip.ramp, s, spd);
+}
+
+export function clipSourceLength(clip: Clip): number {
+  if (!clip.ramp || !clipPlaysSource(clip)) return clip.duration * (clip.speed ?? 1);
+  return clipSourceTimeAt(clip, clip.start + clip.duration) - (clip.sourceStart ?? 0);
+}
+
+export function clipTimelineSpan(clip: Clip, s0: number, s1: number): number {
+  const spd = clip.speed ?? 1;
+  if (!clip.ramp || !clipPlaysSource(clip)) return (s1 - s0) / spd;
+  return rampSpan(clip.ramp, s0, s1, spd);
+}
+
+export function retimeClip(
+  clip: Clip,
+  snap: (t: number) => number,
+  minimum: number,
+  change: (c: Clip) => void
+): void {
+  if (!clipPlaysSource(clip)) {
+    change(clip);
+    return;
+  }
+  const s0 = clip.sourceStart ?? 0;
+  const length = clipSourceLength(clip);
+  change(clip);
+  clip.duration = Math.max(snap(clipTimelineSpan(clip, s0, s0 + length)), minimum);
+  const fadeIn = Math.min(Math.max(0, clip.fadeIn ?? 0), clip.duration);
+  const fadeOut = Math.min(Math.max(0, clip.fadeOut ?? 0), clip.duration - fadeIn);
+  clip.fadeIn = fadeIn;
+  clip.fadeOut = fadeOut;
+}
