@@ -1,1 +1,38 @@
-YXBwSWQ6IGNvbS5tYWt1ci52ZWN0cmFpbApwcm9kdWN0TmFtZTogVmVjdHJhaWwKY29weXJpZ2h0OiBDb3B5cmlnaHQgKGMpIDIwMjYgTWFrdXIgKE1JVCkKZGlyZWN0b3JpZXM6CiAgb3V0cHV0OiByZWxlYXNlCiAgYnVpbGRSZXNvdXJjZXM6IGJ1aWxkCmZpbGVzOgogIC0gZGlzdC8qKi8qCiAgLSBkaXN0LWVsZWN0cm9uLyoqLyoKICAtIHBhY2thZ2UuanNvbgpleHRyYVJlc291cmNlczoKICAtIGZyb206IGJ1aWxkL0Jhc2UubXA0CiAgICB0bzogQmFzZS5tcDQKICAtIGZyb206IGJ1aWxkL2ljb24ucG5nCiAgICB0bzogaWNvbi5wbmcKICAtIGZyb206IHBsdWdpbnMKICAgIHRvOiBwbHVnaW5zCndpbjoKICBpY29uOiBidWlsZC9pY29uLmljbwogIHRhcmdldDoKICAgIC0gdGFyZ2V0OiBuc2lzCiAgICAgIGFyY2g6CiAgICAgICAgLSB4NjQKICAgIC0gdGFyZ2V0OiBwb3J0YWJsZQogICAgICBhcmNoOgogICAgICAgIC0geDY0Cm5zaXM6CiAgb25lQ2xpY2s6IGZhbHNlCiAgYWxsb3dUb0NoYW5nZUluc3RhbGxhdGlvbkRpcmVjdG9yeTogdHJ1ZQogIGNyZWF0ZURlc2t0b3BTaG9ydGN1dDogdHJ1ZQogIGNyZWF0ZVN0YXJ0TWVudVNob3J0Y3V0OiB0cnVlCnBvcnRhYmxlOgogIGFydGlmYWN0TmFtZTogVmVjdHJhaWwtV2luZG93cy1Qb3J0YWJsZS0ke3ZlcnNpb259LSR7YXJjaH0uZXhlCmZpbGVBc3NvY2lhdGlvbnM6CiAgLSBleHQ6IHZlY3RyYWlsCiAgICBuYW1lOiBWZWN0cmFpbCBQcm9qZWN0CiAgICBkZXNjcmlwdGlvbjogVmVjdHJhaWwgVmlkZW8gUHJvamVjdAogICAgcm9sZTogRWRpdG9yCg==
+appId: com.makur.vectrail
+productName: Vectrail
+copyright: Copyright (c) 2026 Makur (MIT)
+directories:
+  output: release
+  buildResources: build
+files:
+  - dist/**/*
+  - dist-electron/**/*
+  - package.json
+extraResources:
+  - from: build/Base.mp4
+    to: Base.mp4
+  - from: build/icon.png
+    to: icon.png
+  - from: plugins
+    to: plugins
+win:
+  icon: build/icon.ico
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+portable:
+  artifactName: Vectrail-Windows-Portable-${version}-${arch}.exe
+fileAssociations:
+  - ext: vectrail
+    name: Vectrail Project
+    description: Vectrail Video Project
+    role: Editor
