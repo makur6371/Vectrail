@@ -55,6 +55,7 @@ import {
   SettingsModal,
 } from './components/Modals';
 import { DjiImportModal } from './components/DjiImportModal';
+import { MediaLinkImportModal } from './components/MediaLinkImportModal';
 import { PluginMarketplaceModal } from './components/PluginMarketplaceModal';
 import { MagicOverlay, MagicShowSession } from './components/MagicOverlay';
 
@@ -170,7 +171,7 @@ export const App: React.FC = () => {
   const [lastDarkTheme, setLastDarkTheme] = useState<AppThemeName>(loadLastDarkTheme);
   const [copiedGrade, setCopiedGrade] = useState<ColorGrade | undefined>();
   const [clipClipboard, setClipClipboard] = useState<Clip[]>([]);
-  const [modal, setModal] = useState<'export' | 'settings' | 'dji' | 'marketplace' | null>(null);
+  const [modal, setModal] = useState<'export' | 'settings' | 'dji' | 'media' | 'marketplace' | null>(null);
   const [magicOpen, setMagicOpen] = useState(false);
   const [mcpRunning, setMcpRunning] = useState(false);
   const [meter, setMeter] = useState({ left: 0, right: 0 });
@@ -1427,6 +1428,7 @@ export const App: React.FC = () => {
       {modal === 'dji' && djiState && (
         <DjiImportModal state={djiState} onClose={() => setModal(null)} />
       )}
+      {modal === 'media' && <MediaLinkImportModal onClose={() => setModal(null)} />}
       {modal === 'marketplace' && (
         <PluginMarketplaceModal
           plugins={plugins}
@@ -1436,6 +1438,7 @@ export const App: React.FC = () => {
             void window.vectrail.getDjiState().then(setDjiState);
           }}
           onOpenDjiImport={() => setModal('dji')}
+          onOpenMediaImport={() => setModal('media')}
           onOpenTemplates={() => {
             setMagicPanelTab('templates');
             setMagicOpen(true);
