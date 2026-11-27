@@ -1,1 +1,182 @@
-ZXhwb3J0IGludGVyZmFjZSBQbHVnaW5TdW1tYXJ5IHsKICBpZDogc3RyaW5nOwogIG5hbWU6IHN0cmluZzsKICBuYW1lWmg6IHN0cmluZzsKICB2ZXJzaW9uOiBzdHJpbmc7CiAgZGVzY3JpcHRpb246IHN0cmluZzsKICBkZXNjcmlwdGlvblpoOiBzdHJpbmc7CiAgZW5hYmxlZDogYm9vbGVhbjsKICBoZWFsdGh5OiBib29sZWFuOwogIGVycm9yPzogc3RyaW5nOwp9CgpleHBvcnQgdHlwZSBEamlDb25uZWN0aW9uUGhhc2UgPQogIHwgJ2lkbGUnCiAgfCAnc2Nhbm5pbmcnCiAgfCAnYmxlX2Nvbm5lY3RpbmcnCiAgfCAnYXdhaXRpbmdfYXBwcm92YWwnCiAgfCAnd2lmaV9qb2luaW5nJwogIHwgJ2RhdGFsaW5rX2Nvbm5lY3RpbmcnCiAgfCAncmVhZHknCiAgfCAnZXJyb3InOwoKZXhwb3J0IGludGVyZmFjZSBEamlDYW1lcmFEZXZpY2UgewogIGlkOiBzdHJpbmc7CiAgYWRkcmVzczogc3RyaW5nOwogIG5hbWU6IHN0cmluZzsKICBtb2RlbElkOiBudW1iZXIgfCBudWxsOwogIG1vZGVsTmFtZTogc3RyaW5nOwogIHJzc2k6IG51bWJlcjsKICBkYXRhbGlua1BvcnQ6IG51bWJlcjsKICB0Y3BQb2tlOiBib29sZWFuOwogIHdpZmlTZWN1cml0eTogJ1dQQTInIHwgJ1dQQTMnOwogIGlzU2ltdWxhdGVkPzogYm9vbGVhbjsKICBsYXN0U2VlbkF0OiBudW1iZXI7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgRGppRW52aXJvbm1lbnRTdGF0dXMgewogIHBsYXRmb3JtOiBzdHJpbmc7CiAgcHl0aG9uUGF0aDogc3RyaW5nIHwgbnVsbDsKICBweXRob25BdmFpbGFibGU6IGJvb2xlYW47CiAgYmxlYWtBdmFpbGFibGU6IGJvb2xlYW47CiAgYmx1ZXRvb3RoUmVhZHk6IGJvb2xlYW47CiAgd2lmaVJlYWR5OiBib29sZWFuOwogIHdpZmlDb25uZWN0ZWRQcm9maWxlPzogc3RyaW5nIHwgbnVsbDsKICBldGhlcm5ldEFjdGl2ZT86IGJvb2xlYW47CiAgbm90ZXM6IHN0cmluZ1tdOwp9CgpleHBvcnQgaW50ZXJmYWNlIERqaUxpdmVDb25uZWN0aW9uU3RhdHVzIHsKICBjaGVja2VkQXQ6IG51bWJlcjsKICB3aWZpTWF0Y2hlc0NhbWVyYTogYm9vbGVhbjsKICBjb25uZWN0ZWRTc2lkOiBzdHJpbmcgfCBudWxsOwogIGNhbWVyYUlwUmVhY2hhYmxlOiBib29sZWFuOwogIGxhdGVuY3lNczogbnVtYmVyIHwgbnVsbDsKICBjYW1lcmFTZXNzaW9uVmFsaWQ6IGJvb2xlYW47CiAgc3RhdGU6ICdjb25uZWN0ZWQnIHwgJ3RyYW5zZmVycmluZycgfCAnd2lmaV9taXNtYXRjaCcgfCAndW5yZWFjaGFibGUnIHwgJ3N0YWxlJyB8ICdkaXNjb25uZWN0ZWQnOwogIG1lc3NhZ2U6IHN0cmluZzsKfQoKZXhwb3J0IGludGVyZmFjZSBEamlDYW1lcmFTdGF0dXMgewogIGNvbm5lY3RlZDogYm9vbGVhbjsKICBwaGFzZTogRGppQ29ubmVjdGlvblBoYXNlOwogIHBoYXNlTWVzc2FnZTogc3RyaW5nOwogIGNhbWVyYT86IERqaUNhbWVyYURldmljZTsKICBiYXR0ZXJ5UGN0PzogbnVtYmVyOwogIHNkRnJlZU1iPzogbnVtYmVyOwogIHNkVG90YWxNYj86IG51bWJlcjsKICBpbnRlcm5hbEZyZWVNYj86IG51bWJlcjsKICBpbnRlcm5hbFRvdGFsTWI/OiBudW1iZXI7CiAgd2lmaVNzaWQ/OiBzdHJpbmc7CiAgY2FtZXJhSXA/OiBzdHJpbmc7CiAgcHJldmlvdXNXaWZpUHJvZmlsZT86IHN0cmluZyB8IG51bGw7CiAgZXJyb3I/OiBzdHJpbmc7CiAgbGl2ZT86IERqaUxpdmVDb25uZWN0aW9uU3RhdHVzOwp9CgpleHBvcnQgdHlwZSBEamlNZWRpYUtpbmQgPSAndmlkZW8nIHwgJ3Bob3RvJzsKCmV4cG9ydCBpbnRlcmZhY2UgRGppUmVtb3RlTWVkaWFJdGVtIHsKICBpZDogc3RyaW5nOwogIGhhbmRsZTogbnVtYmVyOwogIG5hbWU6IHN0cmluZzsKICBmb2xkZXI6IHN0cmluZzsKICBtZWRpYVBhdGg6IHN0cmluZzsKICB0aHVtYlBhdGg/OiBzdHJpbmc7CiAgZXh0OiBzdHJpbmc7CiAga2luZDogRGppTWVkaWFLaW5kOwogIHNpemU6IG51bWJlcjsKICBzdG9yYWdlOiAwIHwgMTsKICBzdGFyOiBib29sZWFuOwogIGNhcHR1cmVkQXQ/OiBzdHJpbmc7CiAgYWxyZWFkeUltcG9ydGVkOiBib29sZWFuOwogIGxvY2FsUGF0aD86IHN0cmluZzsKfQoKZXhwb3J0IHR5cGUgRGppRG93bmxvYWRTdGF0dXMgPQogIHwgJ3F1ZXVlZCcKICB8ICdkb3dubG9hZGluZycKICB8ICd2ZXJpZnlpbmcnCiAgfCAnaW1wb3J0aW5nJwogIHwgJ2RvbmUnCiAgfCAnZmFpbGVkJwogIHwgJ2NhbmNlbGxlZCc7CgpleHBvcnQgaW50ZXJmYWNlIERqaURvd25sb2FkVGFzayB7CiAgaWQ6IHN0cmluZzsKICBtZWRpYUlkOiBzdHJpbmc7CiAgbmFtZTogc3RyaW5nOwogIG1lZGlhUGF0aDogc3RyaW5nOwogIGV4dDogc3RyaW5nOwogIHN0b3JhZ2U6IDAgfCAxOwogIHNpemU6IG51bWJlcjsKICBkb3dubG9hZGVkQnl0ZXM6IG51bWJlcjsKICBzcGVlZEJ5dGVzUGVyU2VjOiBudW1iZXI7CiAgZXRhU2Vjb25kczogbnVtYmVyIHwgbnVsbDsKICBzdGF0dXM6IERqaURvd25sb2FkU3RhdHVzOwogIGRlc3RQYXRoOiBzdHJpbmc7CiAgaGFzaEhleD86IHN0cmluZzsKICByZXN1bWVkRnJvbT86IG51bWJlcjsKICBpbXBvcnRlZEFzc2V0SWRzPzogc3RyaW5nW107CiAgZXJyb3I/OiBzdHJpbmc7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgRGppVXNiRmlsZSB7CiAgaWQ6IHN0cmluZzsKICBuYW1lOiBzdHJpbmc7CiAgZm9sZGVyOiBzdHJpbmc7CiAgcmVsYXRpdmVQYXRoOiBzdHJpbmc7CiAgZXh0OiBzdHJpbmc7CiAga2luZDogRGppTWVkaWFLaW5kOwogIHNpemU6IG51bWJlcjsKICBzb3VyY2VQYXRoOiBzdHJpbmc7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgRGppVXNiVm9sdW1lIHsKICBpZDogc3RyaW5nOwogIGxldHRlcjogc3RyaW5nOwogIGxhYmVsOiBzdHJpbmc7CiAgZmlsZXM6IERqaVVzYkZpbGVbXTsKfQoKZXhwb3J0IHR5cGUgRGppVXNiSW1wb3J0U3RhdHVzID0gJ2NvcHlpbmcnIHwgJ2RvbmUnIHwgJ2ZhaWxlZCc7CgpleHBvcnQgaW50ZXJmYWNlIERqaVVzYkltcG9ydFRhc2sgewogIGlkOiBzdHJpbmc7CiAgZmlsZUlkOiBzdHJpbmc7CiAgbmFtZTogc3RyaW5nOwogIHNvdXJjZVBhdGg6IHN0cmluZzsKICBzaXplOiBudW1iZXI7CiAgY29waWVkQnl0ZXM6IG51bWJlcjsKICBzcGVlZEJ5dGVzUGVyU2VjOiBudW1iZXI7CiAgZXRhU2Vjb25kczogbnVtYmVyIHwgbnVsbDsKICBzdGF0dXM6IERqaVVzYkltcG9ydFN0YXR1czsKICBkZXN0UGF0aD86IHN0cmluZzsKICBpbXBvcnRlZEFzc2V0SWRzPzogc3RyaW5nW107CiAgZXJyb3I/OiBzdHJpbmc7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgRGppUGx1Z2luU2V0dGluZ3MgewogIGRvd25sb2FkRGlyOiBzdHJpbmc7CiAgYXV0b0ltcG9ydFRvUHJvamVjdDogYm9vbGVhbjsKICBjb25jdXJyZW5jeTogMSB8IDI7CiAgcmVzdG9yZVdpZmlPbkRpc2Nvbm5lY3Q6IGJvb2xlYW47CiAgcmVtZW1iZXJlZENhbWVyYXM6IEFycmF5PHsKICAgIGFkZHJlc3M6IHN0cmluZzsKICAgIG5hbWU6IHN0cmluZzsKICAgIG1vZGVsTmFtZTogc3RyaW5nOwogICAgbGFzdENvbm5lY3RlZEF0OiBudW1iZXI7CiAgfT47Cn0KCmV4cG9ydCBpbnRlcmZhY2UgRGppUGx1Z2luU3RhdGVTbmFwc2hvdCB7CiAgZW5hYmxlZDogYm9vbGVhbjsKICBlbnY6IERqaUVudmlyb25tZW50U3RhdHVzIHwgbnVsbDsKICBzdGF0dXM6IERqaUNhbWVyYVN0YXR1czsKICBkaXNjb3ZlcmVkOiBEamlDYW1lcmFEZXZpY2VbXTsKICBtZWRpYTogRGppUmVtb3RlTWVkaWFJdGVtW107CiAgdGFza3M6IERqaURvd25sb2FkVGFza1tdOwogIHNldHRpbmdzOiBEamlQbHVnaW5TZXR0aW5nczsKICB1c2JWb2x1bWVzOiBEamlVc2JWb2x1bWVbXTsKICB1c2JUYXNrczogRGppVXNiSW1wb3J0VGFza1tdOwp9Cg==
+export interface PluginSummary {
+  id: string;
+  name: string;
+  nameZh: string;
+  version: string;
+  description: string;
+  descriptionZh: string;
+  enabled: boolean;
+  healthy: boolean;
+  error?: string;
+}
+
+export type DjiConnectionPhase =
+  | 'idle'
+  | 'scanning'
+  | 'ble_connecting'
+  | 'awaiting_approval'
+  | 'wifi_joining'
+  | 'datalink_connecting'
+  | 'ready'
+  | 'error';
+
+export interface DjiCameraDevice {
+  id: string;
+  address: string;
+  name: string;
+  modelId: number | null;
+  modelName: string;
+  rssi: number;
+  datalinkPort: number;
+  tcpPoke: boolean;
+  wifiSecurity: 'WPA2' | 'WPA3';
+  isSimulated?: boolean;
+  lastSeenAt: number;
+}
+
+export interface DjiEnvironmentStatus {
+  platform: string;
+  pythonPath: string | null;
+  pythonAvailable: boolean;
+  bleakAvailable: boolean;
+  bluetoothReady: boolean;
+  wifiReady: boolean;
+  wifiConnectedProfile?: string | null;
+  ethernetActive?: boolean;
+  notes: string[];
+}
+
+export interface DjiLiveConnectionStatus {
+  checkedAt: number;
+  wifiMatchesCamera: boolean;
+  connectedSsid: string | null;
+  cameraIpReachable: boolean;
+  latencyMs: number | null;
+  cameraSessionValid: boolean;
+  state: 'connected' | 'transferring' | 'wifi_mismatch' | 'unreachable' | 'stale' | 'disconnected';
+  message: string;
+}
+
+export interface DjiCameraStatus {
+  connected: boolean;
+  phase: DjiConnectionPhase;
+  phaseMessage: string;
+  camera?: DjiCameraDevice;
+  batteryPct?: number;
+  sdFreeMb?: number;
+  sdTotalMb?: number;
+  internalFreeMb?: number;
+  internalTotalMb?: number;
+  wifiSsid?: string;
+  cameraIp?: string;
+  previousWifiProfile?: string | null;
+  error?: string;
+  live?: DjiLiveConnectionStatus;
+}
+
+export type DjiMediaKind = 'video' | 'photo';
+
+export interface DjiRemoteMediaItem {
+  id: string;
+  handle: number;
+  name: string;
+  folder: string;
+  mediaPath: string;
+  thumbPath?: string;
+  ext: string;
+  kind: DjiMediaKind;
+  size: number;
+  storage: 0 | 1;
+  star: boolean;
+  capturedAt?: string;
+  alreadyImported: boolean;
+  localPath?: string;
+}
+
+export type DjiDownloadStatus =
+  | 'queued'
+  | 'downloading'
+  | 'verifying'
+  | 'importing'
+  | 'done'
+  | 'failed'
+  | 'cancelled';
+
+export interface DjiDownloadTask {
+  id: string;
+  mediaId: string;
+  name: string;
+  mediaPath: string;
+  ext: string;
+  storage: 0 | 1;
+  size: number;
+  downloadedBytes: number;
+  speedBytesPerSec: number;
+  etaSeconds: number | null;
+  status: DjiDownloadStatus;
+  destPath: string;
+  hashHex?: string;
+  resumedFrom?: number;
+  importedAssetIds?: string[];
+  error?: string;
+}
+
+export interface DjiUsbFile {
+  id: string;
+  name: string;
+  folder: string;
+  relativePath: string;
+  ext: string;
+  kind: DjiMediaKind;
+  size: number;
+  sourcePath: string;
+}
+
+export interface DjiUsbVolume {
+  id: string;
+  letter: string;
+  label: string;
+  files: DjiUsbFile[];
+}
+
+export type DjiUsbImportStatus = 'copying' | 'done' | 'failed';
+
+export interface DjiUsbImportTask {
+  id: string;
+  fileId: string;
+  name: string;
+  sourcePath: string;
+  size: number;
+  copiedBytes: number;
+  speedBytesPerSec: number;
+  etaSeconds: number | null;
+  status: DjiUsbImportStatus;
+  destPath?: string;
+  importedAssetIds?: string[];
+  error?: string;
+}
+
+export interface DjiPluginSettings {
+  downloadDir: string;
+  autoImportToProject: boolean;
+  concurrency: 1 | 2;
+  restoreWifiOnDisconnect: boolean;
+  rememberedCameras: Array<{
+    address: string;
+    name: string;
+    modelName: string;
+    lastConnectedAt: number;
+  }>;
+}
+
+export interface DjiPluginStateSnapshot {
+  enabled: boolean;
+  env: DjiEnvironmentStatus | null;
+  status: DjiCameraStatus;
+  discovered: DjiCameraDevice[];
+  media: DjiRemoteMediaItem[];
+  tasks: DjiDownloadTask[];
+  settings: DjiPluginSettings;
+  usbVolumes: DjiUsbVolume[];
+  usbTasks: DjiUsbImportTask[];
+}
