@@ -1,1 +1,218 @@
-aW1wb3J0IGZzIGZyb20gJ25vZGU6ZnMnOwppbXBvcnQgcGF0aCBmcm9tICdub2RlOnBhdGgnOwppbXBvcnQgY3J5cHRvIGZyb20gJ25vZGU6Y3J5cHRvJzsKaW1wb3J0IHsgZXhlY0ZpbGUgfSBmcm9tICdub2RlOmNoaWxkX3Byb2Nlc3MnOwppbXBvcnQgeyBwcm9taXNpZnkgfSBmcm9tICdub2RlOnV0aWwnOwppbXBvcnQgdHlwZSB7IERqaVVzYkltcG9ydFRhc2ssIERqaVVzYlZvbHVtZSB9IGZyb20gJy4uLy4uLy4uL3NoYXJlZC9kamlUeXBlcyc7CmltcG9ydCB7IGdldERqaVBsdWdpblNldHRpbmdzIH0gZnJvbSAnLi4vLi4vc2V0dGluZ3MnOwoKY29uc3QgZXhlY0ZpbGVBc3luYyA9IHByb21pc2lmeShleGVjRmlsZSk7Cgpjb25zdCBESklfRElSX1JFID0gL14oREpJfE9TTU98XGR7M31cdyopJC9pOwpjb25zdCBESklfRklMRV9SRSA9IC9eKERKSXxDQU0pX1xkezgsMTR9L2k7CmNvbnN0IFNLSVBfRVhUUyA9IG5ldyBTZXQoWydMUkYnLCAnTFJWJywgJ1hSRicsICdTQ1InLCAnVEhNJ10pOwoKZnVuY3Rpb24gdm9sdW1lTGV0dGVycygpOiBzdHJpbmdbXSB7CiAgY29uc3QgbGV0dGVyczogc3RyaW5nW10gPSBbXTsKICBmb3IgKGxldCBjb2RlID0gNjU7IGNvZGUgPD0gOTA7IGNvZGUrKykgbGV0dGVycy5wdXNoKFN0cmluZy5mcm9tQ2hhckNvZGUoY29kZSkpOwogIHJldHVybiBsZXR0ZXJzOwp9CgpmdW5jdGlvbiBnZXREamlEb3dubG9hZERpcigpOiBzdHJpbmcgewogIHJldHVybiBnZXREamlQbHVnaW5TZXR0aW5ncygpLmRvd25sb2FkRGlyOwp9Cgphc3luYyBmdW5jdGlvbiBkcml2ZVR5cGUocm9vdDogc3RyaW5nKTogUHJvbWlzZTxzdHJpbmcgfCBudWxsPiB7CiAgdHJ5IHsKICAgIGNvbnN0IHJlcyA9IGF3YWl0IGV4ZWNGaWxlQXN5bmMoJ3Bvd2Vyc2hlbGwuZXhlJywgWwogICAgICAnLU5vUHJvZmlsZScsICctTm9uSW50ZXJhY3RpdmUnLCAnLUNvbW1hbmQnLAogICAgICBgKEdldC1DaW1JbnN0YW5jZSBXaW4zMl9Mb2dpY2FsRGlzayAtRmlsdGVyIFwiRGV2aWNlTmFtZT0nJHtyb290fSdcIikuRHJpdmVUeXBlYCwKICAgIF0sIHsgdGltZW91dDogNDAwMCwgd2luZG93c0hpZGU6IHRydWUgfSk7CiAgICByZXR1cm4gcmVzLnN0ZG91dC50cmltKCkgfHwgbnVsbDsKICB9IGNhdGNoIHsKICAgIHJldHVybiBudWxsOwogIH0KfQoKZXhwb3J0IGNsYXNzIERqaVVzYkltcG9ydGVyIHsKICBwcml2YXRlIHJlYWRvbmx5IHRhc2tzID0gbmV3IE1hcDxzdHJpbmcsIERqaVVzYkltcG9ydFRhc2s+KCk7CiAgcHJpdmF0ZSBjYW5jZWxsZWQgPSBuZXcgU2V0PHN0cmluZz4oKTsKICBhc3luYyBsaXN0Vm9sdW1lcygpOiBQcm9taXNlPERqaVVzYlZvbHVtZVtdPiB7CiAgICBjb25zdCB2b2x1bWVzOiBEamlVc2JWb2x1bWVbXSA9IFtdOwogICAgZm9yIChjb25zdCBsZXR0ZXIgb2Ygdm9sdW1lTGV0dGVycygpKSB7CiAgICAgIGNvbnN0IHJvb3RQYXRoID0gYCR7bGV0dGVyfTpcXGA7CiAgICAgIGNvbnN0IHR5cGUgPSBhd2FpdCBkcml2ZVR5cGUocm9vdFBhdGgpOwogICAgICBpZiAodHlwZSAhPT0gJzInKSBjb250aW51ZTsKICAgICAgY29uc3QgZGNpbSA9IHBhdGguam9pbihyb290UGF0aCwgJ0RDSU0nKTsKICAgICAgaWYgKCFmcy5leGlzdHNTeW5jKGRjaW0pKSBjb250aW51ZTsKICAgICAgbGV0IGRqaUZvbGRlcjogc3RyaW5nIHwgbnVsbCA9IG51bGw7CiAgICAgIGxldCBoYXNNZWRpYSA9IGZhbHNlOwogICAgICB0cnkgewogICAgICAgIGZvciAoY29uc3QgZm9sZGVyIG9mIGZzLnJlYWRkaXJTeW5jKGRjaW0sIHsgd2l0aEZpbGVUeXBlczogdHJ1ZSB9KSkgewogICAgICAgICAgaWYgKCFmb2xkZXIuaXNEaXJlY3RvcnkoKSB8fCAhREpJX0RJUl9SRS50ZXN0KGZvbGRlci5uYW1lKSkgY29udGludWU7CiAgICAgICAgICBkamlGb2xkZXIgPSBmb2xkZXIubmFtZTsKICAgICAgICAgIGhhc01lZGlhID0gZnMucmVhZGRpclN5bmMocGF0aC5qb2luKGRjaW0sIGZvbGRlci5uYW1lKSwgeyB3aXRoRmlsZVR5cGVzOiB0cnVlIH0pCiAgICAgICAgICAgIC5zb21lKChlbnRyeSkgPT4gZW50cnkuaXNGaWxlKCkgJiYgREpJX0ZJTEVfUkUudGVzdChlbnRyeS5uYW1lKSk7CiAgICAgICAgICBpZiAoaGFzTWVkaWEpIGJyZWFrOwogICAgICAgIH0KICAgICAgfSBjYXRjaCB7CiAgICAgICAgY29udGludWU7CiAgICAgIH0KICAgICAgaWYgKCFkamlGb2xkZXIgfHwgIWhhc01lZGlhKSBjb250aW51ZTsKCiAgICAgIGNvbnN0IGZpbGVzOiBEamlVc2JWb2x1bWVbJ2ZpbGVzJ10gPSBbXTsKICAgICAgZm9yIChjb25zdCBmb2xkZXIgb2YgZnMucmVhZGRpclN5bmMoZGNpbSwgeyB3aXRoRmlsZVR5cGVzOiB0cnVlIH0pKSB7CiAgICAgICAgaWYgKCFmb2xkZXIuaXNEaXJlY3RvcnkoKSkgY29udGludWU7CiAgICAgICAgY29uc3QgZm9sZGVyUGF0aCA9IHBhdGguam9pbihkY2ltLCBmb2xkZXIubmFtZSk7CiAgICAgICAgZm9yIChjb25zdCBlbnRyeSBvZiBmcy5yZWFkZGlyU3luYyhmb2xkZXJQYXRoLCB7IHdpdGhGaWxlVHlwZXM6IHRydWUgfSkpIHsKICAgICAgICAgIGlmICghZW50cnkuaXNGaWxlKCkgfHwgZW50cnkubmFtZS5zdGFydHNXaXRoKCcuJykpIGNvbnRpbnVlOwogICAgICAgICAgY29uc3QgZXh0ID0gcGF0aC5leHRuYW1lKGVudHJ5Lm5hbWUpLnJlcGxhY2UoJy4nLCAnJykudG9VcHBlckNhc2UoKTsKICAgICAgICAgIGlmIChTS0lQX0VYVFMuaGFzKGV4dCkpIGNvbnRpbnVlOwogICAgICAgICAgdHJ5IHsKICAgICAgICAgICAgY29uc3Qgc3RhdCA9IGZzLnN0YXRTeW5jKHBhdGguam9pbihmb2xkZXJQYXRoLCBlbnRyeS5uYW1lKSk7CiAgICAgICAgICAgIGZpbGVzLnB1c2goewogICAgICAgICAgICAgIGlkOiBgdXNiOiR7bGV0dGVyfToke2ZvbGRlci5uYW1lfToke2VudHJ5Lm5hbWV9YCwKICAgICAgICAgICAgICBuYW1lOiBlbnRyeS5uYW1lLAogICAgICAgICAgICAgIGZvbGRlcjogZm9sZGVyLm5hbWUsCiAgICAgICAgICAgICAgcmVsYXRpdmVQYXRoOiBgRENJTS8ke2ZvbGRlci5uYW1lfS8ke2VudHJ5Lm5hbWV9YCwKICAgICAgICAgICAgICBleHQsCiAgICAgICAgICAgICAga2luZDogZXh0ID09PSAnTVA0JyB8fCBleHQgPT09ICdNT1YnID8gJ3ZpZGVvJyA6ICdwaG90bycsCiAgICAgICAgICAgICAgc2l6ZTogc3RhdC5zaXplLAogICAgICAgICAgICAgIHNvdXJjZVBhdGg6IHBhdGguam9pbihmb2xkZXJQYXRoLCBlbnRyeS5uYW1lKSwKICAgICAgICAgICAgfSk7CiAgICAgICAgICB9IGNhdGNoIHsKICAgICAgICAgICAgY29udGludWU7CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICB9CiAgICAgIGlmIChmaWxlcy5sZW5ndGggPiAwKSB2b2x1bWVzLnB1c2goeyBpZDogYHVzYi0ke2xldHRlcn1gLCBsZXR0ZXIsIGxhYmVsOiBgREpJIFVTQiAoJHtsZXR0ZXJ9OilgLCBmaWxlcyB9KTsKICAgIH0KICAgIHJldHVybiB2b2x1bWVzOwogIH0KCiAgbGlzdFZvbHVtZXNTeW5jKCk6IERqaVVzYlZvbHVtZVtdIHsKICAgIGNvbnN0IHZvbHVtZXM6IERqaVVzYlZvbHVtZVtdID0gW107CiAgICBmb3IgKGNvbnN0IGxldHRlciBvZiB2b2x1bWVMZXR0ZXJzKCkpIHsKICAgICAgY29uc3Qgcm9vdFBhdGggPSBgJHtsZXR0ZXJ9OlxcYDsKICAgICAgY29uc3QgZGNpbSA9IHBhdGguam9pbihyb290UGF0aCwgJ0RDSU0nKTsKICAgICAgdHJ5IHsKICAgICAgICBpZiAoIWZzLmV4aXN0c1N5bmMoZGNpbSkpIGNvbnRpbnVlOwogICAgICAgIGNvbnN0IGZvbGRlcnMgPSBmcy5yZWFkZGlyU3luYyhkY2ltLCB7IHdpdGhGaWxlVHlwZXM6IHRydWUgfSkKICAgICAgICAgIC5maWx0ZXIoKGVudHJ5KSA9PiBlbnRyeS5pc0RpcmVjdG9yeSgpICYmIERKSV9ESVJfUkUudGVzdChlbnRyeS5uYW1lKSk7CiAgICAgICAgaWYgKGZvbGRlcnMubGVuZ3RoID09PSAwKSBjb250aW51ZTsKICAgICAgICBjb25zdCBmaWxlczogRGppVXNiVm9sdW1lWydmaWxlcyddID0gW107CiAgICAgICAgZm9yIChjb25zdCBmb2xkZXIgb2YgZm9sZGVycykgewogICAgICAgICAgY29uc3QgZm9sZGVyUGF0aCA9IHBhdGguam9pbihkY2ltLCBmb2xkZXIubmFtZSk7CiAgICAgICAgICBmb3IgKGNvbnN0IGVudHJ5IG9mIGZzLnJlYWRkaXJTeW5jKGZvbGRlclBhdGgsIHsgd2l0aEZpbGVUeXBlczogdHJ1ZSB9KSkgewogICAgICAgICAgICBpZiAoIWVudHJ5LmlzRmlsZSgpIHx8IGVudHJ5Lm5hbWUuc3RhcnRzV2l0aCgnLicpKSBjb250aW51ZTsKICAgICAgICAgICAgY29uc3QgZXh0ID0gcGF0aC5leHRuYW1lKGVudHJ5Lm5hbWUpLnJlcGxhY2UoJy4nLCAnJykudG9VcHBlckNhc2UoKTsKICAgICAgICAgICAgaWYgKFNLSVBfRVhUUy5oYXMoZXh0KSkgY29udGludWU7CiAgICAgICAgICAgIGZpbGVzLnB1c2goewogICAgICAgICAgICAgIGlkOiBgdXNiOiR7bGV0dGVyfToke2ZvbGRlci5uYW1lfToke2VudHJ5Lm5hbWV9YCwKICAgICAgICAgICAgICBuYW1lOiBlbnRyeS5uYW1lLAogICAgICAgICAgICAgIGZvbGRlcjogZm9sZGVyLm5hbWUsCiAgICAgICAgICAgICAgcmVsYXRpdmVQYXRoOiBgRENJTS8ke2ZvbGRlci5uYW1lfS8ke2VudHJ5Lm5hbWV9YCwKICAgICAgICAgICAgICBleHQsCiAgICAgICAgICAgICAga2luZDogZXh0ID09PSAnTVA0JyB8fCBleHQgPT09ICdNT1YnID8gJ3ZpZGVvJyA6ICdwaG90bycsCiAgICAgICAgICAgICAgc2l6ZTogZnMuc3RhdFN5bmMocGF0aC5qb2luKGZvbGRlclBhdGgsIGVudHJ5Lm5hbWUpKS5zaXplLAogICAgICAgICAgICAgIHNvdXJjZVBhdGg6IHBhdGguam9pbihmb2xkZXJQYXRoLCBlbnRyeS5uYW1lKSwKICAgICAgICAgICAgfSk7CiAgICAgICAgICB9CiAgICAgICAgfQogICAgICAgIGlmIChmaWxlcy5sZW5ndGggPiAwKSB2b2x1bWVzLnB1c2goeyBpZDogYHVzYi0ke2xldHRlcn1gLCBsZXR0ZXIsIGxhYmVsOiBgREpJIFVTQiAoJHtsZXR0ZXJ9OilgLCBmaWxlcyB9KTsKICAgICAgfSBjYXRjaCB7CiAgICAgICAgY29udGludWU7CiAgICAgIH0KICAgIH0KICAgIHJldHVybiB2b2x1bWVzOwogIH0KCiAgYXN5bmMgaW1wb3J0RmlsZXMoZmlsZUlkczogc3RyaW5nW10pOiBQcm9taXNlPERqaVVzYkltcG9ydFRhc2tbXT4gewogICAgY29uc3Qgdm9sdW1lcyA9IGF3YWl0IHRoaXMubGlzdFZvbHVtZXMoKTsKICAgIGNvbnN0IHNlbGVjdGVkID0gdm9sdW1lcy5mbGF0TWFwKCh2KSA9PiB2LmZpbGVzKS5maWx0ZXIoKGYpID0+IGZpbGVJZHMuaW5jbHVkZXMoZi5pZCkpOwogICAgY29uc3QgdGFza3M6IERqaVVzYkltcG9ydFRhc2tbXSA9IFtdOwogICAgZm9yIChjb25zdCBmaWxlIG9mIHNlbGVjdGVkKSB7CiAgICAgIGNvbnN0IHRhc2s6IERqaVVzYkltcG9ydFRhc2sgPSB7CiAgICAgICAgaWQ6IGB1c2ItdGFzay0ke0RhdGUubm93KCl9LSR7TWF0aC5yYW5kb20oKS50b1N0cmluZygzNikuc2xpY2UoMiwgNyl9YCwKICAgICAgICBmaWxlSWQ6IGZpbGUuaWQsCiAgICAgICAgbmFtZTogZmlsZS5uYW1lLAogICAgICAgIHNvdXJjZVBhdGg6IGZpbGUuc291cmNlUGF0aCwKICAgICAgICBzaXplOiBmaWxlLnNpemUsCiAgICAgICAgY29waWVkQnl0ZXM6IDAsCiAgICAgICAgc3BlZWRCeXRlc1BlclNlYzogMCwKICAgICAgICBldGFTZWNvbmRzOiBudWxsLAogICAgICAgIHN0YXR1czogJ2NvcHlpbmcnLAogICAgICB9OwogICAgICB0YXNrcy5wdXNoKHRhc2spOwogICAgfQogICAgZm9yIChjb25zdCB0YXNrIG9mIHRhc2tzKSB0aGlzLnRhc2tzLnNldCh0YXNrLmlkLCB0YXNrKTsKICAgIHZvaWQgdGhpcy5ydW5RdWV1ZSh0YXNrcyk7CiAgICByZXR1cm4gdGFza3M7CiAgfQoKICBsaXN0VGFza3MoKTogRGppVXNiSW1wb3J0VGFza1tdIHsKICAgIHJldHVybiBbLi4udGhpcy50YXNrcy52YWx1ZXMoKV0ubWFwKCh0YXNrKSA9PiAoeyAuLi50YXNrIH0pKTsKICB9CgogIGNhbmNlbCh0YXNrSWQ6IHN0cmluZyk6IHZvaWQgewogICAgdGhpcy5jYW5jZWxsZWQuYWRkKHRhc2tJZCk7CiAgfQoKICBjbGVhckZpbmlzaGVkKCk6IHZvaWQgewogICAgZm9yIChjb25zdCBbaWQsIHRhc2tdIG9mIHRoaXMudGFza3MpIHsKICAgICAgaWYgKHRhc2suc3RhdHVzICE9PSAnY29weWluZycpIHRoaXMudGFza3MuZGVsZXRlKGlkKTsKICAgIH0KICB9CgogIHByaXZhdGUgYXN5bmMgcnVuUXVldWUodGFza3M6IERqaVVzYkltcG9ydFRhc2tbXSk6IFByb21pc2U8dm9pZD4gewogICAgZm9yIChjb25zdCB0YXNrIG9mIHRhc2tzKSB7CiAgICAgIGlmICh0aGlzLmNhbmNlbGxlZC5oYXModGFzay5pZCkpIHsKICAgICAgICB0YXNrLnN0YXR1cyA9ICdmYWlsZWQnOwogICAgICAgIHRhc2suZXJyb3IgPSAnQ2FuY2VsbGVkJzsKICAgICAgICBjb250aW51ZTsKICAgICAgfQogICAgICBjb25zdCBzdGFydGVkQXQgPSBEYXRlLm5vdygpOwogICAgICBsZXQgY29waWVkID0gMDsKICAgICAgdHJ5IHsKICAgICAgICBjb25zdCBkZXN0ID0gcGF0aC5qb2luKGdldERqaURvd25sb2FkRGlyKCksIHRhc2submFtZSk7CiAgICAgICAgZnMubWtkaXJTeW5jKHBhdGguZGlybmFtZShkZXN0KSwgeyByZWN1cnNpdmU6IHRydWUgfSk7CiAgICAgICAgY29uc3QgaGFzaCA9IGNyeXB0by5jcmVhdGVIYXNoKCdzaGEyNTYnKTsKICAgICAgICBhd2FpdCBuZXcgUHJvbWlzZTx2b2lkPigocmVzb2x2ZSwgcmVqZWN0KSA9PiB7CiAgICAgICAgICBjb25zdCBpbnB1dCA9IGZzLmNyZWF0ZVJlYWRTdHJlYW0odGFzay5zb3VyY2VQYXRoLCB7IGhpZ2hXYXRlck1hcms6IDQgKiAxMDI0ICogMTAyNCB9KTsKICAgICAgICAgIGNvbnN0IG91dHB1dCA9IGZzLmNyZWF0ZVdyaXRlU3RyZWFtKGAke2Rlc3R9LnBhcnRgKTsKICAgICAgICAgIGlucHV0Lm9uKCdkYXRhJywgKHJhdzogQnVmZmVyIHwgc3RyaW5nKSA9PiB7CiAgICAgICAgICAgIGNvbnN0IGNodW5rID0gdHlwZW9mIHJhdyA9PT0gJ3N0cmluZycgPyBCdWZmZXIuZnJvbShyYXcpIDogcmF3OwogICAgICAgICAgICBpZiAodGhpcy5jYW5jZWxsZWQuaGFzKHRhc2suaWQpKSB7CiAgICAgICAgICAgICAgaW5wdXQuZGVzdHJveSgpOwogICAgICAgICAgICAgIG91dHB1dC5kZXN0cm95KCk7CiAgICAgICAgICAgICAgcmVqZWN0KG5ldyBFcnJvcignQ2FuY2VsbGVkJykpOwogICAgICAgICAgICAgIHJldHVybjsKICAgICAgICAgICAgfQogICAgICAgICAgICBvdXRwdXQud3JpdGUoY2h1bmspOwogICAgICAgICAgICBoYXNoLnVwZGF0ZShjaHVuayk7CiAgICAgICAgICAgIGNvcGllZCArPSBjaHVuay5sZW5ndGg7CiAgICAgICAgICAgIHRhc2suY29waWVkQnl0ZXMgPSBjb3BpZWQ7CiAgICAgICAgICAgIGNvbnN0IGVsYXBzZWQgPSBNYXRoLm1heCgwLjI1LCAoRGF0ZS5ub3coKSAtIHN0YXJ0ZWRBdCkgLyAxMDAwKTsKICAgICAgICAgICAgdGFzay5zcGVlZEJ5dGVzUGVyU2VjID0gTWF0aC5yb3VuZChjb3BpZWQgLyBlbGFwc2VkKTsKICAgICAgICAgICAgdGFzay5ldGFTZWNvbmRzID0gdGFzay5zaXplID4gMCA/IE1hdGgubWF4KDAsIE1hdGguY2VpbCgodGFzay5zaXplIC0gY29waWVkKSAvIHRhc2suc3BlZWRCeXRlc1BlclNlYykpIDogbnVsbDsKICAgICAgICAgIH0pOwogICAgICAgICAgaW5wdXQub24oJ2Vycm9yJywgcmVqZWN0KTsKICAgICAgICAgIG91dHB1dC5vbignZXJyb3InLCByZWplY3QpOwogICAgICAgICAgb3V0cHV0Lm9uKCdmaW5pc2gnLCByZXNvbHZlKTsKICAgICAgICAgIGlucHV0LnBpcGUob3V0cHV0KTsKICAgICAgICB9KTsKICAgICAgICBpZiAoY29waWVkICE9PSB0YXNrLnNpemUpIHRocm93IG5ldyBFcnJvcihgU2hvcnQgY29weTogJHtjb3BpZWR9LyR7dGFzay5zaXplfWApOwogICAgICAgIGlmIChmcy5leGlzdHNTeW5jKGRlc3QpKSBmcy51bmxpbmtTeW5jKGRlc3QpOwogICAgICAgIGZzLnJlbmFtZVN5bmMoYCR7ZGVzdH0ucGFydGAsIGRlc3QpOwogICAgICAgIHRhc2suZGVzdFBhdGggPSBkZXN0OwogICAgICAgIHRhc2suc3RhdHVzID0gJ2RvbmUnOwogICAgICB9IGNhdGNoIChlcnIpIHsKICAgICAgICB0YXNrLnN0YXR1cyA9ICdmYWlsZWQnOwogICAgICAgIHRhc2suZXJyb3IgPSBlcnIgaW5zdGFuY2VvZiBFcnJvciA/IGVyci5tZXNzYWdlIDogU3RyaW5nKGVycik7CiAgICAgIH0gZmluYWxseSB7CiAgICAgICAgdGFzay5zcGVlZEJ5dGVzUGVyU2VjID0gMDsKICAgICAgICB0YXNrLmV0YVNlY29uZHMgPSBudWxsOwogICAgICB9CiAgICB9CiAgfQp9Cg==
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import type { DjiUsbImportTask, DjiUsbVolume } from '../../../shared/djiTypes';
+import { getDjiPluginSettings } from '../../settings';
+
+const execFileAsync = promisify(execFile);
+
+const DJI_DIR_RE = /^(DJI|OSMO|\d{3}\w*)$/i;
+const DJI_FILE_RE = /^(DJI|CAM)_\d{8,14}/i;
+const SKIP_EXTS = new Set(['LRF', 'LRV', 'XRF', 'SCR', 'THM']);
+
+function volumeLetters(): string[] {
+  const letters: string[] = [];
+  for (let code = 65; code <= 90; code++) letters.push(String.fromCharCode(code));
+  return letters;
+}
+
+function getDjiDownloadDir(): string {
+  return getDjiPluginSettings().downloadDir;
+}
+
+async function driveType(root: string): Promise<string | null> {
+  try {
+    const res = await execFileAsync('powershell.exe', [
+      '-NoProfile', '-NonInteractive', '-Command',
+      `(Get-CimInstance Win32_LogicalDisk -Filter \"DeviceName='${root}'\").DriveType`,
+    ], { timeout: 4000, windowsHide: true });
+    return res.stdout.trim() || null;
+  } catch {
+    return null;
+  }
+}
+
+export class DjiUsbImporter {
+  private readonly tasks = new Map<string, DjiUsbImportTask>();
+  private cancelled = new Set<string>();
+  async listVolumes(): Promise<DjiUsbVolume[]> {
+    const volumes: DjiUsbVolume[] = [];
+    for (const letter of volumeLetters()) {
+      const rootPath = `${letter}:\\`;
+      const type = await driveType(rootPath);
+      if (type !== '2') continue;
+      const dcim = path.join(rootPath, 'DCIM');
+      if (!fs.existsSync(dcim)) continue;
+      let djiFolder: string | null = null;
+      let hasMedia = false;
+      try {
+        for (const folder of fs.readdirSync(dcim, { withFileTypes: true })) {
+          if (!folder.isDirectory() || !DJI_DIR_RE.test(folder.name)) continue;
+          djiFolder = folder.name;
+          hasMedia = fs.readdirSync(path.join(dcim, folder.name), { withFileTypes: true })
+            .some((entry) => entry.isFile() && DJI_FILE_RE.test(entry.name));
+          if (hasMedia) break;
+        }
+      } catch {
+        continue;
+      }
+      if (!djiFolder || !hasMedia) continue;
+
+      const files: DjiUsbVolume['files'] = [];
+      for (const folder of fs.readdirSync(dcim, { withFileTypes: true })) {
+        if (!folder.isDirectory()) continue;
+        const folderPath = path.join(dcim, folder.name);
+        for (const entry of fs.readdirSync(folderPath, { withFileTypes: true })) {
+          if (!entry.isFile() || entry.name.startsWith('.')) continue;
+          const ext = path.extname(entry.name).replace('.', '').toUpperCase();
+          if (SKIP_EXTS.has(ext)) continue;
+          try {
+            const stat = fs.statSync(path.join(folderPath, entry.name));
+            files.push({
+              id: `usb:${letter}:${folder.name}:${entry.name}`,
+              name: entry.name,
+              folder: folder.name,
+              relativePath: `DCIM/${folder.name}/${entry.name}`,
+              ext,
+              kind: ext === 'MP4' || ext === 'MOV' ? 'video' : 'photo',
+              size: stat.size,
+              sourcePath: path.join(folderPath, entry.name),
+            });
+          } catch {
+            continue;
+          }
+        }
+      }
+      if (files.length > 0) volumes.push({ id: `usb-${letter}`, letter, label: `DJI USB (${letter}:)`, files });
+    }
+    return volumes;
+  }
+
+  listVolumesSync(): DjiUsbVolume[] {
+    const volumes: DjiUsbVolume[] = [];
+    for (const letter of volumeLetters()) {
+      const rootPath = `${letter}:\\`;
+      const dcim = path.join(rootPath, 'DCIM');
+      try {
+        if (!fs.existsSync(dcim)) continue;
+        const folders = fs.readdirSync(dcim, { withFileTypes: true })
+          .filter((entry) => entry.isDirectory() && DJI_DIR_RE.test(entry.name));
+        if (folders.length === 0) continue;
+        const files: DjiUsbVolume['files'] = [];
+        for (const folder of folders) {
+          const folderPath = path.join(dcim, folder.name);
+          for (const entry of fs.readdirSync(folderPath, { withFileTypes: true })) {
+            if (!entry.isFile() || entry.name.startsWith('.')) continue;
+            const ext = path.extname(entry.name).replace('.', '').toUpperCase();
+            if (SKIP_EXTS.has(ext)) continue;
+            files.push({
+              id: `usb:${letter}:${folder.name}:${entry.name}`,
+              name: entry.name,
+              folder: folder.name,
+              relativePath: `DCIM/${folder.name}/${entry.name}`,
+              ext,
+              kind: ext === 'MP4' || ext === 'MOV' ? 'video' : 'photo',
+              size: fs.statSync(path.join(folderPath, entry.name)).size,
+              sourcePath: path.join(folderPath, entry.name),
+            });
+          }
+        }
+        if (files.length > 0) volumes.push({ id: `usb-${letter}`, letter, label: `DJI USB (${letter}:)`, files });
+      } catch {
+        continue;
+      }
+    }
+    return volumes;
+  }
+
+  async importFiles(fileIds: string[]): Promise<DjiUsbImportTask[]> {
+    const volumes = await this.listVolumes();
+    const selected = volumes.flatMap((v) => v.files).filter((f) => fileIds.includes(f.id));
+    const tasks: DjiUsbImportTask[] = [];
+    for (const file of selected) {
+      const task: DjiUsbImportTask = {
+        id: `usb-task-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        fileId: file.id,
+        name: file.name,
+        sourcePath: file.sourcePath,
+        size: file.size,
+        copiedBytes: 0,
+        speedBytesPerSec: 0,
+        etaSeconds: null,
+        status: 'copying',
+      };
+      tasks.push(task);
+    }
+    for (const task of tasks) this.tasks.set(task.id, task);
+    void this.runQueue(tasks);
+    return tasks;
+  }
+
+  listTasks(): DjiUsbImportTask[] {
+    return [...this.tasks.values()].map((task) => ({ ...task }));
+  }
+
+  cancel(taskId: string): void {
+    this.cancelled.add(taskId);
+  }
+
+  clearFinished(): void {
+    for (const [id, task] of this.tasks) {
+      if (task.status !== 'copying') this.tasks.delete(id);
+    }
+  }
+
+  private async runQueue(tasks: DjiUsbImportTask[]): Promise<void> {
+    for (const task of tasks) {
+      if (this.cancelled.has(task.id)) {
+        task.status = 'failed';
+        task.error = 'Cancelled';
+        continue;
+      }
+      const startedAt = Date.now();
+      let copied = 0;
+      try {
+        const dest = path.join(getDjiDownloadDir(), task.name);
+        fs.mkdirSync(path.dirname(dest), { recursive: true });
+        const hash = crypto.createHash('sha256');
+        await new Promise<void>((resolve, reject) => {
+          const input = fs.createReadStream(task.sourcePath, { highWaterMark: 4 * 1024 * 1024 });
+          const output = fs.createWriteStream(`${dest}.part`);
+          input.on('data', (raw: Buffer | string) => {
+            const chunk = typeof raw === 'string' ? Buffer.from(raw) : raw;
+            if (this.cancelled.has(task.id)) {
+              input.destroy();
+              output.destroy();
+              reject(new Error('Cancelled'));
+              return;
+            }
+            output.write(chunk);
+            hash.update(chunk);
+            copied += chunk.length;
+            task.copiedBytes = copied;
+            const elapsed = Math.max(0.25, (Date.now() - startedAt) / 1000);
+            task.speedBytesPerSec = Math.round(copied / elapsed);
+            task.etaSeconds = task.size > 0 ? Math.max(0, Math.ceil((task.size - copied) / task.speedBytesPerSec)) : null;
+          });
+          input.on('error', reject);
+          output.on('error', reject);
+          output.on('finish', resolve);
+          input.pipe(output);
+        });
+        if (copied !== task.size) throw new Error(`Short copy: ${copied}/${task.size}`);
+        if (fs.existsSync(dest)) fs.unlinkSync(dest);
+        fs.renameSync(`${dest}.part`, dest);
+        task.destPath = dest;
+        task.status = 'done';
+      } catch (err) {
+        task.status = 'failed';
+        task.error = err instanceof Error ? err.message : String(err);
+      } finally {
+        task.speedBytesPerSec = 0;
+        task.etaSeconds = null;
+      }
+    }
+  }
+}
