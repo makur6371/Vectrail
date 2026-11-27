@@ -1,1 +1,370 @@
-ZXhwb3J0IGludGVyZmFjZSBSR0JBIHsKICByOiBudW1iZXI7CiAgZzogbnVtYmVyOwogIGI6IG51bWJlcjsKICBhOiBudW1iZXI7Cn0KCmV4cG9ydCBjb25zdCBSR0JBX1dISVRFOiBSR0JBID0geyByOiAxLCBnOiAxLCBiOiAxLCBhOiAxIH07CmV4cG9ydCBjb25zdCBSR0JBX0JMQUNLOiBSR0JBID0geyByOiAwLCBnOiAwLCBiOiAwLCBhOiAxIH07CgpleHBvcnQgdHlwZSBUcmFja0tpbmQgPSAndmlkZW8nIHwgJ2F1ZGlvJzsKCmV4cG9ydCBpbnRlcmZhY2UgVHJhY2sgewogIGlkOiBzdHJpbmc7CiAga2luZDogVHJhY2tLaW5kOwogIGhpZGRlbj86IGJvb2xlYW47CiAgbXV0ZWQ/OiBib29sZWFuOwogIGdhaW5EQj86IG51bWJlcjsKICBzb2xvPzogYm9vbGVhbjsKICBsb2NrZWQ/OiBib29sZWFuOwogIGR1Y2tVbmRlcj86IHN0cmluZzsKICBkdWNrREI/OiBudW1iZXI7Cn0KCmV4cG9ydCB0eXBlIENsaXBLaW5kID0gJ3ZpZGVvJyB8ICdhdWRpbycgfCAnaW1hZ2UnIHwgJ3NvbGlkJyB8ICd0ZXh0JzsKCmV4cG9ydCBpbnRlcmZhY2UgVGV4dFN0eWxlIHsKICBzdHJpbmc6IHN0cmluZzsKICBmb250TmFtZTogc3RyaW5nOwogIGJvbGQ6IGJvb2xlYW47CiAgc2l6ZTogbnVtYmVyOwogIGNvbG9yOiBSR0JBOwogIHg6IG51bWJlcjsKICB5OiBudW1iZXI7CiAgc3Ryb2tlQ29sb3I/OiBSR0JBOwogIHN0cm9rZVdpZHRoPzogbnVtYmVyOwogIGJnQ29sb3I/OiBSR0JBOwogIGJnUGFkZGluZz86IG51bWJlcjsKfQoKZXhwb3J0IHR5cGUgRmFkZUN1cnZlID0gJ2xpbmVhcicgfCAnZWFzZUluJyB8ICdlYXNlT3V0JyB8ICdzbW9vdGgnOwoKZXhwb3J0IGludGVyZmFjZSBXaGVlbFBvaW50IHsKICB4OiBudW1iZXI7CiAgeTogbnVtYmVyOwp9CgpleHBvcnQgaW50ZXJmYWNlIENvbG9yR3JhZGUgewogIGxvb2s/OiBzdHJpbmc7CiAgbG9va0ludGVuc2l0eT86IG51bWJlcjsKICBleHBvc3VyZT86IG51bWJlcjsKICBjb250cmFzdD86IG51bWJlcjsKICBzYXR1cmF0aW9uPzogbnVtYmVyOwogIHRlbXBlcmF0dXJlPzogbnVtYmVyOwogIHRpbnQ/OiBudW1iZXI7CiAgc2hhZG93cz86IFdoZWVsUG9pbnQ7CiAgbWlkdG9uZXM/OiBXaGVlbFBvaW50OwogIGhpZ2hsaWdodHM/OiBXaGVlbFBvaW50Owp9CgpleHBvcnQgdHlwZSBUcmFuc2l0aW9uS2luZCA9ICdkaXNzb2x2ZScgfCAnZGlwVG9CbGFjaycgfCAnd2lwZSc7CgpleHBvcnQgaW50ZXJmYWNlIFRyYW5zaXRpb24gewogIGtpbmQ6IFRyYW5zaXRpb25LaW5kOwogIGR1cmF0aW9uOiBudW1iZXI7Cn0KCmV4cG9ydCB0eXBlIFpvb21Nb2RlID0gJ2luJyB8ICdpbk91dCcgfCAnb3V0JzsKCmV4cG9ydCBpbnRlcmZhY2UgWm9vbU1vdmUgewogIG1vZGU6IFpvb21Nb2RlOwogIHAxOiBudW1iZXI7CiAgcDI6IG51bWJlcjsKICBwMzogbnVtYmVyOwogIHA0OiBudW1iZXI7CiAgc21vb3RoPzogYm9vbGVhbjsKfQoKZXhwb3J0IGludGVyZmFjZSBDbGlwVHJhbnNmb3JtIHsKICBzY2FsZTogbnVtYmVyOwogIHg6IG51bWJlcjsKICB5OiBudW1iZXI7CiAgem9vbT86IFpvb21Nb3ZlOwp9CgpleHBvcnQgaW50ZXJmYWNlIFNwZWVkUmFtcCB7CiAgaW5Gcm9tOiBudW1iZXI7CiAgaW5UbzogbnVtYmVyOwogIG91dEZyb206IG51bWJlcjsKICBvdXRUbzogbnVtYmVyOwogIHN0YXJ0U3BlZWQ6IG51bWJlcjsKICBlbmRTcGVlZDogbnVtYmVyOwp9CgpleHBvcnQgaW50ZXJmYWNlIFJldmVyc2VTb3VyY2UgewogIGFzc2V0SUQ6IHN0cmluZzsKICBzb3VyY2VTdGFydDogbnVtYmVyOwp9CgpleHBvcnQgaW50ZXJmYWNlIENsaXAgewogIGlkOiBzdHJpbmc7CiAgdHJhY2tJRDogc3RyaW5nOwogIGtpbmQ6IENsaXBLaW5kOwogIGFzc2V0SUQ/OiBzdHJpbmc7CiAgc3RhcnQ6IG51bWJlcjsKICBkdXJhdGlvbjogbnVtYmVyOwogIHNvdXJjZVN0YXJ0PzogbnVtYmVyOwogIHNwZWVkPzogbnVtYmVyOwogIGZhZGVJbj86IG51bWJlcjsKICBmYWRlT3V0PzogbnVtYmVyOwogIGZhZGVJbkN1cnZlPzogRmFkZUN1cnZlOwogIGZhZGVPdXRDdXJ2ZT86IEZhZGVDdXJ2ZTsKICBnYWluREI/OiBudW1iZXI7CiAgbGlua0lEPzogc3RyaW5nOwogIGNvbG9yPzogUkdCQTsKICB0ZXh0PzogVGV4dFN0eWxlOwogIGdyYWRlPzogQ29sb3JHcmFkZTsKICB0cmFuc2Zvcm0/OiBDbGlwVHJhbnNmb3JtOwogIHRyYW5zaXRpb25Jbj86IFRyYW5zaXRpb247CiAgZnJlZXplPzogYm9vbGVhbjsKICByZXZlcnNlZEZyb20/OiBSZXZlcnNlU291cmNlOwogIHJldmVyc2VkPzogYm9vbGVhbjsKICByYW1wPzogU3BlZWRSYW1wOwogIGNhcHRpb25lZD86IGJvb2xlYW47Cn0KCmV4cG9ydCB0eXBlIE1lZGlhS2luZCA9ICd2aWRlbycgfCAnYXVkaW8nIHwgJ2ltYWdlJzsKCmV4cG9ydCBpbnRlcmZhY2UgTWVkaWFBc3NldCB7CiAgaWQ6IHN0cmluZzsKICBwYXRoOiBzdHJpbmc7CiAgcmVsYXRpdmVQYXRoPzogc3RyaW5nOwogIHBsYXlhYmxlUGF0aD86IHN0cmluZzsKICBmb2xkZXI/OiBzdHJpbmc7CiAgbmFtZTogc3RyaW5nOwogIGtpbmQ6IE1lZGlhS2luZDsKICBkdXJhdGlvbjogbnVtYmVyOwogIHdpZHRoOiBudW1iZXI7CiAgaGVpZ2h0OiBudW1iZXI7CiAgZnBzOiBudW1iZXI7CiAgaGFzQXVkaW86IGJvb2xlYW47Cn0KCmV4cG9ydCB0eXBlIE1hcmtlclRpbnQgPSAnb3JhbmdlJyB8ICdyZWQnIHwgJ3llbGxvdycgfCAnZ3JlZW4nIHwgJ2JsdWUnIHwgJ3B1cnBsZSc7CgpleHBvcnQgaW50ZXJmYWNlIE1hcmtlciB7CiAgaWQ6IHN0cmluZzsKICB0aW1lOiBudW1iZXI7CiAgbmFtZTogc3RyaW5nOwogIGNvbG9yPzogTWFya2VyVGludDsKfQoKZXhwb3J0IGludGVyZmFjZSBQbGF5UmFuZ2UgewogIGluOiBudW1iZXI7CiAgb3V0OiBudW1iZXI7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgQ2FwdGlvblN0eWxlIHsKICBzaXplOiBudW1iZXI7CiAgcG9zaXRpb246IG51bWJlcjsKICBoaWdobGlnaHQ6IGJvb2xlYW47CiAgaGlkZGVuPzogYm9vbGVhbjsKfQoKZXhwb3J0IGludGVyZmFjZSBDYXB0aW9uRml4IHsKICBzdGFydDogbnVtYmVyOwogIHRleHQ/OiBzdHJpbmc7CiAgbWVyZ2VkPzogYm9vbGVhbjsKfQoKZXhwb3J0IGludGVyZmFjZSBUcmFuc2NyaXB0V29yZCB7CiAgc3RhcnQ6IG51bWJlcjsKICBlbmQ6IG51bWJlcjsKICB0ZXh0OiBzdHJpbmc7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgVHJhbnNjcmlwdCB7CiAgZHVyYXRpb246IG51bWJlcjsKICB3b3JkczogVHJhbnNjcmlwdFdvcmRbXTsKfQoKZXhwb3J0IGludGVyZmFjZSBDYXB0aW9uV29yZCB7CiAgc3RhcnQ6IG51bWJlcjsKICBlbmQ6IG51bWJlcjsKICB0ZXh0OiBzdHJpbmc7CiAgc291cmNlOiBudW1iZXI7CiAgY292ZXJzOiBudW1iZXJbXTsKfQoKZXhwb3J0IGludGVyZmFjZSBDYXB0aW9uQmxvY2sgewogIGNsaXBJRDogc3RyaW5nOwogIGFzc2V0SUQ6IHN0cmluZzsKICBzdGFydDogbnVtYmVyOwogIGVuZDogbnVtYmVyOwogIHdvcmRzOiBDYXB0aW9uV29yZFtdOwp9CgpleHBvcnQgaW50ZXJmYWNlIFByb2plY3QgewogIHZlcnNpb246IG51bWJlcjsKICB3aWR0aDogbnVtYmVyOwogIGhlaWdodDogbnVtYmVyOwogIGZwczogbnVtYmVyOwogIHNldHRpbmdzTG9ja2VkPzogYm9vbGVhbjsKICBhc3NldHM6IE1lZGlhQXNzZXRbXTsKICB2aWRlb1RyYWNrczogVHJhY2tbXTsKICBhdWRpb1RyYWNrczogVHJhY2tbXTsKICBjbGlwczogQ2xpcFtdOwogIG1hcmtlcnM/OiBNYXJrZXJbXTsKICBwbGF5UmFuZ2U/OiBQbGF5UmFuZ2U7CiAgY2FwdGlvbnM/OiBDYXB0aW9uU3R5bGU7CiAgY2FwdGlvbkZpeGVzPzogUmVjb3JkPHN0cmluZywgQ2FwdGlvbkZpeFtdPjsKICBleHBvcnREaXI/OiBzdHJpbmc7CiAgZXhwb3J0TmFtZT86IHN0cmluZzsKICBtYWdpY0hpc3Rvcnk/OiBNYWdpY0hpc3RvcnlFbnRyeVtdOwp9CgpleHBvcnQgaW50ZXJmYWNlIE1hZ2ljSGlzdG9yeUVudHJ5IHsKICB0ZXh0OiBzdHJpbmc7CiAgdGFiOiBzdHJpbmc7CiAgdGltZXN0YW1wOiBudW1iZXI7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgQ2xpcFNhbXBsZSB7CiAgdGltZTogbnVtYmVyOwogIGx1bWE6IG51bWJlcjsKICBzaGFycG5lc3M6IG51bWJlcjsKICBtb3Rpb246IG51bWJlcjsKICBjb2xvcjogbnVtYmVyOwogIGZhY2VzOiBudW1iZXI7CiAgYWVzdGhldGljPzogbnVtYmVyOwogIHV0aWxpdHk/OiBib29sZWFuOwp9CgpleHBvcnQgaW50ZXJmYWNlIENsaXBBbmFseXNpcyB7CiAgZHVyYXRpb246IG51bWJlcjsKICBjcmVhdGVkPzogc3RyaW5nOwogIHNhbXBsZXM6IENsaXBTYW1wbGVbXTsKfQoKZXhwb3J0IGludGVyZmFjZSBNdXNpY0FuYWx5c2lzIHsKICBkdXJhdGlvbjogbnVtYmVyOwogIGJwbTogbnVtYmVyOwogIGJlYXRzOiBudW1iZXJbXTsKICBiYXJQaGFzZTogbnVtYmVyOwogIGVuZXJneTogbnVtYmVyW107Cn0KCmV4cG9ydCBpbnRlcmZhY2UgU2NydWJTdHJpcEluZm8gewogIHJhdGU6IG51bWJlcjsKICBmaWxlczogc3RyaW5nW107Cn0KCmV4cG9ydCBpbnRlcmZhY2UgQWdlbnRDdXJzb3JTdGF0ZSB7CiAgbmFtZTogc3RyaW5nOwogIGFjdGl2aXR5Pzogc3RyaW5nOwogIHRhcmdldEtpbmQ/OiAnYXNzZXQnIHwgJ3ZpZXdlcicgfCAnY2xpcCcgfCAndHJhY2snIHwgJ2luc3BlY3RvcicgfCAndGltZWxpbmUnOwogIGFzc2V0SUQ/OiBzdHJpbmc7CiAgY2xpcElEPzogc3RyaW5nOwogIHRyYWNrSUQ/OiBzdHJpbmc7CiAgdGltZT86IG51bWJlcjsKICB0b29sTmFtZT86IHN0cmluZzsKICB1cGRhdGVkQXQ6IG51bWJlcjsKfQoKZXhwb3J0IHR5cGUgTWFnaWNTdGFnZSA9ICdsb29raW5nJyB8ICdhbmFseXppbmcnIHwgJ3RoaW5raW5nJyB8ICdlZGl0aW5nJzsKZXhwb3J0IHR5cGUgTWFnaWNCYWNrZW5kID0gJ2Nsb3VkJyB8ICdsb2NhbCcgfCAnY29kZXgnIHwgJ2NsYXVkZSc7CgpleHBvcnQgaW50ZXJmYWNlIE1hZ2ljUHJvY2Vzc1N0ZXAgewogIGlkOiBzdHJpbmc7CiAgdGltZXN0YW1wOiBudW1iZXI7CiAgc3RhZ2U6IE1hZ2ljU3RhZ2U7CiAgdGl0bGU6IHN0cmluZzsKICBkZXRhaWw/OiBzdHJpbmc7CiAgdG9vbE5hbWU/OiBzdHJpbmc7CiAgc3RhdHVzOiAncnVubmluZycgfCAnZG9uZScgfCAnZXJyb3InOwp9CgpleHBvcnQgaW50ZXJmYWNlIE1hZ2ljUnVuUmVjb3JkIHsKICBpZDogc3RyaW5nOwogIGJhY2tlbmQ6IE1hZ2ljQmFja2VuZCB8ICdleHRlcm5hbCc7CiAgd29ya2VyOiBzdHJpbmc7CiAgZGV0YWlsPzogc3RyaW5nOwogIHByb21wdDogc3RyaW5nOwogIHN0YXJ0ZWRBdDogbnVtYmVyOwogIGZpbmlzaGVkQXQ/OiBudW1iZXI7CiAgZHVyYXRpb25Ncz86IG51bWJlcjsKICBzdGF0dXM6ICdydW5uaW5nJyB8ICdkb25lJyB8ICdlcnJvcicgfCAnY2FuY2VsbGVkJzsKICBzdW1tYXJ5Pzogc3RyaW5nOwogIGNoYW5nZWQ/OiBib29sZWFuOwogIHN0ZXBzOiBNYWdpY1Byb2Nlc3NTdGVwW107Cn0KCmV4cG9ydCBpbnRlcmZhY2UgRXh0ZXJuYWxNY3BBY3Rpdml0eUV2ZW50IHsKICBpZDogc3RyaW5nOwogIHRpbWVzdGFtcDogbnVtYmVyOwogIGNsaWVudE5hbWU6IHN0cmluZzsKICB0b29sTmFtZTogc3RyaW5nOwogIGRldGFpbD86IHN0cmluZzsKICBzdGF0dXM6ICdkb25lJyB8ICdlcnJvcic7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgTWFnaWNQcm9ncmVzc0V2ZW50IHsKICBydW5JZDogc3RyaW5nOwogIHN0YWdlOiBNYWdpY1N0YWdlOwogIHdvcmtlcjogc3RyaW5nOwogIGJhY2tlbmQ/OiBNYWdpY0JhY2tlbmQ7CiAgc3RhdHVzPzogc3RyaW5nOwogIGZvY3VzQXNzZXRJZD86IHN0cmluZzsKICBkcmFmdFByb2plY3Q/OiBQcm9qZWN0OwogIHN0ZXA/OiBNYWdpY1Byb2Nlc3NTdGVwOwp9CgpleHBvcnQgaW50ZXJmYWNlIE1hZ2ljUnVuUmVzdWx0IHsKICBvazogYm9vbGVhbjsKICBjYW5jZWxsZWQ/OiBib29sZWFuOwogIHN1bW1hcnk6IHN0cmluZzsKICBzdGVwcz86IHN0cmluZ1tdOwogIHByb2Nlc3NTdGVwcz86IE1hZ2ljUHJvY2Vzc1N0ZXBbXTsKICBiYWNrZW5kPzogTWFnaWNCYWNrZW5kOwogIHdvcmtlcj86IHN0cmluZzsKICBkZXRhaWw/OiBzdHJpbmc7CiAgY2hhbmdlZD86IGJvb2xlYW47CiAgZHVyYXRpb25Ncz86IG51bWJlcjsKICBiZWZvcmVQcm9qZWN0PzogUHJvamVjdDsKICBhZnRlclByb2plY3Q/OiBQcm9qZWN0Owp9CgpleHBvcnQgdHlwZSBFeHBvcnRGb3JtYXQgPSAndmlkZW8nIHwgJ2F1ZGlvJzsKZXhwb3J0IHR5cGUgRXhwb3J0UXVhbGl0eSA9ICdoaWdoJyB8ICd3ZWInOwpleHBvcnQgdHlwZSBFeHBvcnRDb2RlYyA9ICdoMjY0JyB8ICdoZXZjJzsKZXhwb3J0IHR5cGUgRXhwb3J0U2hhcGUgPSAnb3JpZ2luYWwnIHwgJ3ZlcnRpY2FsJyB8ICdzcXVhcmUnIHwgJ3BvcnRyYWl0JzsKCmV4cG9ydCBpbnRlcmZhY2UgRXhwb3J0U2V0dGluZ3MgewogIGZvcm1hdDogRXhwb3J0Rm9ybWF0OwogIGhlaWdodD86IG51bWJlcjsKICBjb2RlYzogRXhwb3J0Q29kZWM7CiAgcXVhbGl0eTogRXhwb3J0UXVhbGl0eTsKICBpbmNsdWRlQXVkaW86IGJvb2xlYW47CiAgbG91ZG5lc3M/OiBudW1iZXI7CiAgc2hhcGU6IEV4cG9ydFNoYXBlOwogIHJlZnJhbWVYOiBudW1iZXI7CiAgcmVmcmFtZVk6IG51bWJlcjsKICByYW5nZU9ubHk6IGJvb2xlYW47CiAgZW5oYW5jZURldGFpbD86IGJvb2xlYW47CiAgbmFtZT86IHN0cmluZzsKICBvdXRwdXREaXI/OiBzdHJpbmc7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgQ2xvdWRBaUNvbmZpZyB7CiAgYmFzZVVybDogc3RyaW5nOwogIGFwaUtleTogc3RyaW5nOwogIG1vZGVsOiBzdHJpbmc7Cn0KCmV4cG9ydCBpbnRlcmZhY2UgQXBwVXBkYXRlSW5mbyB7CiAgY3VycmVudFZlcnNpb246IHN0cmluZzsKICBsYXRlc3RWZXJzaW9uPzogc3RyaW5nOwogIGhhc1VwZGF0ZTogYm9vbGVhbjsKICByZWxlYXNlVXJsPzogc3RyaW5nOwogIGVycm9yPzogc3RyaW5nOwp9CgpleHBvcnQgaW50ZXJmYWNlIEV4cG9ydEpvYkluZm8gewogIGlkOiBzdHJpbmc7CiAgZmlsZTogc3RyaW5nOwogIHN0YXR1czogJ3dhaXRpbmcnIHwgJ3J1bm5pbmcnIHwgJ2RvbmUnIHwgJ2ZhaWxlZCcgfCAnY2FuY2VsbGVkJzsKICBwcm9ncmVzczogbnVtYmVyOwogIHNpemVMYWJlbDogc3RyaW5nOwogIGVycm9yPzogc3RyaW5nOwp9Cg==
+export interface RGBA {
+  r: number;
+  g: number;
+  b: number;
+  a: number;
+}
+
+export const RGBA_WHITE: RGBA = { r: 1, g: 1, b: 1, a: 1 };
+export const RGBA_BLACK: RGBA = { r: 0, g: 0, b: 0, a: 1 };
+
+export type TrackKind = 'video' | 'audio';
+
+export interface Track {
+  id: string;
+  kind: TrackKind;
+  hidden?: boolean;
+  muted?: boolean;
+  gainDB?: number;
+  solo?: boolean;
+  locked?: boolean;
+  duckUnder?: string;
+  duckDB?: number;
+}
+
+export type ClipKind = 'video' | 'audio' | 'image' | 'solid' | 'text';
+
+export interface TextStyle {
+  string: string;
+  fontName: string;
+  bold: boolean;
+  size: number;
+  color: RGBA;
+  x: number;
+  y: number;
+  strokeColor?: RGBA;
+  strokeWidth?: number;
+  bgColor?: RGBA;
+  bgPadding?: number;
+}
+
+export type FadeCurve = 'linear' | 'easeIn' | 'easeOut' | 'smooth';
+
+export interface WheelPoint {
+  x: number;
+  y: number;
+}
+
+export interface ColorGrade {
+  look?: string;
+  lookIntensity?: number;
+  exposure?: number;
+  contrast?: number;
+  saturation?: number;
+  temperature?: number;
+  tint?: number;
+  shadows?: WheelPoint;
+  midtones?: WheelPoint;
+  highlights?: WheelPoint;
+}
+
+export type TransitionKind = 'dissolve' | 'dipToBlack' | 'wipe';
+
+export interface Transition {
+  kind: TransitionKind;
+  duration: number;
+}
+
+export type ZoomMode = 'in' | 'inOut' | 'out';
+
+export interface ZoomMove {
+  mode: ZoomMode;
+  p1: number;
+  p2: number;
+  p3: number;
+  p4: number;
+  smooth?: boolean;
+}
+
+export interface ClipTransform {
+  scale: number;
+  x: number;
+  y: number;
+  zoom?: ZoomMove;
+}
+
+export interface SpeedRamp {
+  inFrom: number;
+  inTo: number;
+  outFrom: number;
+  outTo: number;
+  startSpeed: number;
+  endSpeed: number;
+}
+
+export interface ReverseSource {
+  assetID: string;
+  sourceStart: number;
+}
+
+export interface Clip {
+  id: string;
+  trackID: string;
+  kind: ClipKind;
+  assetID?: string;
+  start: number;
+  duration: number;
+  sourceStart?: number;
+  speed?: number;
+  fadeIn?: number;
+  fadeOut?: number;
+  fadeInCurve?: FadeCurve;
+  fadeOutCurve?: FadeCurve;
+  gainDB?: number;
+  linkID?: string;
+  color?: RGBA;
+  text?: TextStyle;
+  grade?: ColorGrade;
+  transform?: ClipTransform;
+  transitionIn?: Transition;
+  freeze?: boolean;
+  reversedFrom?: ReverseSource;
+  reversed?: boolean;
+  ramp?: SpeedRamp;
+  captioned?: boolean;
+}
+
+export type MediaKind = 'video' | 'audio' | 'image';
+
+export interface MediaAsset {
+  id: string;
+  path: string;
+  relativePath?: string;
+  playablePath?: string;
+  folder?: string;
+  name: string;
+  kind: MediaKind;
+  duration: number;
+  width: number;
+  height: number;
+  fps: number;
+  hasAudio: boolean;
+}
+
+export type MarkerTint = 'orange' | 'red' | 'yellow' | 'green' | 'blue' | 'purple';
+
+export interface Marker {
+  id: string;
+  time: number;
+  name: string;
+  color?: MarkerTint;
+}
+
+export interface PlayRange {
+  in: number;
+  out: number;
+}
+
+export interface CaptionStyle {
+  size: number;
+  position: number;
+  highlight: boolean;
+  hidden?: boolean;
+}
+
+export interface CaptionFix {
+  start: number;
+  text?: string;
+  merged?: boolean;
+}
+
+export interface TranscriptWord {
+  start: number;
+  end: number;
+  text: string;
+}
+
+export interface Transcript {
+  duration: number;
+  words: TranscriptWord[];
+}
+
+export interface CaptionWord {
+  start: number;
+  end: number;
+  text: string;
+  source: number;
+  covers: number[];
+}
+
+export interface CaptionBlock {
+  clipID: string;
+  assetID: string;
+  start: number;
+  end: number;
+  words: CaptionWord[];
+}
+
+export interface Project {
+  version: number;
+  width: number;
+  height: number;
+  fps: number;
+  settingsLocked?: boolean;
+  assets: MediaAsset[];
+  videoTracks: Track[];
+  audioTracks: Track[];
+  clips: Clip[];
+  markers?: Marker[];
+  playRange?: PlayRange;
+  captions?: CaptionStyle;
+  captionFixes?: Record<string, CaptionFix[]>;
+  exportDir?: string;
+  exportName?: string;
+  magicHistory?: MagicHistoryEntry[];
+}
+
+export interface MagicHistoryEntry {
+  text: string;
+  tab: string;
+  timestamp: number;
+}
+
+export interface ClipSample {
+  time: number;
+  luma: number;
+  sharpness: number;
+  motion: number;
+  color: number;
+  faces: number;
+  aesthetic?: number;
+  utility?: boolean;
+}
+
+export interface ClipAnalysis {
+  duration: number;
+  created?: string;
+  samples: ClipSample[];
+}
+
+export interface MusicAnalysis {
+  duration: number;
+  bpm: number;
+  beats: number[];
+  barPhase: number;
+  energy: number[];
+}
+
+export interface ScrubStripInfo {
+  rate: number;
+  files: string[];
+}
+
+export interface AgentCursorState {
+  name: string;
+  activity?: string;
+  targetKind?: 'asset' | 'viewer' | 'clip' | 'track' | 'inspector' | 'timeline';
+  assetID?: string;
+  clipID?: string;
+  trackID?: string;
+  time?: number;
+  toolName?: string;
+  updatedAt: number;
+}
+
+export type MagicStage = 'looking' | 'analyzing' | 'thinking' | 'editing';
+export type MagicBackend = 'cloud' | 'local' | 'codex' | 'claude';
+
+export interface MagicProcessStep {
+  id: string;
+  timestamp: number;
+  stage: MagicStage;
+  title: string;
+  detail?: string;
+  toolName?: string;
+  status: 'running' | 'done' | 'error';
+}
+
+export interface MagicRunRecord {
+  id: string;
+  backend: MagicBackend | 'external';
+  worker: string;
+  detail?: string;
+  prompt: string;
+  startedAt: number;
+  finishedAt?: number;
+  durationMs?: number;
+  status: 'running' | 'done' | 'error' | 'cancelled';
+  summary?: string;
+  changed?: boolean;
+  steps: MagicProcessStep[];
+}
+
+export interface ExternalMcpActivityEvent {
+  id: string;
+  timestamp: number;
+  clientName: string;
+  toolName: string;
+  detail?: string;
+  status: 'done' | 'error';
+}
+
+export interface MagicProgressEvent {
+  runId: string;
+  stage: MagicStage;
+  worker: string;
+  backend?: MagicBackend;
+  status?: string;
+  focusAssetId?: string;
+  draftProject?: Project;
+  step?: MagicProcessStep;
+}
+
+export interface MagicRunResult {
+  ok: boolean;
+  cancelled?: boolean;
+  summary: string;
+  steps?: string[];
+  processSteps?: MagicProcessStep[];
+  backend?: MagicBackend;
+  worker?: string;
+  detail?: string;
+  changed?: boolean;
+  durationMs?: number;
+  beforeProject?: Project;
+  afterProject?: Project;
+}
+
+export type ExportFormat = 'video' | 'audio';
+export type ExportQuality = 'high' | 'web';
+export type ExportCodec = 'h264' | 'hevc';
+export type ExportShape = 'original' | 'vertical' | 'square' | 'portrait';
+
+export interface ExportSettings {
+  format: ExportFormat;
+  height?: number;
+  codec: ExportCodec;
+  quality: ExportQuality;
+  includeAudio: boolean;
+  loudness?: number;
+  shape: ExportShape;
+  reframeX: number;
+  reframeY: number;
+  rangeOnly: boolean;
+  enhanceDetail?: boolean;
+  name?: string;
+  outputDir?: string;
+}
+
+export interface CloudAiConfig {
+  baseUrl: string;
+  apiKey: string;
+  model: string;
+}
+
+export interface AppUpdateInfo {
+  currentVersion: string;
+  latestVersion?: string;
+  hasUpdate: boolean;
+  releaseUrl?: string;
+  error?: string;
+}
+
+export interface ExportJobInfo {
+  id: string;
+  file: string;
+  status: 'waiting' | 'running' | 'done' | 'failed' | 'cancelled';
+  progress: number;
+  sizeLabel: string;
+  error?: string;
+}
