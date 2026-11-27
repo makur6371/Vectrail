@@ -1,1 +1,144 @@
-aW1wb3J0IHsgZXhlY0ZpbGUgfSBmcm9tICdub2RlOmNoaWxkX3Byb2Nlc3MnOwppbXBvcnQgeyBwcm9taXNpZnkgfSBmcm9tICdub2RlOnV0aWwnOwppbXBvcnQgdHlwZSB7IERqaUVudmlyb25tZW50U3RhdHVzIH0gZnJvbSAnLi4vLi4vLi4vc2hhcmVkL2RqaVR5cGVzJzsKCmNvbnN0IGV4ZWNGaWxlQXN5bmMgPSBwcm9taXNpZnkoZXhlY0ZpbGUpOwoKYXN5bmMgZnVuY3Rpb24gcnVuUXVpZXQoY21kOiBzdHJpbmcsIGFyZ3M6IHN0cmluZ1tdLCB0aW1lb3V0TXMgPSA0MDAwKTogUHJvbWlzZTx7IG9rOiBib29sZWFuOyBzdGRvdXQ6IHN0cmluZzsgc3RkZXJyOiBzdHJpbmcgfT4gewogIHRyeSB7CiAgICBjb25zdCByZXMgPSBhd2FpdCBleGVjRmlsZUFzeW5jKGNtZCwgYXJncywgewogICAgICB0aW1lb3V0OiB0aW1lb3V0TXMsCiAgICAgIHdpbmRvd3NIaWRlOiB0cnVlLAogICAgICBlbmNvZGluZzogJ3V0ZjgnLAogICAgfSk7CiAgICByZXR1cm4geyBvazogdHJ1ZSwgc3Rkb3V0OiByZXMuc3Rkb3V0ID8/ICcnLCBzdGRlcnI6IHJlcy5zdGRlcnIgPz8gJycgfTsKICB9IGNhdGNoIChlcnIpIHsKICAgIGNvbnN0IGUgPSBlcnIgYXMgeyBzdGRvdXQ/OiBzdHJpbmc7IHN0ZGVycj86IHN0cmluZzsgbWVzc2FnZT86IHN0cmluZyB9OwogICAgcmV0dXJuIHsgb2s6IGZhbHNlLCBzdGRvdXQ6IGUuc3Rkb3V0ID8/ICcnLCBzdGRlcnI6IGUuc3RkZXJyID8/IGUubWVzc2FnZSA/PyAnJyB9OwogIH0KfQoKZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGdldFdpbmRvd3NXaWZpUHJvZmlsZSgpOiBQcm9taXNlPHN0cmluZyB8IG51bGw+IHsKICBpZiAocHJvY2Vzcy5wbGF0Zm9ybSAhPT0gJ3dpbjMyJykgcmV0dXJuIG51bGw7CiAgY29uc3Qgd2xhbiA9IGF3YWl0IHJ1blF1aWV0KCduZXRzaCcsIFsnd2xhbicsICdzaG93JywgJ2ludGVyZmFjZXMnXSwgMzAwMCk7CiAgY29uc3QgbWF0Y2ggPSB3bGFuLnN0ZG91dC5tYXRjaCgvXlxzKig/OlByb2ZpbGV86YWN572u5paH5Lu2KVxzKjpccyooLispJC9pbSk7CiAgcmV0dXJuIG1hdGNoID8gbWF0Y2hbMV0udHJpbSgpIDogbnVsbDsKfQoKZXhwb3J0IGFzeW5jIGZ1bmN0aW9uIGRldGVjdFB5dGhvbkFuZEJsZWFrKCk6IFByb21pc2U8eyBweXRob25QYXRoOiBzdHJpbmcgfCBudWxsOyBweXRob25BdmFpbGFibGU6IGJvb2xlYW47IGJsZWFrQXZhaWxhYmxlOiBib29sZWFuIH0+IHsKICBjb25zdCBjYW5kaWRhdGVzOiBBcnJheTxbc3RyaW5nLCBzdHJpbmdbXV0+ID0gWwogICAgWydweXRob24nLCBbJy1jJywgJ2ltcG9ydCBzeXMsIGltcG9ydGxpYi51dGlsOyBwcmludChzeXMuZXhlY3V0YWJsZSk7IHByaW50KCIxIiBpZiBpbXBvcnRsaWIudXRpbC5maW5kX3NwZWMoImJsZWFrIikgZWxzZSAiMCIpJ11dLAogICAgWydweScsIFsnLTMnLCAnLWMnLCAnaW1wb3J0IHN5cywgaW1wb3J0bGliLnV0aWw7IHByaW50KHN5cy5leGVjdXRhYmxlKTsgcHJpbnQoIjEiIGlmIGltcG9ydGxpYi51dGlsLmZpbmRfc3BlYygiYmxlYWsiKSBlbHNlICIwIiknXV0sCiAgXTsKICBmb3IgKGNvbnN0IFtiaW4sIGFyZ3NdIG9mIGNhbmRpZGF0ZXMpIHsKICAgIGNvbnN0IHJlcyA9IGF3YWl0IHJ1blF1aWV0KGJpbiwgYXJncywgMzUwMCk7CiAgICBpZiAocmVzLm9rKSB7CiAgICAgIGNvbnN0IGxpbmVzID0gcmVzLnN0ZG91dC50cmltKCkuc3BsaXQoL1xyP1xuLykubWFwKChzKSA9PiBzLnRyaW0oKSkuZmlsdGVyKEJvb2xlYW4pOwogICAgICBpZiAobGluZXMubGVuZ3RoID49IDIpIHsKICAgICAgICByZXR1cm4gewogICAgICAgICAgcHl0aG9uUGF0aDogbGluZXNbMF0sCiAgICAgICAgICBweXRob25BdmFpbGFibGU6IHRydWUsCiAgICAgICAgICBibGVha0F2YWlsYWJsZTogbGluZXNbMV0gPT09ICcxJywKICAgICAgICB9OwogICAgICB9CiAgICB9CiAgfQogIHJldHVybiB7IHB5dGhvblBhdGg6IG51bGwsIHB5dGhvbkF2YWlsYWJsZTogZmFsc2UsIGJsZWFrQXZhaWxhYmxlOiBmYWxzZSB9Owp9CgpleHBvcnQgYXN5bmMgZnVuY3Rpb24gcHJvYmVXaW5kb3dzTmV0d29ya0FuZFJhZGlvcygpOiBQcm9taXNlPERqaUVudmlyb25tZW50U3RhdHVzPiB7CiAgY29uc3Qgbm90ZXM6IHN0cmluZ1tdID0gW107CiAgY29uc3QgcHlQcm9taXNlID0gZGV0ZWN0UHl0aG9uQW5kQmxlYWsoKTsKCiAgbGV0IHdpZmlSZWFkeSA9IGZhbHNlOwogIGxldCB3aWZpQ29ubmVjdGVkUHJvZmlsZTogc3RyaW5nIHwgbnVsbCA9IG51bGw7CiAgbGV0IGJsdWV0b290aFJlYWR5ID0gZmFsc2U7CiAgbGV0IGV0aGVybmV0QWN0aXZlID0gZmFsc2U7CgogIGlmIChwcm9jZXNzLnBsYXRmb3JtID09PSAnd2luMzInKSB7CiAgICBjb25zdCBbcHksIHdsYW4sIGlwUmVzLCBidFJlc10gPSBhd2FpdCBQcm9taXNlLmFsbChbCiAgICAgIHB5UHJvbWlzZSwKICAgICAgcnVuUXVpZXQoJ25ldHNoJywgWyd3bGFuJywgJ3Nob3cnLCAnaW50ZXJmYWNlcyddLCAzNTAwKSwKICAgICAgcnVuUXVpZXQoJ2lwY29uZmlnJywgW10sIDMwMDApLAogICAgICBydW5RdWlldCgKICAgICAgICAncG93ZXJzaGVsbCcsCiAgICAgICAgWwogICAgICAgICAgJy1Ob1Byb2ZpbGUnLAogICAgICAgICAgJy1Ob25JbnRlcmFjdGl2ZScsCiAgICAgICAgICAnLUNvbW1hbmQnLAogICAgICAgICAgJ0dldC1QbnBEZXZpY2UgLUNsYXNzIEJsdWV0b290aCAtRXJyb3JBY3Rpb24gU2lsZW50bHlDb250aW51ZSB8IFdoZXJlLU9iamVjdCB7JF8uU3RhdHVzIC1lcSAiT0sifSB8IFNlbGVjdC1PYmplY3QgLUZpcnN0IDEgLUV4cGFuZFByb3BlcnR5IEZyaWVuZGx5TmFtZScsCiAgICAgICAgXSwKICAgICAgICA0MDAwCiAgICAgICksCiAgICBdKTsKICAgIHJldHVybiBidWlsZEVudmlyb25tZW50U3RhdHVzKHB5LCB3bGFuLCBpcFJlcywgYnRSZXMsIG5vdGVzKTsKICB9IGVsc2UgewogICAgY29uc3QgcHkgPSBhd2FpdCBweVByb21pc2U7CiAgICBub3Rlcy5wdXNoKCdESkkgd2lyZWxlc3MgaGFyZHdhcmUgdHJhbnNwb3J0IHRhcmdldHMgV2luZG93cyAxMC8xMTsgc2ltdWxhdGVkIGNhbWVyYSBtb2RlIHJlbWFpbnMgYXZhaWxhYmxlLicpOwogICAgcmV0dXJuIGZpbmFsaXplRW52aXJvbm1lbnRTdGF0dXMocHksIGJsdWV0b290aFJlYWR5LCB3aWZpUmVhZHksIHdpZmlDb25uZWN0ZWRQcm9maWxlLCBldGhlcm5ldEFjdGl2ZSwgbm90ZXMpOwogIH0KfQoKZnVuY3Rpb24gYnVpbGRFbnZpcm9ubWVudFN0YXR1cygKICBweTogeyBweXRob25QYXRoOiBzdHJpbmcgfCBudWxsOyBweXRob25BdmFpbGFibGU6IGJvb2xlYW47IGJsZWFrQXZhaWxhYmxlOiBib29sZWFuIH0sCiAgd2xhbjogeyBvazogYm9vbGVhbjsgc3Rkb3V0OiBzdHJpbmc7IHN0ZGVycjogc3RyaW5nIH0sCiAgaXBSZXM6IHsgb2s6IGJvb2xlYW47IHN0ZG91dDogc3RyaW5nOyBzdGRlcnI6IHN0cmluZyB9LAogIGJ0UmVzOiB7IG9rOiBib29sZWFuOyBzdGRvdXQ6IHN0cmluZzsgc3RkZXJyOiBzdHJpbmcgfSwKICBub3Rlczogc3RyaW5nW10KKTogRGppRW52aXJvbm1lbnRTdGF0dXMgewogIGxldCB3aWZpUmVhZHkgPSBmYWxzZTsKICBsZXQgd2lmaUNvbm5lY3RlZFByb2ZpbGU6IHN0cmluZyB8IG51bGwgPSBudWxsOwogIGxldCBibHVldG9vdGhSZWFkeSA9IGZhbHNlOwogIGxldCBldGhlcm5ldEFjdGl2ZSA9IGZhbHNlOwogICAgY29uc3Qgd2xhblRleHQgPSBgJHt3bGFuLnN0ZG91dH1cbiR7d2xhbi5zdGRlcnJ9YDsKICAgIGlmICgvbG9jYXRpb24vaS50ZXN0KHdsYW5UZXh0KSAmJiAoL3Blcm1pc3Npb24vaS50ZXN0KHdsYW5UZXh0KSB8fCAvc2VydmljZXMvaS50ZXN0KHdsYW5UZXh0KSkpIHsKICAgICAgd2lmaVJlYWR5ID0gdHJ1ZTsKICAgICAgbm90ZXMucHVzaCgnV2luZG93cyBMb2NhdGlvbiBTZXJ2aWNlcyBpcyBkaXNhYmxlZDsgbmV0c2ggc3RhdHVzIHJlYWRiYWNrIGlzIHJlc3RyaWN0ZWQsIGZhbGxpbmcgYmFjayB0byBESENQIElQIGNoZWNrLicpOwogICAgfSBlbHNlIGlmICh3bGFuLm9rICYmIC9OYW1lfOWQjeensHxTdGF0ZXznirbmgIEvaS50ZXN0KHdsYW4uc3Rkb3V0KSkgewogICAgICB3aWZpUmVhZHkgPSB0cnVlOwogICAgICBjb25zdCBwcm9maWxlTWF0Y2ggPSB3bGFuLnN0ZG91dC5tYXRjaCgvXlxzKig/OlByb2ZpbGV86YWN572u5paH5Lu2KVxzKjpccyooLispJC9pbSk7CiAgICAgIGlmIChwcm9maWxlTWF0Y2gpIHdpZmlDb25uZWN0ZWRQcm9maWxlID0gcHJvZmlsZU1hdGNoWzFdLnRyaW0oKTsKICAgIH0KCiAgICBpZiAoL0V0aGVybmV0fOS7peWkque9kS9pLnRlc3QoaXBSZXMuc3Rkb3V0KSAmJiAvSVB2NFteOl0qOlxzKig/ITE2OVwuMjU0XC4pXGQrXC5cZCtcLlxkK1wuXGQrL2kudGVzdChpcFJlcy5zdGRvdXQpKSB7CiAgICAgIGV0aGVybmV0QWN0aXZlID0gdHJ1ZTsKICAgIH0KCiAgICBibHVldG9vdGhSZWFkeSA9IGJ0UmVzLm9rICYmIGJ0UmVzLnN0ZG91dC50cmltKCkubGVuZ3RoID4gMDsKCiAgICBpZiAod2lmaVJlYWR5ICYmICFldGhlcm5ldEFjdGl2ZSkgewogICAgICBub3Rlcy5wdXNoKAogICAgICAgICdTaW5nbGUgV2ktRmkgYWRhcHRlciBkZXRlY3RlZCB3aXRob3V0IHdpcmVkIEV0aGVybmV0OiBjb25uZWN0aW5nIHRvIHRoZSBjYW1lcmEgQVAgdGVtcG9yYXJpbHkgcGF1c2VzIFBDIGludGVybmV0IHVudGlsIGRpc2Nvbm5lY3RlZC4nCiAgICAgICk7CiAgICB9IGVsc2UgaWYgKGV0aGVybmV0QWN0aXZlKSB7CiAgICAgIG5vdGVzLnB1c2goJ1dpcmVkIEV0aGVybmV0IGlzIGFjdGl2ZSBhbG9uZ3NpZGUgV2ktRmk6IFBDIGludGVybmV0IHN0YXlzIG9ubGluZSB3aGlsZSB0cmFuc2ZlcnJpbmcgZnJvbSBjYW1lcmEgQVAuJyk7CiAgICB9CiAgcmV0dXJuIGZpbmFsaXplRW52aXJvbm1lbnRTdGF0dXMocHksIGJsdWV0b290aFJlYWR5LCB3aWZpUmVhZHksIHdpZmlDb25uZWN0ZWRQcm9maWxlLCBldGhlcm5ldEFjdGl2ZSwgbm90ZXMpOwp9CgpmdW5jdGlvbiBmaW5hbGl6ZUVudmlyb25tZW50U3RhdHVzKAogIHB5OiB7IHB5dGhvblBhdGg6IHN0cmluZyB8IG51bGw7IHB5dGhvbkF2YWlsYWJsZTogYm9vbGVhbjsgYmxlYWtBdmFpbGFibGU6IGJvb2xlYW4gfSwKICBibHVldG9vdGhSZWFkeTogYm9vbGVhbiwKICB3aWZpUmVhZHk6IGJvb2xlYW4sCiAgd2lmaUNvbm5lY3RlZFByb2ZpbGU6IHN0cmluZyB8IG51bGwsCiAgZXRoZXJuZXRBY3RpdmU6IGJvb2xlYW4sCiAgbm90ZXM6IHN0cmluZ1tdCik6IERqaUVudmlyb25tZW50U3RhdHVzIHsKICBpZiAoIXB5LnB5dGhvbkF2YWlsYWJsZSkgewogICAgbm90ZXMucHVzaCgnUHl0aG9uIDMuMTArIHdhcyBub3QgZm91bmQgb24gUEFUSCBmb3IgdGhlIEJMRS9EYXRhbGluayBzaWRlY2FyLicpOwogIH0gZWxzZSBpZiAoIXB5LmJsZWFrQXZhaWxhYmxlKSB7CiAgICBub3Rlcy5wdXNoKCdQeXRob24gcGFja2FnZSAiYmxlYWsiIGlzIG5vdCBpbnN0YWxsZWQgeWV0IChwaXAgaW5zdGFsbCBibGVhaykgZm9yIGxpdmUgQkxFIGNhbWVyYSBkaXNjb3ZlcnkuJyk7CiAgfQoKICByZXR1cm4gewogICAgcGxhdGZvcm06IHByb2Nlc3MucGxhdGZvcm0sCiAgICBweXRob25QYXRoOiBweS5weXRob25QYXRoLAogICAgcHl0aG9uQXZhaWxhYmxlOiBweS5weXRob25BdmFpbGFibGUsCiAgICBibGVha0F2YWlsYWJsZTogcHkuYmxlYWtBdmFpbGFibGUsCiAgICBibHVldG9vdGhSZWFkeSwKICAgIHdpZmlSZWFkeSwKICAgIHdpZmlDb25uZWN0ZWRQcm9maWxlLAogICAgZXRoZXJuZXRBY3RpdmUsCiAgICBub3RlcywKICB9Owp9Cg==
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import type { DjiEnvironmentStatus } from '../../../shared/djiTypes';
+
+const execFileAsync = promisify(execFile);
+
+async function runQuiet(cmd: string, args: string[], timeoutMs = 4000): Promise<{ ok: boolean; stdout: string; stderr: string }> {
+  try {
+    const res = await execFileAsync(cmd, args, {
+      timeout: timeoutMs,
+      windowsHide: true,
+      encoding: 'utf8',
+    });
+    return { ok: true, stdout: res.stdout ?? '', stderr: res.stderr ?? '' };
+  } catch (err) {
+    const e = err as { stdout?: string; stderr?: string; message?: string };
+    return { ok: false, stdout: e.stdout ?? '', stderr: e.stderr ?? e.message ?? '' };
+  }
+}
+
+export async function getWindowsWifiProfile(): Promise<string | null> {
+  if (process.platform !== 'win32') return null;
+  const wlan = await runQuiet('netsh', ['wlan', 'show', 'interfaces'], 3000);
+  const match = wlan.stdout.match(/^\s*(?:Profile|配置文件)\s*:\s*(.+)$/im);
+  return match ? match[1].trim() : null;
+}
+
+export async function detectPythonAndBleak(): Promise<{ pythonPath: string | null; pythonAvailable: boolean; bleakAvailable: boolean }> {
+  const candidates: Array<[string, string[]]> = [
+    ['python', ['-c', 'import sys, importlib.util; print(sys.executable); print("1" if importlib.util.find_spec("bleak") else "0")']],
+    ['py', ['-3', '-c', 'import sys, importlib.util; print(sys.executable); print("1" if importlib.util.find_spec("bleak") else "0")']],
+  ];
+  for (const [bin, args] of candidates) {
+    const res = await runQuiet(bin, args, 3500);
+    if (res.ok) {
+      const lines = res.stdout.trim().split(/\r?\n/).map((s) => s.trim()).filter(Boolean);
+      if (lines.length >= 2) {
+        return {
+          pythonPath: lines[0],
+          pythonAvailable: true,
+          bleakAvailable: lines[1] === '1',
+        };
+      }
+    }
+  }
+  return { pythonPath: null, pythonAvailable: false, bleakAvailable: false };
+}
+
+export async function probeWindowsNetworkAndRadios(): Promise<DjiEnvironmentStatus> {
+  const notes: string[] = [];
+  const pyPromise = detectPythonAndBleak();
+
+  let wifiReady = false;
+  let wifiConnectedProfile: string | null = null;
+  let bluetoothReady = false;
+  let ethernetActive = false;
+
+  if (process.platform === 'win32') {
+    const [py, wlan, ipRes, btRes] = await Promise.all([
+      pyPromise,
+      runQuiet('netsh', ['wlan', 'show', 'interfaces'], 3500),
+      runQuiet('ipconfig', [], 3000),
+      runQuiet(
+        'powershell',
+        [
+          '-NoProfile',
+          '-NonInteractive',
+          '-Command',
+          'Get-PnpDevice -Class Bluetooth -ErrorAction SilentlyContinue | Where-Object {$_.Status -eq "OK"} | Select-Object -First 1 -ExpandProperty FriendlyName',
+        ],
+        4000
+      ),
+    ]);
+    return buildEnvironmentStatus(py, wlan, ipRes, btRes, notes);
+  } else {
+    const py = await pyPromise;
+    notes.push('DJI wireless hardware transport targets Windows 10/11; simulated camera mode remains available.');
+    return finalizeEnvironmentStatus(py, bluetoothReady, wifiReady, wifiConnectedProfile, ethernetActive, notes);
+  }
+}
+
+function buildEnvironmentStatus(
+  py: { pythonPath: string | null; pythonAvailable: boolean; bleakAvailable: boolean },
+  wlan: { ok: boolean; stdout: string; stderr: string },
+  ipRes: { ok: boolean; stdout: string; stderr: string },
+  btRes: { ok: boolean; stdout: string; stderr: string },
+  notes: string[]
+): DjiEnvironmentStatus {
+  let wifiReady = false;
+  let wifiConnectedProfile: string | null = null;
+  let bluetoothReady = false;
+  let ethernetActive = false;
+    const wlanText = `${wlan.stdout}\n${wlan.stderr}`;
+    if (/location/i.test(wlanText) && (/permission/i.test(wlanText) || /services/i.test(wlanText))) {
+      wifiReady = true;
+      notes.push('Windows Location Services is disabled; netsh status readback is restricted, falling back to DHCP IP check.');
+    } else if (wlan.ok && /Name|名称|State|状态/i.test(wlan.stdout)) {
+      wifiReady = true;
+      const profileMatch = wlan.stdout.match(/^\s*(?:Profile|配置文件)\s*:\s*(.+)$/im);
+      if (profileMatch) wifiConnectedProfile = profileMatch[1].trim();
+    }
+
+    if (/Ethernet|以太网/i.test(ipRes.stdout) && /IPv4[^:]*:\s*(?!169\.254\.)\d+\.\d+\.\d+\.\d+/i.test(ipRes.stdout)) {
+      ethernetActive = true;
+    }
+
+    bluetoothReady = btRes.ok && btRes.stdout.trim().length > 0;
+
+    if (wifiReady && !ethernetActive) {
+      notes.push(
+        'Single Wi-Fi adapter detected without wired Ethernet: connecting to the camera AP temporarily pauses PC internet until disconnected.'
+      );
+    } else if (ethernetActive) {
+      notes.push('Wired Ethernet is active alongside Wi-Fi: PC internet stays online while transferring from camera AP.');
+    }
+  return finalizeEnvironmentStatus(py, bluetoothReady, wifiReady, wifiConnectedProfile, ethernetActive, notes);
+}
+
+function finalizeEnvironmentStatus(
+  py: { pythonPath: string | null; pythonAvailable: boolean; bleakAvailable: boolean },
+  bluetoothReady: boolean,
+  wifiReady: boolean,
+  wifiConnectedProfile: string | null,
+  ethernetActive: boolean,
+  notes: string[]
+): DjiEnvironmentStatus {
+  if (!py.pythonAvailable) {
+    notes.push('Python 3.10+ was not found on PATH for the BLE/Datalink sidecar.');
+  } else if (!py.bleakAvailable) {
+    notes.push('Python package "bleak" is not installed yet (pip install bleak) for live BLE camera discovery.');
+  }
+
+  return {
+    platform: process.platform,
+    pythonPath: py.pythonPath,
+    pythonAvailable: py.pythonAvailable,
+    bleakAvailable: py.bleakAvailable,
+    bluetoothReady,
+    wifiReady,
+    wifiConnectedProfile,
+    ethernetActive,
+    notes,
+  };
+}
