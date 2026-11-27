@@ -10,6 +10,11 @@ import type {
   Transcript,
 } from '../shared/types';
 import type { DjiPluginSettings, DjiPluginStateSnapshot, DjiUsbImportTask, DjiUsbVolume, PluginSummary } from '../shared/djiTypes';
+import type {
+  VideoImportEngineStatus,
+  VideoImportMedia,
+  VideoImportTask,
+} from '../shared/mediaImportTypes';
 import type { EditorSnapshot } from '../main/state';
 import type { WhisperStatus } from '../main/engine/analyzer';
 import type { FfmpegStatus } from '../main/engine/ffmpeg';
@@ -101,6 +106,14 @@ export interface VectrailBridgeAPI {
   importDjiUsbFiles: (fileIds: string[]) => Promise<DjiUsbImportTask[]>;
   cancelDjiUsbImport: (taskId: string) => Promise<void>;
   clearDjiUsbImports: () => Promise<void>;
+  mediaImportHealth: () => Promise<VideoImportEngineStatus>;
+  mediaImportResolve: (input: string) => Promise<VideoImportMedia>;
+  mediaImportLinks: (input: string, formatId?: string) => Promise<VideoImportTask[]>;
+  getMediaImportTasks: () => Promise<VideoImportTask[]>;
+  onMediaImportTasks: (cb: (tasks: VideoImportTask[]) => void) => () => void;
+  cancelMediaImportTask: (taskId: string) => Promise<VideoImportTask[]>;
+  retryMediaImportTask: (taskId: string) => Promise<VideoImportTask[]>;
+  clearMediaImportTasks: () => Promise<VideoImportTask[]>;
   minimizeWindow: () => void;
   maximizeWindow: () => void;
   closeWindow: () => void;
@@ -197,6 +210,18 @@ const api: VectrailBridgeAPI = {
   importDjiUsbFiles: (fileIds) => ipcRenderer.invoke('vectrail:dji-import-usb', fileIds),
   cancelDjiUsbImport: (taskId) => ipcRenderer.invoke('vectrail:dji-cancel-usb', taskId),
   clearDjiUsbImports: () => ipcRenderer.invoke('vectrail:dji-clear-usb'),
+  mediaImportHealth: () => ipcRenderer.invoke('vectrail:media-import-health'),
+  mediaImportResolve: (input) => ipcRenderer.invoke('vectrail:media-import-resolve', input),
+  mediaImportLinks: (input, formatId) => ipcRenderer.invoke('vectrail:media-import-links', input, formatId),
+  getMediaImportTasks: () => ipcRenderer.invoke('vectrail:media-import-tasks'),
+  onMediaImportTasks: (cb) => {
+    const listener = (_e: Electron.IpcRendererEvent, tasks: VideoImportTask[]) => cb(tasks);
+    ipcRenderer.on('vectrail:media-import-tasks', listener);
+    return () => ipcRenderer.removeListener('vectrail:media-import-tasks', listener);
+  },
+  cancelMediaImportTask: (taskId) => ipcRenderer.invoke('vectrail:media-import-cancel', taskId),
+  retryMediaImportTask: (taskId) => ipcRenderer.invoke('vectrail:media-import-retry', taskId),
+  clearMediaImportTasks: () => ipcRenderer.invoke('vectrail:media-import-clear'),
   minimizeWindow: () => ipcRenderer.send('vectrail:win-minimize'),
   maximizeWindow: () => ipcRenderer.send('vectrail:win-maximize'),
   closeWindow: () => ipcRenderer.send('vectrail:win-close'),
