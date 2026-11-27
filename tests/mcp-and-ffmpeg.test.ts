@@ -1,1 +1,388 @@
-aW1wb3J0IGZzIGZyb20gJ25vZGU6ZnMnOwppbXBvcnQgb3MgZnJvbSAnbm9kZTpvcyc7CmltcG9ydCBwYXRoIGZyb20gJ25vZGU6cGF0aCc7CmltcG9ydCB7IGV4ZWNGaWxlIH0gZnJvbSAnbm9kZTpjaGlsZF9wcm9jZXNzJzsKaW1wb3J0IHsgcHJvbWlzaWZ5IH0gZnJvbSAnbm9kZTp1dGlsJzsKaW1wb3J0IHsgYWZ0ZXJBbGwsIGJlZm9yZUFsbCwgZGVzY3JpYmUsIGV4cGVjdCwgaXQgfSBmcm9tICd2aXRlc3QnOwppbXBvcnQgeyBGRk1QRUdfQklOLCBGRlBST0JFX0JJTiB9IGZyb20gJy4uL3NyYy9tYWluL2VuZ2luZS9mZm1wZWcnOwppbXBvcnQgeyBQcm9qZWN0U3RvcmUgfSBmcm9tICcuLi9zcmMvbWFpbi9zdGF0ZSc7CmltcG9ydCB7IE1DUFNlcnZlciB9IGZyb20gJy4uL3NyYy9tYWluL21jcC9zZXJ2ZXInOwppbXBvcnQgeyBNQ1BfVE9PTF9ERUZJTklUSU9OUyB9IGZyb20gJy4uL3NyYy9tYWluL21jcC90b29scyc7CmltcG9ydCB7IGVuc3VyZVBsYXlhYmxlUHJveHkgfSBmcm9tICcuLi9zcmMvbWFpbi9lbmdpbmUvZmZtcGVnJzsKaW1wb3J0IHsgcnVuTWFnaWNQcm9tcHQgfSBmcm9tICcuLi9zcmMvbWFpbi9tYWdpYy9hZ2VudENvbm5lY3QnOwoKY29uc3QgZXhlY0ZpbGVBc3luYyA9IHByb21pc2lmeShleGVjRmlsZSk7CgpkZXNjcmliZSgnTUNQIFNlcnZlciArIFJlYWwgRkZtcGVnIFBpcGVsaW5lJywgKCkgPT4gewogIGxldCB0bXBEaXI6IHN0cmluZzsKICBsZXQgc2FtcGxlVmlkZW86IHN0cmluZzsKICBsZXQgc2FtcGxlQXVkaW86IHN0cmluZzsKCiAgYmVmb3JlQWxsKGFzeW5jICgpID0+IHsKICAgIHRtcERpciA9IGZzLm1rZHRlbXBTeW5jKHBhdGguam9pbihvcy50bXBkaXIoKSwgJ3ZlY3RyYWlsLXRlc3QtJykpOwogICAgcHJvY2Vzcy5lbnYuVkVDVFJBSUxfQ0FDSEVfRElSID0gcGF0aC5qb2luKHRtcERpciwgJ2NhY2hlJyk7CiAgICBzYW1wbGVWaWRlbyA9IHBhdGguam9pbih0bXBEaXIsICdzYW1wbGUubXA0Jyk7CiAgICBzYW1wbGVBdWRpbyA9IHBhdGguam9pbih0bXBEaXIsICdtdXNpYy53YXYnKTsKCiAgICBhd2FpdCBleGVjRmlsZUFzeW5jKEZGTVBFR19CSU4sIFsKICAgICAgJy15JywKICAgICAgJy1mJywgJ2xhdmZpJywgJy1pJywgJ3Rlc3RzcmM9c2l6ZT02NDB4MzYwOnJhdGU9MzA6ZHVyYXRpb249MycsCiAgICAgICctZicsICdsYXZmaScsICctaScsICdzaW5lPWZyZXF1ZW5jeT00NDA6c2FtcGxlX3JhdGU9NDgwMDA6ZHVyYXRpb249MycsCiAgICAgICctYzp2JywgJ2xpYngyNjQnLCAnLXBpeF9mbXQnLCAneXV2NDIwcCcsICctYzphJywgJ2FhYycsCiAgICAgIHNhbXBsZVZpZGVvLAogICAgXSwgeyB3aW5kb3dzSGlkZTogdHJ1ZSB9KTsKCiAgICBhd2FpdCBleGVjRmlsZUFzeW5jKEZGTVBFR19CSU4sIFsKICAgICAgJy15JywKICAgICAgJy1mJywgJ2xhdmZpJywgJy1pJywgJ3NpbmU9ZnJlcXVlbmN5PTExMDpzYW1wbGVfcmF0ZT00ODAwMDpkdXJhdGlvbj00JywKICAgICAgJy1hZicsICd0cmVtb2xvPWY9MjpkPTAuOCcsCiAgICAgIHNhbXBsZUF1ZGlvLAogICAgXSwgeyB3aW5kb3dzSGlkZTogdHJ1ZSB9KTsKICB9LCAzMDAwMCk7CgogIGFmdGVyQWxsKCgpID0+IHsKICAgIGZzLnJtU3luYyh0bXBEaXIsIHsgcmVjdXJzaXZlOiB0cnVlLCBmb3JjZTogdHJ1ZSwgbWF4UmV0cmllczogMTAsIHJldHJ5RGVsYXk6IDIwMCB9KTsKICB9KTsKCiAgaXQoJ3J1bnMgZnVsbCBNQ1AgbGlmZWN5Y2xlOiBpbXBvcnQsIGFuYWx5emUsIGxvb2tfYXRfbWVkaWEsIGVkaXQsIGdldF9mcmFtZSwgYXV0b19lZGl0LCBhbmQgZXhwb3J0IE1QNCcsIGFzeW5jICgpID0+IHsKICAgIGNvbnN0IHN0b3JlID0gbmV3IFByb2plY3RTdG9yZSgpOwogICAgY29uc3QgbWNwID0gbmV3IE1DUFNlcnZlcihzdG9yZSk7CgogICAgY29uc3QgaW5pdCA9IGF3YWl0IG1jcC5oYW5kbGVScGMoeyBqc29ucnBjOiAnMi4wJywgaWQ6IDEsIG1ldGhvZDogJ2luaXRpYWxpemUnLCBwYXJhbXM6IHsgY2xpZW50SW5mbzogeyBuYW1lOiAnY29kZXgnIH0gfSB9KTsKICAgIGV4cGVjdCgoaW5pdD8ucmVzdWx0IGFzIHsgc2VydmVySW5mbzogeyBuYW1lOiBzdHJpbmcgfSB9KS5zZXJ2ZXJJbmZvLm5hbWUpLnRvQmUoJ3ZlY3RyYWlsJyk7CgogICAgY29uc3QgbGlzdFRvb2xzID0gYXdhaXQgbWNwLmhhbmRsZVJwYyh7IGpzb25ycGM6ICcyLjAnLCBpZDogMiwgbWV0aG9kOiAndG9vbHMvbGlzdCcgfSk7CiAgICBjb25zdCB0b29scyA9IChsaXN0VG9vbHM/LnJlc3VsdCBhcyB7IHRvb2xzOiB1bmtub3duW10gfSkudG9vbHM7CiAgICBleHBlY3QodG9vbHMubGVuZ3RoKS50b0JlKE1DUF9UT09MX0RFRklOSVRJT05TLmxlbmd0aCk7CiAgICBleHBlY3QodG9vbHMubGVuZ3RoKS50b0JlR3JlYXRlclRoYW5PckVxdWFsKDQwKTsKCiAgICBjb25zdCBpbXAgPSBhd2FpdCBtY3AuaGFuZGxlUnBjKHsKICAgICAganNvbnJwYzogJzIuMCcsCiAgICAgIGlkOiAzLAogICAgICBtZXRob2Q6ICd0b29scy9jYWxsJywKICAgICAgcGFyYW1zOiB7IG5hbWU6ICdpbXBvcnRfbWVkaWEnLCBhcmd1bWVudHM6IHsgcGF0aHM6IFtzYW1wbGVWaWRlbywgc2FtcGxlQXVkaW9dIH0gfSwKICAgIH0pOwogICAgY29uc3QgaW1wVGV4dCA9ICgoaW1wPy5yZXN1bHQgYXMgeyBjb250ZW50OiBBcnJheTx7IHRleHQ6IHN0cmluZyB9PiB9KS5jb250ZW50WzBdKS50ZXh0OwogICAgY29uc3QgaW1wRGF0YSA9IEpTT04ucGFyc2UoaW1wVGV4dCkgYXMgeyBpbXBvcnRlZDogQXJyYXk8eyBpZDogc3RyaW5nOyBraW5kOiBzdHJpbmcgfT4gfTsKICAgIGV4cGVjdChpbXBEYXRhLmltcG9ydGVkLmxlbmd0aCkudG9CZSgyKTsKCiAgICBjb25zdCB2aWRJZCA9IGltcERhdGEuaW1wb3J0ZWQuZmluZCgoYSkgPT4gYS5raW5kID09PSAndmlkZW8nKSEuaWQ7CiAgICBjb25zdCBhdWRJZCA9IGltcERhdGEuaW1wb3J0ZWQuZmluZCgoYSkgPT4gYS5raW5kID09PSAnYXVkaW8nKSEuaWQ7CgogICAgY29uc3QgYW5hViA9IGF3YWl0IG1jcC5oYW5kbGVScGMoewogICAgICBqc29ucnBjOiAnMi4wJywKICAgICAgaWQ6IDQsCiAgICAgIG1ldGhvZDogJ3Rvb2xzL2NhbGwnLAogICAgICBwYXJhbXM6IHsgbmFtZTogJ2FuYWx5emVfbWVkaWEnLCBhcmd1bWVudHM6IHsgYXNzZXRfaWQ6IHZpZElkIH0gfSwKICAgIH0pOwogICAgZXhwZWN0KChhbmFWPy5yZXN1bHQgYXMgeyBpc0Vycm9yOiBib29sZWFuIH0pLmlzRXJyb3IpLnRvQmUoZmFsc2UpOwoKICAgIGNvbnN0IGFuYUEgPSBhd2FpdCBtY3AuaGFuZGxlUnBjKHsKICAgICAganNvbnJwYzogJzIuMCcsCiAgICAgIGlkOiA1LAogICAgICBtZXRob2Q6ICd0b29scy9jYWxsJywKICAgICAgcGFyYW1zOiB7IG5hbWU6ICdhbmFseXplX21lZGlhJywgYXJndW1lbnRzOiB7IGFzc2V0X2lkOiBhdWRJZCB9IH0sCiAgICB9KTsKICAgIGNvbnN0IGFuYUFUZXh0ID0gKChhbmFBPy5yZXN1bHQgYXMgeyBjb250ZW50OiBBcnJheTx7IHRleHQ6IHN0cmluZyB9PiB9KS5jb250ZW50WzBdKS50ZXh0OwogICAgZXhwZWN0KEpTT04ucGFyc2UoYW5hQVRleHQpLmJwbSkudG9CZUdyZWF0ZXJUaGFuKDUwKTsKCiAgICBjb25zdCBsb29rUmVzID0gYXdhaXQgbWNwLmhhbmRsZVJwYyh7CiAgICAgIGpzb25ycGM6ICcyLjAnLAogICAgICBpZDogNiwKICAgICAgbWV0aG9kOiAndG9vbHMvY2FsbCcsCiAgICAgIHBhcmFtczogeyBuYW1lOiAnbG9va19hdF9tZWRpYScsIGFyZ3VtZW50czogeyBhc3NldF9pZDogdmlkSWQsIGZyYW1lczogMyB9IH0sCiAgICB9KTsKICAgIGNvbnN0IGxvb2tDb250ZW50ID0gKGxvb2tSZXM/LnJlc3VsdCBhcyB7IGNvbnRlbnQ6IEFycmF5PHsgdHlwZTogc3RyaW5nOyBkYXRhPzogc3RyaW5nIH0+IH0pLmNvbnRlbnQ7CiAgICBleHBlY3QobG9va0NvbnRlbnRbMF0udHlwZSkudG9CZSgnaW1hZ2UnKTsKICAgIGV4cGVjdChsb29rQ29udGVudFswXS5kYXRhIS5sZW5ndGgpLnRvQmVHcmVhdGVyVGhhbigxMDApOwoKICAgIGF3YWl0IG1jcC5oYW5kbGVScGMoewogICAgICBqc29ucnBjOiAnMi4wJywKICAgICAgaWQ6IDcsCiAgICAgIG1ldGhvZDogJ3Rvb2xzL2NhbGwnLAogICAgICBwYXJhbXM6IHsgbmFtZTogJ2FkZF9jbGlwJywgYXJndW1lbnRzOiB7IGFzc2V0X2lkOiB2aWRJZCwgc3RhcnQ6IDAsIGR1cmF0aW9uOiAyIH0gfSwKICAgIH0pOwogICAgZXhwZWN0KHN0b3JlLnByb2plY3QuY2xpcHMubGVuZ3RoKS50b0JlKDIpOwoKICAgIGNvbnN0IGZyYW1lUmVzID0gYXdhaXQgbWNwLmhhbmRsZVJwYyh7CiAgICAgIGpzb25ycGM6ICcyLjAnLAogICAgICBpZDogOCwKICAgICAgbWV0aG9kOiAndG9vbHMvY2FsbCcsCiAgICAgIHBhcmFtczogeyBuYW1lOiAnZ2V0X2ZyYW1lJywgYXJndW1lbnRzOiB7IHRpbWU6IDAuNSB9IH0sCiAgICB9KTsKICAgIGV4cGVjdCgoKGZyYW1lUmVzPy5yZXN1bHQgYXMgeyBjb250ZW50OiBBcnJheTx7IHR5cGU6IHN0cmluZyB9PiB9KS5jb250ZW50WzBdKS50eXBlKS50b0JlKCdpbWFnZScpOwoKICAgIGNvbnN0IGF1dG9SZXMgPSBhd2FpdCBtY3AuaGFuZGxlUnBjKHsKICAgICAganNvbnJwYzogJzIuMCcsCiAgICAgIGlkOiA5LAogICAgICBtZXRob2Q6ICd0b29scy9jYWxsJywKICAgICAgcGFyYW1zOiB7IG5hbWU6ICdhdXRvX2VkaXQnLCBhcmd1bWVudHM6IHt9IH0sCiAgICB9KTsKICAgIGV4cGVjdCgoYXV0b1Jlcz8ucmVzdWx0IGFzIHsgaXNFcnJvcjogYm9vbGVhbiB9KS5pc0Vycm9yKS50b0JlKGZhbHNlKTsKICAgIGV4cGVjdChzdG9yZS5wcm9qZWN0LmNsaXBzLmxlbmd0aCkudG9CZUdyZWF0ZXJUaGFuT3JFcXVhbCgzKTsKCiAgICBjb25zdCBzYXZlUGF0aCA9IHBhdGguam9pbih0bXBEaXIsICd0ZXN0LnZlY3RyYWlsJyk7CiAgICBzdG9yZS5zYXZlVG9GaWxlKHNhdmVQYXRoKTsKICAgIGV4cGVjdChmcy5leGlzdHNTeW5jKHNhdmVQYXRoKSkudG9CZSh0cnVlKTsKCiAgICBjb25zdCBleHBSZXMgPSBhd2FpdCBtY3AuaGFuZGxlUnBjKHsKICAgICAganNvbnJwYzogJzIuMCcsCiAgICAgIGlkOiAxMCwKICAgICAgbWV0aG9kOiAndG9vbHMvY2FsbCcsCiAgICAgIHBhcmFtczogewogICAgICAgIG5hbWU6ICdleHBvcnQnLAogICAgICAgIGFyZ3VtZW50czogeyBuYW1lOiAnZmluYWwtY3V0JywgaGVpZ2h0OiAzNjAsIHF1YWxpdHk6ICd3ZWInLCBsb3VkbmVzczogLTE0LCB3YWl0OiB0cnVlIH0sCiAgICAgIH0sCiAgICB9KTsKICAgIGNvbnN0IGV4cFRleHQgPSAoKGV4cFJlcz8ucmVzdWx0IGFzIHsgY29udGVudDogQXJyYXk8eyB0ZXh0OiBzdHJpbmcgfT4gfSkuY29udGVudFswXSkudGV4dDsKICAgIGNvbnN0IGV4cEluZm8gPSBKU09OLnBhcnNlKGV4cFRleHQpIGFzIHsgc3RhdHVzOiBzdHJpbmc7IGZpbGU6IHN0cmluZzsgZXJyb3I/OiBzdHJpbmcgfTsKICAgIGV4cGVjdChleHBJbmZvLmVycm9yKS50b0JlVW5kZWZpbmVkKCk7CiAgICBleHBlY3QoZXhwSW5mby5zdGF0dXMpLnRvQmUoJ2RvbmUnKTsKICAgIGV4cGVjdChmcy5leGlzdHNTeW5jKGV4cEluZm8uZmlsZSkpLnRvQmUodHJ1ZSk7CgogICAgY29uc3QgeyBzdGRvdXQgfSA9IGF3YWl0IGV4ZWNGaWxlQXN5bmMoRkZQUk9CRV9CSU4sIFsKICAgICAgJy12JywgJ3F1aWV0JywgJy1wcmludF9mb3JtYXQnLCAnanNvbicsICctc2hvd19mb3JtYXQnLCBleHBJbmZvLmZpbGUsCiAgICBdLCB7IHdpbmRvd3NIaWRlOiB0cnVlIH0pOwogICAgY29uc3QgcHJvYmVkID0gSlNPTi5wYXJzZShzdGRvdXQpIGFzIHsgZm9ybWF0OiB7IGR1cmF0aW9uOiBzdHJpbmcgfSB9OwogICAgZXhwZWN0KE51bWJlci5wYXJzZUZsb2F0KHByb2JlZC5mb3JtYXQuZHVyYXRpb24pKS50b0JlR3JlYXRlclRoYW4oMC41KTsKCiAgICAvLyBWZXJpZnkgZ3JhZGUgKyBzcGVlZCByYW1wICsgY2FwdGlvbiBidXJuLWluICsgYXVkaW8tb25seSBleHBvcnQKICAgIGNvbnN0IHZpZGVvQ2xpcHMgPSBzdG9yZS5wcm9qZWN0LmNsaXBzLmZpbHRlcigoYykgPT4gYy5raW5kID09PSAndmlkZW8nKTsKICAgIGlmICh2aWRlb0NsaXBzWzBdKSB7CiAgICAgIGF3YWl0IG1jcC5oYW5kbGVScGMoewogICAgICAgIGpzb25ycGM6ICcyLjAnLAogICAgICAgIGlkOiAxMSwKICAgICAgICBtZXRob2Q6ICd0b29scy9jYWxsJywKICAgICAgICBwYXJhbXM6IHsKICAgICAgICAgIG5hbWU6ICdzZXRfZ3JhZGUnLAogICAgICAgICAgYXJndW1lbnRzOiB7IGNsaXBfaWRzOiBbdmlkZW9DbGlwc1swXS5pZF0sIGxvb2s6ICdGaWxtIHByaW50JywgZXhwb3N1cmU6IDAuMTUsIHNhdHVyYXRpb246IDEwIH0sCiAgICAgICAgfSwKICAgICAgfSk7CiAgICAgIGF3YWl0IG1jcC5oYW5kbGVScGMoewogICAgICAgIGpzb25ycGM6ICcyLjAnLAogICAgICAgIGlkOiAxMiwKICAgICAgICBtZXRob2Q6ICd0b29scy9jYWxsJywKICAgICAgICBwYXJhbXM6IHsKICAgICAgICAgIG5hbWU6ICdzZXRfc3BlZWQnLAogICAgICAgICAgYXJndW1lbnRzOiB7IGNsaXBfaWQ6IHZpZGVvQ2xpcHNbMF0uaWQsIHNwZWVkOiAxLjUgfSwKICAgICAgICB9LAogICAgICB9KTsKICAgIH0KICAgIHN0b3JlLnRyYW5zY3JpcHRzW3ZpZElkXSA9IHsKICAgICAgZHVyYXRpb246IDMsCiAgICAgIHdvcmRzOiBbCiAgICAgICAgeyB0ZXh0OiAnSGVsbG8nLCBzdGFydDogMC4xLCBlbmQ6IDAuNSB9LAogICAgICAgIHsgdGV4dDogJ1ZlY3RyYWlsJywgc3RhcnQ6IDAuNTUsIGVuZDogMS4wIH0sCiAgICAgIF0sCiAgICB9OwogICAgYXdhaXQgbWNwLmhhbmRsZVJwYyh7CiAgICAgIGpzb25ycGM6ICcyLjAnLAogICAgICBpZDogMTMsCiAgICAgIG1ldGhvZDogJ3Rvb2xzL2NhbGwnLAogICAgICBwYXJhbXM6IHsgbmFtZTogJ3NldF9jYXB0aW9ucycsIGFyZ3VtZW50czogeyBzdHlsZTogJ2JvbGQnLCBwb3NpdGlvbjogMC44IH0gfSwKICAgIH0pOwogICAgY29uc3QgZ3JhZGVkUmVzID0gYXdhaXQgbWNwLmhhbmRsZVJwYyh7CiAgICAgIGpzb25ycGM6ICcyLjAnLAogICAgICBpZDogMTQsCiAgICAgIG1ldGhvZDogJ3Rvb2xzL2NhbGwnLAogICAgICBwYXJhbXM6IHsKICAgICAgICBuYW1lOiAnZXhwb3J0JywKICAgICAgICBhcmd1bWVudHM6IHsgbmFtZTogJ2dyYWRlZC1jYXB0aW9uZWQnLCBoZWlnaHQ6IDQ4MCwgcXVhbGl0eTogJ3dlYicsIGVuaGFuY2VfZGV0YWlsOiB0cnVlLCB3YWl0OiB0cnVlIH0sCiAgICAgIH0sCiAgICB9KTsKICAgIGNvbnN0IGdyYWRlZEluZm8gPSBKU09OLnBhcnNlKCgoZ3JhZGVkUmVzPy5yZXN1bHQgYXMgeyBjb250ZW50OiBBcnJheTx7IHRleHQ6IHN0cmluZyB9PiB9KS5jb250ZW50WzBdKS50ZXh0KSBhcyB7CiAgICAgIHN0YXR1czogc3RyaW5nOwogICAgICBmaWxlOiBzdHJpbmc7CiAgICAgIGVycm9yPzogc3RyaW5nOwogICAgfTsKICAgIGV4cGVjdChncmFkZWRJbmZvLmVycm9yKS50b0JlVW5kZWZpbmVkKCk7CiAgICBleHBlY3QoZ3JhZGVkSW5mby5zdGF0dXMpLnRvQmUoJ2RvbmUnKTsKICAgIGV4cGVjdChmcy5leGlzdHNTeW5jKGdyYWRlZEluZm8uZmlsZSkpLnRvQmUodHJ1ZSk7CgogICAgY29uc3Qgd2F2UmVzID0gYXdhaXQgbWNwLmhhbmRsZVJwYyh7CiAgICAgIGpzb25ycGM6ICcyLjAnLAogICAgICBpZDogMTUsCiAgICAgIG1ldGhvZDogJ3Rvb2xzL2NhbGwnLAogICAgICBwYXJhbXM6IHsKICAgICAgICBuYW1lOiAnZXhwb3J0JywKICAgICAgICBhcmd1bWVudHM6IHsgbmFtZTogJ2F1ZGlvLW1peCcsIGZvcm1hdDogJ2F1ZGlvJywgd2FpdDogdHJ1ZSB9LAogICAgICB9LAogICAgfSk7CiAgICBjb25zdCB3YXZJbmZvID0gSlNPTi5wYXJzZSgoKHdhdlJlcz8ucmVzdWx0IGFzIHsgY29udGVudDogQXJyYXk8eyB0ZXh0OiBzdHJpbmcgfT4gfSkuY29udGVudFswXSkudGV4dCkgYXMgewogICAgICBzdGF0dXM6IHN0cmluZzsKICAgICAgZmlsZTogc3RyaW5nOwogICAgICBlcnJvcj86IHN0cmluZzsKICAgIH07CiAgICBleHBlY3Qod2F2SW5mby5lcnJvcikudG9CZVVuZGVmaW5lZCgpOwogICAgZXhwZWN0KHdhdkluZm8uc3RhdHVzKS50b0JlKCdkb25lJyk7CiAgICBleHBlY3Qod2F2SW5mby5maWxlLmVuZHNXaXRoKCcud2F2JykpLnRvQmUodHJ1ZSk7CiAgICBleHBlY3QoZnMuZXhpc3RzU3luYyh3YXZJbmZvLmZpbGUpKS50b0JlKHRydWUpOwoKICAgIC8vIFZlcmlmeSByZXBsYWNlUHJvamVjdCByZW1vdmVzIGRlbGV0ZWQgb3B0aW9uYWwgZmllbGRzCiAgICBjb25zdCBjbGVhcmVkID0gSlNPTi5wYXJzZShKU09OLnN0cmluZ2lmeShzdG9yZS5wcm9qZWN0KSkgYXMgdHlwZW9mIHN0b3JlLnByb2plY3Q7CiAgICBkZWxldGUgY2xlYXJlZC5jYXB0aW9uczsKICAgIHN0b3JlLnJlcGxhY2VQcm9qZWN0KGNsZWFyZWQsIHRydWUpOwogICAgZXhwZWN0KHN0b3JlLnByb2plY3QuY2FwdGlvbnMpLnRvQmVVbmRlZmluZWQoKTsKCiAgICAvLyBWZXJpZnkgTUtWIHByb3h5IHJlbXV4aW5nLCB0cmFuc2l0aW9ucywgYXVkaW8gZHVja2luZywgYW5kIE1hZ2ljIEBtZW50aW9ucwogICAgY29uc3QgbWt2UGF0aCA9IHBhdGguam9pbih0bXBEaXIsICdjYW1lcmEubWt2Jyk7CiAgICBhd2FpdCBleGVjRmlsZUFzeW5jKEZGTVBFR19CSU4sIFsKICAgICAgJy15JywgJy1pJywgc2FtcGxlVmlkZW8sICctYycsICdjb3B5JywgbWt2UGF0aCwKICAgIF0sIHsgd2luZG93c0hpZGU6IHRydWUgfSk7CiAgICBjb25zdCBpbXBvcnRlZE1rdiA9IGF3YWl0IHN0b3JlLmltcG9ydEZpbGVzKFtta3ZQYXRoXSk7CiAgICBjb25zdCBwcm94eSA9IGF3YWl0IGVuc3VyZVBsYXlhYmxlUHJveHkoaW1wb3J0ZWRNa3ZbMF0pOwogICAgZXhwZWN0KHByb3h5KS50b0JlRGVmaW5lZCgpOwogICAgZXhwZWN0KGZzLmV4aXN0c1N5bmMocHJveHkhKSkudG9CZSh0cnVlKTsKCiAgICBjb25zdCBtYWdpY1JlcyA9IGF3YWl0IHJ1bk1hZ2ljUHJvbXB0KAogICAgICAnQXBwbHkgd2FybSBmaWxtIGdyYWRlIGFuZCBkaXNzb2x2ZSB0cmFuc2l0aW9ucyBhbmQgdGl0bGUgIkZpbmFsIiBhdCBAcGxheWhlYWQnLAogICAgICAnbG9jYWwnLAogICAgICBzdG9yZSwKICAgICAgW10KICAgICk7CiAgICBleHBlY3QobWFnaWNSZXMub2spLnRvQmUodHJ1ZSk7CiAgICBleHBlY3QobWFnaWNSZXMuc3VtbWFyeSkudG9Db250YWluKCdXYXJtIGZpbG0nKTsKICAgIGV4cGVjdChtYWdpY1Jlcy5iYWNrZW5kKS50b0JlKCdsb2NhbCcpOwogICAgZXhwZWN0KG1hZ2ljUmVzLnByb2Nlc3NTdGVwcz8ubGVuZ3RoKS50b0JlR3JlYXRlclRoYW5PckVxdWFsKDMpOwogICAgZXhwZWN0KG1hZ2ljUmVzLnByb2Nlc3NTdGVwcz8uZXZlcnkoKHMpID0+IHMuc3RhdHVzID09PSAnZG9uZScpKS50b0JlKHRydWUpOwoKICAgIGNvbnN0IHRleHRDbGlwID0gc3RvcmUucHJvamVjdC5jbGlwcy5maW5kKChjKSA9PiBjLmtpbmQgPT09ICd0ZXh0Jyk7CiAgICBleHBlY3QodGV4dENsaXApLnRvQmVEZWZpbmVkKCk7CiAgICBpZiAodGV4dENsaXA/LnRleHQpIHsKICAgICAgdGV4dENsaXAudGV4dC5zdHJva2VXaWR0aCA9IDY7CiAgICAgIHRleHRDbGlwLnRleHQuc3Ryb2tlQ29sb3IgPSB7IHI6IDAsIGc6IDAsIGI6IDAsIGE6IDEgfTsKICAgICAgdGV4dENsaXAudGV4dC5iZ0NvbG9yID0geyByOiAwLjEsIGc6IDAuMSwgYjogMC4xMiwgYTogMC44IH07CiAgICAgIHRleHRDbGlwLnRleHQuYmdQYWRkaW5nID0gMTg7CiAgICAgIGNvbnN0IHN0eWxlZEZyYW1lID0gYXdhaXQgbWNwLmhhbmRsZVJwYyh7CiAgICAgICAganNvbnJwYzogJzIuMCcsCiAgICAgICAgaWQ6IDE5LAogICAgICAgIG1ldGhvZDogJ3Rvb2xzL2NhbGwnLAogICAgICAgIHBhcmFtczogeyBuYW1lOiAnZ2V0X2ZyYW1lJywgYXJndW1lbnRzOiB7IHRpbWU6IHRleHRDbGlwLnN0YXJ0ICsgMC4xIH0gfSwKICAgICAgfSk7CiAgICAgIGNvbnN0IHN0eWxlZENvbnRlbnQgPSAoc3R5bGVkRnJhbWU/LnJlc3VsdCBhcyB7IGNvbnRlbnQ6IEFycmF5PHsgdHlwZTogc3RyaW5nOyBkYXRhPzogc3RyaW5nIH0+IH0pLmNvbnRlbnQ7CiAgICAgIGV4cGVjdChzdHlsZWRDb250ZW50WzBdLnR5cGUpLnRvQmUoJ2ltYWdlJyk7CiAgICAgIGV4cGVjdChzdHlsZWRDb250ZW50WzBdLmRhdGEhLmxlbmd0aCkudG9CZUdyZWF0ZXJUaGFuKDUwMDApOwogICAgfQoKICAgIGNvbnN0IHByb2dyZXNzU3RlcHM6IHN0cmluZ1tdID0gW107CiAgICBjb25zdCB6b29tTWFnaWNSZXMgPSBhd2FpdCBydW5NYWdpY1Byb21wdCgnem9vbSBpbicsICdsb2NhbCcsIHN0b3JlLCBbXSwgewogICAgICBydW5JZDogJ3Rlc3Qtem9vbScsCiAgICAgIG9uUHJvZ3Jlc3M6IChldikgPT4gewogICAgICAgIGlmIChldi5zdGVwKSBwcm9ncmVzc1N0ZXBzLnB1c2goZXYuc3RlcC5pZCk7CiAgICAgIH0sCiAgICB9KTsKICAgIGV4cGVjdCh6b29tTWFnaWNSZXMub2spLnRvQmUodHJ1ZSk7CiAgICBleHBlY3Qoem9vbU1hZ2ljUmVzLnN1bW1hcnkpLnRvQ29udGFpbignem9vbSBpbicpOwogICAgZXhwZWN0KHByb2dyZXNzU3RlcHMpLnRvQ29udGFpbignc2Nhbi1tZWRpYScpOwogICAgZXhwZWN0KHByb2dyZXNzU3RlcHMpLnRvQ29udGFpbignbG9jYWwtcGxhbicpOwoKICAgIGNvbnN0IGV4dGVybmFsRXZlbnRzOiBzdHJpbmdbXSA9IFtdOwogICAgbWNwLnNldEV4dGVybmFsVG9vbExpc3RlbmVyKChldikgPT4gZXh0ZXJuYWxFdmVudHMucHVzaChgJHtldi5jbGllbnROYW1lfToke2V2LnRvb2xOYW1lfToke2V2LnN0YXR1c31gKSk7CiAgICBhd2FpdCBtY3AuaGFuZGxlUnBjKAogICAgICB7CiAgICAgICAganNvbnJwYzogJzIuMCcsCiAgICAgICAgaWQ6IDk5LAogICAgICAgIG1ldGhvZDogJ3Rvb2xzL2NhbGwnLAogICAgICAgIHBhcmFtczogeyBuYW1lOiAnbGlzdF9sb29rcycsIGFyZ3VtZW50czoge30gfSwKICAgICAgfSwKICAgICAgJ1Rlc3RBZ2VudCcKICAgICk7CiAgICBtY3Auc2V0RXh0ZXJuYWxUb29sTGlzdGVuZXIodW5kZWZpbmVkKTsKICAgIGV4cGVjdChleHRlcm5hbEV2ZW50cykudG9Db250YWluKCdUZXN0QWdlbnQ6bGlzdF9sb29rczpkb25lJyk7CgogICAgaWYgKHZpZGVvQ2xpcHNbMF0pIHsKICAgICAgY29uc3QgdGZSZXMgPSBhd2FpdCBtY3AuaGFuZGxlUnBjKHsKICAgICAgICBqc29ucnBjOiAnMi4wJywKICAgICAgICBpZDogMTYsCiAgICAgICAgbWV0aG9kOiAndG9vbHMvY2FsbCcsCiAgICAgICAgcGFyYW1zOiB7IG5hbWU6ICdzZXRfdHJhbnNmb3JtJywgYXJndW1lbnRzOiB7IGNsaXBfaWQ6IHZpZGVvQ2xpcHNbMF0uaWQsIHNjYWxlOiAwLjQsIHg6IDAuMzIsIHk6IC0wLjM1IH0gfSwKICAgICAgfSk7CiAgICAgIGV4cGVjdCgodGZSZXM/LnJlc3VsdCBhcyB7IGlzRXJyb3I6IGJvb2xlYW4gfSkuaXNFcnJvcikudG9CZShmYWxzZSk7CgogICAgICBjb25zdCBjb21wRnJhbWUgPSBhd2FpdCBtY3AuaGFuZGxlUnBjKHsKICAgICAgICBqc29ucnBjOiAnMi4wJywKICAgICAgICBpZDogMTcsCiAgICAgICAgbWV0aG9kOiAndG9vbHMvY2FsbCcsCiAgICAgICAgcGFyYW1zOiB7IG5hbWU6ICdnZXRfZnJhbWUnLCBhcmd1bWVudHM6IHsgdGltZTogdmlkZW9DbGlwc1swXS5zdGFydCArIDAuMiB9IH0sCiAgICAgIH0pOwogICAgICBjb25zdCBjb21wQ29udGVudCA9IChjb21wRnJhbWU/LnJlc3VsdCBhcyB7IGNvbnRlbnQ6IEFycmF5PHsgdHlwZTogc3RyaW5nOyB0ZXh0Pzogc3RyaW5nOyBkYXRhPzogc3RyaW5nIH0+IH0pLmNvbnRlbnQ7CiAgICAgIGV4cGVjdChjb21wQ29udGVudFswXS50eXBlKS50b0JlKCdpbWFnZScpOwogICAgICBleHBlY3QoY29tcENvbnRlbnRbMF0uZGF0YSEubGVuZ3RoKS50b0JlR3JlYXRlclRoYW4oODAwMCk7CiAgICAgIGV4cGVjdChjb21wQ29udGVudFsxXS50ZXh0KS50b0NvbnRhaW4oJ0NvbXBvc2l0ZWQgZnJhbWUnKTsKICAgIH0KCiAgICBjb25zdCBtY3BTYXZlUGF0aCA9IHBhdGguam9pbih0bXBEaXIsICdtY3Atc2F2ZWQudmVjdHJhaWwnKTsKICAgIGNvbnN0IHNhdmVSZXMgPSBhd2FpdCBtY3AuaGFuZGxlUnBjKHsKICAgICAganNvbnJwYzogJzIuMCcsCiAgICAgIGlkOiAyMywKICAgICAgbWV0aG9kOiAndG9vbHMvY2FsbCcsCiAgICAgIHBhcmFtczogeyBuYW1lOiAnc2F2ZV9wcm9qZWN0JywgYXJndW1lbnRzOiB7IHBhdGg6IG1jcFNhdmVQYXRoLCB0aXRsZTogJ01DUCBTYXZlZCcgfSB9LAogICAgfSk7CiAgICBleHBlY3QoKHNhdmVSZXM/LnJlc3VsdCBhcyB7IGlzRXJyb3I6IGJvb2xlYW4gfSkuaXNFcnJvcikudG9CZShmYWxzZSk7CiAgICBleHBlY3QoZnMuZXhpc3RzU3luYyhtY3BTYXZlUGF0aCkpLnRvQmUodHJ1ZSk7CgogICAgY29uc3QgZHVja1JlcyA9IGF3YWl0IG1jcC5oYW5kbGVScGMoewogICAgICBqc29ucnBjOiAnMi4wJywKICAgICAgaWQ6IDE4LAogICAgICBtZXRob2Q6ICd0b29scy9jYWxsJywKICAgICAgcGFyYW1zOiB7IG5hbWU6ICdzZXRfdHJhY2snLCBhcmd1bWVudHM6IHsgdHJhY2s6ICdBMScsIGR1Y2tfdW5kZXI6ICdBMScsIGR1Y2tfZGI6IC0xMiB9IH0sCiAgICB9KTsKICAgIGV4cGVjdCgoZHVja1Jlcz8ucmVzdWx0IGFzIHsgaXNFcnJvcjogYm9vbGVhbiB9KS5pc0Vycm9yKS50b0JlKGZhbHNlKTsKICAgIGV4cGVjdChzdG9yZS5wcm9qZWN0LmF1ZGlvVHJhY2tzWzBdLmR1Y2tEQikudG9CZSgtMTIpOwoKICAgIC8vIFZlcmlmeSB3aXBlIHRyYW5zaXRpb24gKyBzcGVlZCByYW1wICsgdmVydGljYWwgcmVmcmFtZSBjcm9wIGluIHJlYWwgRkZtcGVnIGV4cG9ydAogICAgY29uc3Qgdkxpc3QgPSBzdG9yZS5wcm9qZWN0LmNsaXBzLmZpbHRlcigoYykgPT4gYy5raW5kID09PSAndmlkZW8nKS5zb3J0KChhLCBiKSA9PiBhLnN0YXJ0IC0gYi5zdGFydCk7CiAgICBpZiAodkxpc3QubGVuZ3RoID49IDIpIHsKICAgICAgYXdhaXQgbWNwLmhhbmRsZVJwYyh7CiAgICAgICAganNvbnJwYzogJzIuMCcsCiAgICAgICAgaWQ6IDIwLAogICAgICAgIG1ldGhvZDogJ3Rvb2xzL2NhbGwnLAogICAgICAgIHBhcmFtczogeyBuYW1lOiAnc2V0X3RyYW5zaXRpb24nLCBhcmd1bWVudHM6IHsgY2xpcF9pZDogdkxpc3RbMV0uaWQsIGtpbmQ6ICd3aXBlJywgZHVyYXRpb246IDAuMzUgfSB9LAogICAgICB9KTsKICAgIH0KICAgIGlmICh2TGlzdFswXSkgewogICAgICBhd2FpdCBtY3AuaGFuZGxlUnBjKHsKICAgICAgICBqc29ucnBjOiAnMi4wJywKICAgICAgICBpZDogMjEsCiAgICAgICAgbWV0aG9kOiAndG9vbHMvY2FsbCcsCiAgICAgICAgcGFyYW1zOiB7IG5hbWU6ICdzZXRfc3BlZWRfcmFtcCcsIGFyZ3VtZW50czogeyBjbGlwX2lkOiB2TGlzdFswXS5pZCwgc3BlZWQ6IDIuMCB9IH0sCiAgICAgIH0pOwogICAgfQogICAgY29uc3QgdmVydFJlcyA9IGF3YWl0IG1jcC5oYW5kbGVScGMoewogICAgICBqc29ucnBjOiAnMi4wJywKICAgICAgaWQ6IDIyLAogICAgICBtZXRob2Q6ICd0b29scy9jYWxsJywKICAgICAgcGFyYW1zOiB7CiAgICAgICAgbmFtZTogJ2V4cG9ydCcsCiAgICAgICAgYXJndW1lbnRzOiB7CiAgICAgICAgICBuYW1lOiAndmVydGljYWwtcmVmcmFtZS13aXBlJywKICAgICAgICAgIHNoYXBlOiAndmVydGljYWwnLAogICAgICAgICAgaGVpZ2h0OiAzNjAsCiAgICAgICAgICByZWZyYW1lX3g6IDAuNywKICAgICAgICAgIHJlZnJhbWVfeTogMC41LAogICAgICAgICAgcXVhbGl0eTogJ3dlYicsCiAgICAgICAgICB3YWl0OiB0cnVlLAogICAgICAgIH0sCiAgICAgIH0sCiAgICB9KTsKICAgIGNvbnN0IHZlcnRJbmZvID0gSlNPTi5wYXJzZSgoKHZlcnRSZXM/LnJlc3VsdCBhcyB7IGNvbnRlbnQ6IEFycmF5PHsgdGV4dDogc3RyaW5nIH0+IH0pLmNvbnRlbnRbMF0pLnRleHQpIGFzIHsKICAgICAgc3RhdHVzOiBzdHJpbmc7CiAgICAgIGZpbGU6IHN0cmluZzsKICAgICAgZXJyb3I/OiBzdHJpbmc7CiAgICB9OwogICAgZXhwZWN0KHZlcnRJbmZvLmVycm9yKS50b0JlVW5kZWZpbmVkKCk7CiAgICBleHBlY3QodmVydEluZm8uc3RhdHVzKS50b0JlKCdkb25lJyk7CiAgICBleHBlY3QoZnMuZXhpc3RzU3luYyh2ZXJ0SW5mby5maWxlKSkudG9CZSh0cnVlKTsKICAgIGNvbnN0IHsgc3Rkb3V0OiB2UHJvYmUgfSA9IGF3YWl0IGV4ZWNGaWxlQXN5bmMoCiAgICAgIEZGUFJPQkVfQklOLAogICAgICBbJy12JywgJ3F1aWV0JywgJy1wcmludF9mb3JtYXQnLCAnanNvbicsICctc2hvd19zdHJlYW1zJywgdmVydEluZm8uZmlsZV0sCiAgICAgIHsgd2luZG93c0hpZGU6IHRydWUgfQogICAgKTsKICAgIGNvbnN0IHZTdHJlYW1zID0gKEpTT04ucGFyc2UodlByb2JlKSBhcyB7IHN0cmVhbXM6IEFycmF5PHsgY29kZWNfdHlwZTogc3RyaW5nOyB3aWR0aD86IG51bWJlcjsgaGVpZ2h0PzogbnVtYmVyIH0+IH0pLnN0cmVhbXM7CiAgICBjb25zdCB2U3RyZWFtID0gdlN0cmVhbXMuZmluZCgocykgPT4gcy5jb2RlY190eXBlID09PSAndmlkZW8nKTsKICAgIGV4cGVjdCh2U3RyZWFtPy53aWR0aCkudG9CZSgzNjApOwogICAgZXhwZWN0KHZTdHJlYW0/LmhlaWdodCkudG9CZSg2NDApOwoKICAgIGF3YWl0IHN0b3JlLndhaXRGb3JJZGxlKCk7CiAgfSwgNjAwMDApOwp9KTsK
+import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { FFMPEG_BIN, FFPROBE_BIN } from '../src/main/engine/ffmpeg';
+import { ProjectStore } from '../src/main/state';
+import { MCPServer } from '../src/main/mcp/server';
+import { MCP_TOOL_DEFINITIONS } from '../src/main/mcp/tools';
+import { ensurePlayableProxy } from '../src/main/engine/ffmpeg';
+import { runMagicPrompt } from '../src/main/magic/agentConnect';
+
+const execFileAsync = promisify(execFile);
+
+describe('MCP Server + Real FFmpeg Pipeline', () => {
+  let tmpDir: string;
+  let sampleVideo: string;
+  let sampleAudio: string;
+
+  beforeAll(async () => {
+    tmpDir = fs.mkdtempSync(path.join(os.tmpdir(), 'vectrail-test-'));
+    process.env.VECTRAIL_CACHE_DIR = path.join(tmpDir, 'cache');
+    sampleVideo = path.join(tmpDir, 'sample.mp4');
+    sampleAudio = path.join(tmpDir, 'music.wav');
+
+    await execFileAsync(FFMPEG_BIN, [
+      '-y',
+      '-f', 'lavfi', '-i', 'testsrc=size=640x360:rate=30:duration=3',
+      '-f', 'lavfi', '-i', 'sine=frequency=440:sample_rate=48000:duration=3',
+      '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-c:a', 'aac',
+      sampleVideo,
+    ], { windowsHide: true });
+
+    await execFileAsync(FFMPEG_BIN, [
+      '-y',
+      '-f', 'lavfi', '-i', 'sine=frequency=110:sample_rate=48000:duration=4',
+      '-af', 'tremolo=f=2:d=0.8',
+      sampleAudio,
+    ], { windowsHide: true });
+  }, 30000);
+
+  afterAll(() => {
+    fs.rmSync(tmpDir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
+  });
+
+  it('runs full MCP lifecycle: import, analyze, look_at_media, edit, get_frame, auto_edit, and export MP4', async () => {
+    const store = new ProjectStore();
+    const mcp = new MCPServer(store);
+
+    const init = await mcp.handleRpc({ jsonrpc: '2.0', id: 1, method: 'initialize', params: { clientInfo: { name: 'codex' } } });
+    expect((init?.result as { serverInfo: { name: string } }).serverInfo.name).toBe('vectrail');
+
+    const listTools = await mcp.handleRpc({ jsonrpc: '2.0', id: 2, method: 'tools/list' });
+    const tools = (listTools?.result as { tools: unknown[] }).tools;
+    expect(tools.length).toBe(MCP_TOOL_DEFINITIONS.length);
+    expect(tools.length).toBeGreaterThanOrEqual(40);
+
+    const imp = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 3,
+      method: 'tools/call',
+      params: { name: 'import_media', arguments: { paths: [sampleVideo, sampleAudio] } },
+    });
+    const impText = ((imp?.result as { content: Array<{ text: string }> }).content[0]).text;
+    const impData = JSON.parse(impText) as { imported: Array<{ id: string; kind: string }> };
+    expect(impData.imported.length).toBe(2);
+
+    const vidId = impData.imported.find((a) => a.kind === 'video')!.id;
+    const audId = impData.imported.find((a) => a.kind === 'audio')!.id;
+
+    const anaV = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 4,
+      method: 'tools/call',
+      params: { name: 'analyze_media', arguments: { asset_id: vidId } },
+    });
+    expect((anaV?.result as { isError: boolean }).isError).toBe(false);
+
+    const anaA = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 5,
+      method: 'tools/call',
+      params: { name: 'analyze_media', arguments: { asset_id: audId } },
+    });
+    const anaAText = ((anaA?.result as { content: Array<{ text: string }> }).content[0]).text;
+    expect(JSON.parse(anaAText).bpm).toBeGreaterThan(50);
+
+    const lookRes = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 6,
+      method: 'tools/call',
+      params: { name: 'look_at_media', arguments: { asset_id: vidId, frames: 3 } },
+    });
+    const lookContent = (lookRes?.result as { content: Array<{ type: string; data?: string }> }).content;
+    expect(lookContent[0].type).toBe('image');
+    expect(lookContent[0].data!.length).toBeGreaterThan(100);
+
+    await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 7,
+      method: 'tools/call',
+      params: { name: 'add_clip', arguments: { asset_id: vidId, start: 0, duration: 2 } },
+    });
+    expect(store.project.clips.length).toBe(2);
+
+    const frameRes = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 8,
+      method: 'tools/call',
+      params: { name: 'get_frame', arguments: { time: 0.5 } },
+    });
+    expect(((frameRes?.result as { content: Array<{ type: string }> }).content[0]).type).toBe('image');
+
+    const autoRes = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 9,
+      method: 'tools/call',
+      params: { name: 'auto_edit', arguments: {} },
+    });
+    expect((autoRes?.result as { isError: boolean }).isError).toBe(false);
+    expect(store.project.clips.length).toBeGreaterThanOrEqual(3);
+
+    const savePath = path.join(tmpDir, 'test.vectrail');
+    store.saveToFile(savePath);
+    expect(fs.existsSync(savePath)).toBe(true);
+
+    const expRes = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 10,
+      method: 'tools/call',
+      params: {
+        name: 'export',
+        arguments: { name: 'final-cut', height: 360, quality: 'web', loudness: -14, wait: true },
+      },
+    });
+    const expText = ((expRes?.result as { content: Array<{ text: string }> }).content[0]).text;
+    const expInfo = JSON.parse(expText) as { status: string; file: string; error?: string };
+    expect(expInfo.error).toBeUndefined();
+    expect(expInfo.status).toBe('done');
+    expect(fs.existsSync(expInfo.file)).toBe(true);
+
+    const { stdout } = await execFileAsync(FFPROBE_BIN, [
+      '-v', 'quiet', '-print_format', 'json', '-show_format', expInfo.file,
+    ], { windowsHide: true });
+    const probed = JSON.parse(stdout) as { format: { duration: string } };
+    expect(Number.parseFloat(probed.format.duration)).toBeGreaterThan(0.5);
+
+    // Verify grade + speed ramp + caption burn-in + audio-only export
+    const videoClips = store.project.clips.filter((c) => c.kind === 'video');
+    if (videoClips[0]) {
+      await mcp.handleRpc({
+        jsonrpc: '2.0',
+        id: 11,
+        method: 'tools/call',
+        params: {
+          name: 'set_grade',
+          arguments: { clip_ids: [videoClips[0].id], look: 'Film print', exposure: 0.15, saturation: 10 },
+        },
+      });
+      await mcp.handleRpc({
+        jsonrpc: '2.0',
+        id: 12,
+        method: 'tools/call',
+        params: {
+          name: 'set_speed',
+          arguments: { clip_id: videoClips[0].id, speed: 1.5 },
+        },
+      });
+    }
+    store.transcripts[vidId] = {
+      duration: 3,
+      words: [
+        { text: 'Hello', start: 0.1, end: 0.5 },
+        { text: 'Vectrail', start: 0.55, end: 1.0 },
+      ],
+    };
+    await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 13,
+      method: 'tools/call',
+      params: { name: 'set_captions', arguments: { style: 'bold', position: 0.8 } },
+    });
+    const gradedRes = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 14,
+      method: 'tools/call',
+      params: {
+        name: 'export',
+        arguments: { name: 'graded-captioned', height: 480, quality: 'web', enhance_detail: true, wait: true },
+      },
+    });
+    const gradedInfo = JSON.parse(((gradedRes?.result as { content: Array<{ text: string }> }).content[0]).text) as {
+      status: string;
+      file: string;
+      error?: string;
+    };
+    expect(gradedInfo.error).toBeUndefined();
+    expect(gradedInfo.status).toBe('done');
+    expect(fs.existsSync(gradedInfo.file)).toBe(true);
+
+    const wavRes = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 15,
+      method: 'tools/call',
+      params: {
+        name: 'export',
+        arguments: { name: 'audio-mix', format: 'audio', wait: true },
+      },
+    });
+    const wavInfo = JSON.parse(((wavRes?.result as { content: Array<{ text: string }> }).content[0]).text) as {
+      status: string;
+      file: string;
+      error?: string;
+    };
+    expect(wavInfo.error).toBeUndefined();
+    expect(wavInfo.status).toBe('done');
+    expect(wavInfo.file.endsWith('.wav')).toBe(true);
+    expect(fs.existsSync(wavInfo.file)).toBe(true);
+
+    // Verify replaceProject removes deleted optional fields
+    const cleared = JSON.parse(JSON.stringify(store.project)) as typeof store.project;
+    delete cleared.captions;
+    store.replaceProject(cleared, true);
+    expect(store.project.captions).toBeUndefined();
+
+    // Verify MKV proxy remuxing, transitions, audio ducking, and Magic @mentions
+    const mkvPath = path.join(tmpDir, 'camera.mkv');
+    await execFileAsync(FFMPEG_BIN, [
+      '-y', '-i', sampleVideo, '-c', 'copy', mkvPath,
+    ], { windowsHide: true });
+    const importedMkv = await store.importFiles([mkvPath]);
+    const proxy = await ensurePlayableProxy(importedMkv[0]);
+    expect(proxy).toBeDefined();
+    expect(fs.existsSync(proxy!)).toBe(true);
+
+    const magicRes = await runMagicPrompt(
+      'Apply warm film grade and dissolve transitions and title "Final" at @playhead',
+      'local',
+      store,
+      []
+    );
+    expect(magicRes.ok).toBe(true);
+    expect(magicRes.summary).toContain('Warm film');
+    expect(magicRes.backend).toBe('local');
+    expect(magicRes.processSteps?.length).toBeGreaterThanOrEqual(3);
+    expect(magicRes.processSteps?.every((s) => s.status === 'done')).toBe(true);
+
+    const textClip = store.project.clips.find((c) => c.kind === 'text');
+    expect(textClip).toBeDefined();
+    if (textClip?.text) {
+      textClip.text.strokeWidth = 6;
+      textClip.text.strokeColor = { r: 0, g: 0, b: 0, a: 1 };
+      textClip.text.bgColor = { r: 0.1, g: 0.1, b: 0.12, a: 0.8 };
+      textClip.text.bgPadding = 18;
+      const styledFrame = await mcp.handleRpc({
+        jsonrpc: '2.0',
+        id: 19,
+        method: 'tools/call',
+        params: { name: 'get_frame', arguments: { time: textClip.start + 0.1 } },
+      });
+      const styledContent = (styledFrame?.result as { content: Array<{ type: string; data?: string }> }).content;
+      expect(styledContent[0].type).toBe('image');
+      expect(styledContent[0].data!.length).toBeGreaterThan(5000);
+    }
+
+    const progressSteps: string[] = [];
+    const zoomMagicRes = await runMagicPrompt('zoom in', 'local', store, [], {
+      runId: 'test-zoom',
+      onProgress: (ev) => {
+        if (ev.step) progressSteps.push(ev.step.id);
+      },
+    });
+    expect(zoomMagicRes.ok).toBe(true);
+    expect(zoomMagicRes.summary).toContain('zoom in');
+    expect(progressSteps).toContain('scan-media');
+    expect(progressSteps).toContain('local-plan');
+
+    const externalEvents: string[] = [];
+    mcp.setExternalToolListener((ev) => externalEvents.push(`${ev.clientName}:${ev.toolName}:${ev.status}`));
+    await mcp.handleRpc(
+      {
+        jsonrpc: '2.0',
+        id: 99,
+        method: 'tools/call',
+        params: { name: 'list_looks', arguments: {} },
+      },
+      'TestAgent'
+    );
+    mcp.setExternalToolListener(undefined);
+    expect(externalEvents).toContain('TestAgent:list_looks:done');
+
+    if (videoClips[0]) {
+      const tfRes = await mcp.handleRpc({
+        jsonrpc: '2.0',
+        id: 16,
+        method: 'tools/call',
+        params: { name: 'set_transform', arguments: { clip_id: videoClips[0].id, scale: 0.4, x: 0.32, y: -0.35 } },
+      });
+      expect((tfRes?.result as { isError: boolean }).isError).toBe(false);
+
+      const compFrame = await mcp.handleRpc({
+        jsonrpc: '2.0',
+        id: 17,
+        method: 'tools/call',
+        params: { name: 'get_frame', arguments: { time: videoClips[0].start + 0.2 } },
+      });
+      const compContent = (compFrame?.result as { content: Array<{ type: string; text?: string; data?: string }> }).content;
+      expect(compContent[0].type).toBe('image');
+      expect(compContent[0].data!.length).toBeGreaterThan(8000);
+      expect(compContent[1].text).toContain('Composited frame');
+    }
+
+    const mcpSavePath = path.join(tmpDir, 'mcp-saved.vectrail');
+    const saveRes = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 23,
+      method: 'tools/call',
+      params: { name: 'save_project', arguments: { path: mcpSavePath, title: 'MCP Saved' } },
+    });
+    expect((saveRes?.result as { isError: boolean }).isError).toBe(false);
+    expect(fs.existsSync(mcpSavePath)).toBe(true);
+
+    const duckRes = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 18,
+      method: 'tools/call',
+      params: { name: 'set_track', arguments: { track: 'A1', duck_under: 'A1', duck_db: -12 } },
+    });
+    expect((duckRes?.result as { isError: boolean }).isError).toBe(false);
+    expect(store.project.audioTracks[0].duckDB).toBe(-12);
+
+    // Verify wipe transition + speed ramp + vertical reframe crop in real FFmpeg export
+    const vList = store.project.clips.filter((c) => c.kind === 'video').sort((a, b) => a.start - b.start);
+    if (vList.length >= 2) {
+      await mcp.handleRpc({
+        jsonrpc: '2.0',
+        id: 20,
+        method: 'tools/call',
+        params: { name: 'set_transition', arguments: { clip_id: vList[1].id, kind: 'wipe', duration: 0.35 } },
+      });
+    }
+    if (vList[0]) {
+      await mcp.handleRpc({
+        jsonrpc: '2.0',
+        id: 21,
+        method: 'tools/call',
+        params: { name: 'set_speed_ramp', arguments: { clip_id: vList[0].id, speed: 2.0 } },
+      });
+    }
+    const vertRes = await mcp.handleRpc({
+      jsonrpc: '2.0',
+      id: 22,
+      method: 'tools/call',
+      params: {
+        name: 'export',
+        arguments: {
+          name: 'vertical-reframe-wipe',
+          shape: 'vertical',
+          height: 360,
+          reframe_x: 0.7,
+          reframe_y: 0.5,
+          quality: 'web',
+          wait: true,
+        },
+      },
+    });
+    const vertInfo = JSON.parse(((vertRes?.result as { content: Array<{ text: string }> }).content[0]).text) as {
+      status: string;
+      file: string;
+      error?: string;
+    };
+    expect(vertInfo.error).toBeUndefined();
+    expect(vertInfo.status).toBe('done');
+    expect(fs.existsSync(vertInfo.file)).toBe(true);
+    const { stdout: vProbe } = await execFileAsync(
+      FFPROBE_BIN,
+      ['-v', 'quiet', '-print_format', 'json', '-show_streams', vertInfo.file],
+      { windowsHide: true }
+    );
+    const vStreams = (JSON.parse(vProbe) as { streams: Array<{ codec_type: string; width?: number; height?: number }> }).streams;
+    const vStream = vStreams.find((s) => s.codec_type === 'video');
+    expect(vStream?.width).toBe(360);
+    expect(vStream?.height).toBe(640);
+
+    await store.waitForIdle();
+  }, 60000);
+});
