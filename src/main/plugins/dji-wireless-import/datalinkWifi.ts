@@ -1,1 +1,229 @@
-aW1wb3J0IGRncmFtIGZyb20gJ25vZGU6ZGdyYW0nOwppbXBvcnQgaHR0cCBmcm9tICdub2RlOmh0dHAnOwppbXBvcnQgbmV0IGZyb20gJ25vZGU6bmV0JzsKaW1wb3J0IHR5cGUgeyBEamlSZW1vdGVNZWRpYUl0ZW0gfSBmcm9tICcuLi8uLi8uLi9zaGFyZWQvZGppVHlwZXMnOwppbXBvcnQgewogIEFERFJfQVBQLAogIERVTUxfRkxBR1NfUkVRVUVTVCwKICBEdW1sRnJhbWVQYXJzZXIsCiAgZGVjb2RlTWFuaWZlc3RCdWZmZXIsCiAgZHVtbENvbW1hbmRzLAogIGVuY29kZUR1bWxGcmFtZSwKICBoYXNNYW5pZmVzdEZyYW1lcywKICByZWFzc2VtYmxlTWFuaWZlc3RDaHVua3MsCn0gZnJvbSAnLi9kdW1sJzsKCmNvbnN0IFJFRl9IQU5EU0hBS0UgPSBCdWZmZXIuZnJvbSgKICAnMDAwMDY0MDA2NDAwYzAwNTE0MDAwMDY0MDAwMDAxOTAwMWMwMDUxNDAwMDA2NDAwMTQwMDY0MDBjMDA1MTQwMDAwNjQwMDAxMDEwNDAxMDInLAogICdoZXgnCik7CmNvbnN0IExJU1RfQkFTRSA9IEJ1ZmZlci5mcm9tKAogICc0YTAwMmExMDAxMDAwMDAwMDAwMDAxMDAwMDAwMmQwMDBkMDEwMGZmZmZmZmZmZmZmZmZmZmYwMDAxMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAnLAogICdoZXgnCik7CmNvbnN0IExJU1RfVFJJR0dFUiA9IEJ1ZmZlci5mcm9tKCc0YTA0MGUxMDAxMDAwMDAwMDAwMDAxMDAwMDAwJywgJ2hleCcpOwpjb25zdCBBUFBfUFJFU0VOQ0UgPSBCdWZmZXIuZnJvbSgnMTcwMDQ2MjM3YzQxNTA1MDAwMDAwMDAwMDAwMicsICdoZXgnKTsKY29uc3QgU0RfUVVFUllfQ1RSID0gMTsKY29uc3QgSU5URVJOQUxfUVVFUllfQ1RSID0gMjsKY29uc3QgTkVXRVNUX1NFTlRJTkVMID0gMHg0MDAwMDAwMTsKY29uc3QgUExBWUJBQ0tfRU5URVIgPSBCdWZmZXIuZnJvbSgnMDEwMTAwMDEnLCAnaGV4Jyk7CgpmdW5jdGlvbiBidWlsZFVkcEhlYWRlcihwa3RUeXBlOiBudW1iZXIsIHBheWxvYWRMZW46IG51bWJlciwgc2Vzc2lvbklkOiBudW1iZXIsIHNlcTogbnVtYmVyKTogQnVmZmVyIHsKICBjb25zdCB3MCA9ICgxIDw8IDE1KSB8ICgoOCArIHBheWxvYWRMZW4pICYgMHgzZmZmKTsKICBjb25zdCBoZHIgPSBCdWZmZXIuYWxsb2NVbnNhZmUoOCk7CiAgaGRyWzBdID0gdzAgJiAweGZmOwogIGhkclsxXSA9ICh3MCA+PiA4KSAmIDB4ZmY7CiAgaGRyWzJdID0gc2Vzc2lvbklkICYgMHhmZjsKICBoZHJbM10gPSAoc2Vzc2lvbklkID4+IDgpICYgMHhmZjsKICBoZHJbNF0gPSBzZXEgJiAweGZmOwogIGhkcls1XSA9IChzZXEgPj4gOCkgJiAweGZmOwogIGhkcls2XSA9IHBrdFR5cGUgJiAweGZmOwogIGxldCB4b3IgPSAwOwogIGZvciAobGV0IGkgPSAwOyBpIDwgNzsgaSsrKSB4b3IgXj0gaGRyW2ldOwogIGhkcls3XSA9IHhvcjsKICByZXR1cm4gaGRyOwp9Cgphc3luYyBmdW5jdGlvbiB0Y3BQb2tlNzAwMShjYW1lcmFJcDogc3RyaW5nKTogUHJvbWlzZTx2b2lkPiB7CiAgYXdhaXQgbmV3IFByb21pc2U8dm9pZD4oKHJlc29sdmUpID0+IHsKICAgIGNvbnN0IHNvY2tldCA9IG5ldC5jcmVhdGVDb25uZWN0aW9uKHsgaG9zdDogY2FtZXJhSXAsIHBvcnQ6IDcwMDEsIHRpbWVvdXQ6IDE1MDAgfSwgKCkgPT4gewogICAgICB0cnkgewogICAgICAgIHNvY2tldC53cml0ZShkdW1sQ29tbWFuZHMuc2V0UGFpcmluZ1BpbigweDgwOTIsICd2ZWN0cmFpbC13aW4nLCAnb3NtbycpKTsKICAgICAgfSBjYXRjaCB7CiAgICAgICAgLy8gaWdub3JlIHdyaXRlIGVycm9ycwogICAgICB9CiAgICAgIHNvY2tldC5lbmQoKTsKICAgICAgcmVzb2x2ZSgpOwogICAgfSk7CiAgICBzb2NrZXQub24oJ2Vycm9yJywgKCkgPT4gcmVzb2x2ZSgpKTsKICAgIHNvY2tldC5vbigndGltZW91dCcsICgpID0+IHsKICAgICAgc29ja2V0LmRlc3Ryb3koKTsKICAgICAgcmVzb2x2ZSgpOwogICAgfSk7CiAgfSk7Cn0KCmV4cG9ydCBhc3luYyBmdW5jdGlvbiBpc0NhbWVyYUh0dHBSZWFjaGFibGUoY2FtZXJhSXA6IHN0cmluZyk6IFByb21pc2U8Ym9vbGVhbj4gewogIHJldHVybiBuZXcgUHJvbWlzZTxib29sZWFuPigocmVzb2x2ZSkgPT4gewogICAgY29uc3QgcmVxID0gaHR0cC5yZXF1ZXN0KAogICAgICBgaHR0cDovLyR7Y2FtZXJhSXB9L2AsCiAgICAgIHsgbWV0aG9kOiAnSEVBRCcsIHRpbWVvdXQ6IDIwMDAgfSwKICAgICAgKHJlcykgPT4gewogICAgICAgIHJlcy5yZXN1bWUoKTsKICAgICAgICByZXNvbHZlKHRydWUpOwogICAgICB9CiAgICApOwogICAgcmVxLm9uKCdlcnJvcicsICgpID0+IHJlc29sdmUoZmFsc2UpKTsKICAgIHJlcS5vbigndGltZW91dCcsICgpID0+IHsKICAgICAgcmVxLmRlc3Ryb3koKTsKICAgICAgcmVzb2x2ZShmYWxzZSk7CiAgICB9KTsKICAgIHJlcS5lbmQoKTsKICB9KTsKfQoKZnVuY3Rpb24gZGVsYXkobXM6IG51bWJlcik6IFByb21pc2U8dm9pZD4gewogIHJldHVybiBuZXcgUHJvbWlzZSgocmVzb2x2ZSkgPT4gc2V0VGltZW91dChyZXNvbHZlLCBtcykpOwp9CgpmdW5jdGlvbiBidWlsZExpc3RDb21tYW5kKHJlcXVlc3RDdHI6IG51bWJlciwgY3Vyc29yOiBudW1iZXIpOiBCdWZmZXIgewogIGNvbnN0IHBheWxvYWQgPSBCdWZmZXIuZnJvbShMSVNUX0JBU0UpOwogIHBheWxvYWRbNF0gPSByZXF1ZXN0Q3RyOwogIHBheWxvYWQud3JpdGVVSW50MzJMRShjdXJzb3IgPj4+IDAsIDEwKTsKICByZXR1cm4gcGF5bG9hZDsKfQoKZnVuY3Rpb24gY2FtZXJhUmVjZWl2ZXIocmVjZWl2ZXJUeXBlOiBudW1iZXIsIHJlY2VpdmVySWQ6IG51bWJlcik6IG51bWJlciB7CiAgcmV0dXJuICgocmVjZWl2ZXJJZCA8PCA1KSB8IHJlY2VpdmVyVHlwZSkgJiAweGZmOwp9CgpleHBvcnQgYXN5bmMgZnVuY3Rpb24gcXVlcnlDYW1lcmFNZWRpYU92ZXJXaWZpKAogIGNhbWVyYUlwID0gJzE5Mi4xNjguMi4xJywKICBwb3J0ID0gOTAwNCwKICBwb2tlID0gdHJ1ZQopOiBQcm9taXNlPEFycmF5PE9taXQ8RGppUmVtb3RlTWVkaWFJdGVtLCAnYWxyZWFkeUltcG9ydGVkJyB8ICdsb2NhbFBhdGgnPj4+IHsKICBjb25zdCByZWFjaGFibGUgPSBhd2FpdCBpc0NhbWVyYUh0dHBSZWFjaGFibGUoY2FtZXJhSXApOwogIGlmICghcmVhY2hhYmxlKSB7CiAgICB0aHJvdyBuZXcgRXJyb3IoCiAgICAgIGBDYW5ub3QgcmVhY2ggREpJIGNhbWVyYSBhdCAke2NhbWVyYUlwfS4gQ29ubmVjdCBXaW5kb3dzIFdpLUZpIHRvIHRoZSBjYW1lcmEgaG90c3BvdCBmaXJzdC5gCiAgICApOwogIH0KCiAgaWYgKHBva2UpIHsKICAgIGF3YWl0IHRjcFBva2U3MDAxKGNhbWVyYUlwKTsKICAgIGF3YWl0IGRlbGF5KDMwMCk7CiAgfQoKICBjb25zdCBzb2NrZXQgPSBkZ3JhbS5jcmVhdGVTb2NrZXQoJ3VkcDQnKTsKICBjb25zdCBwYXJzZXIgPSBuZXcgRHVtbEZyYW1lUGFyc2VyKCk7CiAgY29uc3QgZnJhbWVzOiBSZXR1cm5UeXBlPER1bWxGcmFtZVBhcnNlclsnZmVlZCddPiA9IFtdOwogIHNvY2tldC5vbignbWVzc2FnZScsIChtc2cpID0+IHsKICAgIGZyYW1lcy5wdXNoKC4uLnBhcnNlci5mZWVkKG1zZykpOwogIH0pOwoKICB0cnkgewogICAgYXdhaXQgbmV3IFByb21pc2U8dm9pZD4oKHJlc29sdmUsIHJlamVjdCkgPT4gewogICAgICBzb2NrZXQub25jZSgnZXJyb3InLCByZWplY3QpOwogICAgICBzb2NrZXQuYmluZCgwLCAoKSA9PiB7CiAgICAgICAgc29ja2V0LnJlbW92ZUxpc3RlbmVyKCdlcnJvcicsIHJlamVjdCk7CiAgICAgICAgcmVzb2x2ZSgpOwogICAgICB9KTsKICAgIH0pOwoKICAgIGNvbnN0IHNlc3Npb25JZCA9IDB4MTAwMCArIE1hdGguZmxvb3IoTWF0aC5yYW5kb20oKSAqIDB4ZWZmZSk7CiAgICBjb25zdCBiYXNlU2VxID0gKDB4MTAwMCArIE1hdGguZmxvb3IoTWF0aC5yYW5kb20oKSAqIDB4ZTAwMCkpICYgMHhmZmY4OwogICAgbGV0IGNhbWVyYUNoYW5uZWwgPSBiYXNlU2VxOwogICAgY29uc3Qgc3luID0gQnVmZmVyLmNvbmNhdChbQnVmZmVyLmZyb20oW2Jhc2VTZXEgJiAweGZmLCAoYmFzZVNlcSA+PiA4KSAmIDB4ZmZdKSwgUkVGX0hBTkRTSEFLRS5zdWJhcnJheSgyKV0pOwogICAgbGV0IGhhbmRzaGFrZVJlcGx5ID0gZmFsc2U7CiAgICBmb3IgKGxldCBhdHRlbXB0ID0gMDsgYXR0ZW1wdCA8IDIwICYmICFoYW5kc2hha2VSZXBseTsgYXR0ZW1wdCsrKSB7CiAgICAgIHNvY2tldC5zZW5kKEJ1ZmZlci5jb25jYXQoW2J1aWxkVWRwSGVhZGVyKDB4MDAsIHN5bi5sZW5ndGgsIHNlc3Npb25JZCwgMCksIHN5bl0pLCBwb3J0LCBjYW1lcmFJcCk7CiAgICAgIGF3YWl0IGRlbGF5KDM1MCk7CiAgICAgIGhhbmRzaGFrZVJlcGx5ID0gZnJhbWVzLmxlbmd0aCA+IDA7CiAgICB9CiAgICBpZiAoIWhhbmRzaGFrZVJlcGx5KSB7CiAgICAgIHRocm93IG5ldyBFcnJvcignREpJIGRhdGFsaW5rIGhhbmRzaGFrZSB0aW1lZCBvdXQuJyk7CiAgICB9CgogICAgbGV0IHVkcFNlcSA9IChjYW1lcmFDaGFubmVsICsgOCkgJiAweGZmZmY7CiAgICBsZXQgZHVtbFNlcSA9IDB4YTAwMDsKICAgIGxldCBjbWRDdHIgPSAwOwoKICAgIGNvbnN0IHNlbmREbCA9IChjbWRTZXQ6IG51bWJlciwgY21kSWQ6IG51bWJlciwgcGF5bG9hZDogQnVmZmVyLCByZWNlaXZlciA9IGNhbWVyYVJlY2VpdmVyKDB4MDEsIDB4MDApKSA9PiB7CiAgICAgIGNtZEN0ciArPSAxOwogICAgICBjb25zdCBhY2sgPSAodWRwU2VxIC0gOCkgJiAweGZmZmY7CiAgICAgIGNvbnN0IHJ0ID0gQnVmZmVyLmZyb20oWwogICAgICAgIGFjayAmIDB4ZmYsCiAgICAgICAgKGFjayA+PiA4KSAmIDB4ZmYsCiAgICAgICAgdWRwU2VxICYgMHhmZiwKICAgICAgICAodWRwU2VxID4+IDgpICYgMHhmZiwKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgICAgMCwKICAgICAgICAwLAogICAgICAgIGNtZEN0ciAmIDB4ZmYsCiAgICAgICAgMHgwMSwKICAgICAgICAwLAogICAgICAgIDAsCiAgICAgIF0pOwogICAgICBjb25zdCBmcmFtZSA9IGVuY29kZUR1bWxGcmFtZSh7CiAgICAgICAgc2VuZGVyOiBBRERSX0FQUCwKICAgICAgICByZWNlaXZlciwKICAgICAgICBtc2dJZDogZHVtbFNlcSwKICAgICAgICBmbGFnczogRFVNTF9GTEFHU19SRVFVRVNULAogICAgICAgIGNtZFNldCwKICAgICAgICBjbWRJZCwKICAgICAgICBwYXlsb2FkLAogICAgICB9KTsKICAgICAgZHVtbFNlcSA9IChkdW1sU2VxICsgMSkgJiAweGZmZmY7CiAgICAgIGNvbnN0IHBrdCA9IEJ1ZmZlci5jb25jYXQoW2J1aWxkVWRwSGVhZGVyKDB4MDUsIHJ0Lmxlbmd0aCArIGZyYW1lLmxlbmd0aCwgc2Vzc2lvbklkLCB1ZHBTZXEpLCBydCwgZnJhbWVdKTsKICAgICAgdWRwU2VxID0gKHVkcFNlcSArIDgpICYgMHhmZmZmOwogICAgICBzb2NrZXQuc2VuZChwa3QsIHBvcnQsIGNhbWVyYUlwKTsKICAgIH07CgogICAgc2VuZERsKDB4MDAsIDB4ODgsIEFQUF9QUkVTRU5DRSwgY2FtZXJhUmVjZWl2ZXIoMHgwOCwgMHgwMSkpOwogICAgc2VuZERsKDB4MDIsIDB4MGMsIFBMQVlCQUNLX0VOVEVSKTsKICAgIGF3YWl0IGRlbGF5KDQwMCk7CgogICAgc2VuZERsKDB4MDAsIDB4MjYsIGJ1aWxkTGlzdENvbW1hbmQoU0RfUVVFUllfQ1RSLCAxKSk7CiAgICBsZXQgbGFzdENvdW50ID0gLTE7CiAgICBsZXQgc3RhYmxlQmF0Y2hlcyA9IDA7CiAgICBmb3IgKGxldCBiYXRjaCA9IDA7IGJhdGNoIDwgMTU7IGJhdGNoKyspIHsKICAgICAgYXdhaXQgZGVsYXkoODAwKTsKICAgICAgaWYgKGJhdGNoID09PSAxKSBzZW5kRGwoMHgwMCwgMHgyNiwgTElTVF9UUklHR0VSKTsKICAgICAgaWYgKGJhdGNoID09PSAyKSBzZW5kRGwoMHgwMCwgMHgyNiwgYnVpbGRMaXN0Q29tbWFuZChJTlRFUk5BTF9RVUVSWV9DVFIsIE5FV0VTVF9TRU5USU5FTCkpOwogICAgICBpZiAoYmF0Y2ggPT09IDQgJiYgIWhhc01hbmlmZXN0RnJhbWVzKGZyYW1lcykpIGJyZWFrOwoKICAgICAgY29uc3QgYnlTdG9yYWdlID0gZGVjb2RlTWFuaWZlc3RCdWZmZXIocmVhc3NlbWJsZU1hbmlmZXN0Q2h1bmtzKGZyYW1lcywgU0RfUVVFUllfQ1RSKSwgMCkKICAgICAgICAubWFwKChpdGVtKSA9PiAoeyAuLi5pdGVtLCBzdG9yYWdlOiAwIGFzIGNvbnN0IH0pKTsKICAgICAgY29uc3QgaW50ZXJuYWwgPSBkZWNvZGVNYW5pZmVzdEJ1ZmZlcihyZWFzc2VtYmxlTWFuaWZlc3RDaHVua3MoZnJhbWVzLCBJTlRFUk5BTF9RVUVSWV9DVFIpLCAxKQogICAgICAgIC5tYXAoKGl0ZW0pID0+ICh7IC4uLml0ZW0sIHN0b3JhZ2U6IDEgYXMgY29uc3QgfSkpOwogICAgICBsZXQgaXRlbXMgPSBbLi4uaW50ZXJuYWwsIC4uLmJ5U3RvcmFnZV07CiAgICAgIGNvbnN0IHNlZW4gPSBuZXcgU2V0PHN0cmluZz4oKTsKICAgICAgaXRlbXMgPSBpdGVtcy5maWx0ZXIoKGl0ZW0pID0+IHsKICAgICAgICBjb25zdCBrZXkgPSBgJHtpdGVtLnN0b3JhZ2V9OiR7aXRlbS5tZWRpYVBhdGh9YDsKICAgICAgICBpZiAoc2Vlbi5oYXMoa2V5KSkgcmV0dXJuIGZhbHNlOwogICAgICAgIHNlZW4uYWRkKGtleSk7CiAgICAgICAgcmV0dXJuIHRydWU7CiAgICAgIH0pOwogICAgICBpZiAoaXRlbXMubGVuZ3RoID09PSAwKSB7CiAgICAgICAgaXRlbXMgPSBkZWNvZGVNYW5pZmVzdEJ1ZmZlcihyZWFzc2VtYmxlTWFuaWZlc3RDaHVua3MoZnJhbWVzKSwgMCk7CiAgICAgIH0KCiAgICAgIGlmIChpdGVtcy5sZW5ndGggPiAwICYmIGl0ZW1zLmxlbmd0aCA9PT0gbGFzdENvdW50KSB7CiAgICAgICAgc3RhYmxlQmF0Y2hlcysrOwogICAgICAgIGlmIChiYXRjaCA+PSA0ICYmIHN0YWJsZUJhdGNoZXMgPj0gMikgcmV0dXJuIGl0ZW1zOwogICAgICB9IGVsc2UgewogICAgICAgIHN0YWJsZUJhdGNoZXMgPSAwOwogICAgICB9CiAgICAgIGxhc3RDb3VudCA9IGl0ZW1zLmxlbmd0aDsKICAgIH0KICAgIHJldHVybiBkZWNvZGVNYW5pZmVzdEJ1ZmZlcihyZWFzc2VtYmxlTWFuaWZlc3RDaHVua3MoZnJhbWVzKSwgMCk7CiAgfSBmaW5hbGx5IHsKICAgIC8vIExlYXZlIHBsYXliYWNrIGJlc3QtZWZmb3J0IGFmdGVyIHRoZSBkYXRhbGluayBzY29wZSBoYXMgY2xvc2VkLgogICAgdHJ5IHsKICAgICAgc29ja2V0LmNsb3NlKCk7CiAgICB9IGNhdGNoIHsKICAgICAgLy8gaWdub3JlIGNsb3NlIGVycm9ycwogICAgfQogIH0KfQo=
+import dgram from 'node:dgram';
+import http from 'node:http';
+import net from 'node:net';
+import type { DjiRemoteMediaItem } from '../../../shared/djiTypes';
+import {
+  ADDR_APP,
+  DUML_FLAGS_REQUEST,
+  DumlFrameParser,
+  decodeManifestBuffer,
+  dumlCommands,
+  encodeDumlFrame,
+  hasManifestFrames,
+  reassembleManifestChunks,
+} from './duml';
+
+const REF_HANDSHAKE = Buffer.from(
+  '000064006400c005140000640000019001c005140000640014006400c00514000064000101040102',
+  'hex'
+);
+const LIST_BASE = Buffer.from(
+  '4a002a10010000000000010000002d000d0100ffffffffffffffff000100000000000000000000000000',
+  'hex'
+);
+const LIST_TRIGGER = Buffer.from('4a040e1001000000000001000000', 'hex');
+const APP_PRESENCE = Buffer.from('170046237c415050000000000002', 'hex');
+const SD_QUERY_CTR = 1;
+const INTERNAL_QUERY_CTR = 2;
+const NEWEST_SENTINEL = 0x40000001;
+const PLAYBACK_ENTER = Buffer.from('01010001', 'hex');
+
+function buildUdpHeader(pktType: number, payloadLen: number, sessionId: number, seq: number): Buffer {
+  const w0 = (1 << 15) | ((8 + payloadLen) & 0x3fff);
+  const hdr = Buffer.allocUnsafe(8);
+  hdr[0] = w0 & 0xff;
+  hdr[1] = (w0 >> 8) & 0xff;
+  hdr[2] = sessionId & 0xff;
+  hdr[3] = (sessionId >> 8) & 0xff;
+  hdr[4] = seq & 0xff;
+  hdr[5] = (seq >> 8) & 0xff;
+  hdr[6] = pktType & 0xff;
+  let xor = 0;
+  for (let i = 0; i < 7; i++) xor ^= hdr[i];
+  hdr[7] = xor;
+  return hdr;
+}
+
+async function tcpPoke7001(cameraIp: string): Promise<void> {
+  await new Promise<void>((resolve) => {
+    const socket = net.createConnection({ host: cameraIp, port: 7001, timeout: 1500 }, () => {
+      try {
+        socket.write(dumlCommands.setPairingPin(0x8092, 'vectrail-win', 'osmo'));
+      } catch {
+        // ignore write errors
+      }
+      socket.end();
+      resolve();
+    });
+    socket.on('error', () => resolve());
+    socket.on('timeout', () => {
+      socket.destroy();
+      resolve();
+    });
+  });
+}
+
+export async function isCameraHttpReachable(cameraIp: string): Promise<boolean> {
+  return new Promise<boolean>((resolve) => {
+    const req = http.request(
+      `http://${cameraIp}/`,
+      { method: 'HEAD', timeout: 2000 },
+      (res) => {
+        res.resume();
+        resolve(true);
+      }
+    );
+    req.on('error', () => resolve(false));
+    req.on('timeout', () => {
+      req.destroy();
+      resolve(false);
+    });
+    req.end();
+  });
+}
+
+function delay(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function buildListCommand(requestCtr: number, cursor: number): Buffer {
+  const payload = Buffer.from(LIST_BASE);
+  payload[4] = requestCtr;
+  payload.writeUInt32LE(cursor >>> 0, 10);
+  return payload;
+}
+
+function cameraReceiver(receiverType: number, receiverId: number): number {
+  return ((receiverId << 5) | receiverType) & 0xff;
+}
+
+export async function queryCameraMediaOverWifi(
+  cameraIp = '192.168.2.1',
+  port = 9004,
+  poke = true
+): Promise<Array<Omit<DjiRemoteMediaItem, 'alreadyImported' | 'localPath'>>> {
+  const reachable = await isCameraHttpReachable(cameraIp);
+  if (!reachable) {
+    throw new Error(
+      `Cannot reach DJI camera at ${cameraIp}. Connect Windows Wi-Fi to the camera hotspot first.`
+    );
+  }
+
+  if (poke) {
+    await tcpPoke7001(cameraIp);
+    await delay(300);
+  }
+
+  const socket = dgram.createSocket('udp4');
+  const parser = new DumlFrameParser();
+  const frames: ReturnType<DumlFrameParser['feed']> = [];
+  socket.on('message', (msg) => {
+    frames.push(...parser.feed(msg));
+  });
+
+  try {
+    await new Promise<void>((resolve, reject) => {
+      socket.once('error', reject);
+      socket.bind(0, () => {
+        socket.removeListener('error', reject);
+        resolve();
+      });
+    });
+
+    const sessionId = 0x1000 + Math.floor(Math.random() * 0xeffe);
+    const baseSeq = (0x1000 + Math.floor(Math.random() * 0xe000)) & 0xfff8;
+    let cameraChannel = baseSeq;
+    const syn = Buffer.concat([Buffer.from([baseSeq & 0xff, (baseSeq >> 8) & 0xff]), REF_HANDSHAKE.subarray(2)]);
+    let handshakeReply = false;
+    for (let attempt = 0; attempt < 20 && !handshakeReply; attempt++) {
+      socket.send(Buffer.concat([buildUdpHeader(0x00, syn.length, sessionId, 0), syn]), port, cameraIp);
+      await delay(350);
+      handshakeReply = frames.length > 0;
+    }
+    if (!handshakeReply) {
+      throw new Error('DJI datalink handshake timed out.');
+    }
+
+    let udpSeq = (cameraChannel + 8) & 0xffff;
+    let dumlSeq = 0xa000;
+    let cmdCtr = 0;
+
+    const sendDl = (cmdSet: number, cmdId: number, payload: Buffer, receiver = cameraReceiver(0x01, 0x00)) => {
+      cmdCtr += 1;
+      const ack = (udpSeq - 8) & 0xffff;
+      const rt = Buffer.from([
+        ack & 0xff,
+        (ack >> 8) & 0xff,
+        udpSeq & 0xff,
+        (udpSeq >> 8) & 0xff,
+        0,
+        0,
+        0,
+        0,
+        cmdCtr & 0xff,
+        0x01,
+        0,
+        0,
+      ]);
+      const frame = encodeDumlFrame({
+        sender: ADDR_APP,
+        receiver,
+        msgId: dumlSeq,
+        flags: DUML_FLAGS_REQUEST,
+        cmdSet,
+        cmdId,
+        payload,
+      });
+      dumlSeq = (dumlSeq + 1) & 0xffff;
+      const pkt = Buffer.concat([buildUdpHeader(0x05, rt.length + frame.length, sessionId, udpSeq), rt, frame]);
+      udpSeq = (udpSeq + 8) & 0xffff;
+      socket.send(pkt, port, cameraIp);
+    };
+
+    sendDl(0x00, 0x88, APP_PRESENCE, cameraReceiver(0x08, 0x01));
+    sendDl(0x02, 0x0c, PLAYBACK_ENTER);
+    await delay(400);
+
+    sendDl(0x00, 0x26, buildListCommand(SD_QUERY_CTR, 1));
+    let lastCount = -1;
+    let stableBatches = 0;
+    for (let batch = 0; batch < 15; batch++) {
+      await delay(800);
+      if (batch === 1) sendDl(0x00, 0x26, LIST_TRIGGER);
+      if (batch === 2) sendDl(0x00, 0x26, buildListCommand(INTERNAL_QUERY_CTR, NEWEST_SENTINEL));
+      if (batch === 4 && !hasManifestFrames(frames)) break;
+
+      const byStorage = decodeManifestBuffer(reassembleManifestChunks(frames, SD_QUERY_CTR), 0)
+        .map((item) => ({ ...item, storage: 0 as const }));
+      const internal = decodeManifestBuffer(reassembleManifestChunks(frames, INTERNAL_QUERY_CTR), 1)
+        .map((item) => ({ ...item, storage: 1 as const }));
+      let items = [...internal, ...byStorage];
+      const seen = new Set<string>();
+      items = items.filter((item) => {
+        const key = `${item.storage}:${item.mediaPath}`;
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+      if (items.length === 0) {
+        items = decodeManifestBuffer(reassembleManifestChunks(frames), 0);
+      }
+
+      if (items.length > 0 && items.length === lastCount) {
+        stableBatches++;
+        if (batch >= 4 && stableBatches >= 2) return items;
+      } else {
+        stableBatches = 0;
+      }
+      lastCount = items.length;
+    }
+    return decodeManifestBuffer(reassembleManifestChunks(frames), 0);
+  } finally {
+    // Leave playback best-effort after the datalink scope has closed.
+    try {
+      socket.close();
+    } catch {
+      // ignore close errors
+    }
+  }
+}
