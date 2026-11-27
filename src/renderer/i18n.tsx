@@ -1,1 +1,70 @@
-aW1wb3J0IFJlYWN0LCB7IGNyZWF0ZUNvbnRleHQsIHVzZUNhbGxiYWNrLCB1c2VDb250ZXh0LCB1c2VNZW1vLCB1c2VTdGF0ZSB9IGZyb20gJ3JlYWN0JzsKCmV4cG9ydCB0eXBlIEFwcExvY2FsZSA9ICd6aCcgfCAnZW4nOwoKY29uc3QgTE9DQUxFX1NUT1JBR0VfS0VZID0gJ3ZlY3RyYWlsLmxvY2FsZS52MSc7CgpmdW5jdGlvbiBsb2FkSW5pdGlhbExvY2FsZSgpOiBBcHBMb2NhbGUgewogIHRyeSB7CiAgICBjb25zdCBzYXZlZCA9IGxvY2FsU3RvcmFnZS5nZXRJdGVtKExPQ0FMRV9TVE9SQUdFX0tFWSk7CiAgICBpZiAoc2F2ZWQgPT09ICd6aCcgfHwgc2F2ZWQgPT09ICdlbicpIHJldHVybiBzYXZlZDsKICB9IGNhdGNoIHsKICAgIC8vIGlnbm9yZSBzdG9yYWdlIGVycm9ycwogIH0KICBpZiAodHlwZW9mIG5hdmlnYXRvciAhPT0gJ3VuZGVmaW5lZCcgJiYgbmF2aWdhdG9yLmxhbmd1YWdlPy50b0xvd2VyQ2FzZSgpLnN0YXJ0c1dpdGgoJ3poJykpIHsKICAgIHJldHVybiAnemgnOwogIH0KICByZXR1cm4gJ2VuJzsKfQoKaW50ZXJmYWNlIEkxOG5Db250ZXh0VmFsdWUgewogIGxvY2FsZTogQXBwTG9jYWxlOwogIHNldExvY2FsZTogKG5leHQ6IEFwcExvY2FsZSkgPT4gdm9pZDsKICB0b2dnbGVMb2NhbGU6ICgpID0+IHZvaWQ7CiAgTDogKHpoOiBzdHJpbmcsIGVuOiBzdHJpbmcpID0+IHN0cmluZzsKfQoKY29uc3QgSTE4bkNvbnRleHQgPSBjcmVhdGVDb250ZXh0PEkxOG5Db250ZXh0VmFsdWU+KHsKICBsb2NhbGU6ICdlbicsCiAgc2V0TG9jYWxlOiAoKSA9PiB7fSwKICB0b2dnbGVMb2NhbGU6ICgpID0+IHt9LAogIEw6IChfemgsIGVuKSA9PiBlbiwKfSk7CgpleHBvcnQgY29uc3QgSTE4blByb3ZpZGVyOiBSZWFjdC5GQzx7IGNoaWxkcmVuOiBSZWFjdC5SZWFjdE5vZGUgfT4gPSAoeyBjaGlsZHJlbiB9KSA9PiB7CiAgY29uc3QgW2xvY2FsZSwgc2V0TG9jYWxlU3RhdGVdID0gdXNlU3RhdGU8QXBwTG9jYWxlPihsb2FkSW5pdGlhbExvY2FsZSk7CgogIGNvbnN0IHNldExvY2FsZSA9IHVzZUNhbGxiYWNrKChuZXh0OiBBcHBMb2NhbGUpID0+IHsKICAgIHNldExvY2FsZVN0YXRlKG5leHQpOwogICAgdHJ5IHsKICAgICAgbG9jYWxTdG9yYWdlLnNldEl0ZW0oTE9DQUxFX1NUT1JBR0VfS0VZLCBuZXh0KTsKICAgIH0gY2F0Y2ggewogICAgICAvLyBpZ25vcmUgc3RvcmFnZSBlcnJvcnMKICAgIH0KICB9LCBbXSk7CgogIGNvbnN0IHRvZ2dsZUxvY2FsZSA9IHVzZUNhbGxiYWNrKCgpID0+IHsKICAgIHNldExvY2FsZVN0YXRlKChwcmV2KSA9PiB7CiAgICAgIGNvbnN0IG5leHQ6IEFwcExvY2FsZSA9IHByZXYgPT09ICd6aCcgPyAnZW4nIDogJ3poJzsKICAgICAgdHJ5IHsKICAgICAgICBsb2NhbFN0b3JhZ2Uuc2V0SXRlbShMT0NBTEVfU1RPUkFHRV9LRVksIG5leHQpOwogICAgICB9IGNhdGNoIHsKICAgICAgICAvLyBpZ25vcmUgc3RvcmFnZSBlcnJvcnMKICAgICAgfQogICAgICByZXR1cm4gbmV4dDsKICAgIH0pOwogIH0sIFtdKTsKCiAgY29uc3QgTCA9IHVzZUNhbGxiYWNrKCh6aDogc3RyaW5nLCBlbjogc3RyaW5nKSA9PiAobG9jYWxlID09PSAnemgnID8gemggOiBlbiksIFtsb2NhbGVdKTsKCiAgY29uc3QgdmFsdWUgPSB1c2VNZW1vPEkxOG5Db250ZXh0VmFsdWU+KAogICAgKCkgPT4gKHsgbG9jYWxlLCBzZXRMb2NhbGUsIHRvZ2dsZUxvY2FsZSwgTCB9KSwKICAgIFtsb2NhbGUsIHNldExvY2FsZSwgdG9nZ2xlTG9jYWxlLCBMXQogICk7CgogIHJldHVybiA8STE4bkNvbnRleHQuUHJvdmlkZXIgdmFsdWU9e3ZhbHVlfT57Y2hpbGRyZW59PC9JMThuQ29udGV4dC5Qcm92aWRlcj47Cn07CgpleHBvcnQgZnVuY3Rpb24gdXNlSTE4bigpOiBJMThuQ29udGV4dFZhbHVlIHsKICByZXR1cm4gdXNlQ29udGV4dChJMThuQ29udGV4dCk7Cn0K
+import React, { createContext, useCallback, useContext, useMemo, useState } from 'react';
+
+export type AppLocale = 'zh' | 'en';
+
+const LOCALE_STORAGE_KEY = 'vectrail.locale.v1';
+
+function loadInitialLocale(): AppLocale {
+  try {
+    const saved = localStorage.getItem(LOCALE_STORAGE_KEY);
+    if (saved === 'zh' || saved === 'en') return saved;
+  } catch {
+    // ignore storage errors
+  }
+  if (typeof navigator !== 'undefined' && navigator.language?.toLowerCase().startsWith('zh')) {
+    return 'zh';
+  }
+  return 'en';
+}
+
+interface I18nContextValue {
+  locale: AppLocale;
+  setLocale: (next: AppLocale) => void;
+  toggleLocale: () => void;
+  L: (zh: string, en: string) => string;
+}
+
+const I18nContext = createContext<I18nContextValue>({
+  locale: 'en',
+  setLocale: () => {},
+  toggleLocale: () => {},
+  L: (_zh, en) => en,
+});
+
+export const I18nProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [locale, setLocaleState] = useState<AppLocale>(loadInitialLocale);
+
+  const setLocale = useCallback((next: AppLocale) => {
+    setLocaleState(next);
+    try {
+      localStorage.setItem(LOCALE_STORAGE_KEY, next);
+    } catch {
+      // ignore storage errors
+    }
+  }, []);
+
+  const toggleLocale = useCallback(() => {
+    setLocaleState((prev) => {
+      const next: AppLocale = prev === 'zh' ? 'en' : 'zh';
+      try {
+        localStorage.setItem(LOCALE_STORAGE_KEY, next);
+      } catch {
+        // ignore storage errors
+      }
+      return next;
+    });
+  }, []);
+
+  const L = useCallback((zh: string, en: string) => (locale === 'zh' ? zh : en), [locale]);
+
+  const value = useMemo<I18nContextValue>(
+    () => ({ locale, setLocale, toggleLocale, L }),
+    [locale, setLocale, toggleLocale, L]
+  );
+
+  return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
+};
+
+export function useI18n(): I18nContextValue {
+  return useContext(I18nContext);
+}
