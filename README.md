@@ -1,47 +1,84 @@
+<div align="center">
+
 ![Vectrail](docs/banner.png)
 
 # Vectrail
 
-Fast, open-source **AI-native video editor for Windows**, built from the ground up with Electron, React, TypeScript, WebGL2, FFmpeg, Cloud AI planning, and a built-in 45-tool Model Context Protocol (MCP) server.
+**AI-native video editing for Windows.**  
+Fast timeline, real-time WebGL grading, FFmpeg export, local transcription, agent automation, and camera import — in one open-source editor.
 
-https://github.com/user-attachments/assets/vectrail-teaser
+[![Release](https://img.shields.io/github/v/release/makur6371/Vectrail?color=FF4A1C&label=Release)](https://github.com/makur6371/Vectrail/releases)
+[![Platform](https://img.shields.io/badge/Windows-10%20%2F%2011-0078D6)](#download)
+[![License](https://img.shields.io/badge/License-MIT-30D158)](LICENSE)
 
-*Built by Makur · Inspired by [robbietilton/Editroom](https://github.com/robbietilton/Editroom) for macOS.*
+[Download](#download) · [Features](#features) · [AI & MCP](#ai-agent-integration) · [Build](#development--testing)
+
+</div>
+
+<div align="center">
+
+https://github.com/makur6371/Vectrail/releases/download/v1.2.0/vectrail-teaser-v2.0.0.mp4
+
+**4K 60fps product teaser** — click to watch.
+
+</div>
+
+---
+
+## Why Vectrail
+
+Vectrail is a desktop editing studio built around speed and control. It keeps heavy media work local, exposes real timeline and color tools, and adds AI where it is useful — planning cuts, understanding media, and driving the editor through MCP.
+
+| Area | What you get |
+| --- | --- |
+| **Timeline** | Multi-track video/audio, ripple delete, speed ramps, reverse, freeze frames, ducking, linked clips, snapping, markers, and editable shortcuts. |
+| **Color & Preview** | Real-time WebGL2 compositing, 11 built-in looks, `.cube` LUT import/bake, color wheels, direct canvas transform handles, and frame-accurate scrubbing. |
+| **Media** | Hover-scrub thumbnails, source `I/O` ranges, proxy/remux support for difficult formats, Whisper transcription, and automatic scene tags. |
+| **Export** | Hardware H.264/HEVC with software fallback, Lanczos + CAS upscaling, loudness normalization, caption burn-in, and social aspect presets. |
+| **AI & Automation** | Magic AI bar, OpenAI-compatible Cloud AI, Codex/Claude connectors, and a local 45-tool MCP server. |
+| **Camera Import** | DJI wireless discovery, live diagnostics, resumable original-file transfer, USB mass-storage ingest, checksum verification, and auto project import. |
 
 ## Features
 
-- **Real-time WebGL2 Preview & Direct Canvas Gizmo**: Multi-track compositing, 11 built-in 3D LUT looks + `.cube` LUT import, exposure/contrast/saturation/temperature/tint/lift-gamma-gain color wheels, smooth zoom/pan curves, `dissolve`/`dipToBlack`/`wipe` transitions, fade curves, word-highlighted captions, and direct Viewer drag/scale handles with center-snap guides.
-- **Media Library Hover Scrubbing & Source In/Out**: Move your cursor across any library video card to scrub frames live in the Viewer, or pin a source clip to mark `I`/`O` subclip ranges before inserting.
-- **Resizable Pro Workspace**: Drag panel splitters between Library, Viewer, Inspector, and Timeline (saved automatically) with four built-in palettes (`Dark`, `Grey`, `Amber`, `Light`).
-- **Universal Format Support**: Native `vectrail-media://` byte-range streaming plus automatic background FFmpeg playable proxy/remuxing for `.mkv`, `.mxf`, `.avi`, and `.mov` (HEVC/ProRes/PCM) files while exporting directly from original sources.
-- **Non-linear Multi-track Timeline**: Video (`V1`, `V2`, ...) and audio (`A1`, `A2`, ...) tracks, continuous filmstrip tiling, linked pairs, snapping, right-click clip context menu, marker tint/rename popover, ripple delete (`Shift+Delete`), split (`S`), `J`/`K`/`L` shuttle with rate badge, freeze frame, piecewise speed ramps, reverse playback, track ducking, editable shortcuts, and undo/redo (`Ctrl+Z` / `Ctrl+Shift+Z`).
-- **Local Whisper Transcription & Scene Tags**: Built-in `whisper.cpp` speech transcription via FFmpeg (`ggml-tiny`/`ggml-base` download in Settings) and automatic visual scene tagging (`bright`, `night`, `action`, `people`, `vivid`, `sharp`) for instant media search.
-- **Magic AI Bar (Cloud OpenAI-Compatible API + Codex/Claude + 45-Tool MCP)**: Floating Magic popover with `@` mention autocomplete, live execution steps, one-click undo, configurable **OpenAI-compatible Cloud AI** (`Base URL`, `API Key`, `Model`), and local HTTP/stdio MCP server (`127.0.0.1:47920/mcp`, port file at `%APPDATA%\Vectrail\Runtime\mcp-port.json`).
-- **16/32 Editing Skills & Composable Templates**: Built-in `Core 16` / `Pro 32` editing skills (`src/shared/editingTemplates.ts`) and curated workflow templates directly accessible from the Magic panel.
-- **DJI Camera Import, USB Fast Transfer & Extension Marketplace**: Isolated plugin manager (`src/main/plugins/`) featuring `dji-wireless-import` (BLE/Wi-Fi camera discovery, live connection diagnostics, resumable original-file downloads, SHA-256 verification, automatic project import, simulated camera mode, and DJI USB mass-storage ingest with progress/cancel) plus a built-in Extension Marketplace modal for managing ready and upcoming ecosystem extensions (iPhone import, Digital Human, Voice Cloning, Watch-Folder).
-- **FFmpeg Export Engine**: Hardware-probed H.264/HEVC MP4 (NVENC / QSV / AMF with `libx264` / `libx265` fallback), Lanczos + Contrast Adaptive Sharpen (`cas`) detail enhancement on upscales, audio-only WAV, aspect ratio presets (`16:9`, `9:16`, `1:1`, `4:5`), EBU R128 loudness normalization, `.cube` LUT bake, and caption burn-in.
-
-## Prerequisites
-
-- **Windows 10 / 11 (x64)**
-- **Node.js 20+** (for building from source)
-- **FFmpeg & FFprobe** on `PATH` (for example `winget install Gyan.FFmpeg`, or placed under `resources/ffmpeg/ffmpeg.exe`)
+- **Real-time WebGL2 preview** with multi-track compositing, transitions, fades, captions, zoom/pan curves, exposure, contrast, saturation, temperature, tint, and lift-gamma-gain wheels.
+- **Professional non-linear timeline** with continuous filmstrip tiling, `V/A` tracks, split (`S`), shuttle (`J`/`K`/`L`), ripple delete (`Shift+Delete`), piecewise speed ramps, reverse playback, track ducking, and undo/redo.
+- **Universal media support** through `vectrail-media://` byte-range streaming plus background FFmpeg proxies for `.mkv`, `.mxf`, `.avi`, and incompatible `.mov` profiles.
+- **Local Whisper transcription** and automatic scene tags such as `bright`, `night`, `action`, `people`, `vivid`, and `sharp`.
+- **Magic AI bar** with `@` mention autocomplete, live execution steps, one-click undo, Cloud AI configuration, and agent session logs.
+- **Core 16 / Pro 32 editing skills** and composable workflow templates.
+- **DJI import plugin** for BLE/Wi-Fi camera discovery, live connection health, resumable downloads, USB mass-storage ingest, SHA-256 verification, simulated-camera testing, and automatic library import.
+- **Extension marketplace** for managing ready and planned integrations, including iPhone import, digital human, voice cloning, and watch folders.
+- **FFmpeg export engine** with hardware probing, audio-only WAV, aspect presets, `.cube` LUT baking, and caption burn-in.
 
 ## Download
 
-Grab the latest Windows installer or portable executable from [Releases](https://github.com/makur6371/Vectrail/releases). Each release includes:
+Download the latest Windows build from the [Release page](https://github.com/makur6371/Vectrail/releases/latest):
 
-- `Vectrail Setup <version>.exe`
-- `Vectrail-Windows-Portable-<version>-x64.exe`
-- `vectrail-teaser-v2.0.0.mp4` — 4K 60fps product teaser
+| Asset | Use |
+| --- | --- |
+| `Vectrail.Setup.*.exe` | Recommended NSIS installer for Windows 10/11. |
+| `Vectrail-Windows-Portable-*-x64.exe` | Portable single-file executable. |
+| `vectrail-teaser-*.mp4` | Product teaser. |
 
-## AI Agent Integration (MCP & Cloud AI)
+### Prerequisites
+
+- Windows 10/11 x64.
+- FFmpeg and FFprobe available on `PATH`, for example:
+
+```powershell
+winget install Gyan.FFmpeg
+```
+
+For source builds, install Node.js 20 or newer.
+
+## AI Agent Integration
 
 1. Launch Vectrail and open **Settings**.
-2. For **Cloud AI** inside the Magic popover, enter any OpenAI-compatible `Base URL`, `API Key`, and `Model` and click **Test**.
-3. For external coding/editing agents, click **Connect** under **AI Agents & MCP Server** for **Codex** (`%USERPROFILE%\.codex\config.toml`), **Claude Code**, or **Claude Desktop** to register the `vectrail` stdio MCP server automatically.
+2. In the Magic popover, configure any **OpenAI-compatible Cloud AI** endpoint: `Base URL`, `API Key`, and `Model`.
+3. Under **AI Agents & MCP Server**, click **Connect** for **Codex**, **Claude Code**, or **Claude Desktop**.
+4. Vectrail registers its local stdio bridge automatically. The HTTP MCP endpoint is `127.0.0.1:47920/mcp`.
 
-If you run the Portable executable, Vectrail copies the bridge script to `%APPDATA%\Vectrail\Runtime\vectrail-mcp-bridge.js` so agent configs stay valid across launches.
+Portable builds copy the bridge to `%APPDATA%\Vectrail\Runtime\vectrail-mcp-bridge.js`, so agent configuration remains stable between launches.
 
 ## Development & Testing
 
@@ -52,39 +89,60 @@ npm test
 npm start
 ```
 
-## Packaging for Windows
+Package Windows binaries:
 
 ```powershell
 npm run dist:win
 ```
 
-If GitHub is unavailable or you want to reuse the Electron runtime already installed by `npm install`:
+If GitHub is unavailable and you want to reuse the local Electron runtime:
 
 ```powershell
 npm run dist:win:offline
 ```
 
-Outputs are generated in `release/`:
-- `Vectrail Setup <version>.exe` (NSIS installer)
-- `Vectrail-Windows-Portable-<version>-x64.exe` (single-file portable executable)
-- `win-unpacked/Vectrail.exe`
+Outputs land in `release/`:
+
+```text
+release/
+├── Vectrail Setup <version>.exe
+├── Vectrail-Windows-Portable-<version>-x64.exe
+└── win-unpacked/Vectrail.exe
+```
+
+## Architecture
+
+```text
+src/
+├── main/       Electron process, media protocol, FFmpeg pipeline, plugins, MCP.
+├── renderer/   React UI, WebGL2 compositor, timeline, inspector, and modals.
+└── shared/     Cross-process project model, LUT engine, caption layout, templates.
+tests/          Unit and integration tests with Vitest.
+```
+
+- **Main process**: media protocol handler, FFmpeg analyzer/exporter/proxy pipeline, DJI plugin transport, Cloud AI connector, and MCP HTTP + stdio server.
+- **Renderer**: React + Tailwind workspace, WebGL2 color compositor, Web Audio mixer, timeline, library, inspector, and AI panels.
+- **Shared**: deterministic project model, `.cube` parsing/baking, caption layout, beat planning, themes, and shortcut definitions.
 
 ## Live QA
 
-With Vectrail running and fixtures present in `%TEMP%\vectrail-live-test`, import the fixtures, build a beat-synced cut, apply a color grade, seek, inspect the playhead frame, and save:
+With Vectrail running and fixtures in `%TEMP%\vectrail-live-test`:
 
 ```powershell
 npm run qa:live
 ```
 
-## Architecture
+The script imports fixtures, builds a beat-synced cut, applies grading, seeks the playhead, inspects a rendered frame, and saves the project.
 
-- `src/main/` — Electron main process, `vectrail-media://` protocol handler, FFmpeg analyzer/exporter/proxy pipeline, Cloud AI & Magic agent connector, and MCP HTTP + stdio server (`45` tools).
-- `src/renderer/` — React + Tailwind UI, WebGL2 color-grading compositor, Web Audio mixer, timeline, inspector, library, and modals.
-- `src/shared/` — Cross-process project model, 3D `.cube` LUT parser & baker, caption layout, speed ramp math, beat-cut planner, themes, and shortcuts.
-- `tests/` — Unit tests and end-to-end MCP + real FFmpeg pipeline tests (`vitest`).
+## Documentation
+
+- [DJI plugin architecture & compatibility](docs/DJI_PLUGIN_REPORT.md)
+- [Editing skills and templates](docs/VIDEO_EDITING_SKILLS_AND_TEMPLATES.md)
+- [Project notes and roadmap](docs/TODO.md)
 
 ## Attribution & License
 
-MIT License — see [LICENSE](LICENSE).
-Built by Makur. Inspired by [robbietilton/Editroom](https://github.com/robbietilton/Editroom) for macOS.
+Built by [Makur](https://github.com/makur6371).  
+Inspired by [robbietilton/Editroom](https://github.com/robbietilton/Editroom) for macOS.
+
+Released under the [MIT License](LICENSE). DJI and Osmo are trademarks of their respective owners; this project is independent and not affiliated with or endorsed by DJI.
