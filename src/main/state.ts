@@ -1,1 +1,458 @@
-aW1wb3J0IGZzIGZyb20gJ25vZGU6ZnMnOwppbXBvcnQgcGF0aCBmcm9tICdub2RlOnBhdGgnOwppbXBvcnQgewogIEFnZW50Q3Vyc29yU3RhdGUsCiAgQ2xpcEFuYWx5c2lzLAogIEV4cG9ydEpvYkluZm8sCiAgTWVkaWFBc3NldCwKICBNdXNpY0FuYWx5c2lzLAogIFByb2plY3QsCiAgU2NydWJTdHJpcEluZm8sCiAgVHJhbnNjcmlwdCwKfSBmcm9tICcuLi9zaGFyZWQvdHlwZXMnOwppbXBvcnQgeyBjbG9uZVByb2plY3QsIGNyZWF0ZUVtcHR5UHJvamVjdCwgc2FuaXRpemVQcm9qZWN0IH0gZnJvbSAnLi4vc2hhcmVkL3Byb2plY3QnOwppbXBvcnQgewogIGNvbGxlY3RNZWRpYUZpbGVzLAogIGVuc3VyZVBsYXlhYmxlUHJveHksCiAgZXh0cmFjdFRodW1ibmFpbFN0cmlwLAogIGV4dHJhY3RXYXZlZm9ybSwKICBnZXRDYWNoZURpciwKICBwcm9iZU1lZGlhQXNzZXQsCiAgV2F2ZWZvcm1EYXRhLAp9IGZyb20gJy4vZW5naW5lL2ZmbXBlZyc7CmltcG9ydCB7IGFkZFJlY2VudFByb2plY3QsIGdldEF1dG9TYXZlRW5hYmxlZCB9IGZyb20gJy4vc2V0dGluZ3MnOwppbXBvcnQgewogIGFuYWx5emVNdXNpY0Fzc2V0LAogIGFuYWx5emVWaXN1YWxBc3NldCwKICBjb21wdXRlQ2xpcFNjZW5lVGFncywKICBnZXRDYWNoZWRUcmFuc2NyaXB0LAogIHRyYW5zY3JpYmVNZWRpYUFzc2V0LAp9IGZyb20gJy4vZW5naW5lL2FuYWx5emVyJzsKaW1wb3J0IHsgRXhwb3J0TWFuYWdlciB9IGZyb20gJy4vZW5naW5lL2V4cG9ydGVyJzsKaW1wb3J0IHsgU2NydWJDYWNoZU1hbmFnZXIgfSBmcm9tICcuL2VuZ2luZS9zY3J1YkNhY2hlJzsKCmV4cG9ydCBpbnRlcmZhY2UgRWRpdG9yU25hcHNob3QgewogIHByb2plY3Q6IFByb2plY3Q7CiAgZmlsZVBhdGg/OiBzdHJpbmc7CiAgdGl0bGU6IHN0cmluZzsKICBpc0RpcnR5OiBib29sZWFuOwogIHBsYXloZWFkOiBudW1iZXI7CiAgcGxheWluZzogYm9vbGVhbjsKICBjYW5VbmRvOiBib29sZWFuOwogIGNhblJlZG86IGJvb2xlYW47CiAgYWdlbnRDdXJzb3I/OiBBZ2VudEN1cnNvclN0YXRlOwogIHdhdmVmb3JtczogUmVjb3JkPHN0cmluZywgV2F2ZWZvcm1EYXRhPjsKICB0aHVtYnM6IFJlY29yZDxzdHJpbmcsIHN0cmluZ1tdPjsKICBzY3J1YlN0cmlwczogUmVjb3JkPHN0cmluZywgU2NydWJTdHJpcEluZm8+OwogIHRyYW5zY3JpcHRzOiBSZWNvcmQ8c3RyaW5nLCBUcmFuc2NyaXB0PjsKICBzY2VuZVRhZ3M6IFJlY29yZDxzdHJpbmcsIHN0cmluZ1tdPjsKICBleHBvcnRzOiBFeHBvcnRKb2JJbmZvW107Cn0KCmV4cG9ydCBjbGFzcyBQcm9qZWN0U3RvcmUgewogIHByb2plY3Q6IFByb2plY3Q7CiAgZmlsZVBhdGg/OiBzdHJpbmc7CiAgaXNEaXJ0eSA9IGZhbHNlOwogIHBsYXloZWFkID0gMDsKICBwbGF5aW5nID0gZmFsc2U7CiAgYWdlbnRDdXJzb3I/OiBBZ2VudEN1cnNvclN0YXRlOwogIHdhdmVmb3JtczogUmVjb3JkPHN0cmluZywgV2F2ZWZvcm1EYXRhPiA9IHt9OwogIHRodW1iczogUmVjb3JkPHN0cmluZywgc3RyaW5nW10+ID0ge307CiAgc2NydWJTdHJpcHM6IFJlY29yZDxzdHJpbmcsIFNjcnViU3RyaXBJbmZvPiA9IHt9OwogIGNsaXBBbmFseXNlczogUmVjb3JkPHN0cmluZywgQ2xpcEFuYWx5c2lzPiA9IHt9OwogIG11c2ljQW5hbHlzZXM6IFJlY29yZDxzdHJpbmcsIE11c2ljQW5hbHlzaXM+ID0ge307CiAgdHJhbnNjcmlwdHM6IFJlY29yZDxzdHJpbmcsIFRyYW5zY3JpcHQ+ID0ge307CiAgc2NlbmVUYWdzOiBSZWNvcmQ8c3RyaW5nLCBzdHJpbmdbXT4gPSB7fTsKICB1bmRvU3RhY2s6IFByb2plY3RbXSA9IFtdOwogIHJlZG9TdGFjazogUHJvamVjdFtdID0gW107CiAgcmVhZG9ubHkgZXhwb3J0czogRXhwb3J0TWFuYWdlcjsKICByZWFkb25seSBzY3J1YkNhY2hlOiBTY3J1YkNhY2hlTWFuYWdlcjsKICBwcml2YXRlIGxpc3RlbmVycyA9IG5ldyBTZXQ8KHNuYXA6IEVkaXRvclNuYXBzaG90KSA9PiB2b2lkPigpOwogIHByaXZhdGUgYWdlbnRDbGVhclRpbWVyPzogTm9kZUpTLlRpbWVvdXQ7CiAgcHJpdmF0ZSBhdXRvU2F2ZVRpbWVyPzogTm9kZUpTLlRpbWVvdXQ7CiAgcHJpdmF0ZSBwZW5kaW5nV2FybXVwcyA9IG5ldyBTZXQ8UHJvbWlzZTx2b2lkPj4oKTsKCiAgY29uc3RydWN0b3IoKSB7CiAgICB0aGlzLnByb2plY3QgPSBjcmVhdGVFbXB0eVByb2plY3QoKTsKICAgIHRoaXMuZXhwb3J0cyA9IG5ldyBFeHBvcnRNYW5hZ2VyKCgpID0+IHRoaXMuZW1pdCgpKTsKICAgIHRoaXMuc2NydWJDYWNoZSA9IG5ldyBTY3J1YkNhY2hlTWFuYWdlcigoYXNzZXRJZCwgc3RyaXApID0+IHsKICAgICAgdGhpcy5zY3J1YlN0cmlwc1thc3NldElkXSA9IHN0cmlwOwogICAgICB0aGlzLmVtaXQoKTsKICAgIH0pOwogIH0KCiAgZ2V0IHRpdGxlKCk6IHN0cmluZyB7CiAgICBpZiAodGhpcy5maWxlUGF0aCkgcmV0dXJuIHBhdGguYmFzZW5hbWUodGhpcy5maWxlUGF0aCwgcGF0aC5leHRuYW1lKHRoaXMuZmlsZVBhdGgpKTsKICAgIHJldHVybiAnVW50aXRsZWQnOwogIH0KCiAgb25DaGFuZ2UoZm46IChzbmFwOiBFZGl0b3JTbmFwc2hvdCkgPT4gdm9pZCk6ICgpID0+IHZvaWQgewogICAgdGhpcy5saXN0ZW5lcnMuYWRkKGZuKTsKICAgIHJldHVybiAoKSA9PiB0aGlzLmxpc3RlbmVycy5kZWxldGUoZm4pOwogIH0KCiAgc25hcHNob3QoKTogRWRpdG9yU25hcHNob3QgewogICAgcmV0dXJuIHsKICAgICAgcHJvamVjdDogdGhpcy5wcm9qZWN0LAogICAgICBmaWxlUGF0aDogdGhpcy5maWxlUGF0aCwKICAgICAgdGl0bGU6IHRoaXMudGl0bGUsCiAgICAgIGlzRGlydHk6IHRoaXMuaXNEaXJ0eSwKICAgICAgcGxheWhlYWQ6IHRoaXMucGxheWhlYWQsCiAgICAgIHBsYXlpbmc6IHRoaXMucGxheWluZywKICAgICAgY2FuVW5kbzogdGhpcy51bmRvU3RhY2subGVuZ3RoID4gMCwKICAgICAgY2FuUmVkbzogdGhpcy5yZWRvU3RhY2subGVuZ3RoID4gMCwKICAgICAgYWdlbnRDdXJzb3I6IHRoaXMuYWdlbnRDdXJzb3IsCiAgICAgIHdhdmVmb3JtczogdGhpcy53YXZlZm9ybXMsCiAgICAgIHRodW1iczogdGhpcy50aHVtYnMsCiAgICAgIHNjcnViU3RyaXBzOiB0aGlzLnNjcnViU3RyaXBzLAogICAgICB0cmFuc2NyaXB0czogdGhpcy50cmFuc2NyaXB0cywKICAgICAgc2NlbmVUYWdzOiB0aGlzLnNjZW5lVGFncywKICAgICAgZXhwb3J0czogdGhpcy5leHBvcnRzLmxpc3QoKSwKICAgIH07CiAgfQoKICBlbWl0KCk6IHZvaWQgewogICAgY29uc3Qgc25hcCA9IHRoaXMuc25hcHNob3QoKTsKICAgIGZvciAoY29uc3QgZm4gb2YgdGhpcy5saXN0ZW5lcnMpIGZuKHNuYXApOwogIH0KCiAgbXV0YXRlKG11dGF0b3I6IChkcmFmdDogUHJvamVjdCkgPT4gdm9pZCwgcmVjb3JkSGlzdG9yeSA9IHRydWUpOiB2b2lkIHsKICAgIGlmIChyZWNvcmRIaXN0b3J5KSB7CiAgICAgIHRoaXMudW5kb1N0YWNrLnB1c2goY2xvbmVQcm9qZWN0KHRoaXMucHJvamVjdCkpOwogICAgICBpZiAodGhpcy51bmRvU3RhY2subGVuZ3RoID4gMTAwKSB0aGlzLnVuZG9TdGFjay5zaGlmdCgpOwogICAgICB0aGlzLnJlZG9TdGFjayA9IFtdOwogICAgfQogICAgbXV0YXRvcih0aGlzLnByb2plY3QpOwogICAgc2FuaXRpemVQcm9qZWN0KHRoaXMucHJvamVjdCk7CiAgICB0aGlzLmlzRGlydHkgPSB0cnVlOwogICAgdGhpcy5zY2hlZHVsZUF1dG9TYXZlKCk7CiAgICB0aGlzLmVtaXQoKTsKICB9CgogIHJlcGxhY2VQcm9qZWN0KG5leHRQcm9qZWN0OiBQcm9qZWN0LCByZWNvcmRIaXN0b3J5ID0gdHJ1ZSk6IHZvaWQgewogICAgaWYgKHJlY29yZEhpc3RvcnkpIHsKICAgICAgdGhpcy51bmRvU3RhY2sucHVzaChjbG9uZVByb2plY3QodGhpcy5wcm9qZWN0KSk7CiAgICAgIGlmICh0aGlzLnVuZG9TdGFjay5sZW5ndGggPiAxMDApIHRoaXMudW5kb1N0YWNrLnNoaWZ0KCk7CiAgICAgIHRoaXMucmVkb1N0YWNrID0gW107CiAgICB9CiAgICB0aGlzLnByb2plY3QgPSBjbG9uZVByb2plY3QobmV4dFByb2plY3QpOwogICAgc2FuaXRpemVQcm9qZWN0KHRoaXMucHJvamVjdCk7CiAgICB0aGlzLmlzRGlydHkgPSB0cnVlOwogICAgdGhpcy5zY2hlZHVsZUF1dG9TYXZlKCk7CiAgICB0aGlzLmVtaXQoKTsKICB9CgogIHByaXZhdGUgc2NoZWR1bGVBdXRvU2F2ZSgpOiB2b2lkIHsKICAgIGlmICh0aGlzLmF1dG9TYXZlVGltZXIpIGNsZWFyVGltZW91dCh0aGlzLmF1dG9TYXZlVGltZXIpOwogICAgaWYgKCF0aGlzLmZpbGVQYXRoIHx8ICFnZXRBdXRvU2F2ZUVuYWJsZWQoKSkgcmV0dXJuOwogICAgdGhpcy5hdXRvU2F2ZVRpbWVyID0gc2V0VGltZW91dCgoKSA9PiB7CiAgICAgIHRoaXMuYXV0b1NhdmVUaW1lciA9IHVuZGVmaW5lZDsKICAgICAgaWYgKHRoaXMuZmlsZVBhdGggJiYgdGhpcy5pc0RpcnR5ICYmIGdldEF1dG9TYXZlRW5hYmxlZCgpKSB7CiAgICAgICAgdHJ5IHsKICAgICAgICAgIHRoaXMuc2F2ZVRvRmlsZSgpOwogICAgICAgIH0gY2F0Y2ggewogICAgICAgICAgLy8gaWdub3JlIGJhY2tncm91bmQgYXV0b3NhdmUgZmFpbHVyZQogICAgICAgIH0KICAgICAgfQogICAgfSwgMjUwMCk7CiAgfQoKICB1bmRvKCk6IGJvb2xlYW4gewogICAgY29uc3QgcHJldiA9IHRoaXMudW5kb1N0YWNrLnBvcCgpOwogICAgaWYgKCFwcmV2KSByZXR1cm4gZmFsc2U7CiAgICB0aGlzLnJlZG9TdGFjay5wdXNoKGNsb25lUHJvamVjdCh0aGlzLnByb2plY3QpKTsKICAgIHRoaXMucHJvamVjdCA9IHByZXY7CiAgICB0aGlzLmlzRGlydHkgPSB0cnVlOwogICAgdGhpcy5lbWl0KCk7CiAgICByZXR1cm4gdHJ1ZTsKICB9CgogIHJlZG8oKTogYm9vbGVhbiB7CiAgICBjb25zdCBuZXh0ID0gdGhpcy5yZWRvU3RhY2sucG9wKCk7CiAgICBpZiAoIW5leHQpIHJldHVybiBmYWxzZTsKICAgIHRoaXMudW5kb1N0YWNrLnB1c2goY2xvbmVQcm9qZWN0KHRoaXMucHJvamVjdCkpOwogICAgdGhpcy5wcm9qZWN0ID0gbmV4dDsKICAgIHRoaXMuaXNEaXJ0eSA9IHRydWU7CiAgICB0aGlzLmVtaXQoKTsKICAgIHJldHVybiB0cnVlOwogIH0KCiAgc2V0UGxheWhlYWQodDogbnVtYmVyKTogdm9pZCB7CiAgICB0aGlzLnBsYXloZWFkID0gTWF0aC5tYXgoMCwgdCk7CiAgICB0aGlzLmVtaXQoKTsKICB9CgogIHNldFBsYXlpbmcocGxheWluZzogYm9vbGVhbik6IHZvaWQgewogICAgdGhpcy5wbGF5aW5nID0gcGxheWluZzsKICAgIHRoaXMuZW1pdCgpOwogIH0KCiAgc2V0QWdlbnRDdXJzb3IoY3Vyc29yPzogUGFydGlhbDxBZ2VudEN1cnNvclN0YXRlPiAmIHsgbmFtZTogc3RyaW5nIH0pOiB2b2lkIHsKICAgIGlmICghY3Vyc29yKSB7CiAgICAgIHRoaXMuYWdlbnRDdXJzb3IgPSB1bmRlZmluZWQ7CiAgICAgIHRoaXMuZW1pdCgpOwogICAgICByZXR1cm47CiAgICB9CiAgICB0aGlzLmFnZW50Q3Vyc29yID0gewogICAgICBuYW1lOiBjdXJzb3IubmFtZSwKICAgICAgYWN0aXZpdHk6IGN1cnNvci5hY3Rpdml0eSwKICAgICAgdGFyZ2V0S2luZDogY3Vyc29yLnRhcmdldEtpbmQsCiAgICAgIGFzc2V0SUQ6IGN1cnNvci5hc3NldElELAogICAgICBjbGlwSUQ6IGN1cnNvci5jbGlwSUQsCiAgICAgIHRyYWNrSUQ6IGN1cnNvci50cmFja0lELAogICAgICB0aW1lOiBjdXJzb3IudGltZSwKICAgICAgdG9vbE5hbWU6IGN1cnNvci50b29sTmFtZSwKICAgICAgdXBkYXRlZEF0OiBEYXRlLm5vdygpLAogICAgfTsKICAgIGlmICh0aGlzLmFnZW50Q2xlYXJUaW1lcikgY2xlYXJUaW1lb3V0KHRoaXMuYWdlbnRDbGVhclRpbWVyKTsKICAgIHRoaXMuYWdlbnRDbGVhclRpbWVyID0gc2V0VGltZW91dCgoKSA9PiB7CiAgICAgIHRoaXMuYWdlbnRDdXJzb3IgPSB1bmRlZmluZWQ7CiAgICAgIHRoaXMuZW1pdCgpOwogICAgfSwgMTIwMDApOwogICAgdGhpcy5lbWl0KCk7CiAgfQoKICBjcmVhdGVEcmFmdENsb25lKCk6IFByb2plY3RTdG9yZSB7CiAgICBjb25zdCBkcmFmdCA9IG5ldyBQcm9qZWN0U3RvcmUoKTsKICAgIGRyYWZ0LnByb2plY3QgPSBjbG9uZVByb2plY3QodGhpcy5wcm9qZWN0KTsKICAgIGRyYWZ0LmZpbGVQYXRoID0gdGhpcy5maWxlUGF0aDsKICAgIGRyYWZ0LnBsYXloZWFkID0gdGhpcy5wbGF5aGVhZDsKICAgIGRyYWZ0LndhdmVmb3JtcyA9IHsgLi4udGhpcy53YXZlZm9ybXMgfTsKICAgIGRyYWZ0LnRodW1icyA9IHsgLi4udGhpcy50aHVtYnMgfTsKICAgIGRyYWZ0LnNjcnViU3RyaXBzID0geyAuLi50aGlzLnNjcnViU3RyaXBzIH07CiAgICBkcmFmdC5jbGlwQW5hbHlzZXMgPSB7IC4uLnRoaXMuY2xpcEFuYWx5c2VzIH07CiAgICBkcmFmdC5tdXNpY0FuYWx5c2VzID0geyAuLi50aGlzLm11c2ljQW5hbHlzZXMgfTsKICAgIGRyYWZ0LnRyYW5zY3JpcHRzID0geyAuLi50aGlzLnRyYW5zY3JpcHRzIH07CiAgICBkcmFmdC5zY2VuZVRhZ3MgPSB7IC4uLnRoaXMuc2NlbmVUYWdzIH07CiAgICByZXR1cm4gZHJhZnQ7CiAgfQoKICBjb21taXRNYWdpY1Byb2plY3QobmV4dFByb2plY3Q6IFByb2plY3QsIHByb21wdD86IHN0cmluZywgdGFiPzogc3RyaW5nKTogdm9pZCB7CiAgICB0aGlzLnVuZG9TdGFjay5wdXNoKGNsb25lUHJvamVjdCh0aGlzLnByb2plY3QpKTsKICAgIGlmICh0aGlzLnVuZG9TdGFjay5sZW5ndGggPiAxMDApIHRoaXMudW5kb1N0YWNrLnNoaWZ0KCk7CiAgICB0aGlzLnJlZG9TdGFjayA9IFtdOwogICAgdGhpcy5wcm9qZWN0ID0gY2xvbmVQcm9qZWN0KG5leHRQcm9qZWN0KTsKICAgIGlmIChwcm9tcHQgJiYgcHJvbXB0LnRyaW0oKSkgewogICAgICBjb25zdCB0cmltbWVkID0gcHJvbXB0LnRyaW0oKTsKICAgICAgY29uc3QgcHJldiA9ICh0aGlzLnByb2plY3QubWFnaWNIaXN0b3J5ID8/IFtdKS5maWx0ZXIoKGgpID0+IGgudGV4dCAhPT0gdHJpbW1lZCk7CiAgICAgIHRoaXMucHJvamVjdC5tYWdpY0hpc3RvcnkgPSBbeyB0ZXh0OiB0cmltbWVkLCB0YWI6IHRhYiA/PyAnbG9jYWwnLCB0aW1lc3RhbXA6IERhdGUubm93KCkgfSwgLi4ucHJldl0uc2xpY2UoMCwgMjQpOwogICAgfQogICAgc2FuaXRpemVQcm9qZWN0KHRoaXMucHJvamVjdCk7CiAgICB0aGlzLmlzRGlydHkgPSB0cnVlOwogICAgdGhpcy5zY2hlZHVsZUF1dG9TYXZlKCk7CiAgICB0aGlzLmVtaXQoKTsKICB9CgogIG5ld1Byb2plY3QoKTogdm9pZCB7CiAgICB0aGlzLnByb2plY3QgPSBjcmVhdGVFbXB0eVByb2plY3QoKTsKICAgIHRoaXMuZmlsZVBhdGggPSB1bmRlZmluZWQ7CiAgICB0aGlzLmlzRGlydHkgPSBmYWxzZTsKICAgIHRoaXMucGxheWhlYWQgPSAwOwogICAgdGhpcy5wbGF5aW5nID0gZmFsc2U7CiAgICB0aGlzLnVuZG9TdGFjayA9IFtdOwogICAgdGhpcy5yZWRvU3RhY2sgPSBbXTsKICAgIHRoaXMud2F2ZWZvcm1zID0ge307CiAgICB0aGlzLnRodW1icyA9IHt9OwogICAgdGhpcy5zY3J1YlN0cmlwcyA9IHt9OwogICAgdGhpcy50cmFuc2NyaXB0cyA9IHt9OwogICAgdGhpcy5zY2VuZVRhZ3MgPSB7fTsKICAgIHRoaXMuZW1pdCgpOwogIH0KCiAgc2F2ZVRvRmlsZSh0YXJnZXRQYXRoPzogc3RyaW5nKTogc3RyaW5nIHsKICAgIGNvbnN0IG91dFBhdGggPSB0YXJnZXRQYXRoID8/IHRoaXMuZmlsZVBhdGg7CiAgICBpZiAoIW91dFBhdGgpIHRocm93IG5ldyBFcnJvcignTm8gZmlsZSBwYXRoIHNwZWNpZmllZCBmb3Igc2F2aW5nIHByb2plY3QuJyk7CiAgICBjb25zdCBwcm9qRGlyID0gcGF0aC5kaXJuYW1lKHBhdGgucmVzb2x2ZShvdXRQYXRoKSk7CiAgICBmb3IgKGNvbnN0IGEgb2YgdGhpcy5wcm9qZWN0LmFzc2V0cykgewogICAgICBhLnJlbGF0aXZlUGF0aCA9IHBhdGgucmVsYXRpdmUocHJvakRpciwgYS5wYXRoKS5yZXBsYWNlKC9cXC9nLCAnLycpOwogICAgfQogICAgZnMubWtkaXJTeW5jKHByb2pEaXIsIHsgcmVjdXJzaXZlOiB0cnVlIH0pOwogICAgZnMud3JpdGVGaWxlU3luYyhvdXRQYXRoLCBKU09OLnN0cmluZ2lmeSh0aGlzLnByb2plY3QsIG51bGwsIDIpLCAndXRmOCcpOwogICAgdGhpcy5maWxlUGF0aCA9IHBhdGgucmVzb2x2ZShvdXRQYXRoKTsKICAgIHRoaXMuaXNEaXJ0eSA9IGZhbHNlOwogICAgYWRkUmVjZW50UHJvamVjdCh0aGlzLmZpbGVQYXRoKTsKICAgIHRoaXMuZW1pdCgpOwogICAgcmV0dXJuIHRoaXMuZmlsZVBhdGg7CiAgfQoKICBvcGVuRnJvbUZpbGUoZmlsZVBhdGg6IHN0cmluZyk6IHZvaWQgewogICAgY29uc3QgcmVzb2x2ZWQgPSBwYXRoLnJlc29sdmUoZmlsZVBhdGgpOwogICAgY29uc3QgcmF3ID0gSlNPTi5wYXJzZShmcy5yZWFkRmlsZVN5bmMocmVzb2x2ZWQsICd1dGY4JykpIGFzIFByb2plY3Q7CiAgICBjb25zdCBwcm9qRGlyID0gcGF0aC5kaXJuYW1lKHJlc29sdmVkKTsKICAgIGZvciAoY29uc3QgYSBvZiByYXcuYXNzZXRzKSB7CiAgICAgIGlmICghZnMuZXhpc3RzU3luYyhhLnBhdGgpICYmIGEucmVsYXRpdmVQYXRoKSB7CiAgICAgICAgY29uc3QgY2FuZGlkYXRlID0gcGF0aC5yZXNvbHZlKHByb2pEaXIsIGEucmVsYXRpdmVQYXRoKTsKICAgICAgICBpZiAoZnMuZXhpc3RzU3luYyhjYW5kaWRhdGUpKSBhLnBhdGggPSBjYW5kaWRhdGU7CiAgICAgIH0KICAgIH0KICAgIHNhbml0aXplUHJvamVjdChyYXcpOwogICAgdGhpcy5wcm9qZWN0ID0gcmF3OwogICAgdGhpcy5maWxlUGF0aCA9IHJlc29sdmVkOwogICAgYWRkUmVjZW50UHJvamVjdChyZXNvbHZlZCk7CiAgICB0aGlzLmlzRGlydHkgPSBmYWxzZTsKICAgIHRoaXMucGxheWhlYWQgPSAwOwogICAgdGhpcy5wbGF5aW5nID0gZmFsc2U7CiAgICB0aGlzLnVuZG9TdGFjayA9IFtdOwogICAgdGhpcy5yZWRvU3RhY2sgPSBbXTsKICAgIHRoaXMuc2NydWJTdHJpcHMgPSB7fTsKICAgIHRoaXMuZW1pdCgpOwogICAgZm9yIChjb25zdCBhIG9mIHJhdy5hc3NldHMpIHsKICAgICAgdm9pZCB0aGlzLndhcm1Bc3NldChhKTsKICAgIH0KICB9CgogIGFzeW5jIHdhaXRGb3JJZGxlKCk6IFByb21pc2U8dm9pZD4gewogICAgd2hpbGUgKHRoaXMucGVuZGluZ1dhcm11cHMuc2l6ZSA+IDApIHsKICAgICAgYXdhaXQgUHJvbWlzZS5hbGxTZXR0bGVkKFsuLi50aGlzLnBlbmRpbmdXYXJtdXBzXSk7CiAgICB9CiAgfQoKICBhc3luYyBpbXBvcnRGaWxlcyhwYXRoczogc3RyaW5nW10pOiBQcm9taXNlPE1lZGlhQXNzZXRbXT4gewogICAgY29uc3QgYWRkZWQ6IE1lZGlhQXNzZXRbXSA9IFtdOwogICAgY29uc3QgZXhwYW5kZWQgPSBjb2xsZWN0TWVkaWFGaWxlcyhwYXRocyk7CiAgICBmb3IgKGNvbnN0IGVudHJ5IG9mIGV4cGFuZGVkKSB7CiAgICAgIGNvbnN0IHJlc29sdmVkID0gZW50cnkucGF0aDsKICAgICAgaWYgKCFmcy5leGlzdHNTeW5jKHJlc29sdmVkKSkgY29udGludWU7CiAgICAgIGNvbnN0IGV4aXN0aW5nID0gdGhpcy5wcm9qZWN0LmFzc2V0cy5maW5kKChhKSA9PiBwYXRoLnJlc29sdmUoYS5wYXRoKSA9PT0gcmVzb2x2ZWQpOwogICAgICBpZiAoZXhpc3RpbmcpIHsKICAgICAgICBpZiAoZW50cnkuZm9sZGVyICYmIGV4aXN0aW5nLmZvbGRlciAhPT0gZW50cnkuZm9sZGVyKSB7CiAgICAgICAgICB0aGlzLm11dGF0ZSgocCkgPT4gewogICAgICAgICAgICBjb25zdCB0YXJnZXQgPSBwLmFzc2V0cy5maW5kKChhKSA9PiBhLmlkID09PSBleGlzdGluZy5pZCk7CiAgICAgICAgICAgIGlmICh0YXJnZXQpIHRhcmdldC5mb2xkZXIgPSBlbnRyeS5mb2xkZXI7CiAgICAgICAgICB9LCBmYWxzZSk7CiAgICAgICAgfQogICAgICAgIGFkZGVkLnB1c2goZXhpc3RpbmcpOwogICAgICAgIGNvbnRpbnVlOwogICAgICB9CiAgICAgIGNvbnN0IGFzc2V0ID0gYXdhaXQgcHJvYmVNZWRpYUFzc2V0KHJlc29sdmVkKTsKICAgICAgaWYgKGVudHJ5LmZvbGRlcikgYXNzZXQuZm9sZGVyID0gZW50cnkuZm9sZGVyOwogICAgICB0aGlzLm11dGF0ZSgocCkgPT4gewogICAgICAgIHAuYXNzZXRzLnB1c2goYXNzZXQpOwogICAgICAgIGlmICghcC5zZXR0aW5nc0xvY2tlZCAmJiBwLmNsaXBzLmxlbmd0aCA9PT0gMCAmJiBhc3NldC5raW5kID09PSAndmlkZW8nICYmIGFzc2V0LndpZHRoID4gMCAmJiBhc3NldC5oZWlnaHQgPiAwKSB7CiAgICAgICAgICBwLndpZHRoID0gYXNzZXQud2lkdGg7CiAgICAgICAgICBwLmhlaWdodCA9IGFzc2V0LmhlaWdodDsKICAgICAgICAgIHAuZnBzID0gYXNzZXQuZnBzOwogICAgICAgIH0KICAgICAgfSk7CiAgICAgIGFkZGVkLnB1c2goYXNzZXQpOwogICAgICB2b2lkIHRoaXMud2FybUFzc2V0KGFzc2V0KTsKICAgIH0KICAgIHJldHVybiBhZGRlZDsKICB9CgogIGFzeW5jIHJlbG9hZEFzc2V0KGFzc2V0SUQ6IHN0cmluZyk6IFByb21pc2U8TWVkaWFBc3NldCB8IHVuZGVmaW5lZD4gewogICAgY29uc3QgZXhpc3RpbmcgPSB0aGlzLnByb2plY3QuYXNzZXRzLmZpbmQoKGEpID0+IGEuaWQgPT09IGFzc2V0SUQpOwogICAgaWYgKCFleGlzdGluZyB8fCAhZnMuZXhpc3RzU3luYyhleGlzdGluZy5wYXRoKSkgcmV0dXJuIHVuZGVmaW5lZDsKICAgIGNvbnN0IHByb2JlZCA9IGF3YWl0IHByb2JlTWVkaWFBc3NldChleGlzdGluZy5wYXRoKTsKICAgIHRoaXMuc2NydWJDYWNoZS5mb3JnZXQoYXNzZXRJRCk7CiAgICBkZWxldGUgdGhpcy5zY3J1YlN0cmlwc1thc3NldElEXTsKICAgIHRoaXMubXV0YXRlKChwKSA9PiB7CiAgICAgIGNvbnN0IHRhcmdldCA9IHAuYXNzZXRzLmZpbmQoKGEpID0+IGEuaWQgPT09IGFzc2V0SUQpOwogICAgICBpZiAoIXRhcmdldCkgcmV0dXJuOwogICAgICB0YXJnZXQuZHVyYXRpb24gPSBwcm9iZWQuZHVyYXRpb247CiAgICAgIHRhcmdldC53aWR0aCA9IHByb2JlZC53aWR0aDsKICAgICAgdGFyZ2V0LmhlaWdodCA9IHByb2JlZC5oZWlnaHQ7CiAgICAgIHRhcmdldC5mcHMgPSBwcm9iZWQuZnBzOwogICAgICB0YXJnZXQuaGFzQXVkaW8gPSBwcm9iZWQuaGFzQXVkaW87CiAgICAgIGRlbGV0ZSB0YXJnZXQucGxheWFibGVQYXRoOwogICAgfSwgZmFsc2UpOwogICAgY29uc3QgdXBkYXRlZCA9IHRoaXMucHJvamVjdC5hc3NldHMuZmluZCgoYSkgPT4gYS5pZCA9PT0gYXNzZXRJRCk7CiAgICBpZiAodXBkYXRlZCkgdm9pZCB0aGlzLndhcm1Bc3NldCh1cGRhdGVkKTsKICAgIHJldHVybiB1cGRhdGVkOwogIH0KCiAgZGVsZXRlQXNzZXQoYXNzZXRJRDogc3RyaW5nKTogdm9pZCB7CiAgICB0aGlzLnNjcnViQ2FjaGUuZm9yZ2V0KGFzc2V0SUQpOwogICAgZGVsZXRlIHRoaXMuc2NydWJTdHJpcHNbYXNzZXRJRF07CiAgICB0aGlzLm11dGF0ZSgocCkgPT4gewogICAgICBwLmFzc2V0cyA9IHAuYXNzZXRzLmZpbHRlcigoYSkgPT4gYS5pZCAhPT0gYXNzZXRJRCk7CiAgICAgIHAuY2xpcHMgPSBwLmNsaXBzLmZpbHRlcigoYykgPT4gYy5hc3NldElEICE9PSBhc3NldElEKTsKICAgIH0sIHRydWUpOwogIH0KCiAgYXN5bmMgd2FybUFzc2V0KGFzc2V0OiBNZWRpYUFzc2V0KTogUHJvbWlzZTx2b2lkPiB7CiAgICBpZiAoIWZzLmV4aXN0c1N5bmMoYXNzZXQucGF0aCkpIHJldHVybjsKICAgIGNvbnN0IHRhc2sgPSAoYXN5bmMgKCkgPT4gewogICAgICBhd2FpdCB0aGlzLnJ1bldhcm1Bc3NldChhc3NldCk7CiAgICB9KSgpOwogICAgdGhpcy5wZW5kaW5nV2FybXVwcy5hZGQodGFzayk7CiAgICB0cnkgewogICAgICBhd2FpdCB0YXNrOwogICAgfSBmaW5hbGx5IHsKICAgICAgdGhpcy5wZW5kaW5nV2FybXVwcy5kZWxldGUodGFzayk7CiAgICB9CiAgfQoKICBwcml2YXRlIGFzeW5jIHJ1bldhcm1Bc3NldChhc3NldDogTWVkaWFBc3NldCk6IFByb21pc2U8dm9pZD4gewogICAgdHJ5IHsKICAgICAgaWYgKGFzc2V0LmtpbmQgIT09ICdhdWRpbycpIHsKICAgICAgICBpZiAoYXNzZXQua2luZCA9PT0gJ3ZpZGVvJyAmJiAhYXNzZXQucGxheWFibGVQYXRoKSB7CiAgICAgICAgICBjb25zdCBwcm94eSA9IGF3YWl0IGVuc3VyZVBsYXlhYmxlUHJveHkoYXNzZXQpOwogICAgICAgICAgaWYgKHByb3h5KSB7CiAgICAgICAgICAgIGNvbnN0IHRhcmdldCA9IHRoaXMucHJvamVjdC5hc3NldHMuZmluZCgoYSkgPT4gYS5pZCA9PT0gYXNzZXQuaWQpOwogICAgICAgICAgICBpZiAodGFyZ2V0KSB0YXJnZXQucGxheWFibGVQYXRoID0gcHJveHk7CiAgICAgICAgICAgIGFzc2V0LnBsYXlhYmxlUGF0aCA9IHByb3h5OwogICAgICAgICAgICB0aGlzLmVtaXQoKTsKICAgICAgICAgIH0KICAgICAgICB9CiAgICAgICAgY29uc3Qgc3RyaXAgPSBhd2FpdCBleHRyYWN0VGh1bWJuYWlsU3RyaXAoYXNzZXQsIGFzc2V0LmtpbmQgPT09ICdpbWFnZScgPyAxIDogOCk7CiAgICAgICAgdGhpcy50aHVtYnNbYXNzZXQuaWRdID0gc3RyaXA7CiAgICAgICAgdGhpcy5lbWl0KCk7CiAgICAgICAgaWYgKGFzc2V0LmtpbmQgPT09ICd2aWRlbycpIHsKICAgICAgICAgIHRoaXMuc2NydWJDYWNoZS5lbnF1ZXVlKGFzc2V0KTsKICAgICAgICB9CiAgICAgIH0KICAgICAgaWYgKGFzc2V0LmtpbmQgPT09ICdhdWRpbycgfHwgYXNzZXQuaGFzQXVkaW8pIHsKICAgICAgICBjb25zdCB3ZiA9IGF3YWl0IGV4dHJhY3RXYXZlZm9ybShhc3NldC5wYXRoLCAxMjApOwogICAgICAgIHRoaXMud2F2ZWZvcm1zW2Fzc2V0LmlkXSA9IHdmOwogICAgICAgIHRoaXMuZW1pdCgpOwogICAgICB9CiAgICAgIGNvbnN0IGNhY2hlZFRyID0gZ2V0Q2FjaGVkVHJhbnNjcmlwdChhc3NldC5wYXRoKTsKICAgICAgaWYgKGNhY2hlZFRyKSB7CiAgICAgICAgdGhpcy50cmFuc2NyaXB0c1thc3NldC5pZF0gPSBjYWNoZWRUcjsKICAgICAgICB0aGlzLmVtaXQoKTsKICAgICAgfQogICAgICBpZiAoYXNzZXQua2luZCA9PT0gJ2F1ZGlvJykgewogICAgICAgIGNvbnN0IG1hID0gYXdhaXQgYW5hbHl6ZU11c2ljQXNzZXQoYXNzZXQpOwogICAgICAgIGlmIChtYSkgdGhpcy5tdXNpY0FuYWx5c2VzW2Fzc2V0LmlkXSA9IG1hOwogICAgICB9IGVsc2UgewogICAgICAgIGNvbnN0IHZhID0gYXdhaXQgYW5hbHl6ZVZpc3VhbEFzc2V0KGFzc2V0KTsKICAgICAgICBpZiAodmEpIHsKICAgICAgICAgIHRoaXMuY2xpcEFuYWx5c2VzW2Fzc2V0LmlkXSA9IHZhOwogICAgICAgICAgdGhpcy5zY2VuZVRhZ3NbYXNzZXQuaWRdID0gY29tcHV0ZUNsaXBTY2VuZVRhZ3ModmEpOwogICAgICAgICAgdGhpcy5lbWl0KCk7CiAgICAgICAgfQogICAgICB9CiAgICB9IGNhdGNoIHsKICAgICAgLy8gYmFja2dyb3VuZCB3YXJtIGZhaWx1cmVzIGFyZSBub24tZmF0YWwKICAgIH0KICB9CgogIGFzeW5jIHRyYW5zY3JpYmVBc3NldChhc3NldElEOiBzdHJpbmcsIGxhbmd1YWdlID0gJ2F1dG8nKTogUHJvbWlzZTxUcmFuc2NyaXB0PiB7CiAgICBjb25zdCBhc3NldCA9IHRoaXMucHJvamVjdC5hc3NldHMuZmluZCgoYSkgPT4gYS5pZCA9PT0gYXNzZXRJRCk7CiAgICBpZiAoIWFzc2V0KSB0aHJvdyBuZXcgRXJyb3IoYFVua25vd24gYXNzZXQ6ICR7YXNzZXRJRH1gKTsKICAgIGNvbnN0IHRyID0gYXdhaXQgdHJhbnNjcmliZU1lZGlhQXNzZXQoYXNzZXQsIGxhbmd1YWdlKTsKICAgIHRoaXMudHJhbnNjcmlwdHNbYXNzZXQuaWRdID0gdHI7CiAgICB0aGlzLmVtaXQoKTsKICAgIHJldHVybiB0cjsKICB9Cn0KCmV4cG9ydCBmdW5jdGlvbiBsb2FkU2F2ZWRTaG9ydGN1dHMoKTogUmVjb3JkPHN0cmluZywgc3RyaW5nPiB7CiAgdHJ5IHsKICAgIGNvbnN0IHAgPSBwYXRoLmpvaW4oZ2V0Q2FjaGVEaXIoJ0NvbmZpZycpLCAnc2hvcnRjdXRzLmpzb24nKTsKICAgIGlmICghZnMuZXhpc3RzU3luYyhwKSkgcmV0dXJuIHt9OwogICAgcmV0dXJuIEpTT04ucGFyc2UoZnMucmVhZEZpbGVTeW5jKHAsICd1dGY4JykpIGFzIFJlY29yZDxzdHJpbmcsIHN0cmluZz47CiAgfSBjYXRjaCB7CiAgICByZXR1cm4ge307CiAgfQp9CgpleHBvcnQgZnVuY3Rpb24gc2F2ZVNob3J0Y3V0c0NvbmZpZyhtYXA6IFJlY29yZDxzdHJpbmcsIHN0cmluZz4pOiB2b2lkIHsKICB0cnkgewogICAgY29uc3QgcCA9IHBhdGguam9pbihnZXRDYWNoZURpcignQ29uZmlnJyksICdzaG9ydGN1dHMuanNvbicpOwogICAgZnMud3JpdGVGaWxlU3luYyhwLCBKU09OLnN0cmluZ2lmeShtYXAsIG51bGwsIDIpLCAndXRmOCcpOwogIH0gY2F0Y2ggewogICAgLy8gaWdub3JlCiAgfQp9Cg==
+import fs from 'node:fs';
+import path from 'node:path';
+import {
+  AgentCursorState,
+  ClipAnalysis,
+  ExportJobInfo,
+  MediaAsset,
+  MusicAnalysis,
+  Project,
+  ScrubStripInfo,
+  Transcript,
+} from '../shared/types';
+import { cloneProject, createEmptyProject, sanitizeProject } from '../shared/project';
+import {
+  collectMediaFiles,
+  ensurePlayableProxy,
+  extractThumbnailStrip,
+  extractWaveform,
+  getCacheDir,
+  probeMediaAsset,
+  WaveformData,
+} from './engine/ffmpeg';
+import { addRecentProject, getAutoSaveEnabled } from './settings';
+import {
+  analyzeMusicAsset,
+  analyzeVisualAsset,
+  computeClipSceneTags,
+  getCachedTranscript,
+  transcribeMediaAsset,
+} from './engine/analyzer';
+import { ExportManager } from './engine/exporter';
+import { ScrubCacheManager } from './engine/scrubCache';
+
+export interface EditorSnapshot {
+  project: Project;
+  filePath?: string;
+  title: string;
+  isDirty: boolean;
+  playhead: number;
+  playing: boolean;
+  canUndo: boolean;
+  canRedo: boolean;
+  agentCursor?: AgentCursorState;
+  waveforms: Record<string, WaveformData>;
+  thumbs: Record<string, string[]>;
+  scrubStrips: Record<string, ScrubStripInfo>;
+  transcripts: Record<string, Transcript>;
+  sceneTags: Record<string, string[]>;
+  exports: ExportJobInfo[];
+}
+
+export class ProjectStore {
+  project: Project;
+  filePath?: string;
+  isDirty = false;
+  playhead = 0;
+  playing = false;
+  agentCursor?: AgentCursorState;
+  waveforms: Record<string, WaveformData> = {};
+  thumbs: Record<string, string[]> = {};
+  scrubStrips: Record<string, ScrubStripInfo> = {};
+  clipAnalyses: Record<string, ClipAnalysis> = {};
+  musicAnalyses: Record<string, MusicAnalysis> = {};
+  transcripts: Record<string, Transcript> = {};
+  sceneTags: Record<string, string[]> = {};
+  undoStack: Project[] = [];
+  redoStack: Project[] = [];
+  readonly exports: ExportManager;
+  readonly scrubCache: ScrubCacheManager;
+  private listeners = new Set<(snap: EditorSnapshot) => void>();
+  private agentClearTimer?: NodeJS.Timeout;
+  private autoSaveTimer?: NodeJS.Timeout;
+  private pendingWarmups = new Set<Promise<void>>();
+
+  constructor() {
+    this.project = createEmptyProject();
+    this.exports = new ExportManager(() => this.emit());
+    this.scrubCache = new ScrubCacheManager((assetId, strip) => {
+      this.scrubStrips[assetId] = strip;
+      this.emit();
+    });
+  }
+
+  get title(): string {
+    if (this.filePath) return path.basename(this.filePath, path.extname(this.filePath));
+    return 'Untitled';
+  }
+
+  onChange(fn: (snap: EditorSnapshot) => void): () => void {
+    this.listeners.add(fn);
+    return () => this.listeners.delete(fn);
+  }
+
+  snapshot(): EditorSnapshot {
+    return {
+      project: this.project,
+      filePath: this.filePath,
+      title: this.title,
+      isDirty: this.isDirty,
+      playhead: this.playhead,
+      playing: this.playing,
+      canUndo: this.undoStack.length > 0,
+      canRedo: this.redoStack.length > 0,
+      agentCursor: this.agentCursor,
+      waveforms: this.waveforms,
+      thumbs: this.thumbs,
+      scrubStrips: this.scrubStrips,
+      transcripts: this.transcripts,
+      sceneTags: this.sceneTags,
+      exports: this.exports.list(),
+    };
+  }
+
+  emit(): void {
+    const snap = this.snapshot();
+    for (const fn of this.listeners) fn(snap);
+  }
+
+  mutate(mutator: (draft: Project) => void, recordHistory = true): void {
+    if (recordHistory) {
+      this.undoStack.push(cloneProject(this.project));
+      if (this.undoStack.length > 100) this.undoStack.shift();
+      this.redoStack = [];
+    }
+    mutator(this.project);
+    sanitizeProject(this.project);
+    this.isDirty = true;
+    this.scheduleAutoSave();
+    this.emit();
+  }
+
+  replaceProject(nextProject: Project, recordHistory = true): void {
+    if (recordHistory) {
+      this.undoStack.push(cloneProject(this.project));
+      if (this.undoStack.length > 100) this.undoStack.shift();
+      this.redoStack = [];
+    }
+    this.project = cloneProject(nextProject);
+    sanitizeProject(this.project);
+    this.isDirty = true;
+    this.scheduleAutoSave();
+    this.emit();
+  }
+
+  private scheduleAutoSave(): void {
+    if (this.autoSaveTimer) clearTimeout(this.autoSaveTimer);
+    if (!this.filePath || !getAutoSaveEnabled()) return;
+    this.autoSaveTimer = setTimeout(() => {
+      this.autoSaveTimer = undefined;
+      if (this.filePath && this.isDirty && getAutoSaveEnabled()) {
+        try {
+          this.saveToFile();
+        } catch {
+          // ignore background autosave failure
+        }
+      }
+    }, 2500);
+  }
+
+  undo(): boolean {
+    const prev = this.undoStack.pop();
+    if (!prev) return false;
+    this.redoStack.push(cloneProject(this.project));
+    this.project = prev;
+    this.isDirty = true;
+    this.emit();
+    return true;
+  }
+
+  redo(): boolean {
+    const next = this.redoStack.pop();
+    if (!next) return false;
+    this.undoStack.push(cloneProject(this.project));
+    this.project = next;
+    this.isDirty = true;
+    this.emit();
+    return true;
+  }
+
+  setPlayhead(t: number): void {
+    this.playhead = Math.max(0, t);
+    this.emit();
+  }
+
+  setPlaying(playing: boolean): void {
+    this.playing = playing;
+    this.emit();
+  }
+
+  setAgentCursor(cursor?: Partial<AgentCursorState> & { name: string }): void {
+    if (!cursor) {
+      this.agentCursor = undefined;
+      this.emit();
+      return;
+    }
+    this.agentCursor = {
+      name: cursor.name,
+      activity: cursor.activity,
+      targetKind: cursor.targetKind,
+      assetID: cursor.assetID,
+      clipID: cursor.clipID,
+      trackID: cursor.trackID,
+      time: cursor.time,
+      toolName: cursor.toolName,
+      updatedAt: Date.now(),
+    };
+    if (this.agentClearTimer) clearTimeout(this.agentClearTimer);
+    this.agentClearTimer = setTimeout(() => {
+      this.agentCursor = undefined;
+      this.emit();
+    }, 12000);
+    this.emit();
+  }
+
+  createDraftClone(): ProjectStore {
+    const draft = new ProjectStore();
+    draft.project = cloneProject(this.project);
+    draft.filePath = this.filePath;
+    draft.playhead = this.playhead;
+    draft.waveforms = { ...this.waveforms };
+    draft.thumbs = { ...this.thumbs };
+    draft.scrubStrips = { ...this.scrubStrips };
+    draft.clipAnalyses = { ...this.clipAnalyses };
+    draft.musicAnalyses = { ...this.musicAnalyses };
+    draft.transcripts = { ...this.transcripts };
+    draft.sceneTags = { ...this.sceneTags };
+    return draft;
+  }
+
+  commitMagicProject(nextProject: Project, prompt?: string, tab?: string): void {
+    this.undoStack.push(cloneProject(this.project));
+    if (this.undoStack.length > 100) this.undoStack.shift();
+    this.redoStack = [];
+    this.project = cloneProject(nextProject);
+    if (prompt && prompt.trim()) {
+      const trimmed = prompt.trim();
+      const prev = (this.project.magicHistory ?? []).filter((h) => h.text !== trimmed);
+      this.project.magicHistory = [{ text: trimmed, tab: tab ?? 'local', timestamp: Date.now() }, ...prev].slice(0, 24);
+    }
+    sanitizeProject(this.project);
+    this.isDirty = true;
+    this.scheduleAutoSave();
+    this.emit();
+  }
+
+  newProject(): void {
+    this.project = createEmptyProject();
+    this.filePath = undefined;
+    this.isDirty = false;
+    this.playhead = 0;
+    this.playing = false;
+    this.undoStack = [];
+    this.redoStack = [];
+    this.waveforms = {};
+    this.thumbs = {};
+    this.scrubStrips = {};
+    this.transcripts = {};
+    this.sceneTags = {};
+    this.emit();
+  }
+
+  saveToFile(targetPath?: string): string {
+    const outPath = targetPath ?? this.filePath;
+    if (!outPath) throw new Error('No file path specified for saving project.');
+    const projDir = path.dirname(path.resolve(outPath));
+    for (const a of this.project.assets) {
+      a.relativePath = path.relative(projDir, a.path).replace(/\\/g, '/');
+    }
+    fs.mkdirSync(projDir, { recursive: true });
+    fs.writeFileSync(outPath, JSON.stringify(this.project, null, 2), 'utf8');
+    this.filePath = path.resolve(outPath);
+    this.isDirty = false;
+    addRecentProject(this.filePath);
+    this.emit();
+    return this.filePath;
+  }
+
+  openFromFile(filePath: string): void {
+    const resolved = path.resolve(filePath);
+    const raw = JSON.parse(fs.readFileSync(resolved, 'utf8')) as Project;
+    const projDir = path.dirname(resolved);
+    for (const a of raw.assets) {
+      if (!fs.existsSync(a.path) && a.relativePath) {
+        const candidate = path.resolve(projDir, a.relativePath);
+        if (fs.existsSync(candidate)) a.path = candidate;
+      }
+    }
+    sanitizeProject(raw);
+    this.project = raw;
+    this.filePath = resolved;
+    addRecentProject(resolved);
+    this.isDirty = false;
+    this.playhead = 0;
+    this.playing = false;
+    this.undoStack = [];
+    this.redoStack = [];
+    this.scrubStrips = {};
+    this.emit();
+    for (const a of raw.assets) {
+      void this.warmAsset(a);
+    }
+  }
+
+  async waitForIdle(): Promise<void> {
+    while (this.pendingWarmups.size > 0) {
+      await Promise.allSettled([...this.pendingWarmups]);
+    }
+  }
+
+  async importFiles(paths: string[]): Promise<MediaAsset[]> {
+    const added: MediaAsset[] = [];
+    const expanded = collectMediaFiles(paths);
+    for (const entry of expanded) {
+      const resolved = entry.path;
+      if (!fs.existsSync(resolved)) continue;
+      const existing = this.project.assets.find((a) => path.resolve(a.path) === resolved);
+      if (existing) {
+        if (entry.folder && existing.folder !== entry.folder) {
+          this.mutate((p) => {
+            const target = p.assets.find((a) => a.id === existing.id);
+            if (target) target.folder = entry.folder;
+          }, false);
+        }
+        added.push(existing);
+        continue;
+      }
+      const asset = await probeMediaAsset(resolved);
+      if (entry.folder) asset.folder = entry.folder;
+      this.mutate((p) => {
+        p.assets.push(asset);
+        if (!p.settingsLocked && p.clips.length === 0 && asset.kind === 'video' && asset.width > 0 && asset.height > 0) {
+          p.width = asset.width;
+          p.height = asset.height;
+          p.fps = asset.fps;
+        }
+      });
+      added.push(asset);
+      void this.warmAsset(asset);
+    }
+    return added;
+  }
+
+  async reloadAsset(assetID: string): Promise<MediaAsset | undefined> {
+    const existing = this.project.assets.find((a) => a.id === assetID);
+    if (!existing || !fs.existsSync(existing.path)) return undefined;
+    const probed = await probeMediaAsset(existing.path);
+    this.scrubCache.forget(assetID);
+    delete this.scrubStrips[assetID];
+    this.mutate((p) => {
+      const target = p.assets.find((a) => a.id === assetID);
+      if (!target) return;
+      target.duration = probed.duration;
+      target.width = probed.width;
+      target.height = probed.height;
+      target.fps = probed.fps;
+      target.hasAudio = probed.hasAudio;
+      delete target.playablePath;
+    }, false);
+    const updated = this.project.assets.find((a) => a.id === assetID);
+    if (updated) void this.warmAsset(updated);
+    return updated;
+  }
+
+  deleteAsset(assetID: string): void {
+    this.scrubCache.forget(assetID);
+    delete this.scrubStrips[assetID];
+    this.mutate((p) => {
+      p.assets = p.assets.filter((a) => a.id !== assetID);
+      p.clips = p.clips.filter((c) => c.assetID !== assetID);
+    }, true);
+  }
+
+  async warmAsset(asset: MediaAsset): Promise<void> {
+    if (!fs.existsSync(asset.path)) return;
+    const task = (async () => {
+      await this.runWarmAsset(asset);
+    })();
+    this.pendingWarmups.add(task);
+    try {
+      await task;
+    } finally {
+      this.pendingWarmups.delete(task);
+    }
+  }
+
+  private async runWarmAsset(asset: MediaAsset): Promise<void> {
+    try {
+      if (asset.kind !== 'audio') {
+        if (asset.kind === 'video' && !asset.playablePath) {
+          const proxy = await ensurePlayableProxy(asset);
+          if (proxy) {
+            const target = this.project.assets.find((a) => a.id === asset.id);
+            if (target) target.playablePath = proxy;
+            asset.playablePath = proxy;
+            this.emit();
+          }
+        }
+        const strip = await extractThumbnailStrip(asset, asset.kind === 'image' ? 1 : 8);
+        this.thumbs[asset.id] = strip;
+        this.emit();
+        if (asset.kind === 'video') {
+          this.scrubCache.enqueue(asset);
+        }
+      }
+      if (asset.kind === 'audio' || asset.hasAudio) {
+        const wf = await extractWaveform(asset.path, 120);
+        this.waveforms[asset.id] = wf;
+        this.emit();
+      }
+      const cachedTr = getCachedTranscript(asset.path);
+      if (cachedTr) {
+        this.transcripts[asset.id] = cachedTr;
+        this.emit();
+      }
+      if (asset.kind === 'audio') {
+        const ma = await analyzeMusicAsset(asset);
+        if (ma) this.musicAnalyses[asset.id] = ma;
+      } else {
+        const va = await analyzeVisualAsset(asset);
+        if (va) {
+          this.clipAnalyses[asset.id] = va;
+          this.sceneTags[asset.id] = computeClipSceneTags(va);
+          this.emit();
+        }
+      }
+    } catch {
+      // background warm failures are non-fatal
+    }
+  }
+
+  async transcribeAsset(assetID: string, language = 'auto'): Promise<Transcript> {
+    const asset = this.project.assets.find((a) => a.id === assetID);
+    if (!asset) throw new Error(`Unknown asset: ${assetID}`);
+    const tr = await transcribeMediaAsset(asset, language);
+    this.transcripts[asset.id] = tr;
+    this.emit();
+    return tr;
+  }
+}
+
+export function loadSavedShortcuts(): Record<string, string> {
+  try {
+    const p = path.join(getCacheDir('Config'), 'shortcuts.json');
+    if (!fs.existsSync(p)) return {};
+    return JSON.parse(fs.readFileSync(p, 'utf8')) as Record<string, string>;
+  } catch {
+    return {};
+  }
+}
+
+export function saveShortcutsConfig(map: Record<string, string>): void {
+  try {
+    const p = path.join(getCacheDir('Config'), 'shortcuts.json');
+    fs.writeFileSync(p, JSON.stringify(map, null, 2), 'utf8');
+  } catch {
+    // ignore
+  }
+}
