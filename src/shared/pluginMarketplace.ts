@@ -1,1 +1,236 @@
-ZXhwb3J0IHR5cGUgUGx1Z2luTWFya2V0cGxhY2VDYXRlZ29yeSA9CiAgfCAnYWxsJwogIHwgJ2RldmljZV9pbXBvcnQnCiAgfCAnZWRpdGluZ190ZW1wbGF0ZXMnCiAgfCAnYWlfYXZhdGFyJwogIHwgJ2F1ZGlvX3ZvaWNlJwogIHwgJ3dvcmtmbG93JzsKCmV4cG9ydCB0eXBlIFBsdWdpbk1hcmtldHBsYWNlU3RhdHVzID0gJ2luc3RhbGxlZCcgfCAnYnVpbHRfaW4nIHwgJ2NvbWluZ19zb29uJzsKCmV4cG9ydCB0eXBlIE1hcmtldHBsYWNlQWN0aW9uVHlwZSA9ICdvcGVuX2RqaScgfCAnb3Blbl90ZW1wbGF0ZXMnIHwgJ3JvYWRtYXAnOwoKZXhwb3J0IGludGVyZmFjZSBNYXJrZXRwbGFjZUNhdGVnb3J5VGFiIHsKICBpZDogUGx1Z2luTWFya2V0cGxhY2VDYXRlZ29yeTsKICBsYWJlbDogc3RyaW5nOwogIGxhYmVsWmg6IHN0cmluZzsKfQoKZXhwb3J0IGludGVyZmFjZSBNYXJrZXRwbGFjZVBsdWdpbkVudHJ5IHsKICBpZDogc3RyaW5nOwogIHJ1bnRpbWVQbHVnaW5JZD86IHN0cmluZzsKICBjYXRlZ29yeTogRXhjbHVkZTxQbHVnaW5NYXJrZXRwbGFjZUNhdGVnb3J5LCAnYWxsJz47CiAgc3RhdHVzOiBQbHVnaW5NYXJrZXRwbGFjZVN0YXR1czsKICB2ZXJzaW9uOiBzdHJpbmc7CiAgYXV0aG9yOiBzdHJpbmc7CiAgbmFtZTogc3RyaW5nOwogIG5hbWVaaDogc3RyaW5nOwogIHRhZ2xpbmU6IHN0cmluZzsKICB0YWdsaW5lWmg6IHN0cmluZzsKICBkZXNjcmlwdGlvbjogc3RyaW5nOwogIGRlc2NyaXB0aW9uWmg6IHN0cmluZzsKICBjYXBhYmlsaXRpZXM6IHN0cmluZ1tdOwogIGNhcGFiaWxpdGllc1poOiBzdHJpbmdbXTsKICB0YWdzOiBzdHJpbmdbXTsKICBhY3Rpb25UeXBlOiBNYXJrZXRwbGFjZUFjdGlvblR5cGU7Cn0KCmV4cG9ydCBjb25zdCBNQVJLRVRQTEFDRV9DQVRFR09SSUVTOiBNYXJrZXRwbGFjZUNhdGVnb3J5VGFiW10gPSBbCiAgeyBpZDogJ2FsbCcsIGxhYmVsOiAnQWxsJywgbGFiZWxaaDogJ+WFqOmDqCcgfSwKICB7IGlkOiAnZGV2aWNlX2ltcG9ydCcsIGxhYmVsOiAnRGV2aWNlIEltcG9ydCcsIGxhYmVsWmg6ICforr7lpIflr7zlhaUnIH0sCiAgeyBpZDogJ2VkaXRpbmdfdGVtcGxhdGVzJywgbGFiZWw6ICdUZW1wbGF0ZXMnLCBsYWJlbFpoOiAn5Ymq6L6R5qih5p2/JyB9LAogIHsgaWQ6ICdhaV9hdmF0YXInLCBsYWJlbDogJ0RpZ2l0YWwgSHVtYW4nLCBsYWJlbFpoOiAn5pWw5a2X5Lq65Y+j5pKtJyB9LAogIHsgaWQ6ICdhdWRpb192b2ljZScsIGxhYmVsOiAnVm9pY2UgJiBBdWRpbycsIGxhYmVsWmg6ICfphY3pn7Ppn7PpopEnIH0sCiAgeyBpZDogJ3dvcmtmbG93JywgbGFiZWw6ICdBdXRvbWF0aW9uJywgbGFiZWxaaDogJ+iHquWKqOWMlua1gScgfSwKXTsKCmV4cG9ydCBjb25zdCBQTFVHSU5fTUFSS0VUUExBQ0VfQ0FUQUxPRzogTWFya2V0cGxhY2VQbHVnaW5FbnRyeVtdID0gWwogIHsKICAgIGlkOiAnZGppLXdpcmVsZXNzLWltcG9ydCcsCiAgICBydW50aW1lUGx1Z2luSWQ6ICdkamktd2lyZWxlc3MtaW1wb3J0JywKICAgIGNhdGVnb3J5OiAnZGV2aWNlX2ltcG9ydCcsCiAgICBzdGF0dXM6ICdpbnN0YWxsZWQnLAogICAgdmVyc2lvbjogJzEuMS4wJywKICAgIGF1dGhvcjogJ1ZlY3RyYWlsIE9mZmljaWFsJywKICAgIG5hbWU6ICdESkkgV2lyZWxlc3MgSW1wb3J0JywKICAgIG5hbWVaaDogJ0RKSSDml6Dnur/ntKDmnZDlr7zlhaUnLAogICAgdGFnbGluZTogJ0JMRSB3YWtlICsgZGlyZWN0IGNhbWVyYSBXaS1GaSBvZmZsb2FkICYgYXV0by1pbXBvcnQnLAogICAgdGFnbGluZVpoOiAn6JOd54mZ6YWN5a+55ZSk6YaSICsg55u45py6IFdpLUZpIOmrmOmAn+WOn+eJh+ebtOS8oOS4juiHquWKqOWFpeW6kycsCiAgICBkZXNjcmlwdGlvbjoKICAgICAgJ1N1cHBvcnRzIE9zbW8gUG9ja2V0IDMgLyA0IC8gNCBQcm8sIE9zbW8gQWN0aW9uIDQtNiwgT3NtbyBOYW5vIGFuZCBYdHJhIEVkZ2UgUHJvIHdpdGggcmVzdW1hYmxlIEhUVFAgUmFuZ2UgdHJhbnNmZXJzLCBTSEEtMjU2IGNoZWNrc3VtcywgYW5kIGRpcmVjdCAxOTIuMTY4LjIuMSBXaS1GaSBtb2RlLicsCiAgICBkZXNjcmlwdGlvblpoOgogICAgICAn5pSv5oyBIE9zbW8gUG9ja2V0IDMgLyA0IC8gNCBQcm/jgIFBY3Rpb24gNC0244CBTmFubyDkuI4gWHRyYSBFZGdlIFByb++8m+aUr+aMgSBIVFRQIOaWreeCuee7reS8oOOAgVNIQS0yNTYg5qCh6aqM5Y+KIDE5Mi4xNjguMi4xIOWFjeiTneeJmeebtOi/nuaooeW8j+OAgicsCiAgICBjYXBhYmlsaXRpZXM6IFsKICAgICAgJ0JMRSB3YWtlICYgcGFpcmluZyArIGRpcmVjdCBXaS1GaSBmYWxsYmFjaycsCiAgICAgICdIVFRQIFJhbmdlIHJlc3VtZSAmIFNIQS0yNTYgaW50ZWdyaXR5IHZlcmlmaWNhdGlvbicsCiAgICAgICdTaW11bGF0ZWQgbW9jayBjYW1lcmEgZm9yIG9mZmxpbmUgdGVzdGluZycsCiAgICBdLAogICAgY2FwYWJpbGl0aWVzWmg6IFsKICAgICAgJ+iTneeJmeWUpOmGkumFjeWvuSArIOW3sui/nueDreeCueWFjeiTneeJmeebtOi/nuWFnOW6lScsCiAgICAgICflpKfmlofku7bmlq3ngrnnu63kvKDkuI4gU0hBLTI1NiDlrozmlbTmgKfmoKHpqownLAogICAgICAn5YaF572u5qih5ouf55u45py677yM5peg5a6e5py65Lmf6IO95rWL6K+V5YWl5bqT6ZO+6LevJywKICAgIF0sCiAgICB0YWdzOiBbJ0JMRScsICdXaS1GaScsICdPc21vJywgJ1NIQS0yNTYnXSwKICAgIGFjdGlvblR5cGU6ICdvcGVuX2RqaScsCiAgfSwKICB7CiAgICBpZDogJ2VkaXRpbmctdGVtcGxhdGVzLWVuZ2luZScsCiAgICBjYXRlZ29yeTogJ2VkaXRpbmdfdGVtcGxhdGVzJywKICAgIHN0YXR1czogJ2J1aWx0X2luJywKICAgIHZlcnNpb246ICcxLjEuMCcsCiAgICBhdXRob3I6ICdWZWN0cmFpbCBPZmZpY2lhbCcsCiAgICBuYW1lOiAnMTYvMzIgRWRpdGluZyBTa2lsbHMgJiBUZW1wbGF0ZXMnLAogICAgbmFtZVpoOiAnMTYvMzIg5Ymq6L6R5oqA6IO95LiO5qih5p2/5byV5pOOJywKICAgIHRhZ2xpbmU6ICdDb21wb3NhYmxlIDMyLXNraWxsIGVkaXRpbmcgcmVjaXBlcyBpbnNpZGUgTWFnaWMgU3R1ZGlvJywKICAgIHRhZ2xpbmVaaDogJ+WGhee9riAxNiDmoLjlv4MgLyAzMiDlhajph4/liarovpHmioDog73kuI4gNiDlpZflj6/mi7zmjqXmiJDniYfmqKHmnb8nLAogICAgZGVzY3JpcHRpb246CiAgICAgICdDb21iaW5lcyBwcm9iZSwgZGVhZC1haXIgdHJpbSwgYmVhdCBzeW5jLCBKL0wtY3V0LCBCLXJvbGwgY292ZXJhZ2UsIHpvb20gcHVuY2gtaW5zLCBhbmQgcHJlLWRlbGl2ZXJ5IFFBIGNoZWNrcyBpbnRvIG9uZS1jbGljayBNYWdpYyBTdHVkaW8gcmVjaXBlcy4nLAogICAgZGVzY3JpcHRpb25aaDoKICAgICAgJ+WwhuaOoumSiOOAgeawlOWPo+ijgeWJquOAgUJQTSDouKnngrnjgIFKL0wtQ3V044CBQi1Sb2xsIOimhuebluOAgei3s+WIh+i9u+aOqOS4juaIkOeJh+iHquajgOe7hOWQiOS4uuS4gOmUrumFjeaWue+8jOaUr+aMgeebtOaOpeijhemFjei/myBNYWdpYyDlt6XkvZzlj7DjgIInLAogICAgY2FwYWJpbGl0aWVzOiBbCiAgICAgICcxNiBDb3JlICsgMTYgUHJvIGNvbXBvc2FibGUgZWRpdGluZyBza2lsbHMnLAogICAgICAnNiB2ZXJ0aWNhbCBwcmVzZXRzIChWbG9nIC8gVGFsa2luZyBIZWFkIC8gOToxNiAvIFVuYm94aW5nKScsCiAgICAgICdXb3JrcyB3aXRoIExvY2FsLCBDbG91ZCBBSSwgQ29kZXggJiBDbGF1ZGUgYmFja2VuZHMnLAogICAgXSwKICAgIGNhcGFiaWxpdGllc1poOiBbCiAgICAgICcxNiDmoLjlv4MgKyAxNiDov5vpmLbmqKHlnZfljJbliarovpHmioDog73oh6rnlLHmi7zmjqUnLAogICAgICAn6KaG55uW5peF5ouNIFZsb2fjgIHlj6Pmkq3nsr7liarjgIE5OjE2IOW8uumSqeWtkOOAgeW8gOeuseivhOa1i+etiSA2IOWll+aooeadvycsCiAgICAgICflhbzlrrnmnKzlnLDop4TliJnkuI7kupHnq68vQ29kZXgvQ2xhdWRlIOaZuuiDveaJp+ihjCcsCiAgICBdLAogICAgdGFnczogWycxNi8zMiBTa2lsbHMnLCAnVmxvZycsICflj6Pmkq0nLCAnOToxNiddLAogICAgYWN0aW9uVHlwZTogJ29wZW5fdGVtcGxhdGVzJywKICB9LAogIHsKICAgIGlkOiAnYXBwbGUtaW9zLWltcG9ydCcsCiAgICBjYXRlZ29yeTogJ2RldmljZV9pbXBvcnQnLAogICAgc3RhdHVzOiAnY29taW5nX3Nvb24nLAogICAgdmVyc2lvbjogJ1JvYWRtYXAnLAogICAgYXV0aG9yOiAnVmVjdHJhaWwgRWNvc3lzdGVtJywKICAgIG5hbWU6ICdpUGhvbmUgLyBpUGFkIERpcmVjdCBJbXBvcnQnLAogICAgbmFtZVpoOiAnaVBob25lIC8gaVBhZCDpq5jpgJ/ntKDmnZDlr7zlhaUnLAogICAgdGFnbGluZTogJ1VTQiBjYWJsZSAmIGxvY2FsIFdpLUZpIGltcG9ydCBmb3IgSEVWQywgUHJvUmVzICYgQXBwbGUgTG9nIGNsaXBzJywKICAgIHRhZ2xpbmVaaDogJ+aUr+aMgSBVU0Ig5pyJ57q/5LiO5bGA5Z+f572R5peg57q/5a+85YWlIEhFVkPjgIFBcHBsZSBMb2cg5LiOIFByb1JlcyDljp/niYcnLAogICAgZGVzY3JpcHRpb246CiAgICAgICdJbXBvcnQgb3JpZ2luYWwgaVBob25lIGNhbWVyYSByb2xsIHZpZGVvcywgTGl2ZSBQaG90b3MsIGFuZCBzcGF0aWFsL0FwcGxlIExvZyBmb290YWdlIGRpcmVjdGx5IGludG8gVmVjdHJhaWwgd2l0aG91dCBpQ2xvdWQgY29tcHJlc3Npb24gb3IgZXhwbG9yZXIgYm90dGxlbmVja3MuJywKICAgIGRlc2NyaXB0aW9uWmg6CiAgICAgICfnu5Xov4cgV2luZG93cyDotYTmupDnrqHnkIblmaggTVRQIOaWrei/nuS4jiBpQ2xvdWQg5Y6L57yp6ZmQ5Yi277yM6auY6YCf5ZCM5q2lIGlQaG9uZSDnm7jmnLrog7bljbfljp/niYfjgIFBcHBsZSBMb2cg5LiO5aSa5py65L2N57Sg5p2Q5Yiw5bel56iL57Sg5p2Q5bqT44CCJywKICAgIGNhcGFiaWxpdGllczogWwogICAgICAnVVNCIEFwcGxlIE1vYmlsZSBEZXZpY2UgJiBsb2NhbCBXaS1GaSBjb21wYW5pb24gdHJhbnNmZXInLAogICAgICAnQXBwbGUgTG9nIC8gSERSIHRvbmUtbWFwcGluZyBtZXRhZGF0YSByZWNvZ25pdGlvbicsCiAgICAgICdJbmNyZW1lbnRhbCBpbXBvcnQgYnkgc2hvb3QgZGF0ZSAmIGFsYnVtJywKICAgIF0sCiAgICBjYXBhYmlsaXRpZXNaaDogWwogICAgICAnVVNCIOebtOi/nuS4juWxgOWfn+e9keaJq+eggemrmOmAn+S8oOeJhycsCiAgICAgICfoh6rliqjor4bliKsgQXBwbGUgTG9nIC8gSERSIOiJsuW9qeepuumXtOW5tuWMuemFjei/mOWOn+iKgueCuScsCiAgICAgICfmjInmi43mkYTml6XmnJ8v55u45YaM5aKe6YeP5Y676YeN5a+85YWlJywKICAgIF0sCiAgICB0YWdzOiBbJ2lQaG9uZScsICdVU0InLCAnQXBwbGUgTG9nJywgJ1Byb1JlcyddLAogICAgYWN0aW9uVHlwZTogJ3JvYWRtYXAnLAogIH0sCiAgewogICAgaWQ6ICdkaWdpdGFsLWh1bWFuLWF2YXRhcicsCiAgICBjYXRlZ29yeTogJ2FpX2F2YXRhcicsCiAgICBzdGF0dXM6ICdjb21pbmdfc29vbicsCiAgICB2ZXJzaW9uOiAnUm9hZG1hcCcsCiAgICBhdXRob3I6ICdWZWN0cmFpbCBFY29zeXN0ZW0nLAogICAgbmFtZTogJ0RpZ2l0YWwgSHVtYW4gVGFsa2luZy1IZWFkIFN0dWRpbycsCiAgICBuYW1lWmg6ICfmlbDlrZfkurrlj6Pmkq3kuI7nlLvkuK3nlLvlt6XkvZzmtYEnLAogICAgdGFnbGluZTogJ1NjcmlwdC10by1hdmF0YXIgcHJlc2VudGVyIGNsaXBzIHdpdGggYXV0byBCLVJvbGwgJiBjYXB0aW9ucycsCiAgICB0YWdsaW5lWmg6ICfovpPlhaXmlofnqL/miJbpn7PpopHoh6rliqjnlJ/miJDmlbDlrZfkurrlj6Pmkq3nlLvpnaLvvIzlubbogZTliqggQi1Sb2xsIOa3t+WJqicsCiAgICBkZXNjcmlwdGlvbjoKICAgICAgJ0dlbmVyYXRlIGNvbnNpc3RlbnQgdGFsa2luZy1oZWFkIHByZXNlbnRlciBzZWdtZW50cyBvbiB0cmFuc3BhcmVudCBvciB2aXJ0dWFsIHN0dWRpbyBiYWNrZ3JvdW5kcywgdGhlbiBhdXRvbWF0aWNhbGx5IGludGVybGVhdmUgQi1yb2xsIGFuZCBkeW5hbWljIGhpZ2hsaWdodCBzdWJ0aXRsZXMuJywKICAgIGRlc2NyaXB0aW9uWmg6CiAgICAgICfmlK/mjIHmnKzlnLAv5LqR56uv5pWw5a2X5Lq65b2i6LGh6amx5Yqo44CB57u/5bmV5LiO6YCP5piO6IOM5pmv5Y+j5pKt5ZCI5oiQ77yM55Sf5oiQ5ZCO55u05o6l6JC96L2o5bm25LiOIEItUm9sbCDnlLvpnaLjgIHpq5jkuq7lrZfluZXogZTliqjmjpLniYjjgIInLAogICAgY2FwYWJpbGl0aWVzOiBbCiAgICAgICdMaXAtc3luY2VkIHRhbGtpbmctaGVhZCB0cmFjayBnZW5lcmF0aW9uJywKICAgICAgJ0F1dG8gcGljdHVyZS1pbi1waWN0dXJlICYgY29ybmVyIHByZXNlbnRlciBsYXlvdXQnLAogICAgICAnU3luY2VkIHdvcmQtbGV2ZWwgY2FwdGlvbiBzdHlsaW5nJywKICAgIF0sCiAgICBjYXBhYmlsaXRpZXNaaDogWwogICAgICAn5paH5pysL+ivremfs+mpseWKqOWPo+Wei+WQjOatpeeahOaVsOWtl+S6uuWPo+aSreeJh+auteeUn+aIkCcsCiAgICAgICfkuIDplK7liIfmjaLlhajlsY/lj6Pmkq3kuI7op5LmoIfnlLvkuK3nlLvniYjlvI8nLAogICAgICAn6Ieq5Yqo5a+56b2Q6YCQ6K+N6auY5Lqu5a2X5bmV5LiO56ug6IqC5aSn5a2X5Y2hJywKICAgIF0sCiAgICB0YWdzOiBbJ+aVsOWtl+S6uicsICflj6Pmkq0nLCAnQXZhdGFyJywgJ1BpUCddLAogICAgYWN0aW9uVHlwZTogJ3JvYWRtYXAnLAogIH0sCiAgewogICAgaWQ6ICd2b2ljZS1jbG9uZS1kdWJiaW5nJywKICAgIGNhdGVnb3J5OiAnYXVkaW9fdm9pY2UnLAogICAgc3RhdHVzOiAnY29taW5nX3Nvb24nLAogICAgdmVyc2lvbjogJ1JvYWRtYXAnLAogICAgYXV0aG9yOiAnVmVjdHJhaWwgRWNvc3lzdGVtJywKICAgIG5hbWU6ICdBSSBWb2ljZW92ZXIgJiBNdWx0aS1MYW5ndWFnZSBEdWJiaW5nJywKICAgIG5hbWVaaDogJ0FJIOmfs+iJsuWFi+mahuS4juWkmuivreenjemFjemfsycsCiAgICB0YWdsaW5lOiAnQ2xvbmUgbmFycmF0b3Igdm9pY2UsIHRyYW5zbGF0ZSBzY3JpcHRzLCBhbmQgYXV0by1kdWNrIEJHTScsCiAgICB0YWdsaW5lWmg6ICflo7Dpn7PlpI3liLvphY3pn7PjgIHlpJror63np43lj6Pmkq3or5HliLbkuI4gLTE0IExVRlMg6Ieq5Yqo6YG/6K6p5re36Z+zJywKICAgIGRlc2NyaXB0aW9uOgogICAgICAnQ3JlYXRlIG5hdHVyYWwgdm9pY2VvdmVycyBmcm9tIHNjcmlwdHMgb3IgdHJhbnNsYXRlIGV4aXN0aW5nIHNwZWVjaCB0cmFja3Mgd2hpbGUgcHJlc2VydmluZyBzcGVha2VyIHRpbWJyZSBhbmQgdGltZWxpbmUgcGFjaW5nLicsCiAgICBkZXNjcmlwdGlvblpoOgogICAgICAn5qC55o2u6ISa5pys55Sf5oiQ5ouf55yf5peB55m95oiW5bCG5Y6f54mH5Y+j5pKt6K+R5Yi25Li65aSa5Zu96K+t6KiA77yM6Ieq5Yqo5Yy56YWN5Y6f5pyJ5pe26Ze06L206IqC5aWP5bm26IGU5Yqo6Z+z5LmQ6YG/6K6p44CCJywKICAgIGNhcGFiaWxpdGllczogWwogICAgICAnU2hvcnQtc2FtcGxlIHZvaWNlIGNsb25pbmcgJiBlbW90aW9uIGNvbnRyb2wnLAogICAgICAnTXVsdGktbGFuZ3VhZ2UgZHViYmluZyBzeW5jZWQgdG8gc3VidGl0bGUgY3VlcycsCiAgICAgICdCcm9hZGNhc3QgLTE0IExVRlMgbG91ZG5lc3Mgbm9ybWFsaXphdGlvbicsCiAgICBdLAogICAgY2FwYWJpbGl0aWVzWmg6IFsKICAgICAgJ+efreagt+acrOmfs+iJsuWFi+mahuS4juivremAn+aDhee7quiwg+iKgicsCiAgICAgICfmjInlrZfluZXml7bpl7TovbTnsr7lh4blr7npvZDnmoTlpJror63np43or5HliLbphY3pn7MnLAogICAgICAn6Ieq5Yqo5a6M5oiQ5Lq65aOw5Y6L57yp5LiO6IOM5pmv6Z+z5LmQ6YG/6K6pJywKICAgIF0sCiAgICB0YWdzOiBbJ1RUUycsICfpn7PoibLlhYvpmoYnLCAn5aSa6K+t56eNJywgJ0xVRlMnXSwKICAgIGFjdGlvblR5cGU6ICdyb2FkbWFwJywKICB9LAogIHsKICAgIGlkOiAncG9kY2FzdC1iYXRjaC1waXBlbGluZScsCiAgICBjYXRlZ29yeTogJ3dvcmtmbG93JywKICAgIHN0YXR1czogJ2NvbWluZ19zb29uJywKICAgIHZlcnNpb246ICdSb2FkbWFwJywKICAgIGF1dGhvcjogJ1ZlY3RyYWlsIEVjb3N5c3RlbScsCiAgICBuYW1lOiAnV2F0Y2gtRm9sZGVyIEJhdGNoIFJvdWdoLUN1dCcsCiAgICBuYW1lWmg6ICfnm5HlkKzmlofku7blpLnmibnph4/nspfliarmtYHmsLTnur8nLAogICAgdGFnbGluZTogJ0F1dG8taW5nZXN0IG5ldyBmb290YWdlLCB0cmltIHNpbGVuY2VzICYgZXhwb3J0IDE2OjkgKyA5OjE2JywKICAgIHRhZ2xpbmVaaDogJ+iHquWKqOebkeWQrOWvvOWFpeaWsOe0oOadkO+8jOS4gOmUruWujOaIkOWOu+awlOWPo+OAgeWll+aooeadv+S4juaoquerluWPjOerr+a0vueUnycsCiAgICBkZXNjcmlwdGlvbjoKICAgICAgJ0Ryb3AgcmF3IHNob290cyBpbnRvIGEgd2F0Y2hlZCBmb2xkZXIgdG8gYXV0b21hdGljYWxseSBydW4gQVNSIHRyYW5zY3JpcHRpb24sIGRlYWQtYWlyIHJlbW92YWwsIHRlbXBsYXRlIGFzc2VtYmx5LCBhbmQgbXVsdGktYXNwZWN0IGV4cG9ydHMuJywKICAgIGRlc2NyaXB0aW9uWmg6CiAgICAgICflsIbmi43mkYTntKDmnZDmi5blhaXnm5HlkKznm67lvZXlkI7oh6rliqjop6blj5HovazlhpnjgIHlup/niYfliZTpmaTjgIHmqKHmnb/lpZfliarkuI4gMTY6OSAvIDk6MTYg5aSa56uv5bm26KGM5a+85Ye644CCJywKICAgIGNhcGFiaWxpdGllczogWwogICAgICAnRm9sZGVyIHdhdGNoZXIgd2l0aCBwcmVzZXQgdGVtcGxhdGUgYmluZGluZycsCiAgICAgICdCYXRjaCAxNjo5ICYgOToxNiBzbWFydCByZWZyYW1lIGV4cG9ydCcsCiAgICAgICdQcmUtZXhwb3J0IGJsYWNrLWZyYW1lICYgYXVkaW8gY2xpcHBpbmcgUUEgZ2F0ZScsCiAgICBdLAogICAgY2FwYWJpbGl0aWVzWmg6IFsKICAgICAgJ+ebkeWQrOebruW9leiHquWKqOe7keWumuaMh+WumiAxNi8zMiDliarovpHmqKHmnb8nLAogICAgICAn5LiA5qyh55Sf5oiQ5qiq5bGP5LiO56uW5bGP5a6J5YWo5Yy65Y+M54mI5pys5oiQ54mHJywKICAgICAgJ+WvvOWHuuWJjeiHquWKqOaLpuaIqum7keWcuuOAgei9qOmBk+epuumameS4jumfs+mikeWJiuazoicsCiAgICBdLAogICAgdGFnczogWydCYXRjaCcsICdXYXRjaCBGb2xkZXInLCAnMTY6OSArIDk6MTYnXSwKICAgIGFjdGlvblR5cGU6ICdyb2FkbWFwJywKICB9LApdOwoKZXhwb3J0IGZ1bmN0aW9uIGZpbHRlck1hcmtldHBsYWNlUGx1Z2lucygKICBjYXRhbG9nOiBNYXJrZXRwbGFjZVBsdWdpbkVudHJ5W10sCiAgY2F0ZWdvcnk6IFBsdWdpbk1hcmtldHBsYWNlQ2F0ZWdvcnksCiAgcXVlcnk6IHN0cmluZwopOiBNYXJrZXRwbGFjZVBsdWdpbkVudHJ5W10gewogIGNvbnN0IHEgPSBxdWVyeS50cmltKCkudG9Mb3dlckNhc2UoKTsKICByZXR1cm4gY2F0YWxvZy5maWx0ZXIoKGl0ZW0pID0+IHsKICAgIGlmIChjYXRlZ29yeSAhPT0gJ2FsbCcgJiYgaXRlbS5jYXRlZ29yeSAhPT0gY2F0ZWdvcnkpIHJldHVybiBmYWxzZTsKICAgIGlmICghcSkgcmV0dXJuIHRydWU7CiAgICBjb25zdCBoYXlzdGFjayA9IFsKICAgICAgaXRlbS5pZCwKICAgICAgaXRlbS5uYW1lLAogICAgICBpdGVtLm5hbWVaaCwKICAgICAgaXRlbS50YWdsaW5lLAogICAgICBpdGVtLnRhZ2xpbmVaaCwKICAgICAgaXRlbS5kZXNjcmlwdGlvbiwKICAgICAgaXRlbS5kZXNjcmlwdGlvblpoLAogICAgICAuLi5pdGVtLnRhZ3MsCiAgICBdCiAgICAgIC5qb2luKCcgJykKICAgICAgLnRvTG93ZXJDYXNlKCk7CiAgICByZXR1cm4gaGF5c3RhY2suaW5jbHVkZXMocSk7CiAgfSk7Cn0K
+export type PluginMarketplaceCategory =
+  | 'all'
+  | 'device_import'
+  | 'editing_templates'
+  | 'ai_avatar'
+  | 'audio_voice'
+  | 'workflow';
+
+export type PluginMarketplaceStatus = 'installed' | 'built_in' | 'coming_soon';
+
+export type MarketplaceActionType = 'open_dji' | 'open_templates' | 'roadmap';
+
+export interface MarketplaceCategoryTab {
+  id: PluginMarketplaceCategory;
+  label: string;
+  labelZh: string;
+}
+
+export interface MarketplacePluginEntry {
+  id: string;
+  runtimePluginId?: string;
+  category: Exclude<PluginMarketplaceCategory, 'all'>;
+  status: PluginMarketplaceStatus;
+  version: string;
+  author: string;
+  name: string;
+  nameZh: string;
+  tagline: string;
+  taglineZh: string;
+  description: string;
+  descriptionZh: string;
+  capabilities: string[];
+  capabilitiesZh: string[];
+  tags: string[];
+  actionType: MarketplaceActionType;
+}
+
+export const MARKETPLACE_CATEGORIES: MarketplaceCategoryTab[] = [
+  { id: 'all', label: 'All', labelZh: '全部' },
+  { id: 'device_import', label: 'Device Import', labelZh: '设备导入' },
+  { id: 'editing_templates', label: 'Templates', labelZh: '剪辑模板' },
+  { id: 'ai_avatar', label: 'Digital Human', labelZh: '数字人口播' },
+  { id: 'audio_voice', label: 'Voice & Audio', labelZh: '配音音频' },
+  { id: 'workflow', label: 'Automation', labelZh: '自动化流' },
+];
+
+export const PLUGIN_MARKETPLACE_CATALOG: MarketplacePluginEntry[] = [
+  {
+    id: 'dji-wireless-import',
+    runtimePluginId: 'dji-wireless-import',
+    category: 'device_import',
+    status: 'installed',
+    version: '1.1.0',
+    author: 'Vectrail Official',
+    name: 'DJI Wireless Import',
+    nameZh: 'DJI 无线素材导入',
+    tagline: 'BLE wake + direct camera Wi-Fi offload & auto-import',
+    taglineZh: '蓝牙配对唤醒 + 相机 Wi-Fi 高速原片直传与自动入库',
+    description:
+      'Supports Osmo Pocket 3 / 4 / 4 Pro, Osmo Action 4-6, Osmo Nano and Xtra Edge Pro with resumable HTTP Range transfers, SHA-256 checksums, and direct 192.168.2.1 Wi-Fi mode.',
+    descriptionZh:
+      '支持 Osmo Pocket 3 / 4 / 4 Pro、Action 4-6、Nano 与 Xtra Edge Pro；支持 HTTP 断点续传、SHA-256 校验及 192.168.2.1 免蓝牙直连模式。',
+    capabilities: [
+      'BLE wake & pairing + direct Wi-Fi fallback',
+      'HTTP Range resume & SHA-256 integrity verification',
+      'Simulated mock camera for offline testing',
+    ],
+    capabilitiesZh: [
+      '蓝牙唤醒配对 + 已连热点免蓝牙直连兜底',
+      '大文件断点续传与 SHA-256 完整性校验',
+      '内置模拟相机，无实机也能测试入库链路',
+    ],
+    tags: ['BLE', 'Wi-Fi', 'Osmo', 'SHA-256'],
+    actionType: 'open_dji',
+  },
+  {
+    id: 'editing-templates-engine',
+    category: 'editing_templates',
+    status: 'built_in',
+    version: '1.1.0',
+    author: 'Vectrail Official',
+    name: '16/32 Editing Skills & Templates',
+    nameZh: '16/32 剪辑技能与模板引擎',
+    tagline: 'Composable 32-skill editing recipes inside Magic Studio',
+    taglineZh: '内置 16 核心 / 32 全量剪辑技能与 6 套可拼接成片模板',
+    description:
+      'Combines probe, dead-air trim, beat sync, J/L-cut, B-roll coverage, zoom punch-ins, and pre-delivery QA checks into one-click Magic Studio recipes.',
+    descriptionZh:
+      '将探针、气口裁剪、BPM 踩点、J/L-Cut、B-Roll 覆盖、跳切轻推与成片自检组合为一键配方，支持直接装配进 Magic 工作台。',
+    capabilities: [
+      '16 Core + 16 Pro composable editing skills',
+      '6 vertical presets (Vlog / Talking Head / 9:16 / Unboxing)',
+      'Works with Local, Cloud AI, Codex & Claude backends',
+    ],
+    capabilitiesZh: [
+      '16 核心 + 16 进阶模块化剪辑技能自由拼接',
+      '覆盖旅拍 Vlog、口播精剪、9:16 强钩子、开箱评测等 6 套模板',
+      '兼容本地规则与云端/Codex/Claude 智能执行',
+    ],
+    tags: ['16/32 Skills', 'Vlog', '口播', '9:16'],
+    actionType: 'open_templates',
+  },
+  {
+    id: 'apple-ios-import',
+    category: 'device_import',
+    status: 'coming_soon',
+    version: 'Roadmap',
+    author: 'Vectrail Ecosystem',
+    name: 'iPhone / iPad Direct Import',
+    nameZh: 'iPhone / iPad 高速素材导入',
+    tagline: 'USB cable & local Wi-Fi import for HEVC, ProRes & Apple Log clips',
+    taglineZh: '支持 USB 有线与局域网无线导入 HEVC、Apple Log 与 ProRes 原片',
+    description:
+      'Import original iPhone camera roll videos, Live Photos, and spatial/Apple Log footage directly into Vectrail without iCloud compression or explorer bottlenecks.',
+    descriptionZh:
+      '绕过 Windows 资源管理器 MTP 断连与 iCloud 压缩限制，高速同步 iPhone 相机胶卷原片、Apple Log 与多机位素材到工程素材库。',
+    capabilities: [
+      'USB Apple Mobile Device & local Wi-Fi companion transfer',
+      'Apple Log / HDR tone-mapping metadata recognition',
+      'Incremental import by shoot date & album',
+    ],
+    capabilitiesZh: [
+      'USB 直连与局域网扫码高速传片',
+      '自动识别 Apple Log / HDR 色彩空间并匹配还原节点',
+      '按拍摄日期/相册增量去重导入',
+    ],
+    tags: ['iPhone', 'USB', 'Apple Log', 'ProRes'],
+    actionType: 'roadmap',
+  },
+  {
+    id: 'digital-human-avatar',
+    category: 'ai_avatar',
+    status: 'coming_soon',
+    version: 'Roadmap',
+    author: 'Vectrail Ecosystem',
+    name: 'Digital Human Talking-Head Studio',
+    nameZh: '数字人口播与画中画工作流',
+    tagline: 'Script-to-avatar presenter clips with auto B-Roll & captions',
+    taglineZh: '输入文稿或音频自动生成数字人口播画面，并联动 B-Roll 混剪',
+    description:
+      'Generate consistent talking-head presenter segments on transparent or virtual studio backgrounds, then automatically interleave B-roll and dynamic highlight subtitles.',
+    descriptionZh:
+      '支持本地/云端数字人形象驱动、绿幕与透明背景口播合成，生成后直接落轨并与 B-Roll 画面、高亮字幕联动排版。',
+    capabilities: [
+      'Lip-synced talking-head track generation',
+      'Auto picture-in-picture & corner presenter layout',
+      'Synced word-level caption styling',
+    ],
+    capabilitiesZh: [
+      '文本/语音驱动口型同步的数字人口播片段生成',
+      '一键切换全屏口播与角标画中画版式',
+      '自动对齐逐词高亮字幕与章节大字卡',
+    ],
+    tags: ['数字人', '口播', 'Avatar', 'PiP'],
+    actionType: 'roadmap',
+  },
+  {
+    id: 'voice-clone-dubbing',
+    category: 'audio_voice',
+    status: 'coming_soon',
+    version: 'Roadmap',
+    author: 'Vectrail Ecosystem',
+    name: 'AI Voiceover & Multi-Language Dubbing',
+    nameZh: 'AI 音色克隆与多语种配音',
+    tagline: 'Clone narrator voice, translate scripts, and auto-duck BGM',
+    taglineZh: '声音复刻配音、多语种口播译制与 -14 LUFS 自动避让混音',
+    description:
+      'Create natural voiceovers from scripts or translate existing speech tracks while preserving speaker timbre and timeline pacing.',
+    descriptionZh:
+      '根据脚本生成拟真旁白或将原片口播译制为多国语言，自动匹配原有时间轴节奏并联动音乐避让。',
+    capabilities: [
+      'Short-sample voice cloning & emotion control',
+      'Multi-language dubbing synced to subtitle cues',
+      'Broadcast -14 LUFS loudness normalization',
+    ],
+    capabilitiesZh: [
+      '短样本音色克隆与语速情绪调节',
+      '按字幕时间轴精准对齐的多语种译制配音',
+      '自动完成人声压缩与背景音乐避让',
+    ],
+    tags: ['TTS', '音色克隆', '多语种', 'LUFS'],
+    actionType: 'roadmap',
+  },
+  {
+    id: 'podcast-batch-pipeline',
+    category: 'workflow',
+    status: 'coming_soon',
+    version: 'Roadmap',
+    author: 'Vectrail Ecosystem',
+    name: 'Watch-Folder Batch Rough-Cut',
+    nameZh: '监听文件夹批量粗剪流水线',
+    tagline: 'Auto-ingest new footage, trim silences & export 16:9 + 9:16',
+    taglineZh: '自动监听导入新素材，一键完成去气口、套模板与横竖双端派生',
+    description:
+      'Drop raw shoots into a watched folder to automatically run ASR transcription, dead-air removal, template assembly, and multi-aspect exports.',
+    descriptionZh:
+      '将拍摄素材拖入监听目录后自动触发转写、废片剔除、模板套剪与 16:9 / 9:16 多端并行导出。',
+    capabilities: [
+      'Folder watcher with preset template binding',
+      'Batch 16:9 & 9:16 smart reframe export',
+      'Pre-export black-frame & audio clipping QA gate',
+    ],
+    capabilitiesZh: [
+      '监听目录自动绑定指定 16/32 剪辑模板',
+      '一次生成横屏与竖屏安全区双版本成片',
+      '导出前自动拦截黑场、轨道空隙与音频削波',
+    ],
+    tags: ['Batch', 'Watch Folder', '16:9 + 9:16'],
+    actionType: 'roadmap',
+  },
+];
+
+export function filterMarketplacePlugins(
+  catalog: MarketplacePluginEntry[],
+  category: PluginMarketplaceCategory,
+  query: string
+): MarketplacePluginEntry[] {
+  const q = query.trim().toLowerCase();
+  return catalog.filter((item) => {
+    if (category !== 'all' && item.category !== category) return false;
+    if (!q) return true;
+    const haystack = [
+      item.id,
+      item.name,
+      item.nameZh,
+      item.tagline,
+      item.taglineZh,
+      item.description,
+      item.descriptionZh,
+      ...item.tags,
+    ]
+      .join(' ')
+      .toLowerCase();
+    return haystack.includes(q);
+  });
+}
