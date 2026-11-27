@@ -4,11 +4,13 @@ import os from 'node:os';
 import path from 'node:path';
 import { promisify } from 'node:util';
 import type {
-  VideoImportEngineStatus,
+  VideoImportLinkRoute,
   VideoImportMedia,
+  VideoImportEngineStatus,
   VideoImportPlatform,
 } from '../../../shared/mediaImportTypes';
 import { FFPROBE_BIN } from '../../engine/ffmpeg';
+import { detectPythonAndBleak } from '../dji-wireless-import/wifiManager';
 
 const execFileAsync = promisify(execFile);
 
@@ -66,6 +68,119 @@ export async function getEngineStatus(binary?: string): Promise<VideoImportEngin
     available: false,
     binary: resolved,
     error: 'yt-dlp was not found on PATH or in resources/ffmpeg.',
+  };
+}
+
+function resolveDouyinScript(): string | null {
+  const candidates = [
+    path.resolve(process.cwd(), 'plugins', 'media-import', 'douyin_dtk.py'),
+    path.resolve(__dirname, '../../../../plugins/media-import/douyin_dtk.py'),
+    process.resourcesPath ? path.join(process.resourcesPath, 'plugins', 'media-import', 'douyin_dtk.py') : null,
+  ].filter((candidate): candidate is string => Boolean(candidate));
+  return candidates.find((candidate) => fs.existsSync(candidate)) ?? null;
+}
+
+export async function getDouyinRouteStatus(): Promise<VideoImportLinkRoute> {
+  const script = resolveDouyinScript();
+  const python = await detectPythonAndBleak();
+  if (!script) {
+    return { id: 'douyin-dtk', label: 'DTK native', labelZh: 'DTK 本地线路', available: false, error: 'douyin_dtk.py not found' };
+  }
+  if (!python.pythonPath || !python.pythonAvailable) {
+    return { id: 'douyin-dtk', label: 'DTK native', labelZh: 'DTK 本地线路', available: false, error: 'Python 3.12+ not found' };
+  }
+  try {
+    const { stdout } = await execFileAsync(python.pythonPath, [script, '--check'], {
+      windowsHide: true,
+      timeout: 10000,
+      maxBuffer: 1024 * 1024,
+    });
+    const status = JSON.parse(stdout.trim().split(/\r?\n/).at(-1) ?? '{}') as { ok?: boolean; version?: string; error?: string };
+    if (!status.ok) throw new Error(status.error ?? 'DTK route unavailable');
+    return { id: 'douyin-dtk', label: 'DTK native', labelZh: 'DTK 本地线路', available: true, version: status.version };
+  } catch (err) {
+    return {
+      id: 'douyin-dtk',
+      label: 'DTK native',
+      labelZh: 'DTK 本地线路',
+      available: false,
+      error: err instanceof Error ? err.message : String(err),
+    };
+  }
+}
+
+function resolvePython(): string | null {
+  const candidates = [process.env.PYTHON, 'python', 'py'];
+  for (const candidate of candidates) {
+    if (candidate) return candidate;
+  }
+  return null;
+}
+
+export async function resolveDouyinMedia(input: string): Promise<VideoImportMedia> {
+  const script = resolveDouyinScript();
+  if (!script) throw new Error('Douyin DTK sidecar is missing.');
+  const python = await detectPythonAndBleak();
+  const pythonPath = python.pythonPath ?? resolvePython();
+  if (!pythonPath) throw new Error('Python 3.12+ is required for the Douyin DTK route.');
+  const { stdout } = await execFileAsync(pythonPath, [script, '--resolve', input], {
+    windowsHide: true,
+    timeout: 45000,
+    maxBuffer: 16 * 1024 * 1024,
+    env: {
+      ...process.env,
+      PYTHONIOENCODING: 'utf-8',
+      PYTHONPATH: [process.env.PYTHONPATH, 'dtk'].filter(Boolean).join(';'),
+    },
+  });
+  const lines = stdout.trim().split(/\r?\n/);
+  const jsonLine = [...lines].reverse().find((line) => line.startsWith('{'));
+  if (!jsonLine) throw new Error(lines.filter(Boolean).at(-1) ?? 'DTK route returned no data.');
+  const parsed = JSON.parse(jsonLine) as
+    | ({ ok: true } & {
+        id: string;
+        title: string;
+        author: string;
+        durationMs: number;
+        thumbnail?: string | null;
+        formats: Array<{
+          id: string;
+          label: string;
+          url: string;
+          height: number;
+          width: number;
+          size_bytes: number | null;
+          watermark: boolean;
+        }>;
+      })
+    | { ok: false; error: string };
+  if (!parsed.ok) throw new Error(parsed.error);
+  return {
+    engine: 'douyin-dtk',
+    platform: 'douyin',
+    sourceUrl: input,
+    id: parsed.id,
+    title: parsed.title,
+    description: '',
+    author: parsed.author,
+    authorId: parsed.id,
+    duration: Math.round((parsed.durationMs ?? 0) / 1000),
+    thumbnailUrl: parsed.thumbnail ?? undefined,
+    formats: parsed.formats
+      .filter((format) => !format.watermark)
+      .map((format) => ({
+        id: format.id,
+        label: format.label,
+        extension: 'mp4',
+        height: format.height,
+        fps: 0,
+        filesize: format.size_bytes,
+        filesizeApprox: format.size_bytes,
+        hasVideo: true,
+        hasAudio: true,
+      })),
+    subtitles: [],
+    gallery: [],
   };
 }
 

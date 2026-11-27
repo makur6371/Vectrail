@@ -24,6 +24,7 @@ export type VideoImportTaskStatus =
 export interface VideoImportFormat {
   id: string;
   label: string;
+  url?: string;
   extension: string;
   height: number;
   fps: number;
@@ -70,6 +71,15 @@ export interface VideoImportTask {
 
 export interface VideoImportEngineStatus {
   id: string;
+  available: boolean;
+  version?: string;
+  error?: string;
+}
+
+export interface VideoImportLinkRoute {
+  id: 'yt-dlp' | 'douyin-dtk';
+  label: string;
+  labelZh: string;
   available: boolean;
   version?: string;
   error?: string;

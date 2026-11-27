@@ -16,7 +16,10 @@ import {
   extractUrls,
   getEngineStatus,
   resolveMedia,
+  resolveDouyinMedia,
 } from './engine';
+import http from 'node:http';
+import https from 'node:https';
 
 function sanitizeFilename(value: string): string {
   return value.replace(/[<>:"/\\|?*\x00-\x1f]/g, ' ').replace(/\s+/g, ' ').trim().slice(0, 100) || 'web-video';
@@ -89,6 +92,17 @@ export class MediaImportService implements VectrailPlugin {
   }
 
   async resolveLink(input: string): Promise<VideoImportMedia> {
+    if (detectPlatform(extractUrls(input)[0] ?? '') === 'douyin') {
+      try {
+        const douyin = await resolveDouyinMedia(input);
+        this.media.set(douyin.sourceUrl, douyin);
+        return douyin;
+      } catch (err) {
+        const message = err instanceof Error ? err.message : String(err);
+        if (!this.engine.available) await this.healthCheck();
+        if (!this.engine.available) throw new Error(`${message} (yt-dlp unavailable)`);
+      }
+    }
     if (!this.engine.available) await this.healthCheck();
     if (!this.engine.available) {
       throw new Error(
@@ -175,28 +189,44 @@ export class MediaImportService implements VectrailPlugin {
         totalBytes: selected?.filesize ?? selected?.filesizeApprox ?? null,
       });
 
-      const handle = createDownload(
-        this.engine.binary,
-        task.sourceUrl,
-        selected?.id ?? 'best',
-        outputTemplate,
-        (downloaded, total, speed) => {
-          this.updateTask(task.id, {
-            downloadedBytes: downloaded,
-            totalBytes: total ?? task.totalBytes,
-            speedBytesPerSec: speed,
-            etaSeconds: total && speed > 0 ? Math.ceil((total - downloaded) / speed) : null,
-          });
-        },
-        (line) => {
-          if (/Merging formats|Deleting original file/i.test(line)) {
-            this.updateTask(task.id, { status: 'merging' });
+      if (media.engine === 'douyin-dtk' && selected?.url) {
+        const destination = await this.downloadDirect(
+          selected.url.startsWith('//') ? `https:${selected?.url}` : selected?.url,
+          outputTemplate.replace('.%(ext)s', '.mp4'),
+          (downloaded, total, speed) => {
+            this.updateTask(task.id, {
+              downloadedBytes: downloaded,
+              totalBytes: total,
+              speedBytesPerSec: speed,
+              etaSeconds: total && speed > 0 ? Math.ceil((total - downloaded) / speed) : null,
+            });
           }
-        }
-      );
-      this.cancelHandles.set(task.id, handle.cancel);
-      await handle.promise;
-      this.cancelHandles.delete(task.id);
+        );
+        fs.renameSync(destination, outputTemplate.replace('.%(ext)s', '.mp4'));
+      } else {
+        const handle = createDownload(
+          this.engine.binary,
+          task.sourceUrl,
+          selected?.id ?? 'best',
+          outputTemplate,
+          (downloaded, total, speed) => {
+            this.updateTask(task.id, {
+              downloadedBytes: downloaded,
+              totalBytes: total ?? task.totalBytes,
+              speedBytesPerSec: speed,
+              etaSeconds: total && speed > 0 ? Math.ceil((total - downloaded) / speed) : null,
+            });
+          },
+          (line) => {
+            if (/Merging formats|Deleting original file/i.test(line)) {
+              this.updateTask(task.id, { status: 'merging' });
+            }
+          }
+        );
+        this.cancelHandles.set(task.id, handle.cancel);
+        await handle.promise;
+        this.cancelHandles.delete(task.id);
+      }
 
       const files = fs
         .readdirSync(directory)
@@ -229,6 +259,63 @@ export class MediaImportService implements VectrailPlugin {
         etaSeconds: null,
       });
     }
+  }
+
+  private downloadDirect(
+    url: string,
+    destination: string,
+    onProgress: (downloaded: number, total: number | null, speed: number) => void
+  ): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const partPath = `${destination}.part`;
+      const protocol = url.startsWith('https:') ? https : http;
+      let downloaded = 0;
+      let lastTick = Date.now();
+      let windowBytes = 0;
+      const request = protocol.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (response) => {
+        const total = Number(response.headers['content-length']) || null;
+        if (response.statusCode && response.statusCode >= 300 && response.statusCode < 400) {
+          const location = response.headers.location;
+          if (location) {
+            response.resume();
+            this.downloadDirect(new URL(location, url).toString(), destination, onProgress).then(resolve, reject);
+            return;
+          }
+        }
+        if (response.statusCode !== 200) {
+          response.resume();
+          reject(new Error(`Direct download HTTP ${response.statusCode}`));
+          return;
+        }
+        const output = fs.createWriteStream(partPath);
+        response.on('data', (chunk: Buffer) => {
+          downloaded += chunk.length;
+          windowBytes += chunk.length;
+          const now = Date.now();
+          if (now - lastTick >= 250) {
+            onProgress(downloaded, total, Math.round((windowBytes / (now - lastTick)) * 1000));
+            lastTick = now;
+            windowBytes = 0;
+          }
+        });
+        response.pipe(output);
+        output.on('finish', () => {
+          if (fs.existsSync(destination)) fs.unlinkSync(destination);
+          fs.renameSync(partPath, destination);
+          onProgress(fs.statSync(destination).size, fs.statSync(destination).size, 0);
+          resolve(destination);
+        });
+        output.on('error', reject);
+        response.on('error', reject);
+      });
+      request.on('error', reject);
+      this.cancelHandles.set(
+        'direct-download-current',
+        () => {
+          request.destroy(new Error('Cancelled'));
+        }
+      );
+    });
   }
 }
 
