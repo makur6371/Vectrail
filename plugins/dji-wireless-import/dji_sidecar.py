@@ -1,1 +1,435 @@
-IiIiVmVjdHJhaWwgREpJIFdpcmVsZXNzIEltcG9ydCBXaW5kb3dzIFNpZGVjYXIuCgpJbXBsZW1lbnRzIHRoZSBCTEUgR0FUVCBwYWlyaW5nL3dha2UvV2ktRmkgY3JlZGVudGlhbCBmbG93LCBXaW5kb3dzIG5ldHNoCldpLUZpIGFzc29jaWF0aW9uLCBhbmQgRFVNTC1vdmVyLVVEUCBtZWRpYSBsaXN0IHF1ZXJ5IGJhc2VkIG9uIHRoZSBNSVQtbGljZW5zZWQKT3Ntb09mZmxvYWQgLyBLb25yYWRJVC9vc21vc2lzIHByb3RvY29sIGRvY3VtZW50YXRpb24uCiIiIgoKZnJvbSBfX2Z1dHVyZV9fIGltcG9ydCBhbm5vdGF0aW9ucwoKaW1wb3J0IGFyZ3BhcnNlCmltcG9ydCBhc3luY2lvCmltcG9ydCBqc29uCmltcG9ydCBvcwppbXBvcnQgcmFuZG9tCmltcG9ydCByZQppbXBvcnQgc29ja2V0CmltcG9ydCBzdHJ1Y3QKaW1wb3J0IHN1YnByb2Nlc3MKaW1wb3J0IHRlbXBmaWxlCmltcG9ydCB0aW1lCmZyb20geG1sLnNheC5zYXh1dGlscyBpbXBvcnQgZXNjYXBlIGFzIHhtbF9lc2NhcGUKZnJvbSBwYXRobGliIGltcG9ydCBQYXRoCgpDUkVBVEVfTk9fV0lORE9XID0gMHgwODAwMDAwMApTT0YgPSAweDU1Ck9WRVJIRUFEID0gMTMKRkxBR1NfUkVRVUVTVCA9IDB4NDAKRkxBR1NfUkVTUE9OU0UgPSAweEMwCgpESklfQ09NUEFOWV9JRFMgPSB7MHgwOEFBLCAweEFBMDh9ClhUUkFfQ09NUEFOWV9JRFMgPSB7MHhBQUY3LCAweEY3QUF9Ck5BTUVfUFJFRklYRVMgPSAoCiAgICAiT3Ntb1BvY2tldDRQIiwKICAgICJPc21vUG9ja2V0NCIsCiAgICAiT3Ntb1BvY2tldDMiLAogICAgIk9zbW9BY3Rpb24iLAogICAgIk9zbW9OYW5vIiwKICAgICJPc21vMzYwIiwKICAgICJYdHJhRWRnZVBybyIsCiAgICAiT3NtbyIsCikKTU9ERUxfTkFNRVMgPSB7CiAgICAweDAwMDY6ICJPc21vIEFjdGlvbiIsCiAgICAweDAwMTA6ICJPc21vIEFjdGlvbiAyIiwKICAgIDB4MDAxMjogIk9zbW8gQWN0aW9uIDMiLAogICAgMHgwMDE0OiAiT3NtbyBBY3Rpb24gNCIsCiAgICAweDAwMTU6ICJPc21vIEFjdGlvbiA1IFBybyIsCiAgICAweDAwMTc6ICJPc21vIDM2MCIsCiAgICAweDAwMTg6ICJPc21vIEFjdGlvbiA2IiwKICAgIDB4MDAxOTogIk9zbW8gTmFubyIsCiAgICAweDAwMjA6ICJPc21vIFBvY2tldCAzIiwKICAgIDB4MDAyMTogIk9zbW8gUG9ja2V0IDQiLAogICAgMHgwMDIyOiAiT3NtbyBQb2NrZXQgNCBQcm8iLAp9CgpSRUZfSEFORFNIQUtFID0gYnl0ZXMuZnJvbWhleCgKICAgICIwMDAwNjQwMDY0MDBjMDA1MTQwMDAwNjQwMDAwMDE5MDAxYzAwNTE0MDAwMDY0MDAxNDAwNjQwMGMwMDUxNDAwMDA2NDAwMDEwMTA0MDEwMiIKKQpMSVNUX0JBU0UgPSBieXRlcy5mcm9taGV4KAogICAgIjRhMDAyYTEwMDEwMDAwMDAwMDAwMDEwMDAwMDAyZDAwMGQwMTAwZmZmZmZmZmZmZmZmZmZmZjAwMDEwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMCIKKQpMSVNUX1RSSUdHRVIgPSBieXRlcy5mcm9taGV4KCI0YTA0MGUxMDAxMDAwMDAwMDAwMDAxMDAwMDAwIikKQVBQX1BSRVNFTkNFID0gYnl0ZXMuZnJvbWhleCgiMTcwMDQ2MjM3YzQxNTA1MDAwMDAwMDAwMDAwMiIpCgoKZGVmIGNyYzgoZGF0YTogYnl0ZXMpIC0+IGludDoKICAgIGMgPSAweDc3CiAgICBmb3IgYiBpbiBkYXRhOgogICAgICAgIGMgXj0gYgogICAgICAgIGZvciBfIGluIHJhbmdlKDgpOgogICAgICAgICAgICBjID0gKGMgPj4gMSkgXiAweDhDIGlmIChjICYgMSkgZWxzZSAoYyA+PiAxKQogICAgcmV0dXJuIGMKCgpkZWYgY3JjMTYoZGF0YTogYnl0ZXMpIC0+IGludDoKICAgIGMgPSAweDM2OTIKICAgIGZvciBiIGluIGRhdGE6CiAgICAgICAgYyBePSBiCiAgICAgICAgZm9yIF8gaW4gcmFuZ2UoOCk6CiAgICAgICAgICAgIGMgPSAoYyA+PiAxKSBeIDB4ODQwOCBpZiAoYyAmIDEpIGVsc2UgKGMgPj4gMSkKICAgIHJldHVybiBjCgoKZGVmIGVuY29kZV9kdW1sKHNlbmRlcjogaW50LCByZWNlaXZlcjogaW50LCBtc2dfaWQ6IGludCwgZmxhZ3M6IGludCwgY21kX3NldDogaW50LCBjbWRfaWQ6IGludCwgcGF5bG9hZDogYnl0ZXMgPSBiIiIpIC0+IGJ5dGVzOgogICAgdG90YWwgPSBPVkVSSEVBRCArIGxlbihwYXlsb2FkKQogICAgaGVhZCA9IGJ5dGVzKFtTT0YsIHRvdGFsICYgMHhGRiwgMHgwNCB8ICgodG90YWwgPj4gOCkgJiAweDAzKV0pCiAgICBoZWFkICs9IGJ5dGVzKFtjcmM4KGhlYWQpXSkKICAgIGJvZHkgPSBieXRlcyhbc2VuZGVyLCByZWNlaXZlciwgbXNnX2lkICYgMHhGRiwgKG1zZ19pZCA+PiA4KSAmIDB4RkYsIGZsYWdzLCBjbWRfc2V0LCBjbWRfaWRdKSArIHBheWxvYWQKICAgIGZyYW1lID0gaGVhZCArIGJvZHkKICAgIGMxNiA9IGNyYzE2KGZyYW1lKQogICAgcmV0dXJuIGZyYW1lICsgYnl0ZXMoW2MxNiAmIDB4RkYsIChjMTYgPj4gOCkgJiAweEZGXSkKCgpkZWYgaXRlcl9kdW1sX2ZyYW1lcyhyYXc6IGJ5dGVzKToKICAgIGkgPSAwCiAgICBuID0gbGVuKHJhdykKICAgIHdoaWxlIGkgKyBPVkVSSEVBRCA8PSBuOgogICAgICAgIGlmIHJhd1tpXSAhPSBTT0Y6CiAgICAgICAgICAgIGkgKz0gMQogICAgICAgICAgICBjb250aW51ZQogICAgICAgIHRvdGFsID0gKHJhd1tpICsgMV0gfCAocmF3W2kgKyAyXSA8PCA4KSkgJiAweDNGRgogICAgICAgIHZlciA9IHJhd1tpICsgMl0gPj4gMgogICAgICAgIGlmIHZlciAhPSAxIG9yIHRvdGFsIDwgT1ZFUkhFQUQgb3IgaSArIHRvdGFsID4gbiBvciBjcmM4KHJhd1tpIDogaSArIDNdKSAhPSByYXdbaSArIDNdOgogICAgICAgICAgICBpICs9IDEKICAgICAgICAgICAgY29udGludWUKICAgICAgICB3YW50ID0gcmF3W2kgKyB0b3RhbCAtIDJdIHwgKHJhd1tpICsgdG90YWwgLSAxXSA8PCA4KQogICAgICAgIGlmIGNyYzE2KHJhd1tpIDogaSArIHRvdGFsIC0gMl0pICE9IHdhbnQ6CiAgICAgICAgICAgIGkgKz0gMQogICAgICAgICAgICBjb250aW51ZQogICAgICAgIHlpZWxkICgKICAgICAgICAgICAgcmF3W2kgKyA0XSwKICAgICAgICAgICAgcmF3W2kgKyA1XSwKICAgICAgICAgICAgcmF3W2kgKyA2XSB8IChyYXdbaSArIDddIDw8IDgpLAogICAgICAgICAgICByYXdbaSArIDhdLAogICAgICAgICAgICByYXdbaSArIDldLAogICAgICAgICAgICByYXdbaSArIDEwXSwKICAgICAgICAgICAgcmF3W2kgKyAxMSA6IGkgKyB0b3RhbCAtIDJdLAogICAgICAgICkKICAgICAgICBpICs9IHRvdGFsCgoKZGVmIHBhY2tfc3RyKHM6IHN0cikgLT4gYnl0ZXM6CiAgICByYXcgPSBzLmVuY29kZSgidXRmLTgiKQogICAgcmV0dXJuIGJ5dGVzKFtsZW4ocmF3KV0pICsgcmF3CgoKZGVmIHBhcnNlX3BhY2tlZF9yZXBseShwYXlsb2FkOiBieXRlcykgLT4gc3RyOgogICAgaWYgbGVuKHBheWxvYWQpIDwgMjoKICAgICAgICByZXR1cm4gIiIKICAgIG4gPSBwYXlsb2FkWzFdCiAgICByZXR1cm4gcGF5bG9hZFsyIDogMiArIG5dLmRlY29kZSgidXRmLTgiLCBlcnJvcnM9InJlcGxhY2UiKQoKCmRlZiByZXNvbHZlX21vZGVsKG1mcl9kYXRhOiBkaWN0W2ludCwgYnl0ZXNdLCBuYW1lOiBzdHIpIC0+IHR1cGxlW2ludCB8IE5vbmUsIHN0cl06CiAgICBmb3IgY2lkLCBwYXlsb2FkIGluIG1mcl9kYXRhLml0ZW1zKCk6CiAgICAgICAgaWYgY2lkIG5vdCBpbiAoREpJX0NPTVBBTllfSURTIHwgWFRSQV9DT01QQU5ZX0lEUyk6CiAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgaWYgbGVuKHBheWxvYWQpID49IDEyIGFuZCAocGF5bG9hZFsxMF0gfCAocGF5bG9hZFsxMV0gPDwgOCkpID09IDIxODoKICAgICAgICAgICAgcmV0dXJuIDB4MDAyMiwgIk9zbW8gUG9ja2V0IDQgUHJvIgogICAgICAgIGlmIHBheWxvYWQgYW5kIHBheWxvYWRbMF0gaW4gTU9ERUxfTkFNRVM6CiAgICAgICAgICAgIHJldHVybiBwYXlsb2FkWzBdLCBNT0RFTF9OQU1FU1twYXlsb2FkWzBdXQogICAgZm9yIHByZWZpeCwgbWlkLCBkaXNwIGluICgKICAgICAgICAoIk9zbW9Qb2NrZXQ0UCIsIDB4MDAyMiwgIk9zbW8gUG9ja2V0IDQgUHJvIiksCiAgICAgICAgKCJPc21vUG9ja2V0NCIsIDB4MDAyMSwgIk9zbW8gUG9ja2V0IDQiKSwKICAgICAgICAoIk9zbW9Qb2NrZXQzIiwgMHgwMDIwLCAiT3NtbyBQb2NrZXQgMyIpLAogICAgICAgICgiT3Ntb05hbm8iLCAweDAwMTksICJPc21vIE5hbm8iKSwKICAgICAgICAoIk9zbW8zNjAiLCAweDAwMTcsICJPc21vIDM2MCIpLAogICAgICAgICgiWHRyYUVkZ2VQcm8iLCAweDAwMTUsICJYdHJhIEVkZ2UgUHJvIiksCiAgICAgICAgKCJPc21vQWN0aW9uNiIsIDB4MDAxOCwgIk9zbW8gQWN0aW9uIDYiKSwKICAgICAgICAoIk9zbW9BY3Rpb241IiwgMHgwMDE1LCAiT3NtbyBBY3Rpb24gNSBQcm8iKSwKICAgICAgICAoIk9zbW9BY3Rpb240IiwgMHgwMDE0LCAiT3NtbyBBY3Rpb24gNCIpLAogICAgKToKICAgICAgICBpZiBuYW1lLnN0YXJ0c3dpdGgocHJlZml4KToKICAgICAgICAgICAgcmV0dXJuIG1pZCwgZGlzcAogICAgcmV0dXJuIE5vbmUsIG5hbWUgb3IgIlVua25vd24gREpJIENhbWVyYSIKCgphc3luYyBkZWYgY21kX3NjYW4odGltZW91dDogZmxvYXQpIC0+IGRpY3Q6CiAgICBmcm9tIGJsZWFrIGltcG9ydCBCbGVha1NjYW5uZXIKCiAgICByZXN1bHRzID0gYXdhaXQgQmxlYWtTY2FubmVyLmRpc2NvdmVyKHRpbWVvdXQ9dGltZW91dCwgcmV0dXJuX2Fkdj1UcnVlKQogICAgY2FtZXJhcyA9IFtdCiAgICBmb3IgYWRkcmVzcywgKGRldmljZSwgYWR2KSBpbiByZXN1bHRzLml0ZW1zKCk6CiAgICAgICAgbmFtZSA9IGFkdi5sb2NhbF9uYW1lIG9yIGRldmljZS5uYW1lIG9yICIiCiAgICAgICAgaXNfZGppID0gYm9vbChzZXQoYWR2Lm1hbnVmYWN0dXJlcl9kYXRhKSAmIChESklfQ09NUEFOWV9JRFMgfCBYVFJBX0NPTVBBTllfSURTKSkKICAgICAgICBpc19uYW1lID0gbmFtZS5zdGFydHN3aXRoKE5BTUVfUFJFRklYRVMpCiAgICAgICAgaGFzX2ZmZjAgPSBhbnkoImZmZjAiIGluICh1IG9yICIiKS5sb3dlcigpIGZvciB1IGluIGFkdi5zZXJ2aWNlX3V1aWRzKQogICAgICAgIGlmIG5vdCAoaXNfZGppIG9yIGlzX25hbWUgb3IgaGFzX2ZmZjApOgogICAgICAgICAgICBjb250aW51ZQogICAgICAgIG1pZCwgbW5hbWUgPSByZXNvbHZlX21vZGVsKGFkdi5tYW51ZmFjdHVyZXJfZGF0YSwgbmFtZSkKICAgICAgICBjYW1lcmFzLmFwcGVuZCh7ImFkZHJlc3MiOiBhZGRyZXNzLCAibmFtZSI6IG5hbWUsICJyc3NpIjogYWR2LnJzc2ksICJtb2RlbF9pZCI6IG1pZCwgIm1vZGVsX25hbWUiOiBtbmFtZX0pCiAgICBjYW1lcmFzLnNvcnQoa2V5PWxhbWJkYSBjOiAtY1sicnNzaSJdKQogICAgcmV0dXJuIHsib2siOiBUcnVlLCAiY2FtZXJhcyI6IGNhbWVyYXN9CgoKZGVmIHJ1bl9uZXRzaCgqYXJnczogc3RyKSAtPiB0dXBsZVtpbnQsIHN0cl06CiAgICBwcm9jID0gc3VicHJvY2Vzcy5ydW4oCiAgICAgICAgWyJuZXRzaCIsICphcmdzXSwKICAgICAgICBjYXB0dXJlX291dHB1dD1UcnVlLAogICAgICAgIHRleHQ9RmFsc2UsCiAgICAgICAgY3JlYXRpb25mbGFncz1DUkVBVEVfTk9fV0lORE9XLAogICAgICAgIHRpbWVvdXQ9MTIsCiAgICApCiAgICByZXR1cm4gcHJvYy5yZXR1cm5jb2RlIG9yIDAsIHByb2Muc3Rkb3V0LmRlY29kZSgibWJjcyIsIGVycm9ycz0icmVwbGFjZSIpCgoKZGVmIGN1cnJlbnRfd2lmaV9wcm9maWxlKCkgLT4gc3RyIHwgTm9uZToKICAgIF8sIHR4dCA9IHJ1bl9uZXRzaCgid2xhbiIsICJzaG93IiwgImludGVyZmFjZXMiKQogICAgbSA9IHJlLnNlYXJjaChyIl5ccyooPzpQcm9maWxlfOmFjee9ruaWh+S7tilccyo6XHMqKC4rKSQiLCB0eHQsIHJlLk0gfCByZS5JKQogICAgcmV0dXJuIG0uZ3JvdXAoMSkuc3RyaXAoKSBpZiBtIGVsc2UgTm9uZQoKCmRlZiBqb2luX3dpZmlfd3BhMihzc2lkOiBzdHIsIHBhc3N3b3JkOiBzdHIsIHRpbWVvdXQ6IGZsb2F0ID0gMjUuMCkgLT4gc3RyOgogICAgaWYgY3VycmVudF93aWZpX3Byb2ZpbGUoKSA9PSBzc2lkOgogICAgICAgIGlwX291dCA9IHN1YnByb2Nlc3MucnVuKFsiaXBjb25maWciXSwgY2FwdHVyZV9vdXRwdXQ9VHJ1ZSwgY3JlYXRpb25mbGFncz1DUkVBVEVfTk9fV0lORE9XKS5zdGRvdXQuZGVjb2RlKCJtYmNzIiwgZXJyb3JzPSJyZXBsYWNlIikKICAgICAgICBtID0gcmUuc2VhcmNoKHIiSVB2NFteOl0qOlxzKigxOTJcLjE2OFwuMlwuXGQrKSIsIGlwX291dCkKICAgICAgICBpZiBtOgogICAgICAgICAgICByZXR1cm4gbS5ncm91cCgxKQogICAgc2FmZV9zc2lkID0geG1sX2VzY2FwZShzc2lkKQogICAgc2FmZV9wYXNzd29yZCA9IHhtbF9lc2NhcGUocGFzc3dvcmQpCiAgICB4bWwgPSBmIiIiPD94bWwgdmVyc2lvbj0iMS4wIj8+CjxXTEFOUHJvZmlsZSB4bWxucz0iaHR0cDovL3d3dy5taWNyb3NvZnQuY29tL25ldHdvcmtpbmcvV0xBTi9wcm9maWxlL3YxIj4KICA8bmFtZT57c2FmZV9zc2lkfTwvbmFtZT4KICA8U1NJRENvbmZpZz48U1NJRD48bmFtZT57c2FmZV9zc2lkfTwvbmFtZT48L1NTSUQ+PG5vbkJyb2FkY2FzdD5mYWxzZTwvbm9uQnJvYWRjYXN0PjwvU1NJRENvbmZpZz4KICA8Y29ubmVjdGlvblR5cGU+RVNTPC9jb25uZWN0aW9uVHlwZT4KICA8Y29ubmVjdGlvbk1vZGU+bWFudWFsPC9jb25uZWN0aW9uTW9kZT4KICA8TVNNPjxzZWN1cml0eT4KICAgIDxhdXRoRW5jcnlwdGlvbj48YXV0aGVudGljYXRpb24+V1BBMlBTSzwvYXV0aGVudGljYXRpb24+PGVuY3J5cHRpb24+QUVTPC9lbmNyeXB0aW9uPjx1c2VPbmVYPmZhbHNlPC91c2VPbmVYPjwvYXV0aEVuY3J5cHRpb24+CiAgICA8c2hhcmVkS2V5PjxrZXlUeXBlPnBhc3NQaHJhc2U8L2tleVR5cGU+PHByb3RlY3RlZD5mYWxzZTwvcHJvdGVjdGVkPjxrZXlNYXRlcmlhbD57c2FmZV9wYXNzd29yZH08L2tleU1hdGVyaWFsPjwvc2hhcmVkS2V5PgogIDwvc2VjdXJpdHk+PC9NU00+CjwvV0xBTlByb2ZpbGU+IiIiCiAgICB3aXRoIHRlbXBmaWxlLk5hbWVkVGVtcG9yYXJ5RmlsZSgidyIsIHN1ZmZpeD0iLnhtbCIsIGRlbGV0ZT1GYWxzZSwgZW5jb2Rpbmc9InV0Zi04IikgYXMgZjoKICAgICAgICBmLndyaXRlKHhtbCkKICAgICAgICB4bWxfcGF0aCA9IFBhdGgoZi5uYW1lKQogICAgdHJ5OgogICAgICAgIHJjLCBvdXQgPSBydW5fbmV0c2goIndsYW4iLCAiYWRkIiwgInByb2ZpbGUiLCBmImZpbGVuYW1lPXt4bWxfcGF0aH0iLCAidXNlcj1jdXJyZW50IikKICAgICAgICBpZiByYyAhPSAwOgogICAgICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoZiJuZXRzaCBhZGQgcHJvZmlsZSBmYWlsZWQ6IHtvdXQuc3RyaXAoKX0iKQogICAgZmluYWxseToKICAgICAgICB4bWxfcGF0aC51bmxpbmsobWlzc2luZ19vaz1UcnVlKQogICAgcmMsIG91dCA9IHJ1bl9uZXRzaCgid2xhbiIsICJjb25uZWN0IiwgZiJuYW1lPXtzc2lkfSIpCiAgICBpZiByYyAhPSAwIGFuZCAibG9jYXRpb24iIG5vdCBpbiBvdXQubG93ZXIoKToKICAgICAgICByYWlzZSBSdW50aW1lRXJyb3IoZiJuZXRzaCBjb25uZWN0IGZhaWxlZDoge291dC5zdHJpcCgpfSIpCiAgICBkZWFkbGluZSA9IHRpbWUubW9ub3RvbmljKCkgKyB0aW1lb3V0CiAgICB3aGlsZSB0aW1lLm1vbm90b25pYygpIDwgZGVhZGxpbmU6CiAgICAgICAgaXBfb3V0ID0gc3VicHJvY2Vzcy5ydW4oWyJpcGNvbmZpZyJdLCBjYXB0dXJlX291dHB1dD1UcnVlLCBjcmVhdGlvbmZsYWdzPUNSRUFURV9OT19XSU5ET1cpLnN0ZG91dC5kZWNvZGUoIm1iY3MiLCBlcnJvcnM9InJlcGxhY2UiKQogICAgICAgIG0gPSByZS5zZWFyY2gociJJUHY0W146XSo6XHMqKDE5MlwuMTY4XC4yXC5cZCspIiwgaXBfb3V0KQogICAgICAgIGlmIG06CiAgICAgICAgICAgIHJldHVybiBtLmdyb3VwKDEpCiAgICAgICAgdGltZS5zbGVlcCgwLjgpCiAgICByYWlzZSBUaW1lb3V0RXJyb3IoZiJUaW1lZCBvdXQgd2FpdGluZyBmb3IgY2FtZXJhIEFQIERIQ1AgYWRkcmVzcyBmb3IgU1NJRCB7c3NpZH0iKQoKCmRlZiBkZWNvZGVfbWFuaWZlc3RfcmVjb3JkcyhidWY6IGJ5dGVzLCBzdG9yYWdlOiBpbnQpIC0+IGxpc3RbZGljdF06CiAgICBtZWRpYXMgPSBbXQogICAgaSA9IDAKICAgIHdoaWxlIGkgPCBsZW4oYnVmKToKICAgICAgICBpZiBpICsgNiA8PSBsZW4oYnVmKSBhbmQgYnVmW2ldID09IDB4MUEgYW5kIGJ1ZltpICsgMiA6IGkgKyA1XSA9PSBiIlx4MDBceDAwXHgwMCIgYW5kIGJ1ZltpICsgNV0gPT0gMToKICAgICAgICAgICAgc2xlbiA9IGJ1ZltpICsgMV0gLSA2CiAgICAgICAgICAgIHZhbCA9IGJ1ZltpICsgNiA6IGkgKyA2ICsgc2xlbl0KICAgICAgICAgICAgaWYgc2xlbiA+PSA1IGFuZCBsZW4odmFsKSA9PSBzbGVuIGFuZCB2YWwuc3RhcnRzd2l0aChiIkRDSU0vIik6CiAgICAgICAgICAgICAgICBtZWRpYXMuYXBwZW5kKChpLCBpICsgNiArIHNsZW4sIHZhbC5kZWNvZGUoImFzY2lpIiwgInJlcGxhY2UiKSkpCiAgICAgICAgICAgICAgICBpICs9IDYgKyBzbGVuCiAgICAgICAgICAgICAgICBjb250aW51ZQogICAgICAgIGkgKz0gMQogICAgb3V0ID0gW10KICAgIGZvciBrLCAocG9zLCBlbmQsIG1wYXRoKSBpbiBlbnVtZXJhdGUobWVkaWFzKToKICAgICAgICBsbyA9IG1lZGlhc1trIC0gMV1bMV0gaWYgayBlbHNlIDAKICAgICAgICBoaSA9IG1lZGlhc1trICsgMV1bMF0gaWYgayArIDEgPCBsZW4obWVkaWFzKSBlbHNlIGxlbihidWYpCiAgICAgICAgcGFydHMgPSBtcGF0aC5zcGxpdCgiLyIpCiAgICAgICAgZm9sZGVyID0gcGFydHNbMV0gaWYgbGVuKHBhcnRzKSA+IDEgZWxzZSAiIgogICAgICAgIGJhc2UgPSBtcGF0aC5yc3BsaXQoIi8iLCAxKVstMV0KICAgICAgICBleHQgPSAiIgogICAgICAgIG5lZWRsZSA9IChiYXNlICsgIi4iKS5lbmNvZGUoKQogICAgICAgIGogPSBsbwogICAgICAgIHdoaWxlIGogPCBoaSAtIDIgLSBsZW4obmVlZGxlKToKICAgICAgICAgICAgaWYgYnVmW2pdID09IDB4MEQgYW5kIGJ1ZltqICsgMiA6IGogKyAyICsgbGVuKG5lZWRsZSldID09IG5lZWRsZToKICAgICAgICAgICAgICAgIGV4dCA9IGJ1ZltqICsgMiArIGxlbihuZWVkbGUpIDogaiArIDIgKyBidWZbaiArIDFdXS5kZWNvZGUoImFzY2lpIiwgInJlcGxhY2UiKS51cHBlcigpCiAgICAgICAgICAgICAgICBicmVhawogICAgICAgICAgICBqICs9IDEKICAgICAgICBoYW5kbGUgPSBzaXplID0gMAogICAgICAgIHN0YXIgPSBGYWxzZQogICAgICAgIHAgPSBsbwogICAgICAgIHdoaWxlIHAgPCBwb3MgLSAxOgogICAgICAgICAgICBpZiBidWZbcF0gPT0gMHgxOSBhbmQgYnVmW3AgKyAxXSA9PSAweDA2IGFuZCBwID49IDEgYW5kIGJ1ZltwIC0gMV0gaW4gKDB4RkUsIDB4RkYpOgogICAgICAgICAgICAgICAgaWYgcCAtIDEwID49IDA6CiAgICAgICAgICAgICAgICAgICAgaGFuZGxlID0gc3RydWN0LnVucGFja19mcm9tKCI8SSIsIGJ1ZiwgcCAtIDEwKVswXQogICAgICAgICAgICAgICAgaWYgcCAtIDE0ID49IDA6CiAgICAgICAgICAgICAgICAgICAgc2l6ZSA9IHN0cnVjdC51bnBhY2tfZnJvbSgiPEkiLCBidWYsIHAgLSAxNClbMF0KICAgICAgICAgICAgICAgIGlmIHAgKyA4IDwgbGVuKGJ1ZikgYW5kIGJ1ZltwICsgN10gIT0gMHgxQSBhbmQgYnVmW3AgKyA4XSBpbiAoMCwgMSk6CiAgICAgICAgICAgICAgICAgICAgc3RhciA9IGJ1ZltwICsgOF0gPT0gMQogICAgICAgICAgICAgICAgYnJlYWsKICAgICAgICAgICAgcCArPSAxCiAgICAgICAgbmFtZSA9IGYie2Jhc2V9LntleHR9IiBpZiBleHQgZWxzZSBiYXNlCiAgICAgICAgb3V0LmFwcGVuZCh7ImZvbGRlciI6IGZvbGRlciwgIm5hbWUiOiBuYW1lLCAibWVkaWFfcGF0aCI6IG1wYXRoLCAiZXh0IjogZXh0LCAiaGFuZGxlIjogaGFuZGxlLCAic2l6ZSI6IHNpemUsICJzdG9yYWdlIjogc3RvcmFnZSwgInN0YXIiOiBzdGFyfSkKICAgIHJldHVybiBvdXQKCgphc3luYyBkZWYgY21kX2Nvbm5lY3RfYW5kX2xpc3QoYWRkcmVzczogc3RyLCBwb3J0OiBpbnQsIHBva2U6IGJvb2wpIC0+IGRpY3Q6CiAgICBmcm9tIGJsZWFrIGltcG9ydCBCbGVha0NsaWVudCwgbm9ybWFsaXplX3V1aWRfMTYKCiAgICBjaGFyX2ZmZjQgPSBub3JtYWxpemVfdXVpZF8xNigweEZGRjQpCiAgICBjaGFyX2ZmZjUgPSBub3JtYWxpemVfdXVpZF8xNigweEZGRjUpCiAgICBwcmV2X3dpZmkgPSBjdXJyZW50X3dpZmlfcHJvZmlsZSgpCiAgICByeF9mcmFtZXM6IGxpc3RbdHVwbGVdID0gW10KICAgIHdhaXRlcnMgPSBbXQogICAgbXNnX3NlcSA9IDB4MjEwMAoKICAgIGRlZiBuZXh0X2lkKCkgLT4gaW50OgogICAgICAgIG5vbmxvY2FsIG1zZ19zZXEKICAgICAgICBtc2dfc2VxICs9IDEKICAgICAgICByZXR1cm4gbXNnX3NlcQoKICAgIGRlZiBvbl9ub3RpZnkoX2NoYXIsIGRhdGE6IGJ5dGVhcnJheSk6CiAgICAgICAgZm9yIGYgaW4gaXRlcl9kdW1sX2ZyYW1lcyhieXRlcyhkYXRhKSk6CiAgICAgICAgICAgIHJ4X2ZyYW1lcy5hcHBlbmQoZikKICAgICAgICAgICAgZm9yIHByZWQsIGZ1dCBpbiBsaXN0KHdhaXRlcnMpOgogICAgICAgICAgICAgICAgaWYgbm90IGZ1dC5kb25lKCkgYW5kIHByZWQoZik6CiAgICAgICAgICAgICAgICAgICAgZnV0LmdldF9sb29wKCkuY2FsbF9zb29uX3RocmVhZHNhZmUoZnV0LnNldF9yZXN1bHQsIGYpCiAgICAgICAgICAgICAgICAgICAgd2FpdGVycy5yZW1vdmUoKHByZWQsIGZ1dCkpCgogICAgYXN5bmMgd2l0aCBCbGVha0NsaWVudChhZGRyZXNzLCB0aW1lb3V0PTIwLjApIGFzIGNsaWVudDoKICAgICAgICBhd2FpdCBjbGllbnQuc3RhcnRfbm90aWZ5KGNoYXJfZmZmNCwgb25fbm90aWZ5KQogICAgICAgIHRyeToKICAgICAgICAgICAgYXdhaXQgY2xpZW50LnN0YXJ0X25vdGlmeShjaGFyX2ZmZjUsIG9uX25vdGlmeSkKICAgICAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgICAgICBwYXNzCiAgICAgICAgdHJ5OgogICAgICAgICAgICBhd2FpdCBjbGllbnQud3JpdGVfZ2F0dF9jaGFyKGNoYXJfZmZmNCwgYiJceDAxXHgwMCIsIHJlc3BvbnNlPVRydWUpCiAgICAgICAgZXhjZXB0IEV4Y2VwdGlvbjoKICAgICAgICAgICAgcGFzcwogICAgICAgIGF3YWl0IGFzeW5jaW8uc2xlZXAoMC4yNSkKCiAgICAgICAgYXdhaXQgY2xpZW50LndyaXRlX2dhdHRfY2hhcihjaGFyX2ZmZjUsIGVuY29kZV9kdW1sKDB4MDIsIDB4RjAsIG5leHRfaWQoKSwgRkxBR1NfUkVRVUVTVCwgMHgwMCwgMHgyQiwgYiJceDA0XHgwMCIpLCByZXNwb25zZT1GYWxzZSkKICAgICAgICBhd2FpdCBhc3luY2lvLnNsZWVwKDAuMikKCiAgICAgICAgbG9vcCA9IGFzeW5jaW8uZ2V0X3J1bm5pbmdfbG9vcCgpCiAgICAgICAgYXBwcm92YWxfZnV0ID0gbG9vcC5jcmVhdGVfZnV0dXJlKCkKICAgICAgICB3YWl0ZXJzLmFwcGVuZCgobGFtYmRhIGY6IGZbNF0gPT0gMHgwNyBhbmQgZls1XSA9PSAweDQ2IGFuZCAoZlszXSAmIDB4RTApID09IEZMQUdTX1JFUVVFU1QsIGFwcHJvdmFsX2Z1dCkpCgogICAgICAgIHBpbl9wYXlsb2FkID0gcGFja19zdHIoInZlY3RyYWlsLXdpbiIpICsgcGFja19zdHIoIm9zbW8iKQogICAgICAgIHBpbl9mdXQgPSBsb29wLmNyZWF0ZV9mdXR1cmUoKQogICAgICAgIHdhaXRlcnMuYXBwZW5kKChsYW1iZGEgZjogZls0XSA9PSAweDA3IGFuZCBmWzVdID09IDB4NDUgYW5kIChmWzNdICYgMHhFMCkgIT0gRkxBR1NfUkVRVUVTVCwgcGluX2Z1dCkpCiAgICAgICAgYXdhaXQgY2xpZW50LndyaXRlX2dhdHRfY2hhcihjaGFyX2ZmZjUsIGVuY29kZV9kdW1sKDB4MDIsIDB4MDcsIG5leHRfaWQoKSwgRkxBR1NfUkVRVUVTVCwgMHgwNywgMHg0NSwgcGluX3BheWxvYWQpLCByZXNwb25zZT1GYWxzZSkKICAgICAgICBwaW5fcmVwbHkgPSBhd2FpdCBhc3luY2lvLndhaXRfZm9yKHBpbl9mdXQsIHRpbWVvdXQ9NS4wKQogICAgICAgIGFscmVhZHkgPSBsZW4ocGluX3JlcGx5WzZdKSA+PSAyIGFuZCBwaW5fcmVwbHlbNl1bMV0gPT0gMHgwMQogICAgICAgIGlmIG5vdCBhbHJlYWR5OgogICAgICAgICAgICByZXEgPSBhd2FpdCBhc3luY2lvLndhaXRfZm9yKGFwcHJvdmFsX2Z1dCwgdGltZW91dD05MC4wKQogICAgICAgICAgICBhd2FpdCBjbGllbnQud3JpdGVfZ2F0dF9jaGFyKGNoYXJfZmZmNSwgZW5jb2RlX2R1bWwoMHgwMiwgMHgwNywgcmVxWzJdLCBGTEFHU19SRVNQT05TRSwgMHgwNywgMHg0NiwgYiJceDAwIiksIHJlc3BvbnNlPUZhbHNlKQoKICAgICAgICBhd2FpdCBjbGllbnQud3JpdGVfZ2F0dF9jaGFyKGNoYXJfZmZmNSwgZW5jb2RlX2R1bWwoMHgwMiwgMHgxQywgbmV4dF9pZCgpLCBGTEFHU19SRVFVRVNULCAweDUzLCAweDEwLCBieXRlcyg0KSksIHJlc3BvbnNlPUZhbHNlKQogICAgICAgIGF3YWl0IGFzeW5jaW8uc2xlZXAoMC41KQoKICAgICAgICBzc2lkX2Z1dCA9IGxvb3AuY3JlYXRlX2Z1dHVyZSgpCiAgICAgICAgd2FpdGVycy5hcHBlbmQoKGxhbWJkYSBmOiBmWzRdID09IDB4MDcgYW5kIGZbNV0gPT0gMHgwNyBhbmQgKGZbM10gJiAweEUwKSAhPSBGTEFHU19SRVFVRVNULCBzc2lkX2Z1dCkpCiAgICAgICAgYXdhaXQgY2xpZW50LndyaXRlX2dhdHRfY2hhcihjaGFyX2ZmZjUsIGVuY29kZV9kdW1sKDB4MDIsIDB4MDcsIG5leHRfaWQoKSwgRkxBR1NfUkVRVUVTVCwgMHgwNywgMHgwNyksIHJlc3BvbnNlPUZhbHNlKQogICAgICAgIHNzaWQgPSBwYXJzZV9wYWNrZWRfcmVwbHkoKGF3YWl0IGFzeW5jaW8ud2FpdF9mb3Ioc3NpZF9mdXQsIHRpbWVvdXQ9NC4wKSlbNl0pCgogICAgICAgIGF3YWl0IGFzeW5jaW8uc2xlZXAoMC40KQogICAgICAgIHBhc3NfZnV0ID0gbG9vcC5jcmVhdGVfZnV0dXJlKCkKICAgICAgICB3YWl0ZXJzLmFwcGVuZCgobGFtYmRhIGY6IGZbNF0gPT0gMHgwNyBhbmQgZls1XSA9PSAweDBFIGFuZCAoZlszXSAmIDB4RTApICE9IEZMQUdTX1JFUVVFU1QsIHBhc3NfZnV0KSkKICAgICAgICBhd2FpdCBjbGllbnQud3JpdGVfZ2F0dF9jaGFyKGNoYXJfZmZmNSwgZW5jb2RlX2R1bWwoMHgwMiwgMHgwNywgbmV4dF9pZCgpLCBGTEFHU19SRVFVRVNULCAweDA3LCAweDBFKSwgcmVzcG9uc2U9RmFsc2UpCiAgICAgICAgcGFzc3dvcmQgPSBwYXJzZV9wYWNrZWRfcmVwbHkoKGF3YWl0IGFzeW5jaW8ud2FpdF9mb3IocGFzc19mdXQsIHRpbWVvdXQ9NC4wKSlbNl0pCgogICAgam9pbl93aWZpX3dwYTIoc3NpZCwgcGFzc3dvcmQsIHRpbWVvdXQ9MjUuMCkKCiAgICBjYW1faXAgPSAiMTkyLjE2OC4yLjEiCiAgICBpZiBwb2tlOgogICAgICAgIHRyeToKICAgICAgICAgICAgd2l0aCBzb2NrZXQuY3JlYXRlX2Nvbm5lY3Rpb24oKGNhbV9pcCwgNzAwMSksIHRpbWVvdXQ9MS41KSBhcyBzOgogICAgICAgICAgICAgICAgcy5zZW5kYWxsKGVuY29kZV9kdW1sKDB4MDIsIDB4MDcsIDB4ODA5MiwgRkxBR1NfUkVRVUVTVCwgMHgwNywgMHg0NSwgcGFja19zdHIoInZlY3RyYWlsLXdpbiIpICsgcGFja19zdHIoIm9zbW8iKSkpCiAgICAgICAgICAgIHRpbWUuc2xlZXAoMC40KQogICAgICAgIGV4Y2VwdCBPU0Vycm9yOgogICAgICAgICAgICBwYXNzCgogICAgZGVmIHVkcF9oZHIocGt0X3R5cGU6IGludCwgcGxlbjogaW50LCBzaWQ6IGludCwgc2VxOiBpbnQpIC0+IGJ5dGVzOgogICAgICAgIHcwID0gKDEgPDwgMTUpIHwgKCg4ICsgcGxlbikgJiAweDNGRkYpCiAgICAgICAgYiA9IGJ5dGVzKFt3MCAmIDB4RkYsIHcwID4+IDgsIHNpZCAmIDB4RkYsIHNpZCA+PiA4LCBzZXEgJiAweEZGLCBzZXEgPj4gOCwgcGt0X3R5cGVdKQogICAgICAgIHggPSAwCiAgICAgICAgZm9yIHYgaW4gYjoKICAgICAgICAgICAgeCBePSB2CiAgICAgICAgcmV0dXJuIGIgKyBieXRlcyhbeF0pCgogICAgc29jayA9IHNvY2tldC5zb2NrZXQoc29ja2V0LkFGX0lORVQsIHNvY2tldC5TT0NLX0RHUkFNKQogICAgc29jay5zZXR0aW1lb3V0KDAuMjUpCiAgICB0cnk6CiAgICAgICAgc2lkID0gcmFuZG9tLnJhbmRpbnQoMHgxMDAwLCAweEZGRkUpCiAgICAgICAgYmFzZV9zZXEgPSByYW5kb20ucmFuZGludCgweDEwMDAsIDB4RjAwMCkgJiAweEZGRjgKICAgICAgICBzeW4gPSBieXRlcyhbYmFzZV9zZXEgJiAweEZGLCBiYXNlX3NlcSA+PiA4XSkgKyBSRUZfSEFORFNIQUtFWzI6XQogICAgICAgIHNvY2suc2VuZHRvKHVkcF9oZHIoMHgwMCwgbGVuKHN5biksIHNpZCwgMCkgKyBzeW4sIChjYW1faXAsIHBvcnQpKQogICAgICAgIHRpbWUuc2xlZXAoMC41KQogICAgICAgIHVkcF9zZXEgPSAoYmFzZV9zZXEgKyA4KSAmIDB4RkZGRgogICAgICAgIGR1bWxfc2VxID0gMHhBMDAwCiAgICAgICAgY21kX2N0ciA9IDAKCiAgICAgICAgZGVmIHNlbmRfZGwoY3M6IGludCwgY2k6IGludCwgcGw6IGJ5dGVzLCByeDogaW50ID0gMHgwMSk6CiAgICAgICAgICAgIG5vbmxvY2FsIHVkcF9zZXEsIGR1bWxfc2VxLCBjbWRfY3RyCiAgICAgICAgICAgIGNtZF9jdHIgKz0gMQogICAgICAgICAgICBhY2sgPSAodWRwX3NlcSAtIDgpICYgMHhGRkZGCiAgICAgICAgICAgIHJ0ID0gYnl0ZXMoW2FjayAmIDB4RkYsIGFjayA+PiA4LCB1ZHBfc2VxICYgMHhGRiwgdWRwX3NlcSA+PiA4LCAwLCAwLCAwLCAwLCBjbWRfY3RyICYgMHhGRiwgMHgwMSwgMCwgMF0pCiAgICAgICAgICAgIGZyID0gZW5jb2RlX2R1bWwoMHgwMiwgcngsIGR1bWxfc2VxLCBGTEFHU19SRVFVRVNULCBjcywgY2ksIHBsKQogICAgICAgICAgICBkdW1sX3NlcSA9IChkdW1sX3NlcSArIDEpICYgMHhGRkZGCiAgICAgICAgICAgIHNvY2suc2VuZHRvKHVkcF9oZHIoMHgwNSwgbGVuKHJ0KSArIGxlbihmciksIHNpZCwgdWRwX3NlcSkgKyBydCArIGZyLCAoY2FtX2lwLCBwb3J0KSkKICAgICAgICAgICAgdWRwX3NlcSA9ICh1ZHBfc2VxICsgOCkgJiAweEZGRkYKCiAgICAgICAgc2VuZF9kbCgweDAwLCAweDg4LCBBUFBfUFJFU0VOQ0UsIHJ4PTB4MjgpCiAgICAgICAgc2VuZF9kbCgweDAwLCAweDI2LCBMSVNUX0JBU0UsIHJ4PTB4MDEpCiAgICAgICAgdGltZS5zbGVlcCgwLjMpCiAgICAgICAgc2VuZF9kbCgweDAwLCAweDI2LCBMSVNUX1RSSUdHRVIsIHJ4PTB4MDEpCiAgICAgICAgYmxvYiA9IGJ5dGVhcnJheSgpCiAgICAgICAgZGVhZGxpbmUgPSB0aW1lLm1vbm90b25pYygpICsgNC4wCiAgICAgICAgd2hpbGUgdGltZS5tb25vdG9uaWMoKSA8IGRlYWRsaW5lOgogICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICBibG9iICs9IHNvY2sucmVjdig2NTUzNikKICAgICAgICAgICAgZXhjZXB0IHNvY2tldC50aW1lb3V0OgogICAgICAgICAgICAgICAgcGFzcwogICAgICAgIGNodW5rcyA9IGJ5dGVhcnJheSgpCiAgICAgICAgZm9yIF9zLCBfciwgX21pZCwgX2ZsLCBjcywgY2ksIHBsIGluIGl0ZXJfZHVtbF9mcmFtZXMoYnl0ZXMoYmxvYikpOgogICAgICAgICAgICBpZiBjcyA9PSAweDAwIGFuZCBjaSA9PSAweDI3IGFuZCBsZW4ocGwpID4gMTAgYW5kIHBsWzBdID09IDB4NEEgYW5kIHBsWzFdID09IDB4MDE6CiAgICAgICAgICAgICAgICBjaHVua3MgKz0gcGxbMTA6XQogICAgICAgIG1lZGlhID0gZGVjb2RlX21hbmlmZXN0X3JlY29yZHMoYnl0ZXMoY2h1bmtzKSwgMCkKICAgICAgICByZXR1cm4geyJvayI6IFRydWUsICJzc2lkIjogc3NpZCwgImJhc2VfdXJsIjogZiJodHRwOi8ve2NhbV9pcH0iLCAicHJldmlvdXNfd2lmaSI6IHByZXZfd2lmaSwgIm1lZGlhIjogbWVkaWF9CiAgICBmaW5hbGx5OgogICAgICAgIHNvY2suY2xvc2UoKQoKCmRlZiBtYWluKCk6CiAgICBwYXJzZXIgPSBhcmdwYXJzZS5Bcmd1bWVudFBhcnNlcigpCiAgICBzdWIgPSBwYXJzZXIuYWRkX3N1YnBhcnNlcnMoZGVzdD0iY21kIiwgcmVxdWlyZWQ9VHJ1ZSkKICAgIHNfc2NhbiA9IHN1Yi5hZGRfcGFyc2VyKCJzY2FuIikKICAgIHNfc2Nhbi5hZGRfYXJndW1lbnQoIi0tdGltZW91dCIsIHR5cGU9ZmxvYXQsIGRlZmF1bHQ9Ni4wKQogICAgc19jb25uID0gc3ViLmFkZF9wYXJzZXIoImNvbm5lY3QtYW5kLWxpc3QiKQogICAgc19jb25uLmFkZF9hcmd1bWVudCgiLS1hZGRyZXNzIiwgcmVxdWlyZWQ9VHJ1ZSkKICAgIHNfY29ubi5hZGRfYXJndW1lbnQoIi0tcG9ydCIsIHR5cGU9aW50LCBkZWZhdWx0PTkwMDQpCiAgICBzX2Nvbm4uYWRkX2FyZ3VtZW50KCItLXBva2UiLCB0eXBlPWludCwgZGVmYXVsdD0xKQogICAgc19yZXN0ID0gc3ViLmFkZF9wYXJzZXIoInJlc3RvcmUtd2lmaSIpCiAgICBzX3Jlc3QuYWRkX2FyZ3VtZW50KCItLXByb2ZpbGUiLCByZXF1aXJlZD1UcnVlKQogICAgYXJncyA9IHBhcnNlci5wYXJzZV9hcmdzKCkKICAgIHRyeToKICAgICAgICBpZiBhcmdzLmNtZCA9PSAic2NhbiI6CiAgICAgICAgICAgIHJlcyA9IGFzeW5jaW8ucnVuKGNtZF9zY2FuKGFyZ3MudGltZW91dCkpCiAgICAgICAgZWxpZiBhcmdzLmNtZCA9PSAiY29ubmVjdC1hbmQtbGlzdCI6CiAgICAgICAgICAgIHJlcyA9IGFzeW5jaW8ucnVuKGNtZF9jb25uZWN0X2FuZF9saXN0KGFyZ3MuYWRkcmVzcywgYXJncy5wb3J0LCBib29sKGFyZ3MucG9rZSkpKQogICAgICAgIGVsaWYgYXJncy5jbWQgPT0gInJlc3RvcmUtd2lmaSI6CiAgICAgICAgICAgIHJ1bl9uZXRzaCgid2xhbiIsICJjb25uZWN0IiwgZiJuYW1lPXthcmdzLnByb2ZpbGV9IikKICAgICAgICAgICAgcmVzID0geyJvayI6IFRydWV9CiAgICAgICAgZWxzZToKICAgICAgICAgICAgcmVzID0geyJvayI6IEZhbHNlLCAiZXJyb3IiOiBmIlVua25vd24gY29tbWFuZDoge2FyZ3MuY21kfSJ9CiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGV4YzoKICAgICAgICByZXMgPSB7Im9rIjogRmFsc2UsICJlcnJvciI6IHN0cihleGMpfQogICAgcHJpbnQoanNvbi5kdW1wcyhyZXMsIGVuc3VyZV9hc2NpaT1GYWxzZSkpCgoKaWYgX19uYW1lX18gPT0gIl9fbWFpbl9fIjoKICAgIG1haW4oKQo=
+"""Vectrail DJI Wireless Import Windows Sidecar.
+
+Implements the BLE GATT pairing/wake/Wi-Fi credential flow, Windows netsh
+Wi-Fi association, and DUML-over-UDP media list query based on the MIT-licensed
+OsmoOffload / KonradIT/osmosis protocol documentation.
+"""
+
+from __future__ import annotations
+
+import argparse
+import asyncio
+import json
+import os
+import random
+import re
+import socket
+import struct
+import subprocess
+import tempfile
+import time
+from xml.sax.saxutils import escape as xml_escape
+from pathlib import Path
+
+CREATE_NO_WINDOW = 0x08000000
+SOF = 0x55
+OVERHEAD = 13
+FLAGS_REQUEST = 0x40
+FLAGS_RESPONSE = 0xC0
+
+DJI_COMPANY_IDS = {0x08AA, 0xAA08}
+XTRA_COMPANY_IDS = {0xAAF7, 0xF7AA}
+NAME_PREFIXES = (
+    "OsmoPocket4P",
+    "OsmoPocket4",
+    "OsmoPocket3",
+    "OsmoAction",
+    "OsmoNano",
+    "Osmo360",
+    "XtraEdgePro",
+    "Osmo",
+)
+MODEL_NAMES = {
+    0x0006: "Osmo Action",
+    0x0010: "Osmo Action 2",
+    0x0012: "Osmo Action 3",
+    0x0014: "Osmo Action 4",
+    0x0015: "Osmo Action 5 Pro",
+    0x0017: "Osmo 360",
+    0x0018: "Osmo Action 6",
+    0x0019: "Osmo Nano",
+    0x0020: "Osmo Pocket 3",
+    0x0021: "Osmo Pocket 4",
+    0x0022: "Osmo Pocket 4 Pro",
+}
+
+REF_HANDSHAKE = bytes.fromhex(
+    "000064006400c005140000640000019001c005140000640014006400c00514000064000101040102"
+)
+LIST_BASE = bytes.fromhex(
+    "4a002a10010000000000010000002d000d0100ffffffffffffffff000100000000000000000000000000"
+)
+LIST_TRIGGER = bytes.fromhex("4a040e1001000000000001000000")
+APP_PRESENCE = bytes.fromhex("170046237c415050000000000002")
+
+
+def crc8(data: bytes) -> int:
+    c = 0x77
+    for b in data:
+        c ^= b
+        for _ in range(8):
+            c = (c >> 1) ^ 0x8C if (c & 1) else (c >> 1)
+    return c
+
+
+def crc16(data: bytes) -> int:
+    c = 0x3692
+    for b in data:
+        c ^= b
+        for _ in range(8):
+            c = (c >> 1) ^ 0x8408 if (c & 1) else (c >> 1)
+    return c
+
+
+def encode_duml(sender: int, receiver: int, msg_id: int, flags: int, cmd_set: int, cmd_id: int, payload: bytes = b"") -> bytes:
+    total = OVERHEAD + len(payload)
+    head = bytes([SOF, total & 0xFF, 0x04 | ((total >> 8) & 0x03)])
+    head += bytes([crc8(head)])
+    body = bytes([sender, receiver, msg_id & 0xFF, (msg_id >> 8) & 0xFF, flags, cmd_set, cmd_id]) + payload
+    frame = head + body
+    c16 = crc16(frame)
+    return frame + bytes([c16 & 0xFF, (c16 >> 8) & 0xFF])
+
+
+def iter_duml_frames(raw: bytes):
+    i = 0
+    n = len(raw)
+    while i + OVERHEAD <= n:
+        if raw[i] != SOF:
+            i += 1
+            continue
+        total = (raw[i + 1] | (raw[i + 2] << 8)) & 0x3FF
+        ver = raw[i + 2] >> 2
+        if ver != 1 or total < OVERHEAD or i + total > n or crc8(raw[i : i + 3]) != raw[i + 3]:
+            i += 1
+            continue
+        want = raw[i + total - 2] | (raw[i + total - 1] << 8)
+        if crc16(raw[i : i + total - 2]) != want:
+            i += 1
+            continue
+        yield (
+            raw[i + 4],
+            raw[i + 5],
+            raw[i + 6] | (raw[i + 7] << 8),
+            raw[i + 8],
+            raw[i + 9],
+            raw[i + 10],
+            raw[i + 11 : i + total - 2],
+        )
+        i += total
+
+
+def pack_str(s: str) -> bytes:
+    raw = s.encode("utf-8")
+    return bytes([len(raw)]) + raw
+
+
+def parse_packed_reply(payload: bytes) -> str:
+    if len(payload) < 2:
+        return ""
+    n = payload[1]
+    return payload[2 : 2 + n].decode("utf-8", errors="replace")
+
+
+def resolve_model(mfr_data: dict[int, bytes], name: str) -> tuple[int | None, str]:
+    for cid, payload in mfr_data.items():
+        if cid not in (DJI_COMPANY_IDS | XTRA_COMPANY_IDS):
+            continue
+        if len(payload) >= 12 and (payload[10] | (payload[11] << 8)) == 218:
+            return 0x0022, "Osmo Pocket 4 Pro"
+        if payload and payload[0] in MODEL_NAMES:
+            return payload[0], MODEL_NAMES[payload[0]]
+    for prefix, mid, disp in (
+        ("OsmoPocket4P", 0x0022, "Osmo Pocket 4 Pro"),
+        ("OsmoPocket4", 0x0021, "Osmo Pocket 4"),
+        ("OsmoPocket3", 0x0020, "Osmo Pocket 3"),
+        ("OsmoNano", 0x0019, "Osmo Nano"),
+        ("Osmo360", 0x0017, "Osmo 360"),
+        ("XtraEdgePro", 0x0015, "Xtra Edge Pro"),
+        ("OsmoAction6", 0x0018, "Osmo Action 6"),
+        ("OsmoAction5", 0x0015, "Osmo Action 5 Pro"),
+        ("OsmoAction4", 0x0014, "Osmo Action 4"),
+    ):
+        if name.startswith(prefix):
+            return mid, disp
+    return None, name or "Unknown DJI Camera"
+
+
+async def cmd_scan(timeout: float) -> dict:
+    from bleak import BleakScanner
+
+    results = await BleakScanner.discover(timeout=timeout, return_adv=True)
+    cameras = []
+    for address, (device, adv) in results.items():
+        name = adv.local_name or device.name or ""
+        is_dji = bool(set(adv.manufacturer_data) & (DJI_COMPANY_IDS | XTRA_COMPANY_IDS))
+        is_name = name.startswith(NAME_PREFIXES)
+        has_fff0 = any("fff0" in (u or "").lower() for u in adv.service_uuids)
+        if not (is_dji or is_name or has_fff0):
+            continue
+        mid, mname = resolve_model(adv.manufacturer_data, name)
+        cameras.append({"address": address, "name": name, "rssi": adv.rssi, "model_id": mid, "model_name": mname})
+    cameras.sort(key=lambda c: -c["rssi"])
+    return {"ok": True, "cameras": cameras}
+
+
+def run_netsh(*args: str) -> tuple[int, str]:
+    proc = subprocess.run(
+        ["netsh", *args],
+        capture_output=True,
+        text=False,
+        creationflags=CREATE_NO_WINDOW,
+        timeout=12,
+    )
+    return proc.returncode or 0, proc.stdout.decode("mbcs", errors="replace")
+
+
+def current_wifi_profile() -> str | None:
+    _, txt = run_netsh("wlan", "show", "interfaces")
+    m = re.search(r"^\s*(?:Profile|配置文件)\s*:\s*(.+)$", txt, re.M | re.I)
+    return m.group(1).strip() if m else None
+
+
+def join_wifi_wpa2(ssid: str, password: str, timeout: float = 25.0) -> str:
+    if current_wifi_profile() == ssid:
+        ip_out = subprocess.run(["ipconfig"], capture_output=True, creationflags=CREATE_NO_WINDOW).stdout.decode("mbcs", errors="replace")
+        m = re.search(r"IPv4[^:]*:\s*(192\.168\.2\.\d+)", ip_out)
+        if m:
+            return m.group(1)
+    safe_ssid = xml_escape(ssid)
+    safe_password = xml_escape(password)
+    xml = f"""<?xml version="1.0"?>
+<WLANProfile xmlns="http://www.microsoft.com/networking/WLAN/profile/v1">
+  <name>{safe_ssid}</name>
+  <SSIDConfig><SSID><name>{safe_ssid}</name></SSID><nonBroadcast>false</nonBroadcast></SSIDConfig>
+  <connectionType>ESS</connectionType>
+  <connectionMode>manual</connectionMode>
+  <MSM><security>
+    <authEncryption><authentication>WPA2PSK</authentication><encryption>AES</encryption><useOneX>false</useOneX></authEncryption>
+    <sharedKey><keyType>passPhrase</keyType><protected>false</protected><keyMaterial>{safe_password}</keyMaterial></sharedKey>
+  </security></MSM>
+</WLANProfile>"""
+    with tempfile.NamedTemporaryFile("w", suffix=".xml", delete=False, encoding="utf-8") as f:
+        f.write(xml)
+        xml_path = Path(f.name)
+    try:
+        rc, out = run_netsh("wlan", "add", "profile", f"filename={xml_path}", "user=current")
+        if rc != 0:
+            raise RuntimeError(f"netsh add profile failed: {out.strip()}")
+    finally:
+        xml_path.unlink(missing_ok=True)
+    rc, out = run_netsh("wlan", "connect", f"name={ssid}")
+    if rc != 0 and "location" not in out.lower():
+        raise RuntimeError(f"netsh connect failed: {out.strip()}")
+    deadline = time.monotonic() + timeout
+    while time.monotonic() < deadline:
+        ip_out = subprocess.run(["ipconfig"], capture_output=True, creationflags=CREATE_NO_WINDOW).stdout.decode("mbcs", errors="replace")
+        m = re.search(r"IPv4[^:]*:\s*(192\.168\.2\.\d+)", ip_out)
+        if m:
+            return m.group(1)
+        time.sleep(0.8)
+    raise TimeoutError(f"Timed out waiting for camera AP DHCP address for SSID {ssid}")
+
+
+def decode_manifest_records(buf: bytes, storage: int) -> list[dict]:
+    medias = []
+    i = 0
+    while i < len(buf):
+        if i + 6 <= len(buf) and buf[i] == 0x1A and buf[i + 2 : i + 5] == b"\x00\x00\x00" and buf[i + 5] == 1:
+            slen = buf[i + 1] - 6
+            val = buf[i + 6 : i + 6 + slen]
+            if slen >= 5 and len(val) == slen and val.startswith(b"DCIM/"):
+                medias.append((i, i + 6 + slen, val.decode("ascii", "replace")))
+                i += 6 + slen
+                continue
+        i += 1
+    out = []
+    for k, (pos, end, mpath) in enumerate(medias):
+        lo = medias[k - 1][1] if k else 0
+        hi = medias[k + 1][0] if k + 1 < len(medias) else len(buf)
+        parts = mpath.split("/")
+        folder = parts[1] if len(parts) > 1 else ""
+        base = mpath.rsplit("/", 1)[-1]
+        ext = ""
+        needle = (base + ".").encode()
+        j = lo
+        while j < hi - 2 - len(needle):
+            if buf[j] == 0x0D and buf[j + 2 : j + 2 + len(needle)] == needle:
+                ext = buf[j + 2 + len(needle) : j + 2 + buf[j + 1]].decode("ascii", "replace").upper()
+                break
+            j += 1
+        handle = size = 0
+        star = False
+        p = lo
+        while p < pos - 1:
+            if buf[p] == 0x19 and buf[p + 1] == 0x06 and p >= 1 and buf[p - 1] in (0xFE, 0xFF):
+                if p - 10 >= 0:
+                    handle = struct.unpack_from("<I", buf, p - 10)[0]
+                if p - 14 >= 0:
+                    size = struct.unpack_from("<I", buf, p - 14)[0]
+                if p + 8 < len(buf) and buf[p + 7] != 0x1A and buf[p + 8] in (0, 1):
+                    star = buf[p + 8] == 1
+                break
+            p += 1
+        name = f"{base}.{ext}" if ext else base
+        out.append({"folder": folder, "name": name, "media_path": mpath, "ext": ext, "handle": handle, "size": size, "storage": storage, "star": star})
+    return out
+
+
+async def cmd_connect_and_list(address: str, port: int, poke: bool) -> dict:
+    from bleak import BleakClient, normalize_uuid_16
+
+    char_fff4 = normalize_uuid_16(0xFFF4)
+    char_fff5 = normalize_uuid_16(0xFFF5)
+    prev_wifi = current_wifi_profile()
+    rx_frames: list[tuple] = []
+    waiters = []
+    msg_seq = 0x2100
+
+    def next_id() -> int:
+        nonlocal msg_seq
+        msg_seq += 1
+        return msg_seq
+
+    def on_notify(_char, data: bytearray):
+        for f in iter_duml_frames(bytes(data)):
+            rx_frames.append(f)
+            for pred, fut in list(waiters):
+                if not fut.done() and pred(f):
+                    fut.get_loop().call_soon_threadsafe(fut.set_result, f)
+                    waiters.remove((pred, fut))
+
+    async with BleakClient(address, timeout=20.0) as client:
+        await client.start_notify(char_fff4, on_notify)
+        try:
+            await client.start_notify(char_fff5, on_notify)
+        except Exception:
+            pass
+        try:
+            await client.write_gatt_char(char_fff4, b"\x01\x00", response=True)
+        except Exception:
+            pass
+        await asyncio.sleep(0.25)
+
+        await client.write_gatt_char(char_fff5, encode_duml(0x02, 0xF0, next_id(), FLAGS_REQUEST, 0x00, 0x2B, b"\x04\x00"), response=False)
+        await asyncio.sleep(0.2)
+
+        loop = asyncio.get_running_loop()
+        approval_fut = loop.create_future()
+        waiters.append((lambda f: f[4] == 0x07 and f[5] == 0x46 and (f[3] & 0xE0) == FLAGS_REQUEST, approval_fut))
+
+        pin_payload = pack_str("vectrail-win") + pack_str("osmo")
+        pin_fut = loop.create_future()
+        waiters.append((lambda f: f[4] == 0x07 and f[5] == 0x45 and (f[3] & 0xE0) != FLAGS_REQUEST, pin_fut))
+        await client.write_gatt_char(char_fff5, encode_duml(0x02, 0x07, next_id(), FLAGS_REQUEST, 0x07, 0x45, pin_payload), response=False)
+        pin_reply = await asyncio.wait_for(pin_fut, timeout=5.0)
+        already = len(pin_reply[6]) >= 2 and pin_reply[6][1] == 0x01
+        if not already:
+            req = await asyncio.wait_for(approval_fut, timeout=90.0)
+            await client.write_gatt_char(char_fff5, encode_duml(0x02, 0x07, req[2], FLAGS_RESPONSE, 0x07, 0x46, b"\x00"), response=False)
+
+        await client.write_gatt_char(char_fff5, encode_duml(0x02, 0x1C, next_id(), FLAGS_REQUEST, 0x53, 0x10, bytes(4)), response=False)
+        await asyncio.sleep(0.5)
+
+        ssid_fut = loop.create_future()
+        waiters.append((lambda f: f[4] == 0x07 and f[5] == 0x07 and (f[3] & 0xE0) != FLAGS_REQUEST, ssid_fut))
+        await client.write_gatt_char(char_fff5, encode_duml(0x02, 0x07, next_id(), FLAGS_REQUEST, 0x07, 0x07), response=False)
+        ssid = parse_packed_reply((await asyncio.wait_for(ssid_fut, timeout=4.0))[6])
+
+        await asyncio.sleep(0.4)
+        pass_fut = loop.create_future()
+        waiters.append((lambda f: f[4] == 0x07 and f[5] == 0x0E and (f[3] & 0xE0) != FLAGS_REQUEST, pass_fut))
+        await client.write_gatt_char(char_fff5, encode_duml(0x02, 0x07, next_id(), FLAGS_REQUEST, 0x07, 0x0E), response=False)
+        password = parse_packed_reply((await asyncio.wait_for(pass_fut, timeout=4.0))[6])
+
+    join_wifi_wpa2(ssid, password, timeout=25.0)
+
+    cam_ip = "192.168.2.1"
+    if poke:
+        try:
+            with socket.create_connection((cam_ip, 7001), timeout=1.5) as s:
+                s.sendall(encode_duml(0x02, 0x07, 0x8092, FLAGS_REQUEST, 0x07, 0x45, pack_str("vectrail-win") + pack_str("osmo")))
+            time.sleep(0.4)
+        except OSError:
+            pass
+
+    def udp_hdr(pkt_type: int, plen: int, sid: int, seq: int) -> bytes:
+        w0 = (1 << 15) | ((8 + plen) & 0x3FFF)
+        b = bytes([w0 & 0xFF, w0 >> 8, sid & 0xFF, sid >> 8, seq & 0xFF, seq >> 8, pkt_type])
+        x = 0
+        for v in b:
+            x ^= v
+        return b + bytes([x])
+
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.settimeout(0.25)
+    try:
+        sid = random.randint(0x1000, 0xFFFE)
+        base_seq = random.randint(0x1000, 0xF000) & 0xFFF8
+        syn = bytes([base_seq & 0xFF, base_seq >> 8]) + REF_HANDSHAKE[2:]
+        sock.sendto(udp_hdr(0x00, len(syn), sid, 0) + syn, (cam_ip, port))
+        time.sleep(0.5)
+        udp_seq = (base_seq + 8) & 0xFFFF
+        duml_seq = 0xA000
+        cmd_ctr = 0
+
+        def send_dl(cs: int, ci: int, pl: bytes, rx: int = 0x01):
+            nonlocal udp_seq, duml_seq, cmd_ctr
+            cmd_ctr += 1
+            ack = (udp_seq - 8) & 0xFFFF
+            rt = bytes([ack & 0xFF, ack >> 8, udp_seq & 0xFF, udp_seq >> 8, 0, 0, 0, 0, cmd_ctr & 0xFF, 0x01, 0, 0])
+            fr = encode_duml(0x02, rx, duml_seq, FLAGS_REQUEST, cs, ci, pl)
+            duml_seq = (duml_seq + 1) & 0xFFFF
+            sock.sendto(udp_hdr(0x05, len(rt) + len(fr), sid, udp_seq) + rt + fr, (cam_ip, port))
+            udp_seq = (udp_seq + 8) & 0xFFFF
+
+        send_dl(0x00, 0x88, APP_PRESENCE, rx=0x28)
+        send_dl(0x00, 0x26, LIST_BASE, rx=0x01)
+        time.sleep(0.3)
+        send_dl(0x00, 0x26, LIST_TRIGGER, rx=0x01)
+        blob = bytearray()
+        deadline = time.monotonic() + 4.0
+        while time.monotonic() < deadline:
+            try:
+                blob += sock.recv(65536)
+            except socket.timeout:
+                pass
+        chunks = bytearray()
+        for _s, _r, _mid, _fl, cs, ci, pl in iter_duml_frames(bytes(blob)):
+            if cs == 0x00 and ci == 0x27 and len(pl) > 10 and pl[0] == 0x4A and pl[1] == 0x01:
+                chunks += pl[10:]
+        media = decode_manifest_records(bytes(chunks), 0)
+        return {"ok": True, "ssid": ssid, "base_url": f"http://{cam_ip}", "previous_wifi": prev_wifi, "media": media}
+    finally:
+        sock.close()
+
+
+def main():
+    parser = argparse.ArgumentParser()
+    sub = parser.add_subparsers(dest="cmd", required=True)
+    s_scan = sub.add_parser("scan")
+    s_scan.add_argument("--timeout", type=float, default=6.0)
+    s_conn = sub.add_parser("connect-and-list")
+    s_conn.add_argument("--address", required=True)
+    s_conn.add_argument("--port", type=int, default=9004)
+    s_conn.add_argument("--poke", type=int, default=1)
+    s_rest = sub.add_parser("restore-wifi")
+    s_rest.add_argument("--profile", required=True)
+    args = parser.parse_args()
+    try:
+        if args.cmd == "scan":
+            res = asyncio.run(cmd_scan(args.timeout))
+        elif args.cmd == "connect-and-list":
+            res = asyncio.run(cmd_connect_and_list(args.address, args.port, bool(args.poke)))
+        elif args.cmd == "restore-wifi":
+            run_netsh("wlan", "connect", f"name={args.profile}")
+            res = {"ok": True}
+        else:
+            res = {"ok": False, "error": f"Unknown command: {args.cmd}"}
+    except Exception as exc:
+        res = {"ok": False, "error": str(exc)}
+    print(json.dumps(res, ensure_ascii=False))
+
+
+if __name__ == "__main__":
+    main()
