@@ -1,1 +1,401 @@
-aW1wb3J0IHsgY2xpcE5hbWUsIGNsb25lUHJvamVjdCwgc2FuaXRpemVQcm9qZWN0IH0gZnJvbSAnLi9wcm9qZWN0JzsKaW1wb3J0IHsgQ2xpcCwgQ29sb3JHcmFkZSwgUHJvamVjdCwgVHJhbnNpdGlvbktpbmQgfSBmcm9tICcuL3R5cGVzJzsKCmV4cG9ydCB0eXBlIE1hZ2ljU3RlcEtpbmQgPQogIHwgJ3JlbW92ZScKICB8ICdwbGFjZScKICB8ICdtb3ZlJwogIHwgJ3RyaW0nCiAgfCAnZ3JhZGUnCiAgfCAndHJhbnNpdGlvbicKICB8ICd6b29tJwogIHwgJ3RpdGxlJwogIHwgJ2F1ZGlvJwogIHwgJ2NhcHRpb25zJwogIHwgJ3NlcXVlbmNlJzsKCmV4cG9ydCBpbnRlcmZhY2UgTWFnaWNBY3RvciB7CiAgaWQ6IHN0cmluZzsKICBuYW1lOiBzdHJpbmc7CiAgY29sb3I6IHN0cmluZzsKfQoKZXhwb3J0IGludGVyZmFjZSBNYWdpY0Nob3Jlb1N0ZXAgewogIGlkOiBzdHJpbmc7CiAga2luZDogTWFnaWNTdGVwS2luZDsKICBhY3RvcjogTWFnaWNBY3RvcjsKICBjbGlwSWQ/OiBzdHJpbmc7CiAgYXNzZXRJZD86IHN0cmluZzsKICB0cmFja0lkPzogc3RyaW5nOwogIHRpbWU6IG51bWJlcjsKICBkdXJhdGlvbjogbnVtYmVyOwogIGxhYmVsOiBzdHJpbmc7CiAgZ3JhZGU/OiBDb2xvckdyYWRlOwogIHRyYW5zaXRpb25LaW5kPzogVHJhbnNpdGlvbktpbmQ7CiAgc25hcFRpbWVzPzogbnVtYmVyW107CiAgY3V0VGltZT86IG51bWJlcjsKICBzdGFydE1zOiBudW1iZXI7CiAgZW5kTXM6IG51bWJlcjsKfQoKZXhwb3J0IGludGVyZmFjZSBNYWdpY0Nob3Jlb2dyYXBoeSB7CiAgYmVmb3JlOiBQcm9qZWN0OwogIGFmdGVyOiBQcm9qZWN0OwogIGFjdG9yczogTWFnaWNBY3RvcltdOwogIHN0ZXBzOiBNYWdpY0Nob3Jlb1N0ZXBbXTsKICB0b3RhbER1cmF0aW9uTXM6IG51bWJlcjsKfQoKY29uc3QgQUdFTlRfQ09MT1JTOiBSZWNvcmQ8c3RyaW5nLCBzdHJpbmc+ID0gewogIENsYXVkZTogJyNEOTc3NTcnLAogIENvZGV4OiAnIzEwQTM3RicsCiAgQ2hhdEdQVDogJyMxMEEzN0YnLAogICdDbG91ZCBBSSc6ICcjRkY2QjM1JywKICBMb2NhbDogJyNFQUVDRUYnLAogIEN1dHRlcjogJyM1OEE2RkYnLAogIENvbG9yOiAnI0Y1QTYyMycsCiAgU291bmQ6ICcjMzBEMTU4JywKICBUaXRsZXM6ICcjQkY1QUYyJywKfTsKCmZ1bmN0aW9uIGNvbG9yRm9yKG5hbWU6IHN0cmluZywgZmFsbGJhY2tJZHggPSAwKTogc3RyaW5nIHsKICBpZiAoQUdFTlRfQ09MT1JTW25hbWVdKSByZXR1cm4gQUdFTlRfQ09MT1JTW25hbWVdOwogIGNvbnN0IHBhbGV0dGUgPSBbJyM1OEE2RkYnLCAnI0Y1QTYyMycsICcjMzBEMTU4JywgJyNCRjVBRjInLCAnI0ZGNkIzNSddOwogIHJldHVybiBwYWxldHRlW2ZhbGxiYWNrSWR4ICUgcGFsZXR0ZS5sZW5ndGhdOwp9CgpmdW5jdGlvbiBncmFkZUNoYW5nZWQoYT86IENvbG9yR3JhZGUsIGI/OiBDb2xvckdyYWRlKTogYm9vbGVhbiB7CiAgcmV0dXJuIEpTT04uc3RyaW5naWZ5KGEgPz8gbnVsbCkgIT09IEpTT04uc3RyaW5naWZ5KGIgPz8gbnVsbCk7Cn0KCmZ1bmN0aW9uIHRyYW5zaXRpb25DaGFuZ2VkKGE/OiBDbGlwWyd0cmFuc2l0aW9uSW4nXSwgYj86IENsaXBbJ3RyYW5zaXRpb25JbiddKTogYm9vbGVhbiB7CiAgcmV0dXJuIEpTT04uc3RyaW5naWZ5KGEgPz8gbnVsbCkgIT09IEpTT04uc3RyaW5naWZ5KGIgPz8gbnVsbCk7Cn0KCmZ1bmN0aW9uIHpvb21DaGFuZ2VkKGE/OiBDbGlwWyd0cmFuc2Zvcm0nXSwgYj86IENsaXBbJ3RyYW5zZm9ybSddKTogYm9vbGVhbiB7CiAgcmV0dXJuIEpTT04uc3RyaW5naWZ5KGEgPz8gbnVsbCkgIT09IEpTT04uc3RyaW5naWZ5KGIgPz8gbnVsbCk7Cn0KCmZ1bmN0aW9uIGF1ZGlvQ2hhbmdlZChhOiBDbGlwLCBiOiBDbGlwKTogYm9vbGVhbiB7CiAgcmV0dXJuICgKICAgIChhLmdhaW5EQiA/PyAwKSAhPT0gKGIuZ2FpbkRCID8/IDApIHx8CiAgICAoYS5mYWRlSW4gPz8gMCkgIT09IChiLmZhZGVJbiA/PyAwKSB8fAogICAgKGEuZmFkZU91dCA/PyAwKSAhPT0gKGIuZmFkZU91dCA/PyAwKQogICk7Cn0KCi8qKgogKiBEaWZmcyBhIGJlZm9yZS9hZnRlciBwcm9qZWN0IHBhaXIgaW50byBhbmltYXRlZCBzd2FybSBjdXJzb3Igc3RlcHMsIHNwbGl0dGluZwogKiBsYXJnZXIgZWRpdHMgYWNyb3NzIHNwZWNpYWxpemVkIGFjdG9ycyAoQ3V0dGVyLCBDb2xvciwgU291bmQsIFRpdGxlcykganVzdAogKiBsaWtlIEVkaXRyb29tJ3MgTWFnaWNTaG93IGNob3Jlb2dyYXBoZXIuCiAqLwpleHBvcnQgZnVuY3Rpb24gYnVpbGRNYWdpY1BsYW4oYmVmb3JlOiBQcm9qZWN0LCBhZnRlcjogUHJvamVjdCwgd29ya2VyOiBzdHJpbmcpOiBNYWdpY0Nob3Jlb2dyYXBoeSB7CiAgY29uc3QgYmVmb3JlTWFwID0gbmV3IE1hcChiZWZvcmUuY2xpcHMubWFwKChjKSA9PiBbYy5pZCwgY10pKTsKICBjb25zdCBhZnRlck1hcCA9IG5ldyBNYXAoYWZ0ZXIuY2xpcHMubWFwKChjKSA9PiBbYy5pZCwgY10pKTsKICBjb25zdCBwcmltYXJ5OiBNYWdpY0FjdG9yID0geyBpZDogJ3ByaW1hcnknLCBuYW1lOiB3b3JrZXIgfHwgJ0xvY2FsJywgY29sb3I6IGNvbG9yRm9yKHdvcmtlciB8fCAnTG9jYWwnKSB9OwogIGNvbnN0IGN1dHRlcjogTWFnaWNBY3RvciA9IHsgaWQ6ICdjdXR0ZXInLCBuYW1lOiAnQ3V0dGVyJywgY29sb3I6IGNvbG9yRm9yKCdDdXR0ZXInKSB9OwogIGNvbnN0IGNvbG9yQWN0b3I6IE1hZ2ljQWN0b3IgPSB7IGlkOiAnY29sb3InLCBuYW1lOiAnQ29sb3InLCBjb2xvcjogY29sb3JGb3IoJ0NvbG9yJykgfTsKICBjb25zdCBzb3VuZEFjdG9yOiBNYWdpY0FjdG9yID0geyBpZDogJ3NvdW5kJywgbmFtZTogJ1NvdW5kJywgY29sb3I6IGNvbG9yRm9yKCdTb3VuZCcpIH07CiAgY29uc3QgdGl0bGVzQWN0b3I6IE1hZ2ljQWN0b3IgPSB7IGlkOiAndGl0bGVzJywgbmFtZTogJ1RpdGxlcycsIGNvbG9yOiBjb2xvckZvcignVGl0bGVzJykgfTsKCiAgY29uc3QgcmF3U3RlcHM6IEFycmF5PE9taXQ8TWFnaWNDaG9yZW9TdGVwLCAnc3RhcnRNcycgfCAnZW5kTXMnPj4gPSBbXTsKCiAgY29uc3QgcmVtb3ZlZENsaXBzID0gYmVmb3JlLmNsaXBzLmZpbHRlcigoYykgPT4gIWFmdGVyTWFwLmhhcyhjLmlkKSkuc29ydCgoYSwgYikgPT4gYS5zdGFydCAtIGIuc3RhcnQpOwogIGZvciAoY29uc3Qgb2xkQ2xpcCBvZiByZW1vdmVkQ2xpcHMpIHsKICAgIHJhd1N0ZXBzLnB1c2goewogICAgICBpZDogYHJtLSR7b2xkQ2xpcC5pZH1gLAogICAgICBraW5kOiAncmVtb3ZlJywKICAgICAgYWN0b3I6IHJlbW92ZWRDbGlwcy5sZW5ndGggPj0gMiA/IGN1dHRlciA6IHByaW1hcnksCiAgICAgIGNsaXBJZDogb2xkQ2xpcC5pZCwKICAgICAgYXNzZXRJZDogb2xkQ2xpcC5hc3NldElELAogICAgICB0cmFja0lkOiBvbGRDbGlwLnRyYWNrSUQsCiAgICAgIHRpbWU6IG9sZENsaXAuc3RhcnQsCiAgICAgIGR1cmF0aW9uOiBvbGRDbGlwLmR1cmF0aW9uLAogICAgICBsYWJlbDogYFJlbW92aW5nICR7Y2xpcE5hbWUoYmVmb3JlLCBvbGRDbGlwKX1gLAogICAgfSk7CiAgfQoKICBjb25zdCBhZGRlZFNvcnRlZCA9IGFmdGVyLmNsaXBzCiAgICAuZmlsdGVyKChjKSA9PiAhYmVmb3JlTWFwLmhhcyhjLmlkKSkKICAgIC5zb3J0KChhLCBiKSA9PiBhLnN0YXJ0IC0gYi5zdGFydCk7CgogIGxldCBwbGFjZUNvdW50ZXIgPSAwOwogIGZvciAoY29uc3QgbmV4dENsaXAgb2YgYWRkZWRTb3J0ZWQpIHsKICAgIGlmIChuZXh0Q2xpcC5raW5kID09PSAndGV4dCcpIHsKICAgICAgcmF3U3RlcHMucHVzaCh7CiAgICAgICAgaWQ6IGB0aXRsZS0ke25leHRDbGlwLmlkfWAsCiAgICAgICAga2luZDogJ3RpdGxlJywKICAgICAgICBhY3RvcjogYWRkZWRTb3J0ZWQubGVuZ3RoID49IDMgPyB0aXRsZXNBY3RvciA6IHByaW1hcnksCiAgICAgICAgY2xpcElkOiBuZXh0Q2xpcC5pZCwKICAgICAgICB0cmFja0lkOiBuZXh0Q2xpcC50cmFja0lELAogICAgICAgIHRpbWU6IG5leHRDbGlwLnN0YXJ0LAogICAgICAgIGR1cmF0aW9uOiBuZXh0Q2xpcC5kdXJhdGlvbiwKICAgICAgICBsYWJlbDogbmV4dENsaXAudGV4dD8uc3RyaW5nID8gYFRpdGxlICIke25leHRDbGlwLnRleHQuc3RyaW5nLnNsaWNlKDAsIDE4KX0iYCA6ICdBZGRpbmcgdGl0bGUnLAogICAgICAgIHNuYXBUaW1lczogW25leHRDbGlwLnN0YXJ0XSwKICAgICAgfSk7CiAgICAgIGNvbnRpbnVlOwogICAgfQoKICAgIGlmIChuZXh0Q2xpcC5raW5kID09PSAnYXVkaW8nKSB7CiAgICAgIHJhd1N0ZXBzLnB1c2goewogICAgICAgIGlkOiBgYXVkaW8tJHtuZXh0Q2xpcC5pZH1gLAogICAgICAgIGtpbmQ6ICdhdWRpbycsCiAgICAgICAgYWN0b3I6IGFkZGVkU29ydGVkLmxlbmd0aCA+PSAzID8gc291bmRBY3RvciA6IHByaW1hcnksCiAgICAgICAgY2xpcElkOiBuZXh0Q2xpcC5pZCwKICAgICAgICBhc3NldElkOiBuZXh0Q2xpcC5hc3NldElELAogICAgICAgIHRyYWNrSWQ6IG5leHRDbGlwLnRyYWNrSUQsCiAgICAgICAgdGltZTogbmV4dENsaXAuc3RhcnQsCiAgICAgICAgZHVyYXRpb246IG5leHRDbGlwLmR1cmF0aW9uLAogICAgICAgIGxhYmVsOiBgU2NvcmluZyAke2NsaXBOYW1lKGFmdGVyLCBuZXh0Q2xpcCl9YCwKICAgICAgICBzbmFwVGltZXM6IFtuZXh0Q2xpcC5zdGFydCwgbmV4dENsaXAuc3RhcnQgKyBuZXh0Q2xpcC5kdXJhdGlvbl0sCiAgICAgIH0pOwogICAgICBjb250aW51ZTsKICAgIH0KCiAgICBjb25zdCBhY3RvciA9IGFkZGVkU29ydGVkLmxlbmd0aCA+PSA0ICYmIHBsYWNlQ291bnRlciAlIDIgPT09IDEgPyBjdXR0ZXIgOiBwcmltYXJ5OwogICAgcGxhY2VDb3VudGVyKys7CiAgICByYXdTdGVwcy5wdXNoKHsKICAgICAgaWQ6IGBwbGFjZS0ke25leHRDbGlwLmlkfWAsCiAgICAgIGtpbmQ6ICdwbGFjZScsCiAgICAgIGFjdG9yLAogICAgICBjbGlwSWQ6IG5leHRDbGlwLmlkLAogICAgICBhc3NldElkOiBuZXh0Q2xpcC5hc3NldElELAogICAgICB0cmFja0lkOiBuZXh0Q2xpcC50cmFja0lELAogICAgICB0aW1lOiBuZXh0Q2xpcC5zdGFydCwKICAgICAgZHVyYXRpb246IG5leHRDbGlwLmR1cmF0aW9uLAogICAgICBsYWJlbDogYFBsYWNpbmcgJHtjbGlwTmFtZShhZnRlciwgbmV4dENsaXApfWAsCiAgICAgIHNuYXBUaW1lczogW25leHRDbGlwLnN0YXJ0LCBuZXh0Q2xpcC5zdGFydCArIG5leHRDbGlwLmR1cmF0aW9uXSwKICAgIH0pOwoKICAgIGlmIChuZXh0Q2xpcC5ncmFkZSkgewogICAgICByYXdTdGVwcy5wdXNoKHsKICAgICAgICBpZDogYGdyYWRlLSR7bmV4dENsaXAuaWR9YCwKICAgICAgICBraW5kOiAnZ3JhZGUnLAogICAgICAgIGFjdG9yOiBhZGRlZFNvcnRlZC5sZW5ndGggPj0gMyA/IGNvbG9yQWN0b3IgOiBwcmltYXJ5LAogICAgICAgIGNsaXBJZDogbmV4dENsaXAuaWQsCiAgICAgICAgdHJhY2tJZDogbmV4dENsaXAudHJhY2tJRCwKICAgICAgICB0aW1lOiBuZXh0Q2xpcC5zdGFydCArIG5leHRDbGlwLmR1cmF0aW9uICogMC41LAogICAgICAgIGR1cmF0aW9uOiBuZXh0Q2xpcC5kdXJhdGlvbiwKICAgICAgICBsYWJlbDogbmV4dENsaXAuZ3JhZGUubG9vayA/IGBMb29rOiAke25leHRDbGlwLmdyYWRlLmxvb2t9YCA6ICdDb2xvciBncmFkZScsCiAgICAgICAgZ3JhZGU6IG5leHRDbGlwLmdyYWRlLAogICAgICB9KTsKICAgIH0KICAgIGlmIChuZXh0Q2xpcC50cmFuc2l0aW9uSW4pIHsKICAgICAgcmF3U3RlcHMucHVzaCh7CiAgICAgICAgaWQ6IGB0cmFucy0ke25leHRDbGlwLmlkfWAsCiAgICAgICAga2luZDogJ3RyYW5zaXRpb24nLAogICAgICAgIGFjdG9yOiBjdXR0ZXIsCiAgICAgICAgY2xpcElkOiBuZXh0Q2xpcC5pZCwKICAgICAgICB0cmFja0lkOiBuZXh0Q2xpcC50cmFja0lELAogICAgICAgIHRpbWU6IG5leHRDbGlwLnN0YXJ0LAogICAgICAgIGR1cmF0aW9uOiBuZXh0Q2xpcC50cmFuc2l0aW9uSW4uZHVyYXRpb24sCiAgICAgICAgbGFiZWw6IG5leHRDbGlwLnRyYW5zaXRpb25Jbi5raW5kLAogICAgICAgIHRyYW5zaXRpb25LaW5kOiBuZXh0Q2xpcC50cmFuc2l0aW9uSW4ua2luZCwKICAgICAgfSk7CiAgICB9CiAgfQoKICBmb3IgKGNvbnN0IG5leHRDbGlwIG9mIGFmdGVyLmNsaXBzKSB7CiAgICBjb25zdCBwcmV2Q2xpcCA9IGJlZm9yZU1hcC5nZXQobmV4dENsaXAuaWQpOwogICAgaWYgKCFwcmV2Q2xpcCkgY29udGludWU7CiAgICBpZiAoTWF0aC5hYnMocHJldkNsaXAuc3RhcnQgLSBuZXh0Q2xpcC5zdGFydCkgPiAxZS0zIHx8IHByZXZDbGlwLnRyYWNrSUQgIT09IG5leHRDbGlwLnRyYWNrSUQpIHsKICAgICAgcmF3U3RlcHMucHVzaCh7CiAgICAgICAgaWQ6IGBtb3ZlLSR7bmV4dENsaXAuaWR9YCwKICAgICAgICBraW5kOiAnbW92ZScsCiAgICAgICAgYWN0b3I6IHByaW1hcnksCiAgICAgICAgY2xpcElkOiBuZXh0Q2xpcC5pZCwKICAgICAgICB0cmFja0lkOiBuZXh0Q2xpcC50cmFja0lELAogICAgICAgIHRpbWU6IG5leHRDbGlwLnN0YXJ0LAogICAgICAgIGR1cmF0aW9uOiBuZXh0Q2xpcC5kdXJhdGlvbiwKICAgICAgICBsYWJlbDogYE1vdmluZyAke2NsaXBOYW1lKGFmdGVyLCBuZXh0Q2xpcCl9YCwKICAgICAgICBzbmFwVGltZXM6IFtuZXh0Q2xpcC5zdGFydF0sCiAgICAgIH0pOwogICAgfQogICAgaWYgKAogICAgICBNYXRoLmFicyhwcmV2Q2xpcC5kdXJhdGlvbiAtIG5leHRDbGlwLmR1cmF0aW9uKSA+IDFlLTMgfHwKICAgICAgTWF0aC5hYnMoKHByZXZDbGlwLnNvdXJjZVN0YXJ0ID8/IDApIC0gKG5leHRDbGlwLnNvdXJjZVN0YXJ0ID8/IDApKSA+IDFlLTMgfHwKICAgICAgKHByZXZDbGlwLnNwZWVkID8/IDEpICE9PSAobmV4dENsaXAuc3BlZWQgPz8gMSkKICAgICkgewogICAgICByYXdTdGVwcy5wdXNoKHsKICAgICAgICBpZDogYHRyaW0tJHtuZXh0Q2xpcC5pZH1gLAogICAgICAgIGtpbmQ6ICd0cmltJywKICAgICAgICBhY3RvcjogY3V0dGVyLAogICAgICAgIGNsaXBJZDogbmV4dENsaXAuaWQsCiAgICAgICAgdHJhY2tJZDogbmV4dENsaXAudHJhY2tJRCwKICAgICAgICB0aW1lOiBuZXh0Q2xpcC5zdGFydCArIG5leHRDbGlwLmR1cmF0aW9uLAogICAgICAgIGR1cmF0aW9uOiBuZXh0Q2xpcC5kdXJhdGlvbiwKICAgICAgICBsYWJlbDogYFRyaW1taW5nICR7Y2xpcE5hbWUoYWZ0ZXIsIG5leHRDbGlwKX1gLAogICAgICAgIGN1dFRpbWU6IG5leHRDbGlwLnN0YXJ0ICsgbmV4dENsaXAuZHVyYXRpb24sCiAgICAgIH0pOwogICAgfQogICAgaWYgKGdyYWRlQ2hhbmdlZChwcmV2Q2xpcC5ncmFkZSwgbmV4dENsaXAuZ3JhZGUpICYmIG5leHRDbGlwLmdyYWRlKSB7CiAgICAgIHJhd1N0ZXBzLnB1c2goewogICAgICAgIGlkOiBgZ3JhZGUtJHtuZXh0Q2xpcC5pZH1gLAogICAgICAgIGtpbmQ6ICdncmFkZScsCiAgICAgICAgYWN0b3I6IGNvbG9yQWN0b3IsCiAgICAgICAgY2xpcElkOiBuZXh0Q2xpcC5pZCwKICAgICAgICB0cmFja0lkOiBuZXh0Q2xpcC50cmFja0lELAogICAgICAgIHRpbWU6IG5leHRDbGlwLnN0YXJ0ICsgbmV4dENsaXAuZHVyYXRpb24gKiAwLjUsCiAgICAgICAgZHVyYXRpb246IG5leHRDbGlwLmR1cmF0aW9uLAogICAgICAgIGxhYmVsOiBuZXh0Q2xpcC5ncmFkZS5sb29rID8gYExvb2s6ICR7bmV4dENsaXAuZ3JhZGUubG9va31gIDogJ0dyYWRpbmcgc2hvdCcsCiAgICAgICAgZ3JhZGU6IG5leHRDbGlwLmdyYWRlLAogICAgICB9KTsKICAgIH0KICAgIGlmICh0cmFuc2l0aW9uQ2hhbmdlZChwcmV2Q2xpcC50cmFuc2l0aW9uSW4sIG5leHRDbGlwLnRyYW5zaXRpb25JbikgJiYgbmV4dENsaXAudHJhbnNpdGlvbkluKSB7CiAgICAgIHJhd1N0ZXBzLnB1c2goewogICAgICAgIGlkOiBgdHJhbnMtJHtuZXh0Q2xpcC5pZH1gLAogICAgICAgIGtpbmQ6ICd0cmFuc2l0aW9uJywKICAgICAgICBhY3RvcjogY3V0dGVyLAogICAgICAgIGNsaXBJZDogbmV4dENsaXAuaWQsCiAgICAgICAgdHJhY2tJZDogbmV4dENsaXAudHJhY2tJRCwKICAgICAgICB0aW1lOiBuZXh0Q2xpcC5zdGFydCwKICAgICAgICBkdXJhdGlvbjogbmV4dENsaXAudHJhbnNpdGlvbkluLmR1cmF0aW9uLAogICAgICAgIGxhYmVsOiBuZXh0Q2xpcC50cmFuc2l0aW9uSW4ua2luZCwKICAgICAgICB0cmFuc2l0aW9uS2luZDogbmV4dENsaXAudHJhbnNpdGlvbkluLmtpbmQsCiAgICAgIH0pOwogICAgfQogICAgaWYgKHpvb21DaGFuZ2VkKHByZXZDbGlwLnRyYW5zZm9ybSwgbmV4dENsaXAudHJhbnNmb3JtKSkgewogICAgICByYXdTdGVwcy5wdXNoKHsKICAgICAgICBpZDogYHpvb20tJHtuZXh0Q2xpcC5pZH1gLAogICAgICAgIGtpbmQ6ICd6b29tJywKICAgICAgICBhY3RvcjogcHJpbWFyeSwKICAgICAgICBjbGlwSWQ6IG5leHRDbGlwLmlkLAogICAgICAgIHRyYWNrSWQ6IG5leHRDbGlwLnRyYWNrSUQsCiAgICAgICAgdGltZTogbmV4dENsaXAuc3RhcnQgKyBuZXh0Q2xpcC5kdXJhdGlvbiAqIDAuNSwKICAgICAgICBkdXJhdGlvbjogbmV4dENsaXAuZHVyYXRpb24sCiAgICAgICAgbGFiZWw6ICdGcmFtaW5nIHpvb20nLAogICAgICB9KTsKICAgIH0KICAgIGlmIChhdWRpb0NoYW5nZWQocHJldkNsaXAsIG5leHRDbGlwKSkgewogICAgICByYXdTdGVwcy5wdXNoKHsKICAgICAgICBpZDogYGF1ZC0ke25leHRDbGlwLmlkfWAsCiAgICAgICAga2luZDogJ2F1ZGlvJywKICAgICAgICBhY3Rvcjogc291bmRBY3RvciwKICAgICAgICBjbGlwSWQ6IG5leHRDbGlwLmlkLAogICAgICAgIHRyYWNrSWQ6IG5leHRDbGlwLnRyYWNrSUQsCiAgICAgICAgdGltZTogbmV4dENsaXAuc3RhcnQgKyBuZXh0Q2xpcC5kdXJhdGlvbiAqIDAuNSwKICAgICAgICBkdXJhdGlvbjogbmV4dENsaXAuZHVyYXRpb24sCiAgICAgICAgbGFiZWw6ICdCYWxhbmNpbmcgYXVkaW8nLAogICAgICB9KTsKICAgIH0KICB9CgogIGlmIChiZWZvcmUud2lkdGggIT09IGFmdGVyLndpZHRoIHx8IGJlZm9yZS5oZWlnaHQgIT09IGFmdGVyLmhlaWdodCkgewogICAgcmF3U3RlcHMudW5zaGlmdCh7CiAgICAgIGlkOiAnc2VxdWVuY2Utc2l6ZScsCiAgICAgIGtpbmQ6ICdzZXF1ZW5jZScsCiAgICAgIGFjdG9yOiBwcmltYXJ5LAogICAgICB0aW1lOiAwLAogICAgICBkdXJhdGlvbjogMCwKICAgICAgbGFiZWw6IGBGcmFtZSAke2FmdGVyLndpZHRofXgke2FmdGVyLmhlaWdodH1gLAogICAgfSk7CiAgfQoKICBpZiAoSlNPTi5zdHJpbmdpZnkoYmVmb3JlLmNhcHRpb25zID8/IG51bGwpICE9PSBKU09OLnN0cmluZ2lmeShhZnRlci5jYXB0aW9ucyA/PyBudWxsKSkgewogICAgcmF3U3RlcHMucHVzaCh7CiAgICAgIGlkOiAnY2FwdGlvbnMnLAogICAgICBraW5kOiAnY2FwdGlvbnMnLAogICAgICBhY3RvcjogdGl0bGVzQWN0b3IsCiAgICAgIHRpbWU6IDAsCiAgICAgIGR1cmF0aW9uOiAwLAogICAgICBsYWJlbDogJ1N0eWxpbmcgY2FwdGlvbnMnLAogICAgfSk7CiAgfQoKICBjb25zdCBjb3VudCA9IE1hdGgubWF4KDEsIHJhd1N0ZXBzLmxlbmd0aCk7CiAgY29uc3QgdGFyZ2V0VG90YWxNcyA9IGNvdW50IDw9IDMgPyBNYXRoLm1heCgxNDAwLCBjb3VudCAqIDY4MCkgOiBNYXRoLm1pbig2ODAwLCAxNDAwICsgY291bnQgKiAzNDApOwogIGNvbnN0IHN0ZXBTcGFuTXMgPSBNYXRoLm1heCg0MjAsIE1hdGgubWluKDkyMCwgdGFyZ2V0VG90YWxNcyAvIGNvdW50KSk7CiAgY29uc3Qgc3RhZ2dlck1zID0gY291bnQgPD0gMiA/IHN0ZXBTcGFuTXMgKiAwLjg4IDogKHRhcmdldFRvdGFsTXMgLSBzdGVwU3Bhbk1zKSAvIE1hdGgubWF4KDEsIGNvdW50IC0gMSk7CgogIGNvbnN0IGFjdG9yVHJhY2tFbmQgPSBuZXcgTWFwPHN0cmluZywgbnVtYmVyPigpOwogIGNvbnN0IHN0ZXBzOiBNYWdpY0Nob3Jlb1N0ZXBbXSA9IHJhd1N0ZXBzLm1hcCgocywgaWR4KSA9PiB7CiAgICBjb25zdCBwcmV2RW5kID0gYWN0b3JUcmFja0VuZC5nZXQocy5hY3Rvci5pZCkgPz8gMDsKICAgIGNvbnN0IHN0YXJ0TXMgPSBNYXRoLm1heChpZHggKiBzdGFnZ2VyTXMsIHByZXZFbmQgKiAwLjcyKTsKICAgIGNvbnN0IGR1ciA9CiAgICAgIHMua2luZCA9PT0gJ2dyYWRlJwogICAgICAgID8gTWF0aC5tYXgoc3RlcFNwYW5NcywgNzgwKQogICAgICAgIDogcy5raW5kID09PSAndHJhbnNpdGlvbicKICAgICAgICA/IE1hdGgubWF4KHN0ZXBTcGFuTXMsIDcyMCkKICAgICAgICA6IHN0ZXBTcGFuTXM7CiAgICBjb25zdCBlbmRNcyA9IHN0YXJ0TXMgKyBkdXI7CiAgICBhY3RvclRyYWNrRW5kLnNldChzLmFjdG9yLmlkLCBlbmRNcyk7CiAgICByZXR1cm4geyAuLi5zLCBzdGFydE1zLCBlbmRNcyB9OwogIH0pOwoKICBjb25zdCBhY3RvcnNNYXAgPSBuZXcgTWFwPHN0cmluZywgTWFnaWNBY3Rvcj4oKTsKICBmb3IgKGNvbnN0IHMgb2Ygc3RlcHMpIGFjdG9yc01hcC5zZXQocy5hY3Rvci5pZCwgcy5hY3Rvcik7CiAgY29uc3QgbWF4RW5kID0gc3RlcHMucmVkdWNlKChhY2MsIHMpID0+IE1hdGgubWF4KGFjYywgcy5lbmRNcyksIDkwMCk7CgogIHJldHVybiB7CiAgICBiZWZvcmU6IGNsb25lUHJvamVjdChiZWZvcmUpLAogICAgYWZ0ZXI6IGNsb25lUHJvamVjdChhZnRlciksCiAgICBhY3RvcnM6IFsuLi5hY3RvcnNNYXAudmFsdWVzKCldLAogICAgc3RlcHMsCiAgICB0b3RhbER1cmF0aW9uTXM6IG1heEVuZCArIDQ2MCwKICB9Owp9CgovKioKICogUHJvZ3Jlc3NpdmVseSBhcHBsaWVzIGEgY29tcGxldGVkIGNob3Jlb2dyYXBoaWMgc3RlcCBvbnRvIGEgd29ya2luZyBwcm9qZWN0IGNsb25lCiAqIHNvIGNsaXBzL2dyYWRlcy90cmFuc2l0aW9ucyBsYW5kIGxpdmUgYXMgZWFjaCBBSSBjdXJzb3IgZmluaXNoZXMgaXRzIGFjdGlvbi4KICovCmV4cG9ydCBmdW5jdGlvbiBhcHBseU1hZ2ljU3RlcCh3b3JraW5nOiBQcm9qZWN0LCBzdGVwOiBNYWdpY0Nob3Jlb1N0ZXAsIHRhcmdldDogUHJvamVjdCk6IFByb2plY3QgewogIGNvbnN0IG5leHQgPSBjbG9uZVByb2plY3Qod29ya2luZyk7CiAgY29uc3QgdGFyZ2V0Q2xpcCA9IHN0ZXAuY2xpcElkID8gdGFyZ2V0LmNsaXBzLmZpbmQoKGMpID0+IGMuaWQgPT09IHN0ZXAuY2xpcElkKSA6IHVuZGVmaW5lZDsKCiAgaWYgKHN0ZXAua2luZCA9PT0gJ3NlcXVlbmNlJykgewogICAgbmV4dC53aWR0aCA9IHRhcmdldC53aWR0aDsKICAgIG5leHQuaGVpZ2h0ID0gdGFyZ2V0LmhlaWdodDsKICAgIG5leHQuZnBzID0gdGFyZ2V0LmZwczsKICAgIG5leHQudmlkZW9UcmFja3MgPSB0YXJnZXQudmlkZW9UcmFja3MubWFwKCh0KSA9PiAoeyAuLi50IH0pKTsKICAgIG5leHQuYXVkaW9UcmFja3MgPSB0YXJnZXQuYXVkaW9UcmFja3MubWFwKCh0KSA9PiAoeyAuLi50IH0pKTsKICAgIHJldHVybiBuZXh0OwogIH0KCiAgaWYgKHN0ZXAua2luZCA9PT0gJ2NhcHRpb25zJykgewogICAgbmV4dC5jYXB0aW9ucyA9IHRhcmdldC5jYXB0aW9ucyA/IHsgLi4udGFyZ2V0LmNhcHRpb25zIH0gOiB1bmRlZmluZWQ7CiAgICByZXR1cm4gbmV4dDsKICB9CgogIGlmIChzdGVwLmtpbmQgPT09ICdyZW1vdmUnICYmIHN0ZXAuY2xpcElkKSB7CiAgICBuZXh0LmNsaXBzID0gbmV4dC5jbGlwcy5maWx0ZXIoKGMpID0+IGMuaWQgIT09IHN0ZXAuY2xpcElkKTsKICAgIHJldHVybiBuZXh0OwogIH0KCiAgaWYgKCF0YXJnZXRDbGlwKSByZXR1cm4gbmV4dDsKCiAgZm9yIChjb25zdCB2dCBvZiB0YXJnZXQudmlkZW9UcmFja3MpIHsKICAgIGlmICghbmV4dC52aWRlb1RyYWNrcy5zb21lKCh0KSA9PiB0LmlkID09PSB2dC5pZCkpIG5leHQudmlkZW9UcmFja3MucHVzaCh7IC4uLnZ0IH0pOwogIH0KICBmb3IgKGNvbnN0IGF0IG9mIHRhcmdldC5hdWRpb1RyYWNrcykgewogICAgaWYgKCFuZXh0LmF1ZGlvVHJhY2tzLnNvbWUoKHQpID0+IHQuaWQgPT09IGF0LmlkKSkgbmV4dC5hdWRpb1RyYWNrcy5wdXNoKHsgLi4uYXQgfSk7CiAgfQoKICBjb25zdCBpZHggPSBuZXh0LmNsaXBzLmZpbmRJbmRleCgoYykgPT4gYy5pZCA9PT0gdGFyZ2V0Q2xpcC5pZCk7CiAgaWYgKGlkeCA9PT0gLTEpIHsKICAgIGNvbnN0IHBsYWNlZCA9IGNsb25lUHJvamVjdCh7IC4uLnRhcmdldCwgY2xpcHM6IFt0YXJnZXRDbGlwXSB9KS5jbGlwc1swXTsKICAgIGlmIChzdGVwLmtpbmQgPT09ICdwbGFjZScpIHsKICAgICAgZGVsZXRlIHBsYWNlZC5ncmFkZTsKICAgICAgZGVsZXRlIHBsYWNlZC50cmFuc2l0aW9uSW47CiAgICB9CiAgICBuZXh0LmNsaXBzLnB1c2gocGxhY2VkKTsKICB9IGVsc2UgewogICAgY29uc3QgY3VyID0gbmV4dC5jbGlwc1tpZHhdOwogICAgaWYgKHN0ZXAua2luZCA9PT0gJ2dyYWRlJykgewogICAgICBjdXIuZ3JhZGUgPSB0YXJnZXRDbGlwLmdyYWRlID8geyAuLi50YXJnZXRDbGlwLmdyYWRlIH0gOiB1bmRlZmluZWQ7CiAgICB9IGVsc2UgaWYgKHN0ZXAua2luZCA9PT0gJ3RyYW5zaXRpb24nKSB7CiAgICAgIGN1ci50cmFuc2l0aW9uSW4gPSB0YXJnZXRDbGlwLnRyYW5zaXRpb25JbiA/IHsgLi4udGFyZ2V0Q2xpcC50cmFuc2l0aW9uSW4gfSA6IHVuZGVmaW5lZDsKICAgIH0gZWxzZSBpZiAoc3RlcC5raW5kID09PSAnem9vbScpIHsKICAgICAgY3VyLnRyYW5zZm9ybSA9IHRhcmdldENsaXAudHJhbnNmb3JtID8gSlNPTi5wYXJzZShKU09OLnN0cmluZ2lmeSh0YXJnZXRDbGlwLnRyYW5zZm9ybSkpIDogdW5kZWZpbmVkOwogICAgfSBlbHNlIGlmIChzdGVwLmtpbmQgPT09ICdhdWRpbycpIHsKICAgICAgY3VyLmdhaW5EQiA9IHRhcmdldENsaXAuZ2FpbkRCOwogICAgICBjdXIuZmFkZUluID0gdGFyZ2V0Q2xpcC5mYWRlSW47CiAgICAgIGN1ci5mYWRlT3V0ID0gdGFyZ2V0Q2xpcC5mYWRlT3V0OwogICAgfSBlbHNlIHsKICAgICAgbmV4dC5jbGlwc1tpZHhdID0gY2xvbmVQcm9qZWN0KHsgLi4udGFyZ2V0LCBjbGlwczogW3RhcmdldENsaXBdIH0pLmNsaXBzWzBdOwogICAgfQogIH0KCiAgc2FuaXRpemVQcm9qZWN0KG5leHQpOwogIHJldHVybiBuZXh0Owp9Cg==
+import { clipName, cloneProject, sanitizeProject } from './project';
+import { Clip, ColorGrade, Project, TransitionKind } from './types';
+
+export type MagicStepKind =
+  | 'remove'
+  | 'place'
+  | 'move'
+  | 'trim'
+  | 'grade'
+  | 'transition'
+  | 'zoom'
+  | 'title'
+  | 'audio'
+  | 'captions'
+  | 'sequence';
+
+export interface MagicActor {
+  id: string;
+  name: string;
+  color: string;
+}
+
+export interface MagicChoreoStep {
+  id: string;
+  kind: MagicStepKind;
+  actor: MagicActor;
+  clipId?: string;
+  assetId?: string;
+  trackId?: string;
+  time: number;
+  duration: number;
+  label: string;
+  grade?: ColorGrade;
+  transitionKind?: TransitionKind;
+  snapTimes?: number[];
+  cutTime?: number;
+  startMs: number;
+  endMs: number;
+}
+
+export interface MagicChoreography {
+  before: Project;
+  after: Project;
+  actors: MagicActor[];
+  steps: MagicChoreoStep[];
+  totalDurationMs: number;
+}
+
+const AGENT_COLORS: Record<string, string> = {
+  Claude: '#D97757',
+  Codex: '#10A37F',
+  ChatGPT: '#10A37F',
+  'Cloud AI': '#FF6B35',
+  Local: '#EAECEF',
+  Cutter: '#58A6FF',
+  Color: '#F5A623',
+  Sound: '#30D158',
+  Titles: '#BF5AF2',
+};
+
+function colorFor(name: string, fallbackIdx = 0): string {
+  if (AGENT_COLORS[name]) return AGENT_COLORS[name];
+  const palette = ['#58A6FF', '#F5A623', '#30D158', '#BF5AF2', '#FF6B35'];
+  return palette[fallbackIdx % palette.length];
+}
+
+function gradeChanged(a?: ColorGrade, b?: ColorGrade): boolean {
+  return JSON.stringify(a ?? null) !== JSON.stringify(b ?? null);
+}
+
+function transitionChanged(a?: Clip['transitionIn'], b?: Clip['transitionIn']): boolean {
+  return JSON.stringify(a ?? null) !== JSON.stringify(b ?? null);
+}
+
+function zoomChanged(a?: Clip['transform'], b?: Clip['transform']): boolean {
+  return JSON.stringify(a ?? null) !== JSON.stringify(b ?? null);
+}
+
+function audioChanged(a: Clip, b: Clip): boolean {
+  return (
+    (a.gainDB ?? 0) !== (b.gainDB ?? 0) ||
+    (a.fadeIn ?? 0) !== (b.fadeIn ?? 0) ||
+    (a.fadeOut ?? 0) !== (b.fadeOut ?? 0)
+  );
+}
+
+/**
+ * Diffs a before/after project pair into animated swarm cursor steps, splitting
+ * larger edits across specialized actors (Cutter, Color, Sound, Titles) just
+ * like Editroom's MagicShow choreographer.
+ */
+export function buildMagicPlan(before: Project, after: Project, worker: string): MagicChoreography {
+  const beforeMap = new Map(before.clips.map((c) => [c.id, c]));
+  const afterMap = new Map(after.clips.map((c) => [c.id, c]));
+  const primary: MagicActor = { id: 'primary', name: worker || 'Local', color: colorFor(worker || 'Local') };
+  const cutter: MagicActor = { id: 'cutter', name: 'Cutter', color: colorFor('Cutter') };
+  const colorActor: MagicActor = { id: 'color', name: 'Color', color: colorFor('Color') };
+  const soundActor: MagicActor = { id: 'sound', name: 'Sound', color: colorFor('Sound') };
+  const titlesActor: MagicActor = { id: 'titles', name: 'Titles', color: colorFor('Titles') };
+
+  const rawSteps: Array<Omit<MagicChoreoStep, 'startMs' | 'endMs'>> = [];
+
+  const removedClips = before.clips.filter((c) => !afterMap.has(c.id)).sort((a, b) => a.start - b.start);
+  for (const oldClip of removedClips) {
+    rawSteps.push({
+      id: `rm-${oldClip.id}`,
+      kind: 'remove',
+      actor: removedClips.length >= 2 ? cutter : primary,
+      clipId: oldClip.id,
+      assetId: oldClip.assetID,
+      trackId: oldClip.trackID,
+      time: oldClip.start,
+      duration: oldClip.duration,
+      label: `Removing ${clipName(before, oldClip)}`,
+    });
+  }
+
+  const addedSorted = after.clips
+    .filter((c) => !beforeMap.has(c.id))
+    .sort((a, b) => a.start - b.start);
+
+  let placeCounter = 0;
+  for (const nextClip of addedSorted) {
+    if (nextClip.kind === 'text') {
+      rawSteps.push({
+        id: `title-${nextClip.id}`,
+        kind: 'title',
+        actor: addedSorted.length >= 3 ? titlesActor : primary,
+        clipId: nextClip.id,
+        trackId: nextClip.trackID,
+        time: nextClip.start,
+        duration: nextClip.duration,
+        label: nextClip.text?.string ? `Title "${nextClip.text.string.slice(0, 18)}"` : 'Adding title',
+        snapTimes: [nextClip.start],
+      });
+      continue;
+    }
+
+    if (nextClip.kind === 'audio') {
+      rawSteps.push({
+        id: `audio-${nextClip.id}`,
+        kind: 'audio',
+        actor: addedSorted.length >= 3 ? soundActor : primary,
+        clipId: nextClip.id,
+        assetId: nextClip.assetID,
+        trackId: nextClip.trackID,
+        time: nextClip.start,
+        duration: nextClip.duration,
+        label: `Scoring ${clipName(after, nextClip)}`,
+        snapTimes: [nextClip.start, nextClip.start + nextClip.duration],
+      });
+      continue;
+    }
+
+    const actor = addedSorted.length >= 4 && placeCounter % 2 === 1 ? cutter : primary;
+    placeCounter++;
+    rawSteps.push({
+      id: `place-${nextClip.id}`,
+      kind: 'place',
+      actor,
+      clipId: nextClip.id,
+      assetId: nextClip.assetID,
+      trackId: nextClip.trackID,
+      time: nextClip.start,
+      duration: nextClip.duration,
+      label: `Placing ${clipName(after, nextClip)}`,
+      snapTimes: [nextClip.start, nextClip.start + nextClip.duration],
+    });
+
+    if (nextClip.grade) {
+      rawSteps.push({
+        id: `grade-${nextClip.id}`,
+        kind: 'grade',
+        actor: addedSorted.length >= 3 ? colorActor : primary,
+        clipId: nextClip.id,
+        trackId: nextClip.trackID,
+        time: nextClip.start + nextClip.duration * 0.5,
+        duration: nextClip.duration,
+        label: nextClip.grade.look ? `Look: ${nextClip.grade.look}` : 'Color grade',
+        grade: nextClip.grade,
+      });
+    }
+    if (nextClip.transitionIn) {
+      rawSteps.push({
+        id: `trans-${nextClip.id}`,
+        kind: 'transition',
+        actor: cutter,
+        clipId: nextClip.id,
+        trackId: nextClip.trackID,
+        time: nextClip.start,
+        duration: nextClip.transitionIn.duration,
+        label: nextClip.transitionIn.kind,
+        transitionKind: nextClip.transitionIn.kind,
+      });
+    }
+  }
+
+  for (const nextClip of after.clips) {
+    const prevClip = beforeMap.get(nextClip.id);
+    if (!prevClip) continue;
+    if (Math.abs(prevClip.start - nextClip.start) > 1e-3 || prevClip.trackID !== nextClip.trackID) {
+      rawSteps.push({
+        id: `move-${nextClip.id}`,
+        kind: 'move',
+        actor: primary,
+        clipId: nextClip.id,
+        trackId: nextClip.trackID,
+        time: nextClip.start,
+        duration: nextClip.duration,
+        label: `Moving ${clipName(after, nextClip)}`,
+        snapTimes: [nextClip.start],
+      });
+    }
+    if (
+      Math.abs(prevClip.duration - nextClip.duration) > 1e-3 ||
+      Math.abs((prevClip.sourceStart ?? 0) - (nextClip.sourceStart ?? 0)) > 1e-3 ||
+      (prevClip.speed ?? 1) !== (nextClip.speed ?? 1)
+    ) {
+      rawSteps.push({
+        id: `trim-${nextClip.id}`,
+        kind: 'trim',
+        actor: cutter,
+        clipId: nextClip.id,
+        trackId: nextClip.trackID,
+        time: nextClip.start + nextClip.duration,
+        duration: nextClip.duration,
+        label: `Trimming ${clipName(after, nextClip)}`,
+        cutTime: nextClip.start + nextClip.duration,
+      });
+    }
+    if (gradeChanged(prevClip.grade, nextClip.grade) && nextClip.grade) {
+      rawSteps.push({
+        id: `grade-${nextClip.id}`,
+        kind: 'grade',
+        actor: colorActor,
+        clipId: nextClip.id,
+        trackId: nextClip.trackID,
+        time: nextClip.start + nextClip.duration * 0.5,
+        duration: nextClip.duration,
+        label: nextClip.grade.look ? `Look: ${nextClip.grade.look}` : 'Grading shot',
+        grade: nextClip.grade,
+      });
+    }
+    if (transitionChanged(prevClip.transitionIn, nextClip.transitionIn) && nextClip.transitionIn) {
+      rawSteps.push({
+        id: `trans-${nextClip.id}`,
+        kind: 'transition',
+        actor: cutter,
+        clipId: nextClip.id,
+        trackId: nextClip.trackID,
+        time: nextClip.start,
+        duration: nextClip.transitionIn.duration,
+        label: nextClip.transitionIn.kind,
+        transitionKind: nextClip.transitionIn.kind,
+      });
+    }
+    if (zoomChanged(prevClip.transform, nextClip.transform)) {
+      rawSteps.push({
+        id: `zoom-${nextClip.id}`,
+        kind: 'zoom',
+        actor: primary,
+        clipId: nextClip.id,
+        trackId: nextClip.trackID,
+        time: nextClip.start + nextClip.duration * 0.5,
+        duration: nextClip.duration,
+        label: 'Framing zoom',
+      });
+    }
+    if (audioChanged(prevClip, nextClip)) {
+      rawSteps.push({
+        id: `aud-${nextClip.id}`,
+        kind: 'audio',
+        actor: soundActor,
+        clipId: nextClip.id,
+        trackId: nextClip.trackID,
+        time: nextClip.start + nextClip.duration * 0.5,
+        duration: nextClip.duration,
+        label: 'Balancing audio',
+      });
+    }
+  }
+
+  if (before.width !== after.width || before.height !== after.height) {
+    rawSteps.unshift({
+      id: 'sequence-size',
+      kind: 'sequence',
+      actor: primary,
+      time: 0,
+      duration: 0,
+      label: `Frame ${after.width}x${after.height}`,
+    });
+  }
+
+  if (JSON.stringify(before.captions ?? null) !== JSON.stringify(after.captions ?? null)) {
+    rawSteps.push({
+      id: 'captions',
+      kind: 'captions',
+      actor: titlesActor,
+      time: 0,
+      duration: 0,
+      label: 'Styling captions',
+    });
+  }
+
+  const count = Math.max(1, rawSteps.length);
+  const targetTotalMs = count <= 3 ? Math.max(1400, count * 680) : Math.min(6800, 1400 + count * 340);
+  const stepSpanMs = Math.max(420, Math.min(920, targetTotalMs / count));
+  const staggerMs = count <= 2 ? stepSpanMs * 0.88 : (targetTotalMs - stepSpanMs) / Math.max(1, count - 1);
+
+  const actorTrackEnd = new Map<string, number>();
+  const steps: MagicChoreoStep[] = rawSteps.map((s, idx) => {
+    const prevEnd = actorTrackEnd.get(s.actor.id) ?? 0;
+    const startMs = Math.max(idx * staggerMs, prevEnd * 0.72);
+    const dur =
+      s.kind === 'grade'
+        ? Math.max(stepSpanMs, 780)
+        : s.kind === 'transition'
+        ? Math.max(stepSpanMs, 720)
+        : stepSpanMs;
+    const endMs = startMs + dur;
+    actorTrackEnd.set(s.actor.id, endMs);
+    return { ...s, startMs, endMs };
+  });
+
+  const actorsMap = new Map<string, MagicActor>();
+  for (const s of steps) actorsMap.set(s.actor.id, s.actor);
+  const maxEnd = steps.reduce((acc, s) => Math.max(acc, s.endMs), 900);
+
+  return {
+    before: cloneProject(before),
+    after: cloneProject(after),
+    actors: [...actorsMap.values()],
+    steps,
+    totalDurationMs: maxEnd + 460,
+  };
+}
+
+/**
+ * Progressively applies a completed choreographic step onto a working project clone
+ * so clips/grades/transitions land live as each AI cursor finishes its action.
+ */
+export function applyMagicStep(working: Project, step: MagicChoreoStep, target: Project): Project {
+  const next = cloneProject(working);
+  const targetClip = step.clipId ? target.clips.find((c) => c.id === step.clipId) : undefined;
+
+  if (step.kind === 'sequence') {
+    next.width = target.width;
+    next.height = target.height;
+    next.fps = target.fps;
+    next.videoTracks = target.videoTracks.map((t) => ({ ...t }));
+    next.audioTracks = target.audioTracks.map((t) => ({ ...t }));
+    return next;
+  }
+
+  if (step.kind === 'captions') {
+    next.captions = target.captions ? { ...target.captions } : undefined;
+    return next;
+  }
+
+  if (step.kind === 'remove' && step.clipId) {
+    next.clips = next.clips.filter((c) => c.id !== step.clipId);
+    return next;
+  }
+
+  if (!targetClip) return next;
+
+  for (const vt of target.videoTracks) {
+    if (!next.videoTracks.some((t) => t.id === vt.id)) next.videoTracks.push({ ...vt });
+  }
+  for (const at of target.audioTracks) {
+    if (!next.audioTracks.some((t) => t.id === at.id)) next.audioTracks.push({ ...at });
+  }
+
+  const idx = next.clips.findIndex((c) => c.id === targetClip.id);
+  if (idx === -1) {
+    const placed = cloneProject({ ...target, clips: [targetClip] }).clips[0];
+    if (step.kind === 'place') {
+      delete placed.grade;
+      delete placed.transitionIn;
+    }
+    next.clips.push(placed);
+  } else {
+    const cur = next.clips[idx];
+    if (step.kind === 'grade') {
+      cur.grade = targetClip.grade ? { ...targetClip.grade } : undefined;
+    } else if (step.kind === 'transition') {
+      cur.transitionIn = targetClip.transitionIn ? { ...targetClip.transitionIn } : undefined;
+    } else if (step.kind === 'zoom') {
+      cur.transform = targetClip.transform ? JSON.parse(JSON.stringify(targetClip.transform)) : undefined;
+    } else if (step.kind === 'audio') {
+      cur.gainDB = targetClip.gainDB;
+      cur.fadeIn = targetClip.fadeIn;
+      cur.fadeOut = targetClip.fadeOut;
+    } else {
+      next.clips[idx] = cloneProject({ ...target, clips: [targetClip] }).clips[0];
+    }
+  }
+
+  sanitizeProject(next);
+  return next;
+}
