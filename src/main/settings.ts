@@ -1,1 +1,204 @@
-aW1wb3J0IGZzIGZyb20gJ25vZGU6ZnMnOwppbXBvcnQgaHR0cHMgZnJvbSAnbm9kZTpodHRwcyc7CmltcG9ydCBvcyBmcm9tICdub2RlOm9zJzsKaW1wb3J0IHBhdGggZnJvbSAnbm9kZTpwYXRoJzsKaW1wb3J0IHsgQXBwVXBkYXRlSW5mbywgQ2xvdWRBaUNvbmZpZyB9IGZyb20gJy4uL3NoYXJlZC90eXBlcyc7CmltcG9ydCB0eXBlIHsgRGppUGx1Z2luU2V0dGluZ3MgfSBmcm9tICcuLi9zaGFyZWQvZGppVHlwZXMnOwppbXBvcnQgeyBnZXRDYWNoZURpciB9IGZyb20gJy4vZW5naW5lL2ZmbXBlZyc7CgppbnRlcmZhY2UgUGVyc2lzdGVkU2V0dGluZ3MgewogIGNsb3VkQWk/OiBQYXJ0aWFsPENsb3VkQWlDb25maWc+OwogIGF1dG9TYXZlPzogYm9vbGVhbjsKICBtYWdpY0FuaW1hdGVkPzogYm9vbGVhbjsKICByZWNlbnRQcm9qZWN0cz86IHN0cmluZ1tdOwogIHBsdWdpbnNFbmFibGVkPzogUmVjb3JkPHN0cmluZywgYm9vbGVhbj47CiAgZGppSW1wb3J0PzogUGFydGlhbDxEamlQbHVnaW5TZXR0aW5ncz47Cn0KCmNvbnN0IERFRkFVTFRfQ0xPVURfQUk6IENsb3VkQWlDb25maWcgPSB7CiAgYmFzZVVybDogJ2h0dHBzOi8vYXBpLm9wZW5haS5jb20vdjEnLAogIGFwaUtleTogJycsCiAgbW9kZWw6ICdncHQtNG8tbWluaScsCn07CgpmdW5jdGlvbiBzZXR0aW5nc0ZpbGVQYXRoKCk6IHN0cmluZyB7CiAgcmV0dXJuIHBhdGguam9pbihnZXRDYWNoZURpcignQ29uZmlnJyksICdzZXR0aW5ncy5qc29uJyk7Cn0KCmZ1bmN0aW9uIHJlYWRTZXR0aW5nc0ZpbGUoKTogUGVyc2lzdGVkU2V0dGluZ3MgewogIGNvbnN0IGZpbGUgPSBzZXR0aW5nc0ZpbGVQYXRoKCk7CiAgaWYgKCFmcy5leGlzdHNTeW5jKGZpbGUpKSByZXR1cm4ge307CiAgdHJ5IHsKICAgIHJldHVybiBKU09OLnBhcnNlKGZzLnJlYWRGaWxlU3luYyhmaWxlLCAndXRmOCcpKSBhcyBQZXJzaXN0ZWRTZXR0aW5nczsKICB9IGNhdGNoIHsKICAgIHJldHVybiB7fTsKICB9Cn0KCmZ1bmN0aW9uIHdyaXRlU2V0dGluZ3NGaWxlKGRhdGE6IFBlcnNpc3RlZFNldHRpbmdzKTogdm9pZCB7CiAgY29uc3QgZmlsZSA9IHNldHRpbmdzRmlsZVBhdGgoKTsKICBmcy5ta2RpclN5bmMocGF0aC5kaXJuYW1lKGZpbGUpLCB7IHJlY3Vyc2l2ZTogdHJ1ZSB9KTsKICBmcy53cml0ZUZpbGVTeW5jKGZpbGUsIEpTT04uc3RyaW5naWZ5KGRhdGEsIG51bGwsIDIpLCAndXRmOCcpOwp9CgpleHBvcnQgZnVuY3Rpb24gZ2V0Q2xvdWRBaUNvbmZpZygpOiBDbG91ZEFpQ29uZmlnIHsKICBjb25zdCBzYXZlZCA9IHJlYWRTZXR0aW5nc0ZpbGUoKS5jbG91ZEFpOwogIHJldHVybiB7CiAgICBiYXNlVXJsOiAoc2F2ZWQ/LmJhc2VVcmwgPz8gREVGQVVMVF9DTE9VRF9BSS5iYXNlVXJsKS50cmltKCkgfHwgREVGQVVMVF9DTE9VRF9BSS5iYXNlVXJsLAogICAgYXBpS2V5OiBzYXZlZD8uYXBpS2V5ID8/ICcnLAogICAgbW9kZWw6IChzYXZlZD8ubW9kZWwgPz8gREVGQVVMVF9DTE9VRF9BSS5tb2RlbCkudHJpbSgpIHx8IERFRkFVTFRfQ0xPVURfQUkubW9kZWwsCiAgfTsKfQoKZXhwb3J0IGZ1bmN0aW9uIHNhdmVDbG91ZEFpQ29uZmlnKGNvbmZpZzogUGFydGlhbDxDbG91ZEFpQ29uZmlnPik6IENsb3VkQWlDb25maWcgewogIGNvbnN0IGN1cnJlbnQgPSByZWFkU2V0dGluZ3NGaWxlKCk7CiAgY29uc3QgbmV4dDogQ2xvdWRBaUNvbmZpZyA9IHsKICAgIGJhc2VVcmw6IChjb25maWcuYmFzZVVybCA/PyBjdXJyZW50LmNsb3VkQWk/LmJhc2VVcmwgPz8gREVGQVVMVF9DTE9VRF9BSS5iYXNlVXJsKS50cmltKCkgfHwgREVGQVVMVF9DTE9VRF9BSS5iYXNlVXJsLAogICAgYXBpS2V5OiAoY29uZmlnLmFwaUtleSA/PyBjdXJyZW50LmNsb3VkQWk/LmFwaUtleSA/PyAnJykudHJpbSgpLAogICAgbW9kZWw6IChjb25maWcubW9kZWwgPz8gY3VycmVudC5jbG91ZEFpPy5tb2RlbCA/PyBERUZBVUxUX0NMT1VEX0FJLm1vZGVsKS50cmltKCkgfHwgREVGQVVMVF9DTE9VRF9BSS5tb2RlbCwKICB9OwogIHdyaXRlU2V0dGluZ3NGaWxlKHsgLi4uY3VycmVudCwgY2xvdWRBaTogbmV4dCB9KTsKICByZXR1cm4gbmV4dDsKfQoKZXhwb3J0IGZ1bmN0aW9uIGdldEF1dG9TYXZlRW5hYmxlZCgpOiBib29sZWFuIHsKICByZXR1cm4gcmVhZFNldHRpbmdzRmlsZSgpLmF1dG9TYXZlID8/IHRydWU7Cn0KCmV4cG9ydCBmdW5jdGlvbiBzZXRBdXRvU2F2ZUVuYWJsZWQoZW5hYmxlZDogYm9vbGVhbik6IGJvb2xlYW4gewogIGNvbnN0IGN1cnJlbnQgPSByZWFkU2V0dGluZ3NGaWxlKCk7CiAgd3JpdGVTZXR0aW5nc0ZpbGUoeyAuLi5jdXJyZW50LCBhdXRvU2F2ZTogZW5hYmxlZCB9KTsKICByZXR1cm4gZW5hYmxlZDsKfQoKZXhwb3J0IGZ1bmN0aW9uIGdldE1hZ2ljQW5pbWF0ZWQoKTogYm9vbGVhbiB7CiAgcmV0dXJuIHJlYWRTZXR0aW5nc0ZpbGUoKS5tYWdpY0FuaW1hdGVkID8/IHRydWU7Cn0KCmV4cG9ydCBmdW5jdGlvbiBzZXRNYWdpY0FuaW1hdGVkKGVuYWJsZWQ6IGJvb2xlYW4pOiBib29sZWFuIHsKICBjb25zdCBjdXJyZW50ID0gcmVhZFNldHRpbmdzRmlsZSgpOwogIHdyaXRlU2V0dGluZ3NGaWxlKHsgLi4uY3VycmVudCwgbWFnaWNBbmltYXRlZDogZW5hYmxlZCB9KTsKICByZXR1cm4gZW5hYmxlZDsKfQoKZXhwb3J0IGZ1bmN0aW9uIGdldFBsdWdpbkVuYWJsZWRTdGF0ZShwbHVnaW5JZDogc3RyaW5nLCBkZWZhdWx0RW5hYmxlZCA9IHRydWUpOiBib29sZWFuIHsKICBjb25zdCBtYXAgPSByZWFkU2V0dGluZ3NGaWxlKCkucGx1Z2luc0VuYWJsZWQ7CiAgaWYgKCFtYXAgfHwgdHlwZW9mIG1hcFtwbHVnaW5JZF0gIT09ICdib29sZWFuJykgcmV0dXJuIGRlZmF1bHRFbmFibGVkOwogIHJldHVybiBtYXBbcGx1Z2luSWRdOwp9CgpleHBvcnQgZnVuY3Rpb24gc2V0UGx1Z2luRW5hYmxlZFN0YXRlKHBsdWdpbklkOiBzdHJpbmcsIGVuYWJsZWQ6IGJvb2xlYW4pOiBib29sZWFuIHsKICBjb25zdCBjdXJyZW50ID0gcmVhZFNldHRpbmdzRmlsZSgpOwogIGNvbnN0IG5leHRNYXAgPSB7IC4uLihjdXJyZW50LnBsdWdpbnNFbmFibGVkID8/IHt9KSwgW3BsdWdpbklkXTogZW5hYmxlZCB9OwogIHdyaXRlU2V0dGluZ3NGaWxlKHsgLi4uY3VycmVudCwgcGx1Z2luc0VuYWJsZWQ6IG5leHRNYXAgfSk7CiAgcmV0dXJuIGVuYWJsZWQ7Cn0KCmV4cG9ydCBmdW5jdGlvbiBkZWZhdWx0RGppRG93bmxvYWREaXIoKTogc3RyaW5nIHsKICByZXR1cm4gcGF0aC5qb2luKG9zLmhvbWVkaXIoKSwgJ1ZpZGVvcycsICdWZWN0cmFpbCBESkkgSW1wb3J0cycpOwp9CgpleHBvcnQgZnVuY3Rpb24gZ2V0RGppUGx1Z2luU2V0dGluZ3MoKTogRGppUGx1Z2luU2V0dGluZ3MgewogIGNvbnN0IHNhdmVkID0gcmVhZFNldHRpbmdzRmlsZSgpLmRqaUltcG9ydDsKICByZXR1cm4gewogICAgZG93bmxvYWREaXI6IChzYXZlZD8uZG93bmxvYWREaXIgPz8gJycpLnRyaW0oKSB8fCBkZWZhdWx0RGppRG93bmxvYWREaXIoKSwKICAgIGF1dG9JbXBvcnRUb1Byb2plY3Q6IHNhdmVkPy5hdXRvSW1wb3J0VG9Qcm9qZWN0ID8/IHRydWUsCiAgICBjb25jdXJyZW5jeTogc2F2ZWQ/LmNvbmN1cnJlbmN5ID09PSAyID8gMiA6IDEsCiAgICByZXN0b3JlV2lmaU9uRGlzY29ubmVjdDogc2F2ZWQ/LnJlc3RvcmVXaWZpT25EaXNjb25uZWN0ID8/IHRydWUsCiAgICByZW1lbWJlcmVkQ2FtZXJhczogQXJyYXkuaXNBcnJheShzYXZlZD8ucmVtZW1iZXJlZENhbWVyYXMpID8gc2F2ZWQucmVtZW1iZXJlZENhbWVyYXMuc2xpY2UoMCwgOCkgOiBbXSwKICB9Owp9CgpleHBvcnQgZnVuY3Rpb24gc2F2ZURqaVBsdWdpblNldHRpbmdzKHBhdGNoOiBQYXJ0aWFsPERqaVBsdWdpblNldHRpbmdzPik6IERqaVBsdWdpblNldHRpbmdzIHsKICBjb25zdCBjdXJyZW50ID0gcmVhZFNldHRpbmdzRmlsZSgpOwogIGNvbnN0IG1lcmdlZCA9IHsKICAgIC4uLmdldERqaVBsdWdpblNldHRpbmdzKCksCiAgICAuLi5wYXRjaCwKICB9OwogIGNvbnN0IG5leHQ6IERqaVBsdWdpblNldHRpbmdzID0gewogICAgZG93bmxvYWREaXI6IG1lcmdlZC5kb3dubG9hZERpci50cmltKCkgfHwgZGVmYXVsdERqaURvd25sb2FkRGlyKCksCiAgICBhdXRvSW1wb3J0VG9Qcm9qZWN0OiBCb29sZWFuKG1lcmdlZC5hdXRvSW1wb3J0VG9Qcm9qZWN0KSwKICAgIGNvbmN1cnJlbmN5OiBtZXJnZWQuY29uY3VycmVuY3kgPT09IDIgPyAyIDogMSwKICAgIHJlc3RvcmVXaWZpT25EaXNjb25uZWN0OiBCb29sZWFuKG1lcmdlZC5yZXN0b3JlV2lmaU9uRGlzY29ubmVjdCksCiAgICByZW1lbWJlcmVkQ2FtZXJhczogQXJyYXkuaXNBcnJheShtZXJnZWQucmVtZW1iZXJlZENhbWVyYXMpID8gbWVyZ2VkLnJlbWVtYmVyZWRDYW1lcmFzLnNsaWNlKDAsIDgpIDogW10sCiAgfTsKICB3cml0ZVNldHRpbmdzRmlsZSh7IC4uLmN1cnJlbnQsIGRqaUltcG9ydDogbmV4dCB9KTsKICByZXR1cm4gbmV4dDsKfQoKZXhwb3J0IGZ1bmN0aW9uIGdldFJlY2VudFByb2plY3RzKCk6IHN0cmluZ1tdIHsKICBjb25zdCBsaXN0ID0gcmVhZFNldHRpbmdzRmlsZSgpLnJlY2VudFByb2plY3RzID8/IFtdOwogIHJldHVybiBsaXN0LmZpbHRlcigocCkgPT4gdHlwZW9mIHAgPT09ICdzdHJpbmcnICYmIGZzLmV4aXN0c1N5bmMocCkpOwp9CgpleHBvcnQgZnVuY3Rpb24gYWRkUmVjZW50UHJvamVjdChmaWxlUGF0aDogc3RyaW5nKTogc3RyaW5nW10gewogIGNvbnN0IHJlc29sdmVkID0gcGF0aC5yZXNvbHZlKGZpbGVQYXRoKTsKICBjb25zdCBjdXJyZW50ID0gcmVhZFNldHRpbmdzRmlsZSgpOwogIGNvbnN0IG5leHQgPSBbcmVzb2x2ZWQsIC4uLihjdXJyZW50LnJlY2VudFByb2plY3RzID8/IFtdKS5maWx0ZXIoKHApID0+IHAgIT09IHJlc29sdmVkKV0uc2xpY2UoMCwgOCk7CiAgd3JpdGVTZXR0aW5nc0ZpbGUoeyAuLi5jdXJyZW50LCByZWNlbnRQcm9qZWN0czogbmV4dCB9KTsKICByZXR1cm4gbmV4dDsKfQoKZXhwb3J0IGZ1bmN0aW9uIGNsZWFyUmVjZW50UHJvamVjdHMoKTogc3RyaW5nW10gewogIGNvbnN0IGN1cnJlbnQgPSByZWFkU2V0dGluZ3NGaWxlKCk7CiAgd3JpdGVTZXR0aW5nc0ZpbGUoeyAuLi5jdXJyZW50LCByZWNlbnRQcm9qZWN0czogW10gfSk7CiAgcmV0dXJuIFtdOwp9CgpmdW5jdGlvbiBjb21wYXJlU2VtdmVyKGE6IHN0cmluZywgYjogc3RyaW5nKTogbnVtYmVyIHsKICBjb25zdCBwYSA9IGEucmVwbGFjZSgvXnYvaSwgJycpLnNwbGl0KCcuJykubWFwKChuKSA9PiBOdW1iZXIucGFyc2VJbnQobiwgMTApIHx8IDApOwogIGNvbnN0IHBiID0gYi5yZXBsYWNlKC9edi9pLCAnJykuc3BsaXQoJy4nKS5tYXAoKG4pID0+IE51bWJlci5wYXJzZUludChuLCAxMCkgfHwgMCk7CiAgZm9yIChsZXQgaSA9IDA7IGkgPCBNYXRoLm1heChwYS5sZW5ndGgsIHBiLmxlbmd0aCk7IGkrKykgewogICAgY29uc3QgZGEgPSBwYVtpXSA/PyAwOwogICAgY29uc3QgZGIgPSBwYltpXSA/PyAwOwogICAgaWYgKGRhICE9PSBkYikgcmV0dXJuIGRhIC0gZGI7CiAgfQogIHJldHVybiAwOwp9CgpleHBvcnQgYXN5bmMgZnVuY3Rpb24gY2hlY2tGb3JBcHBVcGRhdGVzKGN1cnJlbnRWZXJzaW9uOiBzdHJpbmcpOiBQcm9taXNlPEFwcFVwZGF0ZUluZm8+IHsKICByZXR1cm4gbmV3IFByb21pc2UoKHJlc29sdmUpID0+IHsKICAgIGNvbnN0IHJlcSA9IGh0dHBzLmdldCgKICAgICAgJ2h0dHBzOi8vYXBpLmdpdGh1Yi5jb20vcmVwb3MvbWFrdXI2MzcxL1ZlY3RyYWlsL3JlbGVhc2VzL2xhdGVzdCcsCiAgICAgIHsKICAgICAgICBoZWFkZXJzOiB7CiAgICAgICAgICAnVXNlci1BZ2VudCc6IGBWZWN0cmFpbC8ke2N1cnJlbnRWZXJzaW9ufWAsCiAgICAgICAgICBBY2NlcHQ6ICdhcHBsaWNhdGlvbi92bmQuZ2l0aHViK2pzb24nLAogICAgICAgIH0sCiAgICAgICAgdGltZW91dDogMTAwMDAsCiAgICAgIH0sCiAgICAgIChyZXMpID0+IHsKICAgICAgICBsZXQgYm9keSA9ICcnOwogICAgICAgIHJlcy5vbignZGF0YScsIChjaHVuazogQnVmZmVyKSA9PiAoYm9keSArPSBjaHVuay50b1N0cmluZygndXRmOCcpKSk7CiAgICAgICAgcmVzLm9uKCdlbmQnLCAoKSA9PiB7CiAgICAgICAgICBpZiAoIXJlcy5zdGF0dXNDb2RlIHx8IHJlcy5zdGF0dXNDb2RlID49IDQwMCkgewogICAgICAgICAgICByZXNvbHZlKHsKICAgICAgICAgICAgICBjdXJyZW50VmVyc2lvbiwKICAgICAgICAgICAgICBoYXNVcGRhdGU6IGZhbHNlLAogICAgICAgICAgICAgIGVycm9yOiBgUmVsZWFzZSBjaGVjayByZXR1cm5lZCBIVFRQICR7cmVzLnN0YXR1c0NvZGUgPz8gMH1gLAogICAgICAgICAgICB9KTsKICAgICAgICAgICAgcmV0dXJuOwogICAgICAgICAgfQogICAgICAgICAgdHJ5IHsKICAgICAgICAgICAgY29uc3QganNvbiA9IEpTT04ucGFyc2UoYm9keSkgYXMgeyB0YWdfbmFtZT86IHN0cmluZzsgaHRtbF91cmw/OiBzdHJpbmcgfTsKICAgICAgICAgICAgY29uc3QgbGF0ZXN0ID0gKGpzb24udGFnX25hbWUgPz8gJycpLnJlcGxhY2UoL152L2ksICcnKTsKICAgICAgICAgICAgY29uc3QgaGFzVXBkYXRlID0gQm9vbGVhbihsYXRlc3QgJiYgY29tcGFyZVNlbXZlcihsYXRlc3QsIGN1cnJlbnRWZXJzaW9uKSA+IDApOwogICAgICAgICAgICByZXNvbHZlKHsKICAgICAgICAgICAgICBjdXJyZW50VmVyc2lvbiwKICAgICAgICAgICAgICBsYXRlc3RWZXJzaW9uOiBsYXRlc3QgfHwgY3VycmVudFZlcnNpb24sCiAgICAgICAgICAgICAgaGFzVXBkYXRlLAogICAgICAgICAgICAgIHJlbGVhc2VVcmw6IGpzb24uaHRtbF91cmwgfHwgJ2h0dHBzOi8vZ2l0aHViLmNvbS9tYWt1cjYzNzEvVmVjdHJhaWwvcmVsZWFzZXMnLAogICAgICAgICAgICB9KTsKICAgICAgICAgIH0gY2F0Y2ggewogICAgICAgICAgICByZXNvbHZlKHsgY3VycmVudFZlcnNpb24sIGhhc1VwZGF0ZTogZmFsc2UsIGVycm9yOiAnRmFpbGVkIHRvIHBhcnNlIHJlbGVhc2UgbWV0YWRhdGEnIH0pOwogICAgICAgICAgfQogICAgICAgIH0pOwogICAgICB9CiAgICApOwogICAgcmVxLm9uKCdlcnJvcicsIChlcnIpID0+IHJlc29sdmUoeyBjdXJyZW50VmVyc2lvbiwgaGFzVXBkYXRlOiBmYWxzZSwgZXJyb3I6IGVyci5tZXNzYWdlIH0pKTsKICAgIHJlcS5vbigndGltZW91dCcsICgpID0+IHsKICAgICAgcmVxLmRlc3Ryb3koKTsKICAgICAgcmVzb2x2ZSh7IGN1cnJlbnRWZXJzaW9uLCBoYXNVcGRhdGU6IGZhbHNlLCBlcnJvcjogJ1VwZGF0ZSBjaGVjayB0aW1lZCBvdXQnIH0pOwogICAgfSk7CiAgfSk7Cn0K
+import fs from 'node:fs';
+import https from 'node:https';
+import os from 'node:os';
+import path from 'node:path';
+import { AppUpdateInfo, CloudAiConfig } from '../shared/types';
+import type { DjiPluginSettings } from '../shared/djiTypes';
+import { getCacheDir } from './engine/ffmpeg';
+
+interface PersistedSettings {
+  cloudAi?: Partial<CloudAiConfig>;
+  autoSave?: boolean;
+  magicAnimated?: boolean;
+  recentProjects?: string[];
+  pluginsEnabled?: Record<string, boolean>;
+  djiImport?: Partial<DjiPluginSettings>;
+}
+
+const DEFAULT_CLOUD_AI: CloudAiConfig = {
+  baseUrl: 'https://api.openai.com/v1',
+  apiKey: '',
+  model: 'gpt-4o-mini',
+};
+
+function settingsFilePath(): string {
+  return path.join(getCacheDir('Config'), 'settings.json');
+}
+
+function readSettingsFile(): PersistedSettings {
+  const file = settingsFilePath();
+  if (!fs.existsSync(file)) return {};
+  try {
+    return JSON.parse(fs.readFileSync(file, 'utf8')) as PersistedSettings;
+  } catch {
+    return {};
+  }
+}
+
+function writeSettingsFile(data: PersistedSettings): void {
+  const file = settingsFilePath();
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, JSON.stringify(data, null, 2), 'utf8');
+}
+
+export function getCloudAiConfig(): CloudAiConfig {
+  const saved = readSettingsFile().cloudAi;
+  return {
+    baseUrl: (saved?.baseUrl ?? DEFAULT_CLOUD_AI.baseUrl).trim() || DEFAULT_CLOUD_AI.baseUrl,
+    apiKey: saved?.apiKey ?? '',
+    model: (saved?.model ?? DEFAULT_CLOUD_AI.model).trim() || DEFAULT_CLOUD_AI.model,
+  };
+}
+
+export function saveCloudAiConfig(config: Partial<CloudAiConfig>): CloudAiConfig {
+  const current = readSettingsFile();
+  const next: CloudAiConfig = {
+    baseUrl: (config.baseUrl ?? current.cloudAi?.baseUrl ?? DEFAULT_CLOUD_AI.baseUrl).trim() || DEFAULT_CLOUD_AI.baseUrl,
+    apiKey: (config.apiKey ?? current.cloudAi?.apiKey ?? '').trim(),
+    model: (config.model ?? current.cloudAi?.model ?? DEFAULT_CLOUD_AI.model).trim() || DEFAULT_CLOUD_AI.model,
+  };
+  writeSettingsFile({ ...current, cloudAi: next });
+  return next;
+}
+
+export function getAutoSaveEnabled(): boolean {
+  return readSettingsFile().autoSave ?? true;
+}
+
+export function setAutoSaveEnabled(enabled: boolean): boolean {
+  const current = readSettingsFile();
+  writeSettingsFile({ ...current, autoSave: enabled });
+  return enabled;
+}
+
+export function getMagicAnimated(): boolean {
+  return readSettingsFile().magicAnimated ?? true;
+}
+
+export function setMagicAnimated(enabled: boolean): boolean {
+  const current = readSettingsFile();
+  writeSettingsFile({ ...current, magicAnimated: enabled });
+  return enabled;
+}
+
+export function getPluginEnabledState(pluginId: string, defaultEnabled = true): boolean {
+  const map = readSettingsFile().pluginsEnabled;
+  if (!map || typeof map[pluginId] !== 'boolean') return defaultEnabled;
+  return map[pluginId];
+}
+
+export function setPluginEnabledState(pluginId: string, enabled: boolean): boolean {
+  const current = readSettingsFile();
+  const nextMap = { ...(current.pluginsEnabled ?? {}), [pluginId]: enabled };
+  writeSettingsFile({ ...current, pluginsEnabled: nextMap });
+  return enabled;
+}
+
+export function defaultDjiDownloadDir(): string {
+  return path.join(os.homedir(), 'Videos', 'Vectrail DJI Imports');
+}
+
+export function getDjiPluginSettings(): DjiPluginSettings {
+  const saved = readSettingsFile().djiImport;
+  return {
+    downloadDir: (saved?.downloadDir ?? '').trim() || defaultDjiDownloadDir(),
+    autoImportToProject: saved?.autoImportToProject ?? true,
+    concurrency: saved?.concurrency === 2 ? 2 : 1,
+    restoreWifiOnDisconnect: saved?.restoreWifiOnDisconnect ?? true,
+    rememberedCameras: Array.isArray(saved?.rememberedCameras) ? saved.rememberedCameras.slice(0, 8) : [],
+  };
+}
+
+export function saveDjiPluginSettings(patch: Partial<DjiPluginSettings>): DjiPluginSettings {
+  const current = readSettingsFile();
+  const merged = {
+    ...getDjiPluginSettings(),
+    ...patch,
+  };
+  const next: DjiPluginSettings = {
+    downloadDir: merged.downloadDir.trim() || defaultDjiDownloadDir(),
+    autoImportToProject: Boolean(merged.autoImportToProject),
+    concurrency: merged.concurrency === 2 ? 2 : 1,
+    restoreWifiOnDisconnect: Boolean(merged.restoreWifiOnDisconnect),
+    rememberedCameras: Array.isArray(merged.rememberedCameras) ? merged.rememberedCameras.slice(0, 8) : [],
+  };
+  writeSettingsFile({ ...current, djiImport: next });
+  return next;
+}
+
+export function getRecentProjects(): string[] {
+  const list = readSettingsFile().recentProjects ?? [];
+  return list.filter((p) => typeof p === 'string' && fs.existsSync(p));
+}
+
+export function addRecentProject(filePath: string): string[] {
+  const resolved = path.resolve(filePath);
+  const current = readSettingsFile();
+  const next = [resolved, ...(current.recentProjects ?? []).filter((p) => p !== resolved)].slice(0, 8);
+  writeSettingsFile({ ...current, recentProjects: next });
+  return next;
+}
+
+export function clearRecentProjects(): string[] {
+  const current = readSettingsFile();
+  writeSettingsFile({ ...current, recentProjects: [] });
+  return [];
+}
+
+function compareSemver(a: string, b: string): number {
+  const pa = a.replace(/^v/i, '').split('.').map((n) => Number.parseInt(n, 10) || 0);
+  const pb = b.replace(/^v/i, '').split('.').map((n) => Number.parseInt(n, 10) || 0);
+  for (let i = 0; i < Math.max(pa.length, pb.length); i++) {
+    const da = pa[i] ?? 0;
+    const db = pb[i] ?? 0;
+    if (da !== db) return da - db;
+  }
+  return 0;
+}
+
+export async function checkForAppUpdates(currentVersion: string): Promise<AppUpdateInfo> {
+  return new Promise((resolve) => {
+    const req = https.get(
+      'https://api.github.com/repos/makur6371/Vectrail/releases/latest',
+      {
+        headers: {
+          'User-Agent': `Vectrail/${currentVersion}`,
+          Accept: 'application/vnd.github+json',
+        },
+        timeout: 10000,
+      },
+      (res) => {
+        let body = '';
+        res.on('data', (chunk: Buffer) => (body += chunk.toString('utf8')));
+        res.on('end', () => {
+          if (!res.statusCode || res.statusCode >= 400) {
+            resolve({
+              currentVersion,
+              hasUpdate: false,
+              error: `Release check returned HTTP ${res.statusCode ?? 0}`,
+            });
+            return;
+          }
+          try {
+            const json = JSON.parse(body) as { tag_name?: string; html_url?: string };
+            const latest = (json.tag_name ?? '').replace(/^v/i, '');
+            const hasUpdate = Boolean(latest && compareSemver(latest, currentVersion) > 0);
+            resolve({
+              currentVersion,
+              latestVersion: latest || currentVersion,
+              hasUpdate,
+              releaseUrl: json.html_url || 'https://github.com/makur6371/Vectrail/releases',
+            });
+          } catch {
+            resolve({ currentVersion, hasUpdate: false, error: 'Failed to parse release metadata' });
+          }
+        });
+      }
+    );
+    req.on('error', (err) => resolve({ currentVersion, hasUpdate: false, error: err.message }));
+    req.on('timeout', () => {
+      req.destroy();
+      resolve({ currentVersion, hasUpdate: false, error: 'Update check timed out' });
+    });
+  });
+}
