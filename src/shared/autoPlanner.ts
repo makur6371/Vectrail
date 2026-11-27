@@ -1,1 +1,475 @@
-aW1wb3J0IHsgQ2xpcEFuYWx5c2lzLCBDbGlwU2FtcGxlLCBNZWRpYUFzc2V0LCBNdXNpY0FuYWx5c2lzLCBQcm9qZWN0IH0gZnJvbSAnLi90eXBlcyc7CgpleHBvcnQgaW50ZXJmYWNlIFBsYW5uZWRTaG90IHsKICBhc3NldDogTWVkaWFBc3NldDsKICBzb3VyY2U6IG51bWJlcjsKICBkdXJhdGlvbjogbnVtYmVyOwogIGV4cG9zdXJlOiBudW1iZXI7CiAgZ2FpbkRCOiBudW1iZXI7CiAgZGlzc29sdmU6IGJvb2xlYW47CiAgc2NvcmU6IG51bWJlcjsKfQoKZXhwb3J0IGludGVyZmFjZSBQbGFubmVkTXVzaWMgewogIGFzc2V0OiBNZWRpYUFzc2V0OwogIHNvdXJjZTogbnVtYmVyOwogIGR1cmF0aW9uOiBudW1iZXI7CiAgZmFkZU91dDogbnVtYmVyOwp9CgpleHBvcnQgaW50ZXJmYWNlIEVkaXREZWNpc2lvbiB7CiAgc2hvdHM6IFBsYW5uZWRTaG90W107CiAgbXVzaWM/OiBQbGFubmVkTXVzaWM7CiAgdGl0bGU6IHN0cmluZzsKICB0aXRsZUF0RW5kPzogYm9vbGVhbjsKICBsb29rOiBzdHJpbmc7CiAgYnBtPzogbnVtYmVyOwp9CgpleHBvcnQgaW50ZXJmYWNlIEF1dG9QbGFuUmVjaXBlIHsKICBzZWNvbmRzPzogbnVtYmVyOwogIHBhY2U/OiAndW5jaGFuZ2VkJyB8ICdjYWxtJyB8ICdmYXN0JzsKICBsb29rPzogc3RyaW5nOyAvLyBsb29rIG5hbWUsICdub25lJywgb3IgdW5kZWZpbmVkCiAgbXVzaWNNb2RlPzogJ3VuY2hhbmdlZCcgfCAnb2ZmJyB8ICdhZGQnOwogIHNob3RzPzogbnVtYmVyOwogIGV2ZXJ5PzogYm9vbGVhbjsKICBtb21lbnRzPzogUmVjb3JkPHN0cmluZywgbnVtYmVyW10+OwogIHRpdGxlPzogc3RyaW5nOyAvLyB1bmRlZmluZWQgPSBubyB0aXRsZSB1bmxlc3MgZGVmYXVsdFRpdGxlPXRydWU7ICcnID0gcGxhY2Vob2xkZXIgJ1RpdGxlJwogIHRpdGxlQXRFbmQ/OiBib29sZWFuOwogIGRlZmF1bHRUaXRsZT86IGJvb2xlYW47Cn0KCmV4cG9ydCBmdW5jdGlvbiBwZXJjZW50aWxlKHZhbHVlczogbnVtYmVyW10sIHA6IG51bWJlcik6IG51bWJlciB7CiAgaWYgKCF2YWx1ZXMubGVuZ3RoKSByZXR1cm4gMDsKICBjb25zdCBzID0gWy4uLnZhbHVlc10uc29ydCgoYSwgYikgPT4gYSAtIGIpOwogIHJldHVybiBzW01hdGgubWluKHMubGVuZ3RoIC0gMSwgTWF0aC5mbG9vcigocy5sZW5ndGggLSAxKSAqIHApKV07Cn0KCmV4cG9ydCBmdW5jdGlvbiBjcmVhdGVTYW1wbGVTY29yZXIoYWxsOiBDbGlwU2FtcGxlW10pOiAoczogQ2xpcFNhbXBsZSkgPT4gbnVtYmVyIHsKICBjb25zdCBzaGFycExvZyA9IGFsbC5tYXAoKHMpID0+IE1hdGgubG9nMXAocy5zaGFycG5lc3MpKTsKICBjb25zdCBzMTAgPSBwZXJjZW50aWxlKHNoYXJwTG9nLCAwLjEpOwogIGNvbnN0IHM5MCA9IE1hdGgubWF4KHBlcmNlbnRpbGUoc2hhcnBMb2csIDAuOSksIHMxMCArIDFlLTYpOwogIGNvbnN0IG05MCA9IE1hdGgubWF4KHBlcmNlbnRpbGUoYWxsLm1hcCgocykgPT4gcy5tb3Rpb24pLCAwLjkpLCAwLjAyKTsKICBjb25zdCBjOTAgPSBNYXRoLm1heChwZXJjZW50aWxlKGFsbC5tYXAoKHMpID0+IHMuY29sb3IpLCAwLjkpLCAwLjA1KTsKICByZXR1cm4gKHM6IENsaXBTYW1wbGUpID0+IHsKICAgIGNvbnN0IHNoYXJwID0gTWF0aC5taW4oMSwgTWF0aC5tYXgoMCwgKE1hdGgubG9nMXAocy5zaGFycG5lc3MpIC0gczEwKSAvIChzOTAgLSBzMTApKSk7CiAgICBjb25zdCBleHBvc3VyZSA9IDEgLSBNYXRoLm1pbigxLCBNYXRoLmFicyhzLmx1bWEgLSAwLjQ1KSAvIDAuMzgpOwogICAgY29uc3QgY29sb3IgPSBNYXRoLm1pbigxLCBzLmNvbG9yIC8gYzkwKTsKICAgIGNvbnN0IG1vdGlvbiA9IHMubW90aW9uIC8gbTkwOwogICAgbGV0IHEgPSAwLjM2ICogc2hhcnAgKyAwLjIgKiBleHBvc3VyZSArIDAuMTQgKiBjb2xvcjsKICAgIHEgKz0gcy5mYWNlcyA+IDAgPyAwLjE2IDogMDsKICAgIHEgKz0gcy5hZXN0aGV0aWMgIT09IHVuZGVmaW5lZCA/ICgwLjI2ICogKHMuYWVzdGhldGljICsgMSkpIC8gMiA6IDAuMTI7CiAgICBpZiAocy51dGlsaXR5KSBxIC09IDAuMzU7CiAgICBpZiAobW90aW9uID4gMS4xKSBxIC09IE1hdGgubWluKDAuMywgKG1vdGlvbiAtIDEuMSkgKiAwLjMpOwogICAgcmV0dXJuIHE7CiAgfTsKfQoKZXhwb3J0IGZ1bmN0aW9uIGZpbmRCZXN0TW9tZW50cygKICBhbmFseXNpczogQ2xpcEFuYWx5c2lzLAogIGxpbWl0OiBudW1iZXIsCiAgbGVuZ3RoID0gMiwKICBjb3VudCA9IDUsCiAgc2NvcmVGbj86IChzOiBDbGlwU2FtcGxlKSA9PiBudW1iZXIKKTogQXJyYXk8eyBzdGFydDogbnVtYmVyOyBlbmQ6IG51bWJlcjsgc2NvcmU6IG51bWJlcjsgZmFjZXM6IG51bWJlciB9PiB7CiAgY29uc3Qgc2NvcmUgPSBzY29yZUZuID8/IGNyZWF0ZVNhbXBsZVNjb3JlcihhbmFseXNpcy5zYW1wbGVzKTsKICBjb25zdCBzY29yZXMgPSBhbmFseXNpcy5zYW1wbGVzLm1hcChzY29yZSk7CiAgY29uc3QgZW5kID0gTWF0aC5taW4oYW5hbHlzaXMuZHVyYXRpb24sIGxpbWl0KTsKICBjb25zdCBsZW4gPSBNYXRoLm1pbihsZW5ndGgsIGVuZCk7CiAgaWYgKGxlbiA8PSAwIHx8ICFhbmFseXNpcy5zYW1wbGVzLmxlbmd0aCkgcmV0dXJuIFtdOwoKICBjb25zdCB3aW5kb3dzOiBBcnJheTx7IHN0YXJ0OiBudW1iZXI7IHNjb3JlOiBudW1iZXI7IGZhY2VzOiBudW1iZXIgfT4gPSBbXTsKICBmb3IgKGxldCBzdGFydCA9IDA7IHN0YXJ0ICsgbGVuIDw9IGVuZCArIDFlLTY7IHN0YXJ0ICs9IDAuMjUpIHsKICAgIGNvbnN0IGluc2lkZTogbnVtYmVyW10gPSBbXTsKICAgIGxldCBmYWNlcyA9IDA7CiAgICBmb3IgKGxldCBpID0gMDsgaSA8IGFuYWx5c2lzLnNhbXBsZXMubGVuZ3RoOyBpKyspIHsKICAgICAgY29uc3Qgc21wID0gYW5hbHlzaXMuc2FtcGxlc1tpXTsKICAgICAgaWYgKHNtcC50aW1lID49IHN0YXJ0ICYmIHNtcC50aW1lIDw9IHN0YXJ0ICsgbGVuKSB7CiAgICAgICAgaW5zaWRlLnB1c2goc2NvcmVzW2ldKTsKICAgICAgICBmYWNlcyA9IE1hdGgubWF4KGZhY2VzLCBzbXAuZmFjZXMpOwogICAgICB9CiAgICB9CiAgICBpZiAoaW5zaWRlLmxlbmd0aCA+IDApIHsKICAgICAgY29uc3QgYXZnID0gaW5zaWRlLnJlZHVjZSgoYSwgYikgPT4gYSArIGIsIDApIC8gaW5zaWRlLmxlbmd0aDsKICAgICAgY29uc3QgbWluViA9IE1hdGgubWluKC4uLmluc2lkZSk7CiAgICAgIHdpbmRvd3MucHVzaCh7IHN0YXJ0LCBzY29yZTogYXZnICogMC43NSArIG1pblYgKiAwLjI1LCBmYWNlcyB9KTsKICAgIH0KICB9CgogIGNvbnN0IHBpY2tlZDogQXJyYXk8eyBzdGFydDogbnVtYmVyOyBlbmQ6IG51bWJlcjsgc2NvcmU6IG51bWJlcjsgZmFjZXM6IG51bWJlciB9PiA9IFtdOwogIGZvciAoY29uc3QgdyBvZiB3aW5kb3dzLnNvcnQoKGEsIGIpID0+IGIuc2NvcmUgLSBhLnNjb3JlKSkgewogICAgaWYgKHBpY2tlZC5sZW5ndGggPj0gY291bnQpIGJyZWFrOwogICAgaWYgKHBpY2tlZC5ldmVyeSgocCkgPT4gdy5zdGFydCArIGxlbiA8PSBwLnN0YXJ0IHx8IHcuc3RhcnQgPj0gcC5lbmQpKSB7CiAgICAgIHBpY2tlZC5wdXNoKHsgc3RhcnQ6IHcuc3RhcnQsIGVuZDogdy5zdGFydCArIGxlbiwgc2NvcmU6IHcuc2NvcmUsIGZhY2VzOiB3LmZhY2VzIH0pOwogICAgfQogIH0KICByZXR1cm4gcGlja2VkOwp9CgpleHBvcnQgZnVuY3Rpb24gYXV0b1BsYW5FZGl0KAogIF9wcm9qZWN0OiBQcm9qZWN0LAogIGNsaXBzOiBBcnJheTx7IGFzc2V0OiBNZWRpYUFzc2V0OyBhbmFseXNpczogQ2xpcEFuYWx5c2lzIH0+LAogIG11c2ljPzogeyBhc3NldDogTWVkaWFBc3NldDsgYW5hbHlzaXM6IE11c2ljQW5hbHlzaXMgfSwKICByZWNpcGU6IEF1dG9QbGFuUmVjaXBlID0geyBkZWZhdWx0VGl0bGU6IHRydWUsIGxvb2s6ICdXYXJtIGZpbG0nIH0KKTogRWRpdERlY2lzaW9uIHwgdW5kZWZpbmVkIHsKICBjb25zdCB1c2FibGUgPSBjbGlwcy5maWx0ZXIoKGMpID0+IGMuYW5hbHlzaXMuc2FtcGxlcy5sZW5ndGggPiAwKTsKICBpZiAoIXVzYWJsZS5sZW5ndGgpIHJldHVybiB1bmRlZmluZWQ7CgogIGNvbnN0IGFjdGl2ZU11c2ljID0gcmVjaXBlLm11c2ljTW9kZSA9PT0gJ29mZicgPyB1bmRlZmluZWQgOiBtdXNpYzsKICBjb25zdCBhbGxTYW1wbGVzID0gdXNhYmxlLmZsYXRNYXAoKGMpID0+IGMuYW5hbHlzaXMuc2FtcGxlcyk7CiAgY29uc3Qgc2NvcmUgPSBjcmVhdGVTYW1wbGVTY29yZXIoYWxsU2FtcGxlcyk7CgogIGludGVyZmFjZSBTb3VyY2VFbnRyeSB7CiAgICBhc3NldDogTWVkaWFBc3NldDsKICAgIGFuYWx5c2lzOiBDbGlwQW5hbHlzaXM7CiAgICBzY29yZXM6IG51bWJlcltdOwogICAgcGlja2VkOiBBcnJheTxbbnVtYmVyLCBudW1iZXJdPjsKICB9CgogIGNvbnN0IHNvdXJjZXM6IFNvdXJjZUVudHJ5W10gPSB1c2FibGUKICAgIC5tYXAoKGMsIGlkeCkgPT4gKHsKICAgICAgaWR4LAogICAgICBlbnRyeTogewogICAgICAgIGFzc2V0OiBjLmFzc2V0LAogICAgICAgIGFuYWx5c2lzOiBjLmFuYWx5c2lzLAogICAgICAgIHNjb3JlczogYy5hbmFseXNpcy5zYW1wbGVzLm1hcChzY29yZSksCiAgICAgICAgcGlja2VkOiBbXSBhcyBBcnJheTxbbnVtYmVyLCBudW1iZXJdPiwKICAgICAgfSwKICAgIH0pKQogICAgLnNvcnQoKGEsIGIpID0+IHsKICAgICAgY29uc3QgY2EgPSBhLmVudHJ5LmFuYWx5c2lzLmNyZWF0ZWQ7CiAgICAgIGNvbnN0IGNiID0gYi5lbnRyeS5hbmFseXNpcy5jcmVhdGVkOwogICAgICBpZiAoY2EgJiYgY2IpIHJldHVybiBjYSA8IGNiID8gLTEgOiBjYSA+IGNiID8gMSA6IGEuaWR4IC0gYi5pZHg7CiAgICAgIGlmIChjYSAmJiAhY2IpIHJldHVybiAtMTsKICAgICAgaWYgKCFjYSAmJiBjYikgcmV0dXJuIDE7CiAgICAgIHJldHVybiBhLmlkeCAtIGIuaWR4OwogICAgfSkKICAgIC5tYXAoKHgpID0+IHguZW50cnkpOwoKICBjb25zdCBhbGxTY29yZXMgPSBzb3VyY2VzLmZsYXRNYXAoKHMpID0+IHMuc2NvcmVzKTsKICBjb25zdCBmbG9vciA9IHBlcmNlbnRpbGUoYWxsU2NvcmVzLCAwLjMpOwoKICBsZXQgcGVyaW9kID0gYWN0aXZlTXVzaWMgPyA2MCAvIE1hdGgubWF4KDQwLCBhY3RpdmVNdXNpYy5hbmFseXNpcy5icG0pIDogdW5kZWZpbmVkOwogIGNvbnN0IHdhbnRlZCA9IHJlY2lwZS5ldmVyeSA/IE1hdGgubWF4KHJlY2lwZS5zaG90cyA/PyAwLCBzb3VyY2VzLmxlbmd0aCkgOiByZWNpcGUuc2hvdHM7CiAgbGV0IHN1YiA9IDE7CiAgY29uc3QgcGFjZSA9IHJlY2lwZS5wYWNlID09PSAnZmFzdCcgPyAwLjU1IDogcmVjaXBlLnBhY2UgPT09ICdjYWxtJyA/IDEuNyA6IDE7CiAgbGV0IGxvbmdCZWF0cyA9IDQ7CiAgbGV0IHNob3J0QmVhdHMgPSAyOwogIGlmIChwZXJpb2QpIHsKICAgIGxvbmdCZWF0cyA9IFsyLCA0LCA4LCAxNl0uZmluZCgoYikgPT4gYiAqIHBlcmlvZCEgPj0gMS41ICogcGFjZSkgPz8gMTY7CiAgICBzaG9ydEJlYXRzID0gKGxvbmdCZWF0cyAvIDIpICogcGVyaW9kID49IDAuOCA/IGxvbmdCZWF0cyAvIDIgOiBsb25nQmVhdHM7CiAgfQoKICBsZXQgcGVyU2hvdDogbnVtYmVyIHwgdW5kZWZpbmVkOwogIGlmICh3YW50ZWQgIT09IHVuZGVmaW5lZCkgewogICAgY29uc3QgbGVuID0gcmVjaXBlLnNlY29uZHMgPz8gd2FudGVkICogKHJlY2lwZS5wYWNlID09PSAnY2FsbScgPyAyLjUgOiByZWNpcGUucGFjZSA9PT0gJ2Zhc3QnID8gMC45IDogMS41KTsKICAgIHBlclNob3QgPSBNYXRoLm1heChyZWNpcGUuZXZlcnkgPyAwLjIgOiAwLjM1LCBsZW4gLyBNYXRoLm1heCgxLCB3YW50ZWQpKTsKICAgIGlmIChyZWNpcGUuZXZlcnkgJiYgcGVyaW9kICYmIHBlclNob3QgPCBwZXJpb2QgKiAwLjkpIHsKICAgICAgc3ViID0gMjsKICAgICAgcGVyaW9kID0gcGVyaW9kIC8gMjsKICAgIH0KICAgIGlmIChwZXJpb2QpIHsKICAgICAgY29uc3QgYiA9IE1hdGgubWF4KDEsIE1hdGguZmxvb3IocGVyU2hvdCAvIHBlcmlvZCkpOwogICAgICBsb25nQmVhdHMgPSBiOwogICAgICBzaG9ydEJlYXRzID0gYjsKICAgIH0KICB9CgogIGNvbnN0IHJoeXRobSA9IFt0cnVlLCBmYWxzZSwgZmFsc2UsIHRydWUsIHRydWUsIGZhbHNlXTsKICBjb25zdCBiZWF0c0ZvciA9IChrOiBudW1iZXIpID0+IChyaHl0aG1bayAlIHJoeXRobS5sZW5ndGhdID8gbG9uZ0JlYXRzIDogc2hvcnRCZWF0cyk7CiAgY29uc3QgbGVuZ3RoRm9yID0gKGs6IG51bWJlcikgPT4gewogICAgaWYgKHBlcmlvZCkgcmV0dXJuIGJlYXRzRm9yKGspICogcGVyaW9kOwogICAgaWYgKHBlclNob3QgIT09IHVuZGVmaW5lZCkgcmV0dXJuIHBlclNob3QgKiBbMS4wOCwgMC45NCwgMS4wLCAxLjA2LCAwLjkyLCAxLjBdW2sgJSA2XTsKICAgIHJldHVybiBbMi40LCAxLjgsIDIuMSwgMi44LCAxLjcsIDIuMl1bayAlIDZdICogcGFjZTsKICB9OwoKICBjb25zdCBnb29kID0gc291cmNlcy5yZWR1Y2UoKHN1bSwgcykgPT4gewogICAgY29uc3Qgc3RlcCA9IHMuYW5hbHlzaXMuc2FtcGxlcy5sZW5ndGggPiAxID8gcy5hbmFseXNpcy5kdXJhdGlvbiAvIHMuYW5hbHlzaXMuc2FtcGxlcy5sZW5ndGggOiAyLjU7CiAgICByZXR1cm4gc3VtICsgcy5zY29yZXMuZmlsdGVyKCh2KSA9PiB2ID49IGZsb29yKS5sZW5ndGggKiBzdGVwOwogIH0sIDApOwogIGxldCB0YXJnZXQgPQogICAgcmVjaXBlLnNlY29uZHMgPz8KICAgIChwZXJTaG90ICE9PSB1bmRlZmluZWQgPyBwZXJTaG90ICogKHdhbnRlZCA/PyAxKSA6IE1hdGgubWluKDQwLCBNYXRoLm1heCgxMiwgZ29vZCAqIDAuNSkpKTsKICBpZiAoYWN0aXZlTXVzaWMpIHRhcmdldCA9IE1hdGgubWluKHRhcmdldCwgTWF0aC5tYXgoMiwgYWN0aXZlTXVzaWMuYW5hbHlzaXMuZHVyYXRpb24gLSAyKSk7CgogIGNvbnN0IGJlc3RXaW5kb3cgPSAoCiAgICBzOiBTb3VyY2VFbnRyeSwKICAgIGxlbjogbnVtYmVyLAogICAgYXBhcnQgPSAwLjMKICApOiB7IHN0YXJ0OiBudW1iZXI7IHNjb3JlOiBudW1iZXIgfSB8IHVuZGVmaW5lZCA9PiB7CiAgICBjb25zdCBhID0gcy5hbmFseXNpczsKICAgIGlmIChzLmFzc2V0LmtpbmQgPT09ICdpbWFnZScpIHsKICAgICAgcmV0dXJuIHMucGlja2VkLmxlbmd0aCA9PT0gMCA/IHsgc3RhcnQ6IDAsIHNjb3JlOiBzLnNjb3Jlc1swXSA/PyAwIH0gOiB1bmRlZmluZWQ7CiAgICB9CiAgICBjb25zdCBsaW1pdCA9IE1hdGgubWluKGEuZHVyYXRpb24sIHMuYXNzZXQuZHVyYXRpb24pOwogICAgaWYgKGxpbWl0IDwgbGVuICsgMC4xKSByZXR1cm4gdW5kZWZpbmVkOwogICAgbGV0IGJlc3Q6IHsgc3RhcnQ6IG51bWJlcjsgc2NvcmU6IG51bWJlciB9IHwgdW5kZWZpbmVkOwogICAgbGV0IGJlc3RXYW50ZWQ6IHsgc3RhcnQ6IG51bWJlcjsgc2NvcmU6IG51bWJlciB9IHwgdW5kZWZpbmVkOwogICAgY29uc3Qgd2FudGVkVGltZXMgPSByZWNpcGUubW9tZW50cz8uW3MuYXNzZXQuaWRdID8/IFtdOwogICAgZm9yIChsZXQgc3RhcnQgPSAwLjA1OyBzdGFydCArIGxlbiA8PSBsaW1pdCAtIDAuMDUgKyAxZS02OyBzdGFydCArPSAwLjI1KSB7CiAgICAgIGNvbnN0IGVuZCA9IHN0YXJ0ICsgbGVuOwogICAgICBjb25zdCBjbGVhciA9IHMucGlja2VkLmV2ZXJ5KChbcDAsIHAxXSkgPT4gZW5kICsgYXBhcnQgPD0gcDAgfHwgc3RhcnQgPj0gcDEgKyBhcGFydCk7CiAgICAgIGlmICghY2xlYXIpIGNvbnRpbnVlOwogICAgICBjb25zdCB2YWxzOiBudW1iZXJbXSA9IFtdOwogICAgICBmb3IgKGxldCBpZHggPSAwOyBpZHggPCBhLnNhbXBsZXMubGVuZ3RoOyBpZHgrKykgewogICAgICAgIGlmIChhLnNhbXBsZXNbaWR4XS50aW1lID49IHN0YXJ0ICYmIGEuc2FtcGxlc1tpZHhdLnRpbWUgPD0gZW5kKSB7CiAgICAgICAgICB2YWxzLnB1c2gocy5zY29yZXNbaWR4XSk7CiAgICAgICAgfQogICAgICB9CiAgICAgIGlmICghdmFscy5sZW5ndGgpIGNvbnRpbnVlOwogICAgICBjb25zdCB2ID0gKHZhbHMucmVkdWNlKChhY2MsIHgpID0+IGFjYyArIHgsIDApIC8gdmFscy5sZW5ndGgpICogMC43NSArIE1hdGgubWluKC4uLnZhbHMpICogMC4yNTsKICAgICAgaWYgKCFiZXN0IHx8IHYgPiBiZXN0LnNjb3JlKSBiZXN0ID0geyBzdGFydCwgc2NvcmU6IHYgfTsKICAgICAgY29uc3QgbWFyZ2luID0gTWF0aC5taW4oMC4zLCBsZW4gLyA0KTsKICAgICAgaWYgKAogICAgICAgIHdhbnRlZFRpbWVzLnNvbWUoKHd0KSA9PiB3dCA+PSBzdGFydCArIG1hcmdpbiAmJiB3dCA8PSBlbmQgLSBtYXJnaW4pICYmCiAgICAgICAgKCFiZXN0V2FudGVkIHx8IHYgPiBiZXN0V2FudGVkLnNjb3JlKQogICAgICApIHsKICAgICAgICBiZXN0V2FudGVkID0geyBzdGFydCwgc2NvcmU6IHYgfTsKICAgICAgfQogICAgfQogICAgcmV0dXJuIGJlc3RXYW50ZWQgPz8gYmVzdDsKICB9OwoKICBjb25zdCBzaG90czogUGxhbm5lZFNob3RbXSA9IFtdOwogIGNvbnN0IHNob3RCZWF0czogbnVtYmVyW10gPSBbXTsKICBsZXQgdG90YWwgPSAwOwogIGxldCByb3VuZCA9IDA7CiAgY29uc3QgcDEyID0gcGVyY2VudGlsZShhbGxTY29yZXMsIDAuMTIpOwoKICB3aGlsZSAodG90YWwgPCB0YXJnZXQpIHsKICAgIGxldCBhZGRlZCA9IDA7CiAgICBmb3IgKGxldCBpID0gMDsgaSA8IHNvdXJjZXMubGVuZ3RoOyBpKyspIHsKICAgICAgaWYgKCEodG90YWwgPCB0YXJnZXQgfHwgKHJlY2lwZS5ldmVyeSAmJiByb3VuZCA9PT0gMCkpKSBicmVhazsKICAgICAgY29uc3QgcyA9IHNvdXJjZXNbaV07CiAgICAgIGlmIChyb3VuZCA+IDAgJiYgTWF0aC5taW4ocy5hbmFseXNpcy5kdXJhdGlvbiwgcy5hc3NldC5kdXJhdGlvbikgPCAxMikgY29udGludWU7CiAgICAgIGNvbnN0IGFwYXJ0ID0gcm91bmQgPiAwID8gNC4wIDogMC4zOwogICAgICBsZXQgbGVuID0gbGVuZ3RoRm9yKHNob3RzLmxlbmd0aCk7CiAgICAgIGxldCBiZWF0cyA9IGJlYXRzRm9yKHNob3RzLmxlbmd0aCk7CiAgICAgIGxldCBmb3VuZCA9IGJlc3RXaW5kb3cocywgbGVuICsgMC4wOCwgYXBhcnQpOwogICAgICBpZiAoIWZvdW5kICYmIChiZWF0cyAhPT0gc2hvcnRCZWF0cyB8fCAhcGVyaW9kKSkgewogICAgICAgIGJlYXRzID0gc2hvcnRCZWF0czsKICAgICAgICBsZW4gPSBwZXJpb2QgPyBzaG9ydEJlYXRzICogcGVyaW9kIDogTWF0aC5taW4oMS42LCBwZXJTaG90ID8/IDEuNik7CiAgICAgICAgZm91bmQgPSBiZXN0V2luZG93KHMsIGxlbiArIDAuMDgsIGFwYXJ0KTsKICAgICAgfQogICAgICBpZiAoIWZvdW5kKSBjb250aW51ZTsKICAgICAgY29uc3QgbWluU2NvcmUgPSByb3VuZCA9PT0gMCB8fCB0b3RhbCA8IDE4ID8gcDEyIDogZmxvb3I7CiAgICAgIGlmICghKChyZWNpcGUuZXZlcnkgJiYgcm91bmQgPT09IDApIHx8IGZvdW5kLnNjb3JlID49IG1pblNjb3JlKSkgY29udGludWU7CiAgICAgIGlmIChzaG90cy5sZW5ndGggPiAwICYmIHNob3RzW3Nob3RzLmxlbmd0aCAtIDFdLmFzc2V0LmlkID09PSBzLmFzc2V0LmlkICYmIHNvdXJjZXMubGVuZ3RoID4gMSkgewogICAgICAgIGNvbnRpbnVlOwogICAgICB9CiAgICAgIHMucGlja2VkLnB1c2goW2ZvdW5kLnN0YXJ0LCBmb3VuZC5zdGFydCArIGxlbl0pOwogICAgICBjb25zdCBsdW1hU2FtcGxlcyA9IHMuYW5hbHlzaXMuc2FtcGxlcy5maWx0ZXIoCiAgICAgICAgKHNtcCkgPT4gc21wLnRpbWUgPj0gZm91bmQhLnN0YXJ0ICYmIHNtcC50aW1lIDw9IGZvdW5kIS5zdGFydCArIGxlbgogICAgICApOwogICAgICBjb25zdCBtZWFuTHVtYSA9IGx1bWFTYW1wbGVzLmxlbmd0aAogICAgICAgID8gbHVtYVNhbXBsZXMucmVkdWNlKChhY2MsIHNtcCkgPT4gYWNjICsgc21wLmx1bWEsIDApIC8gbHVtYVNhbXBsZXMubGVuZ3RoCiAgICAgICAgOiAwLjQ1OwogICAgICBjb25zdCByYXdFeHAgPSBNYXRoLmxvZzIoMC40NSAvIE1hdGgubWF4KDAuMDUsIG1lYW5MdW1hKSkgKiAwLjU7CiAgICAgIGNvbnN0IGV4cG9zdXJlID0gTWF0aC5yb3VuZChNYXRoLm1heCgtMC41LCBNYXRoLm1pbigwLjUsIHJhd0V4cCkpICogMTApIC8gMTA7CiAgICAgIHNob3RzLnB1c2goewogICAgICAgIGFzc2V0OiBzLmFzc2V0LAogICAgICAgIHNvdXJjZTogZm91bmQuc3RhcnQsCiAgICAgICAgZHVyYXRpb246IGxlbiwKICAgICAgICBleHBvc3VyZSwKICAgICAgICBnYWluREI6IDAsCiAgICAgICAgZGlzc29sdmU6IGZhbHNlLAogICAgICAgIHNjb3JlOiBmb3VuZC5zY29yZSwKICAgICAgfSk7CiAgICAgIHNob3RCZWF0cy5wdXNoKGJlYXRzKTsKICAgICAgdG90YWwgKz0gbGVuOwogICAgICBhZGRlZCsrOwogICAgfQogICAgaWYgKGFkZGVkID09PSAwKSBicmVhazsKICAgIHJvdW5kKys7CiAgICBpZiAocmVjaXBlLmV2ZXJ5KSBicmVhazsKICB9CgogIC8vIEdyb3d0aCBwYXNzIHdoZW4gc2hvcnQgb2YgdGFyZ2V0CiAgY29uc3QgdW5pdCA9IHBlcmlvZCA/PyAwLjI1OwogIGxldCBncmV3ID0gdHJ1ZTsKICB3aGlsZSAodG90YWwgKyB1bml0IDw9IHRhcmdldCArIDAuMDUgJiYgZ3JldykgewogICAgZ3JldyA9IGZhbHNlOwogICAgZm9yIChsZXQgaSA9IDA7IGkgPCBzaG90cy5sZW5ndGggJiYgdG90YWwgKyB1bml0IDw9IHRhcmdldCArIDAuMDU7IGkrKykgewogICAgICBjb25zdCBzID0gc2hvdHNbaV07CiAgICAgIGlmIChzLmFzc2V0LmtpbmQgIT09ICd2aWRlbycpIGNvbnRpbnVlOwogICAgICBjb25zdCBzcmNFbnRyeSA9IHNvdXJjZXMuZmluZCgoeCkgPT4geC5hc3NldC5pZCA9PT0gcy5hc3NldC5pZCk7CiAgICAgIGNvbnN0IGxpbWl0ID0gTWF0aC5taW4ocy5hc3NldC5kdXJhdGlvbiwgc3JjRW50cnk/LmFuYWx5c2lzLmR1cmF0aW9uID8/IHMuYXNzZXQuZHVyYXRpb24pOwogICAgICBpZiAocy5zb3VyY2UgKyBzLmR1cmF0aW9uICsgdW5pdCA+IGxpbWl0IC0gMC4wNSkgY29udGludWU7CiAgICAgIGNvbnN0IGVuZCA9IHMuc291cmNlICsgcy5kdXJhdGlvbiArIHVuaXQ7CiAgICAgIGNvbnN0IGNsZWFyID0gc2hvdHMuZXZlcnkoCiAgICAgICAgKG90aGVyLCBqKSA9PgogICAgICAgICAgaiA9PT0gaSB8fAogICAgICAgICAgb3RoZXIuYXNzZXQuaWQgIT09IHMuYXNzZXQuaWQgfHwKICAgICAgICAgIGVuZCArIDAuMSA8PSBvdGhlci5zb3VyY2UgfHwKICAgICAgICAgIG90aGVyLnNvdXJjZSArIG90aGVyLmR1cmF0aW9uIDw9IHMuc291cmNlCiAgICAgICk7CiAgICAgIGlmICghY2xlYXIpIGNvbnRpbnVlOwogICAgICBzaG90c1tpXS5kdXJhdGlvbiArPSB1bml0OwogICAgICBzaG90QmVhdHNbaV0gKz0gMTsKICAgICAgdG90YWwgKz0gdW5pdDsKICAgICAgZ3JldyA9IHRydWU7CiAgICB9CiAgfQoKICAvLyBUcmltIGV4Y2VzcyBpZiBldmVyeSAmJiBzZWNvbmRzCiAgaWYgKHJlY2lwZS5ldmVyeSAmJiByZWNpcGUuc2Vjb25kcyAhPT0gdW5kZWZpbmVkKSB7CiAgICBjb25zdCBsaW1pdCA9IHJlY2lwZS5zZWNvbmRzOwogICAgd2hpbGUgKHRvdGFsID4gbGltaXQgKyAwLjE1ICYmIHNob3RzLmxlbmd0aCA+IHNvdXJjZXMubGVuZ3RoKSB7CiAgICAgIHRvdGFsIC09IHNob3RzLnBvcCgpIS5kdXJhdGlvbjsKICAgICAgc2hvdEJlYXRzLnBvcCgpOwogICAgfQogICAgaWYgKHRvdGFsID4gbGltaXQgKyAwLjE1ICYmIHNob3RzLmxlbmd0aCA+IDApIHsKICAgICAgY29uc3QgbGFzdCA9IHNob3RzLmxlbmd0aCAtIDE7CiAgICAgIGlmIChwZXJpb2QpIHsKICAgICAgICB3aGlsZSAodG90YWwgPiBsaW1pdCArIDAuMTUgJiYgc2hvdEJlYXRzW2xhc3RdID4gMSkgewogICAgICAgICAgc2hvdEJlYXRzW2xhc3RdIC09IDE7CiAgICAgICAgICBzaG90c1tsYXN0XS5kdXJhdGlvbiAtPSBwZXJpb2Q7CiAgICAgICAgICB0b3RhbCAtPSBwZXJpb2Q7CiAgICAgICAgfQogICAgICB9IGVsc2UgewogICAgICAgIGNvbnN0IGN1dCA9IE1hdGgubWF4KDAsIE1hdGgubWluKHRvdGFsIC0gbGltaXQsIHNob3RzW2xhc3RdLmR1cmF0aW9uIC0gMC4zKSk7CiAgICAgICAgc2hvdHNbbGFzdF0uZHVyYXRpb24gLT0gY3V0OwogICAgICAgIHRvdGFsIC09IGN1dDsKICAgICAgfQogICAgfQogIH0KCiAgaWYgKCFzaG90cy5sZW5ndGgpIHJldHVybiB1bmRlZmluZWQ7CgogIGNvbnN0IG1vbnRoID0gbmV3IERhdGUoKS50b0xvY2FsZURhdGVTdHJpbmcoJ2VuLVVTJywgeyBtb250aDogJ2xvbmcnLCB5ZWFyOiAnbnVtZXJpYycgfSk7CiAgY29uc3QgdGl0bGUgPQogICAgcmVjaXBlLnRpdGxlICE9PSB1bmRlZmluZWQKICAgICAgPyByZWNpcGUudGl0bGUgPT09ICcnCiAgICAgICAgPyAnVGl0bGUnCiAgICAgICAgOiByZWNpcGUudGl0bGUKICAgICAgOiByZWNpcGUuZGVmYXVsdFRpdGxlCiAgICAgID8gbW9udGgKICAgICAgOiAnJzsKICBjb25zdCBsb29rID0gcmVjaXBlLmxvb2sgPT09ICdub25lJyA/ICcnIDogcmVjaXBlLmxvb2sgPz8gJyc7CgogIGxldCBtdXNpY1BsYW46IFBsYW5uZWRNdXNpYyB8IHVuZGVmaW5lZDsKICBpZiAoYWN0aXZlTXVzaWMgJiYgYWN0aXZlTXVzaWMuYW5hbHlzaXMuYmVhdHMubGVuZ3RoID4gNCkgewogICAgY29uc3QgbSA9IGFjdGl2ZU11c2ljLmFuYWx5c2lzOwogICAgbGV0IGdyaWQgPSBbLi4ubS5iZWF0c107CiAgICBsZXQgZW5lcmd5ID0gWy4uLm0uZW5lcmd5XTsKICAgIGlmIChzdWIgPT09IDIpIHsKICAgICAgY29uc3QgaGFsZkdyaWQ6IG51bWJlcltdID0gW107CiAgICAgIGNvbnN0IGhhbGZFbmVyZ3k6IG51bWJlcltdID0gW107CiAgICAgIGZvciAobGV0IGkgPSAwOyBpIDwgbS5iZWF0cy5sZW5ndGg7IGkrKykgewogICAgICAgIGhhbGZHcmlkLnB1c2gobS5iZWF0c1tpXSk7CiAgICAgICAgaGFsZkVuZXJneS5wdXNoKG0uZW5lcmd5W2ldID8/IDApOwogICAgICAgIGlmIChpICsgMSA8IG0uYmVhdHMubGVuZ3RoKSB7CiAgICAgICAgICBoYWxmR3JpZC5wdXNoKChtLmJlYXRzW2ldICsgbS5iZWF0c1tpICsgMV0pIC8gMik7CiAgICAgICAgICBoYWxmRW5lcmd5LnB1c2gobS5lbmVyZ3lbaV0gPz8gMCk7CiAgICAgICAgfQogICAgICB9CiAgICAgIGdyaWQgPSBoYWxmR3JpZDsKICAgICAgZW5lcmd5ID0gaGFsZkVuZXJneTsKICAgIH0KICAgIGNvbnN0IGJhciA9IDQgKiBzdWI7CiAgICBjb25zdCBwaGFzZSA9IChtLmJhclBoYXNlICUgNCkgKiBzdWI7CiAgICBjb25zdCBzdGVwID0gKDYwIC8gTWF0aC5tYXgoNDAsIG0uYnBtKSkgLyBzdWI7CgogICAgY29uc3QgY291bnQgPSBzaG90QmVhdHMucmVkdWNlKChhLCBiKSA9PiBhICsgYiwgMCk7CiAgICBjb25zdCBleHRyYSA9IHJlY2lwZS5ldmVyeSAmJiByZWNpcGUuc2Vjb25kcyAhPT0gdW5kZWZpbmVkID8gMCA6IChiYXIgLSAoY291bnQgJSBiYXIpKSAlIGJhcjsKICAgIGlmIChleHRyYSA+IDAgJiYgc2hvdHMubGVuZ3RoID4gMCkgewogICAgICBjb25zdCBsYXN0ID0gc2hvdHMubGVuZ3RoIC0gMTsKICAgICAgY29uc3QgcyA9IHNob3RzW2xhc3RdOwogICAgICBjb25zdCBuZWVkZWQgPSBzLmR1cmF0aW9uICsgZXh0cmEgKiBzdGVwOwogICAgICBjb25zdCBmaXRzID0gKHN0OiBudW1iZXIpID0+IHsKICAgICAgICBpZiAocy5hc3NldC5raW5kICE9PSAndmlkZW8nKSByZXR1cm4gdHJ1ZTsKICAgICAgICBpZiAoc3QgPCAwIHx8IHN0ICsgbmVlZGVkID4gcy5hc3NldC5kdXJhdGlvbiAtIDAuMDUpIHJldHVybiBmYWxzZTsKICAgICAgICByZXR1cm4gc2hvdHMuZXZlcnkoCiAgICAgICAgICAob3RoZXIsIGopID0+CiAgICAgICAgICAgIGogPT09IGxhc3QgfHwKICAgICAgICAgICAgb3RoZXIuYXNzZXQuaWQgIT09IHMuYXNzZXQuaWQgfHwKICAgICAgICAgICAgc3QgKyBuZWVkZWQgKyAwLjEgPD0gb3RoZXIuc291cmNlIHx8CiAgICAgICAgICAgIHN0ID49IG90aGVyLnNvdXJjZSArIG90aGVyLmR1cmF0aW9uICsgMC4xCiAgICAgICAgKTsKICAgICAgfTsKICAgICAgaWYgKGZpdHMocy5zb3VyY2UpKSB7CiAgICAgICAgc2hvdEJlYXRzW2xhc3RdICs9IGV4dHJhOwogICAgICB9IGVsc2UgaWYgKGZpdHMocy5zb3VyY2UgLSAobmVlZGVkIC0gcy5kdXJhdGlvbikpKSB7CiAgICAgICAgc2hvdEJlYXRzW2xhc3RdICs9IGV4dHJhOwogICAgICAgIHNob3RzW2xhc3RdLnNvdXJjZSA9IHMuc291cmNlIC0gKG5lZWRlZCAtIHMuZHVyYXRpb24pOwogICAgICB9IGVsc2UgaWYgKHNob3RCZWF0c1tsYXN0XSA+IGJhciAtIGV4dHJhKSB7CiAgICAgICAgc2hvdEJlYXRzW2xhc3RdIC09IGJhciAtIGV4dHJhOwogICAgICB9IGVsc2UgaWYgKHNob3RzLmxlbmd0aCA+IDEpIHsKICAgICAgICBjb25zdCBwb3BwZWQgPSBzaG90QmVhdHMucG9wKCkhOwogICAgICAgIHNob3RzLnBvcCgpOwogICAgICAgIGlmIChzaG90QmVhdHMubGVuZ3RoID4gMCkgewogICAgICAgICAgLy8gRHJvcCBleGNlc3MgaWYgbmVlZGVkCiAgICAgICAgICB2b2lkIHBvcHBlZDsKICAgICAgICB9CiAgICAgIH0KICAgIH0KCiAgICBsZXQgdG90YWxCZWF0cyA9IHNob3RCZWF0cy5yZWR1Y2UoKGEsIGIpID0+IGEgKyBiLCAwKTsKICAgIHdoaWxlICh0b3RhbEJlYXRzICsgMiA+PSBncmlkLmxlbmd0aCAmJiBzaG90QmVhdHMubGVuZ3RoID4gMSkgewogICAgICB0b3RhbEJlYXRzIC09IHNob3RCZWF0cy5wb3AoKSE7CiAgICAgIHNob3RzLnBvcCgpOwogICAgfQoKICAgIGxldCBiZXN0QmVhdCA9IE1hdGgubWluKHBoYXNlLCBNYXRoLm1heCgwLCBncmlkLmxlbmd0aCAtIDEpKTsKICAgIGxldCBiZXN0U2NvcmUgPSAtSW5maW5pdHk7CiAgICBjb25zdCBsb29rV2luID0gOCAqIHN1YjsKICAgIGZvciAobGV0IGIgPSBwaGFzZTsgYiArIHRvdGFsQmVhdHMgKyAxIDwgZ3JpZC5sZW5ndGggJiYgYiArIHRvdGFsQmVhdHMgPD0gZW5lcmd5Lmxlbmd0aDsgYiArPSBiYXIpIHsKICAgICAgY29uc3Qgd2luID0gZW5lcmd5LnNsaWNlKGIsIGIgKyB0b3RhbEJlYXRzKTsKICAgICAgY29uc3QgbWVhbiA9IHdpbi5yZWR1Y2UoKGFjYywgdikgPT4gYWNjICsgdiwgMCkgLyBNYXRoLm1heCgxLCB3aW4ubGVuZ3RoKTsKICAgICAgY29uc3QgYmVmb3JlU2xpY2UgPSBiID49IGxvb2tXaW4gPyBlbmVyZ3kuc2xpY2UoYiAtIGxvb2tXaW4sIGIpIDogW107CiAgICAgIGNvbnN0IGJlZm9yZSA9IGJlZm9yZVNsaWNlLmxlbmd0aAogICAgICAgID8gYmVmb3JlU2xpY2UucmVkdWNlKChhY2MsIHYpID0+IGFjYyArIHYsIDApIC8gYmVmb3JlU2xpY2UubGVuZ3RoCiAgICAgICAgOiBtZWFuOwogICAgICBjb25zdCBhZnRlclNsaWNlID0gZW5lcmd5LnNsaWNlKGIsIE1hdGgubWluKGVuZXJneS5sZW5ndGgsIGIgKyBsb29rV2luKSk7CiAgICAgIGNvbnN0IGFmdGVyID0gYWZ0ZXJTbGljZS5sZW5ndGgKICAgICAgICA/IGFmdGVyU2xpY2UucmVkdWNlKChhY2MsIHYpID0+IGFjYyArIHYsIDApIC8gYWZ0ZXJTbGljZS5sZW5ndGgKICAgICAgICA6IG1lYW47CiAgICAgIGNvbnN0IHNjID0gbWVhbiArIDAuNSAqIE1hdGgubWF4KDAsIGFmdGVyIC0gYmVmb3JlKSAtIChiID09PSBwaGFzZSAmJiBiIDwgYmFyID8gMC4wNSA6IDApOwogICAgICBpZiAoc2MgPiBiZXN0U2NvcmUpIHsKICAgICAgICBiZXN0U2NvcmUgPSBzYzsKICAgICAgICBiZXN0QmVhdCA9IGI7CiAgICAgIH0KICAgIH0KCiAgICBjb25zdCBiMCA9IGJlc3RCZWF0OwogICAgbGV0IGF0ID0gYjA7CiAgICBmb3IgKGxldCBpID0gMDsgaSA8IHNob3RzLmxlbmd0aDsgaSsrKSB7CiAgICAgIGNvbnN0IG5leHQgPSBhdCArIHNob3RCZWF0c1tpXTsKICAgICAgaWYgKG5leHQgPCBncmlkLmxlbmd0aCkgewogICAgICAgIHNob3RzW2ldLmR1cmF0aW9uID0gTWF0aC5tYXgoMC4yLCBncmlkW25leHRdIC0gZ3JpZFthdF0pOwogICAgICAgIHNob3RzW2ldLmRpc3NvbHZlID0gc3ViID09PSAxICYmIGkgPiAwICYmIChhdCAtIGIwKSAlIDE2ID09PSAwOwogICAgICAgIGF0ID0gbmV4dDsKICAgICAgfQogICAgfQogICAgY29uc3QgbGVuZ3RoID0gTWF0aC5tYXgoMC41LCBncmlkW2F0XSAtIGdyaWRbYjBdKTsKICAgIGNvbnN0IHRhaWwgPSBNYXRoLm1pbigxLjIsIE1hdGgubWF4KDAsIG0uZHVyYXRpb24gLSBncmlkW2F0XSkpOwogICAgbXVzaWNQbGFuID0gewogICAgICBhc3NldDogYWN0aXZlTXVzaWMuYXNzZXQsCiAgICAgIHNvdXJjZTogZ3JpZFtiMF0sCiAgICAgIGR1cmF0aW9uOiBsZW5ndGggKyB0YWlsLAogICAgICBmYWRlT3V0OiB0YWlsICsgMC42LAogICAgfTsKICAgIGZvciAoY29uc3QgcyBvZiBzaG90cykgewogICAgICBpZiAocy5hc3NldC5oYXNBdWRpbykgcy5nYWluREIgPSAtMTY7CiAgICB9CiAgfSBlbHNlIHsKICAgIGZvciAobGV0IGkgPSAwOyBpIDwgc2hvdHMubGVuZ3RoOyBpKyspIHsKICAgICAgc2hvdHNbaV0uZGlzc29sdmUgPSBpID4gMCAmJiBpICUgNCA9PT0gMDsKICAgIH0KICB9CgogIGZvciAoY29uc3QgcyBvZiBzaG90cykgewogICAgaWYgKHMuYXNzZXQua2luZCA9PT0gJ3ZpZGVvJykgewogICAgICBzLnNvdXJjZSA9IE1hdGgubWF4KDAsIE1hdGgubWluKHMuc291cmNlLCBzLmFzc2V0LmR1cmF0aW9uIC0gcy5kdXJhdGlvbiAtIDAuMDIpKTsKICAgIH0KICB9CgogIHJldHVybiB7CiAgICBzaG90cywKICAgIG11c2ljOiBtdXNpY1BsYW4sCiAgICB0aXRsZSwKICAgIHRpdGxlQXRFbmQ6IHJlY2lwZS50aXRsZUF0RW5kLAogICAgbG9vaywKICAgIGJwbTogYWN0aXZlTXVzaWM/LmFuYWx5c2lzLmJwbSwKICB9Owp9Cg==
+import { ClipAnalysis, ClipSample, MediaAsset, MusicAnalysis, Project } from './types';
+
+export interface PlannedShot {
+  asset: MediaAsset;
+  source: number;
+  duration: number;
+  exposure: number;
+  gainDB: number;
+  dissolve: boolean;
+  score: number;
+}
+
+export interface PlannedMusic {
+  asset: MediaAsset;
+  source: number;
+  duration: number;
+  fadeOut: number;
+}
+
+export interface EditDecision {
+  shots: PlannedShot[];
+  music?: PlannedMusic;
+  title: string;
+  titleAtEnd?: boolean;
+  look: string;
+  bpm?: number;
+}
+
+export interface AutoPlanRecipe {
+  seconds?: number;
+  pace?: 'unchanged' | 'calm' | 'fast';
+  look?: string; // look name, 'none', or undefined
+  musicMode?: 'unchanged' | 'off' | 'add';
+  shots?: number;
+  every?: boolean;
+  moments?: Record<string, number[]>;
+  title?: string; // undefined = no title unless defaultTitle=true; '' = placeholder 'Title'
+  titleAtEnd?: boolean;
+  defaultTitle?: boolean;
+}
+
+export function percentile(values: number[], p: number): number {
+  if (!values.length) return 0;
+  const s = [...values].sort((a, b) => a - b);
+  return s[Math.min(s.length - 1, Math.floor((s.length - 1) * p))];
+}
+
+export function createSampleScorer(all: ClipSample[]): (s: ClipSample) => number {
+  const sharpLog = all.map((s) => Math.log1p(s.sharpness));
+  const s10 = percentile(sharpLog, 0.1);
+  const s90 = Math.max(percentile(sharpLog, 0.9), s10 + 1e-6);
+  const m90 = Math.max(percentile(all.map((s) => s.motion), 0.9), 0.02);
+  const c90 = Math.max(percentile(all.map((s) => s.color), 0.9), 0.05);
+  return (s: ClipSample) => {
+    const sharp = Math.min(1, Math.max(0, (Math.log1p(s.sharpness) - s10) / (s90 - s10)));
+    const exposure = 1 - Math.min(1, Math.abs(s.luma - 0.45) / 0.38);
+    const color = Math.min(1, s.color / c90);
+    const motion = s.motion / m90;
+    let q = 0.36 * sharp + 0.2 * exposure + 0.14 * color;
+    q += s.faces > 0 ? 0.16 : 0;
+    q += s.aesthetic !== undefined ? (0.26 * (s.aesthetic + 1)) / 2 : 0.12;
+    if (s.utility) q -= 0.35;
+    if (motion > 1.1) q -= Math.min(0.3, (motion - 1.1) * 0.3);
+    return q;
+  };
+}
+
+export function findBestMoments(
+  analysis: ClipAnalysis,
+  limit: number,
+  length = 2,
+  count = 5,
+  scoreFn?: (s: ClipSample) => number
+): Array<{ start: number; end: number; score: number; faces: number }> {
+  const score = scoreFn ?? createSampleScorer(analysis.samples);
+  const scores = analysis.samples.map(score);
+  const end = Math.min(analysis.duration, limit);
+  const len = Math.min(length, end);
+  if (len <= 0 || !analysis.samples.length) return [];
+
+  const windows: Array<{ start: number; score: number; faces: number }> = [];
+  for (let start = 0; start + len <= end + 1e-6; start += 0.25) {
+    const inside: number[] = [];
+    let faces = 0;
+    for (let i = 0; i < analysis.samples.length; i++) {
+      const smp = analysis.samples[i];
+      if (smp.time >= start && smp.time <= start + len) {
+        inside.push(scores[i]);
+        faces = Math.max(faces, smp.faces);
+      }
+    }
+    if (inside.length > 0) {
+      const avg = inside.reduce((a, b) => a + b, 0) / inside.length;
+      const minV = Math.min(...inside);
+      windows.push({ start, score: avg * 0.75 + minV * 0.25, faces });
+    }
+  }
+
+  const picked: Array<{ start: number; end: number; score: number; faces: number }> = [];
+  for (const w of windows.sort((a, b) => b.score - a.score)) {
+    if (picked.length >= count) break;
+    if (picked.every((p) => w.start + len <= p.start || w.start >= p.end)) {
+      picked.push({ start: w.start, end: w.start + len, score: w.score, faces: w.faces });
+    }
+  }
+  return picked;
+}
+
+export function autoPlanEdit(
+  _project: Project,
+  clips: Array<{ asset: MediaAsset; analysis: ClipAnalysis }>,
+  music?: { asset: MediaAsset; analysis: MusicAnalysis },
+  recipe: AutoPlanRecipe = { defaultTitle: true, look: 'Warm film' }
+): EditDecision | undefined {
+  const usable = clips.filter((c) => c.analysis.samples.length > 0);
+  if (!usable.length) return undefined;
+
+  const activeMusic = recipe.musicMode === 'off' ? undefined : music;
+  const allSamples = usable.flatMap((c) => c.analysis.samples);
+  const score = createSampleScorer(allSamples);
+
+  interface SourceEntry {
+    asset: MediaAsset;
+    analysis: ClipAnalysis;
+    scores: number[];
+    picked: Array<[number, number]>;
+  }
+
+  const sources: SourceEntry[] = usable
+    .map((c, idx) => ({
+      idx,
+      entry: {
+        asset: c.asset,
+        analysis: c.analysis,
+        scores: c.analysis.samples.map(score),
+        picked: [] as Array<[number, number]>,
+      },
+    }))
+    .sort((a, b) => {
+      const ca = a.entry.analysis.created;
+      const cb = b.entry.analysis.created;
+      if (ca && cb) return ca < cb ? -1 : ca > cb ? 1 : a.idx - b.idx;
+      if (ca && !cb) return -1;
+      if (!ca && cb) return 1;
+      return a.idx - b.idx;
+    })
+    .map((x) => x.entry);
+
+  const allScores = sources.flatMap((s) => s.scores);
+  const floor = percentile(allScores, 0.3);
+
+  let period = activeMusic ? 60 / Math.max(40, activeMusic.analysis.bpm) : undefined;
+  const wanted = recipe.every ? Math.max(recipe.shots ?? 0, sources.length) : recipe.shots;
+  let sub = 1;
+  const pace = recipe.pace === 'fast' ? 0.55 : recipe.pace === 'calm' ? 1.7 : 1;
+  let longBeats = 4;
+  let shortBeats = 2;
+  if (period) {
+    longBeats = [2, 4, 8, 16].find((b) => b * period! >= 1.5 * pace) ?? 16;
+    shortBeats = (longBeats / 2) * period >= 0.8 ? longBeats / 2 : longBeats;
+  }
+
+  let perShot: number | undefined;
+  if (wanted !== undefined) {
+    const len = recipe.seconds ?? wanted * (recipe.pace === 'calm' ? 2.5 : recipe.pace === 'fast' ? 0.9 : 1.5);
+    perShot = Math.max(recipe.every ? 0.2 : 0.35, len / Math.max(1, wanted));
+    if (recipe.every && period && perShot < period * 0.9) {
+      sub = 2;
+      period = period / 2;
+    }
+    if (period) {
+      const b = Math.max(1, Math.floor(perShot / period));
+      longBeats = b;
+      shortBeats = b;
+    }
+  }
+
+  const rhythm = [true, false, false, true, true, false];
+  const beatsFor = (k: number) => (rhythm[k % rhythm.length] ? longBeats : shortBeats);
+  const lengthFor = (k: number) => {
+    if (period) return beatsFor(k) * period;
+    if (perShot !== undefined) return perShot * [1.08, 0.94, 1.0, 1.06, 0.92, 1.0][k % 6];
+    return [2.4, 1.8, 2.1, 2.8, 1.7, 2.2][k % 6] * pace;
+  };
+
+  const good = sources.reduce((sum, s) => {
+    const step = s.analysis.samples.length > 1 ? s.analysis.duration / s.analysis.samples.length : 2.5;
+    return sum + s.scores.filter((v) => v >= floor).length * step;
+  }, 0);
+  let target =
+    recipe.seconds ??
+    (perShot !== undefined ? perShot * (wanted ?? 1) : Math.min(40, Math.max(12, good * 0.5)));
+  if (activeMusic) target = Math.min(target, Math.max(2, activeMusic.analysis.duration - 2));
+
+  const bestWindow = (
+    s: SourceEntry,
+    len: number,
+    apart = 0.3
+  ): { start: number; score: number } | undefined => {
+    const a = s.analysis;
+    if (s.asset.kind === 'image') {
+      return s.picked.length === 0 ? { start: 0, score: s.scores[0] ?? 0 } : undefined;
+    }
+    const limit = Math.min(a.duration, s.asset.duration);
+    if (limit < len + 0.1) return undefined;
+    let best: { start: number; score: number } | undefined;
+    let bestWanted: { start: number; score: number } | undefined;
+    const wantedTimes = recipe.moments?.[s.asset.id] ?? [];
+    for (let start = 0.05; start + len <= limit - 0.05 + 1e-6; start += 0.25) {
+      const end = start + len;
+      const clear = s.picked.every(([p0, p1]) => end + apart <= p0 || start >= p1 + apart);
+      if (!clear) continue;
+      const vals: number[] = [];
+      for (let idx = 0; idx < a.samples.length; idx++) {
+        if (a.samples[idx].time >= start && a.samples[idx].time <= end) {
+          vals.push(s.scores[idx]);
+        }
+      }
+      if (!vals.length) continue;
+      const v = (vals.reduce((acc, x) => acc + x, 0) / vals.length) * 0.75 + Math.min(...vals) * 0.25;
+      if (!best || v > best.score) best = { start, score: v };
+      const margin = Math.min(0.3, len / 4);
+      if (
+        wantedTimes.some((wt) => wt >= start + margin && wt <= end - margin) &&
+        (!bestWanted || v > bestWanted.score)
+      ) {
+        bestWanted = { start, score: v };
+      }
+    }
+    return bestWanted ?? best;
+  };
+
+  const shots: PlannedShot[] = [];
+  const shotBeats: number[] = [];
+  let total = 0;
+  let round = 0;
+  const p12 = percentile(allScores, 0.12);
+
+  while (total < target) {
+    let added = 0;
+    for (let i = 0; i < sources.length; i++) {
+      if (!(total < target || (recipe.every && round === 0))) break;
+      const s = sources[i];
+      if (round > 0 && Math.min(s.analysis.duration, s.asset.duration) < 12) continue;
+      const apart = round > 0 ? 4.0 : 0.3;
+      let len = lengthFor(shots.length);
+      let beats = beatsFor(shots.length);
+      let found = bestWindow(s, len + 0.08, apart);
+      if (!found && (beats !== shortBeats || !period)) {
+        beats = shortBeats;
+        len = period ? shortBeats * period : Math.min(1.6, perShot ?? 1.6);
+        found = bestWindow(s, len + 0.08, apart);
+      }
+      if (!found) continue;
+      const minScore = round === 0 || total < 18 ? p12 : floor;
+      if (!((recipe.every && round === 0) || found.score >= minScore)) continue;
+      if (shots.length > 0 && shots[shots.length - 1].asset.id === s.asset.id && sources.length > 1) {
+        continue;
+      }
+      s.picked.push([found.start, found.start + len]);
+      const lumaSamples = s.analysis.samples.filter(
+        (smp) => smp.time >= found!.start && smp.time <= found!.start + len
+      );
+      const meanLuma = lumaSamples.length
+        ? lumaSamples.reduce((acc, smp) => acc + smp.luma, 0) / lumaSamples.length
+        : 0.45;
+      const rawExp = Math.log2(0.45 / Math.max(0.05, meanLuma)) * 0.5;
+      const exposure = Math.round(Math.max(-0.5, Math.min(0.5, rawExp)) * 10) / 10;
+      shots.push({
+        asset: s.asset,
+        source: found.start,
+        duration: len,
+        exposure,
+        gainDB: 0,
+        dissolve: false,
+        score: found.score,
+      });
+      shotBeats.push(beats);
+      total += len;
+      added++;
+    }
+    if (added === 0) break;
+    round++;
+    if (recipe.every) break;
+  }
+
+  // Growth pass when short of target
+  const unit = period ?? 0.25;
+  let grew = true;
+  while (total + unit <= target + 0.05 && grew) {
+    grew = false;
+    for (let i = 0; i < shots.length && total + unit <= target + 0.05; i++) {
+      const s = shots[i];
+      if (s.asset.kind !== 'video') continue;
+      const srcEntry = sources.find((x) => x.asset.id === s.asset.id);
+      const limit = Math.min(s.asset.duration, srcEntry?.analysis.duration ?? s.asset.duration);
+      if (s.source + s.duration + unit > limit - 0.05) continue;
+      const end = s.source + s.duration + unit;
+      const clear = shots.every(
+        (other, j) =>
+          j === i ||
+          other.asset.id !== s.asset.id ||
+          end + 0.1 <= other.source ||
+          other.source + other.duration <= s.source
+      );
+      if (!clear) continue;
+      shots[i].duration += unit;
+      shotBeats[i] += 1;
+      total += unit;
+      grew = true;
+    }
+  }
+
+  // Trim excess if every && seconds
+  if (recipe.every && recipe.seconds !== undefined) {
+    const limit = recipe.seconds;
+    while (total > limit + 0.15 && shots.length > sources.length) {
+      total -= shots.pop()!.duration;
+      shotBeats.pop();
+    }
+    if (total > limit + 0.15 && shots.length > 0) {
+      const last = shots.length - 1;
+      if (period) {
+        while (total > limit + 0.15 && shotBeats[last] > 1) {
+          shotBeats[last] -= 1;
+          shots[last].duration -= period;
+          total -= period;
+        }
+      } else {
+        const cut = Math.max(0, Math.min(total - limit, shots[last].duration - 0.3));
+        shots[last].duration -= cut;
+        total -= cut;
+      }
+    }
+  }
+
+  if (!shots.length) return undefined;
+
+  const month = new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' });
+  const title =
+    recipe.title !== undefined
+      ? recipe.title === ''
+        ? 'Title'
+        : recipe.title
+      : recipe.defaultTitle
+      ? month
+      : '';
+  const look = recipe.look === 'none' ? '' : recipe.look ?? '';
+
+  let musicPlan: PlannedMusic | undefined;
+  if (activeMusic && activeMusic.analysis.beats.length > 4) {
+    const m = activeMusic.analysis;
+    let grid = [...m.beats];
+    let energy = [...m.energy];
+    if (sub === 2) {
+      const halfGrid: number[] = [];
+      const halfEnergy: number[] = [];
+      for (let i = 0; i < m.beats.length; i++) {
+        halfGrid.push(m.beats[i]);
+        halfEnergy.push(m.energy[i] ?? 0);
+        if (i + 1 < m.beats.length) {
+          halfGrid.push((m.beats[i] + m.beats[i + 1]) / 2);
+          halfEnergy.push(m.energy[i] ?? 0);
+        }
+      }
+      grid = halfGrid;
+      energy = halfEnergy;
+    }
+    const bar = 4 * sub;
+    const phase = (m.barPhase % 4) * sub;
+    const step = (60 / Math.max(40, m.bpm)) / sub;
+
+    const count = shotBeats.reduce((a, b) => a + b, 0);
+    const extra = recipe.every && recipe.seconds !== undefined ? 0 : (bar - (count % bar)) % bar;
+    if (extra > 0 && shots.length > 0) {
+      const last = shots.length - 1;
+      const s = shots[last];
+      const needed = s.duration + extra * step;
+      const fits = (st: number) => {
+        if (s.asset.kind !== 'video') return true;
+        if (st < 0 || st + needed > s.asset.duration - 0.05) return false;
+        return shots.every(
+          (other, j) =>
+            j === last ||
+            other.asset.id !== s.asset.id ||
+            st + needed + 0.1 <= other.source ||
+            st >= other.source + other.duration + 0.1
+        );
+      };
+      if (fits(s.source)) {
+        shotBeats[last] += extra;
+      } else if (fits(s.source - (needed - s.duration))) {
+        shotBeats[last] += extra;
+        shots[last].source = s.source - (needed - s.duration);
+      } else if (shotBeats[last] > bar - extra) {
+        shotBeats[last] -= bar - extra;
+      } else if (shots.length > 1) {
+        const popped = shotBeats.pop()!;
+        shots.pop();
+        if (shotBeats.length > 0) {
+          // Drop excess if needed
+          void popped;
+        }
+      }
+    }
+
+    let totalBeats = shotBeats.reduce((a, b) => a + b, 0);
+    while (totalBeats + 2 >= grid.length && shotBeats.length > 1) {
+      totalBeats -= shotBeats.pop()!;
+      shots.pop();
+    }
+
+    let bestBeat = Math.min(phase, Math.max(0, grid.length - 1));
+    let bestScore = -Infinity;
+    const lookWin = 8 * sub;
+    for (let b = phase; b + totalBeats + 1 < grid.length && b + totalBeats <= energy.length; b += bar) {
+      const win = energy.slice(b, b + totalBeats);
+      const mean = win.reduce((acc, v) => acc + v, 0) / Math.max(1, win.length);
+      const beforeSlice = b >= lookWin ? energy.slice(b - lookWin, b) : [];
+      const before = beforeSlice.length
+        ? beforeSlice.reduce((acc, v) => acc + v, 0) / beforeSlice.length
+        : mean;
+      const afterSlice = energy.slice(b, Math.min(energy.length, b + lookWin));
+      const after = afterSlice.length
+        ? afterSlice.reduce((acc, v) => acc + v, 0) / afterSlice.length
+        : mean;
+      const sc = mean + 0.5 * Math.max(0, after - before) - (b === phase && b < bar ? 0.05 : 0);
+      if (sc > bestScore) {
+        bestScore = sc;
+        bestBeat = b;
+      }
+    }
+
+    const b0 = bestBeat;
+    let at = b0;
+    for (let i = 0; i < shots.length; i++) {
+      const next = at + shotBeats[i];
+      if (next < grid.length) {
+        shots[i].duration = Math.max(0.2, grid[next] - grid[at]);
+        shots[i].dissolve = sub === 1 && i > 0 && (at - b0) % 16 === 0;
+        at = next;
+      }
+    }
+    const length = Math.max(0.5, grid[at] - grid[b0]);
+    const tail = Math.min(1.2, Math.max(0, m.duration - grid[at]));
+    musicPlan = {
+      asset: activeMusic.asset,
+      source: grid[b0],
+      duration: length + tail,
+      fadeOut: tail + 0.6,
+    };
+    for (const s of shots) {
+      if (s.asset.hasAudio) s.gainDB = -16;
+    }
+  } else {
+    for (let i = 0; i < shots.length; i++) {
+      shots[i].dissolve = i > 0 && i % 4 === 0;
+    }
+  }
+
+  for (const s of shots) {
+    if (s.asset.kind === 'video') {
+      s.source = Math.max(0, Math.min(s.source, s.asset.duration - s.duration - 0.02));
+    }
+  }
+
+  return {
+    shots,
+    music: musicPlan,
+    title,
+    titleAtEnd: recipe.titleAtEnd,
+    look,
+    bpm: activeMusic?.analysis.bpm,
+  };
+}
