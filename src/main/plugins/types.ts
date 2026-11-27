@@ -1,1 +1,20 @@
-aW1wb3J0IHR5cGUgeyBQbHVnaW5TdW1tYXJ5IH0gZnJvbSAnLi4vLi4vc2hhcmVkL2RqaVR5cGVzJzsKCmV4cG9ydCBpbnRlcmZhY2UgVmVjdHJhaWxQbHVnaW4gewogIHJlYWRvbmx5IGlkOiBzdHJpbmc7CiAgcmVhZG9ubHkgbmFtZTogc3RyaW5nOwogIHJlYWRvbmx5IG5hbWVaaDogc3RyaW5nOwogIHJlYWRvbmx5IHZlcnNpb246IHN0cmluZzsKICByZWFkb25seSBkZXNjcmlwdGlvbjogc3RyaW5nOwogIHJlYWRvbmx5IGRlc2NyaXB0aW9uWmg6IHN0cmluZzsKICByZWFkb25seSBkZWZhdWx0RW5hYmxlZD86IGJvb2xlYW47CiAgaW5pdCgpOiBQcm9taXNlPHZvaWQ+IHwgdm9pZDsKICBkaXNwb3NlKCk6IFByb21pc2U8dm9pZD4gfCB2b2lkOwogIG9uRW5hYmxlZENoYW5nZT8oZW5hYmxlZDogYm9vbGVhbik6IFByb21pc2U8dm9pZD4gfCB2b2lkOwogIGdldEhlYWx0aD8oKTogeyBoZWFsdGh5OiBib29sZWFuOyBlcnJvcj86IHN0cmluZyB9Owp9CgpleHBvcnQgdHlwZSBSZWdpc3RlcmVkUGx1Z2luUmVjb3JkID0gewogIHBsdWdpbjogVmVjdHJhaWxQbHVnaW47CiAgc3VtbWFyeTogUGx1Z2luU3VtbWFyeTsKfTsK
+import type { PluginSummary } from '../../shared/djiTypes';
+
+export interface VectrailPlugin {
+  readonly id: string;
+  readonly name: string;
+  readonly nameZh: string;
+  readonly version: string;
+  readonly description: string;
+  readonly descriptionZh: string;
+  readonly defaultEnabled?: boolean;
+  init(): Promise<void> | void;
+  dispose(): Promise<void> | void;
+  onEnabledChange?(enabled: boolean): Promise<void> | void;
+  getHealth?(): { healthy: boolean; error?: string };
+}
+
+export type RegisteredPluginRecord = {
+  plugin: VectrailPlugin;
+  summary: PluginSummary;
+};
