@@ -34,6 +34,7 @@ import {
 } from './magic/agentConnect';
 import { PluginManager } from './plugins/manager';
 import { DjiWirelessImportService } from './plugins/dji-wireless-import/service';
+import { MediaImportService } from './plugins/media-import/service';
 
 if (process.argv.includes('--mcp')) {
   const port = Number.parseInt(process.env.VECTRAIL_MCP_PORT || process.env.EDITROOM_MCP_PORT || '', 10) || MCP_DEFAULT_PORT;
@@ -60,6 +61,8 @@ if (process.argv.includes('--mcp')) {
   const pluginManager = new PluginManager();
   const djiPlugin = new DjiWirelessImportService(store);
   pluginManager.register(djiPlugin);
+  const mediaImportPlugin = new MediaImportService(store);
+  pluginManager.register(mediaImportPlugin);
   let mainWindow: BrowserWindow | null = null;
 
   const gotSingleInstanceLock = app.requestSingleInstanceLock();
@@ -94,6 +97,11 @@ if (process.argv.includes('--mcp')) {
   djiPlugin.onStateChange((djiSnap) => {
     if (mainWindow && !mainWindow.isDestroyed()) {
       mainWindow.webContents.send('vectrail:dji-state', djiSnap);
+    }
+  });
+  mediaImportPlugin.onTasks((tasks) => {
+    if (mainWindow && !mainWindow.isDestroyed()) {
+      mainWindow.webContents.send('vectrail:media-import-tasks', tasks);
     }
   });
   mcpServer.setExternalToolListener((ev) => {
@@ -584,6 +592,21 @@ async function serveMediaRequest(req: Request, filePath: string): Promise<Respon
   ipcMain.handle('vectrail:dji-import-usb', (_e, fileIds: string[]) => djiPlugin.importUsbFiles(fileIds));
   ipcMain.handle('vectrail:dji-cancel-usb', (_e, taskId: string) => djiPlugin.cancelUsbImport(taskId));
   ipcMain.handle('vectrail:dji-clear-usb', () => djiPlugin.clearFinishedUsbImports());
+  ipcMain.handle('vectrail:media-import-health', () => mediaImportPlugin.healthCheck());
+  ipcMain.handle('vectrail:media-import-resolve', (_e, input: string) => mediaImportPlugin.resolveLink(input));
+  ipcMain.handle('vectrail:media-import-links', (_e, input: string, formatId?: string) =>
+    mediaImportPlugin.importLinks(input, formatId)
+  );
+  ipcMain.handle('vectrail:media-import-tasks', () => mediaImportPlugin.listTasks());
+  ipcMain.handle('vectrail:media-import-cancel', (_e, taskId: string) => {
+    mediaImportPlugin.cancelTask(taskId);
+    return mediaImportPlugin.listTasks();
+  });
+  ipcMain.handle('vectrail:media-import-retry', (_e, taskId: string) => mediaImportPlugin.retryTask(taskId));
+  ipcMain.handle('vectrail:media-import-clear', () => {
+    mediaImportPlugin.clearFinishedTasks();
+    return mediaImportPlugin.listTasks();
+  });
   ipcMain.on('vectrail:win-minimize', () => mainWindow?.minimize());
   ipcMain.on('vectrail:win-maximize', () => {
     if (!mainWindow) return;
