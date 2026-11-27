@@ -1,1 +1,3 @@
-Ly8vIDxyZWZlcmVuY2UgdHlwZXM9InZpdGUvY2xpZW50IiAvPgoKZGVjbGFyZSBjb25zdCBfX1ZFQ1RSQUlMX1ZFUlNJT05fXzogc3RyaW5nOwo=
+/// <reference types="vite/client" />
+
+declare const __VECTRAIL_VERSION__: string;
