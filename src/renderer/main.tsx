@@ -1,1 +1,13 @@
-aW1wb3J0IFJlYWN0IGZyb20gJ3JlYWN0JzsKaW1wb3J0IFJlYWN0RE9NIGZyb20gJ3JlYWN0LWRvbS9jbGllbnQnOwppbXBvcnQgeyBBcHAgfSBmcm9tICcuL0FwcCc7CmltcG9ydCB7IEkxOG5Qcm92aWRlciB9IGZyb20gJy4vaTE4bic7CmltcG9ydCAnLi9zdHlsZXMuY3NzJzsKClJlYWN0RE9NLmNyZWF0ZVJvb3QoZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ3Jvb3QnKSEpLnJlbmRlcigKICA8UmVhY3QuU3RyaWN0TW9kZT4KICAgIDxJMThuUHJvdmlkZXI+CiAgICAgIDxBcHAgLz4KICAgIDwvSTE4blByb3ZpZGVyPgogIDwvUmVhY3QuU3RyaWN0TW9kZT4KKTsK
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { App } from './App';
+import { I18nProvider } from './i18n';
+import './styles.css';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <I18nProvider>
+      <App />
+    </I18nProvider>
+  </React.StrictMode>
+);
