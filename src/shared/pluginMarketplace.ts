@@ -8,7 +8,7 @@ export type PluginMarketplaceCategory =
 
 export type PluginMarketplaceStatus = 'installed' | 'built_in' | 'coming_soon';
 
-export type MarketplaceActionType = 'open_dji' | 'open_templates' | 'roadmap';
+export type MarketplaceActionType = 'open_dji' | 'open_media' | 'open_templates' | 'roadmap';
 
 export interface MarketplaceCategoryTab {
   id: PluginMarketplaceCategory;
@@ -45,6 +45,34 @@ export const MARKETPLACE_CATEGORIES: MarketplaceCategoryTab[] = [
 ];
 
 export const PLUGIN_MARKETPLACE_CATALOG: MarketplacePluginEntry[] = [
+  {
+    id: 'media-link-import',
+    runtimePluginId: 'media-link-import',
+    category: 'workflow',
+    status: 'installed',
+    version: '0.1.0',
+    author: 'Vectrail Official',
+    name: 'Universal Video Link Import',
+    nameZh: '万能视频链接解析导入',
+    tagline: 'Paste links, resolve, download, verify & import',
+    taglineZh: '粘贴链接即可解析、下载、校验并导入素材库',
+    description:
+      'Multi-platform link resolver powered by the local yt-dlp engine. Extracts links from share text, previews formats, downloads selected quality, verifies with FFprobe, and imports directly into Vectrail.',
+    descriptionZh:
+      '基于本地 yt-dlp 引擎的多平台链接解析器，支持从分享文本中提取链接、画质预览、下载所选清晰度、FFprobe 校验并自动导入工程。',
+    capabilities: [
+      'Douyin, XHS, Kuaishou, Bilibili, YouTube, TikTok coverage',
+      'Batch link extraction, format preview, and engine health check',
+      'Progress, cancel, retry, FFprobe verification, and auto import',
+    ],
+    capabilitiesZh: [
+      '优先覆盖抖音、小红书、快手、B站、YouTube、TikTok',
+      '混杂文本提取链接、画质预览与引擎健康检查',
+      '任务进度、取消重试、FFprobe 完整性校验与自动入库',
+    ],
+    tags: ['yt-dlp', '抖音', '小红书', 'B站', 'YouTube'],
+    actionType: 'open_media',
+  },
   {
     id: 'dji-wireless-import',
     runtimePluginId: 'dji-wireless-import',
