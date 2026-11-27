@@ -1,1 +1,149 @@
-aW1wb3J0IHsgY2xpcEVuZCwgY2xpcEZhZGVHYWluQXQsIGRiVG9MaW5lYXIgfSBmcm9tICcuL3Byb2plY3QnOwppbXBvcnQgeyBjbGlwU291cmNlTGVuZ3RoLCBjbGlwU291cmNlVGltZUF0IH0gZnJvbSAnLi9zcGVlZFJhbXAnOwppbXBvcnQgeyBDbGlwLCBQcm9qZWN0IH0gZnJvbSAnLi90eXBlcyc7CgpleHBvcnQgaW50ZXJmYWNlIFdhdmVmb3JtRW52ZWxvcGVJbnB1dCB7CiAgcGVha3NQZXJTZWNvbmQ6IG51bWJlcjsKICBwZWFrczogbnVtYmVyW107Cn0KCmV4cG9ydCBpbnRlcmZhY2UgQXVkaW9BY3Rpdml0eVNwYW4gewogIHN0YXJ0OiBudW1iZXI7CiAgZW5kOiBudW1iZXI7Cn0KCmV4cG9ydCBmdW5jdGlvbiBjbGlwRW52ZWxvcGVEQigKICBjOiBDbGlwLAogIHdmOiBXYXZlZm9ybUVudmVsb3BlSW5wdXQgfCB1bmRlZmluZWQKKTogbnVtYmVyIHwgdW5kZWZpbmVkIHsKICBpZiAoIXdmIHx8ICF3Zi5wZWFrcy5sZW5ndGgpIHJldHVybiB1bmRlZmluZWQ7CiAgY29uc3QgczAgPSBjLnNvdXJjZVN0YXJ0ID8/IDA7CiAgY29uc3QgbGVuID0gY2xpcFNvdXJjZUxlbmd0aChjKTsKICBjb25zdCBsbyA9IE1hdGgubWF4KDAsIE1hdGguZmxvb3IoczAgKiB3Zi5wZWFrc1BlclNlY29uZCkpOwogIGNvbnN0IGhpID0gTWF0aC5taW4od2YucGVha3MubGVuZ3RoLCBNYXRoLmZsb29yKChzMCArIGxlbikgKiB3Zi5wZWFrc1BlclNlY29uZCkpOwogIGlmIChoaSA8PSBsbykgcmV0dXJuIHVuZGVmaW5lZDsKICBsZXQgc3VtID0gMDsKICBsZXQgY291bnQgPSAwOwogIGZvciAobGV0IGkgPSBsbzsgaSA8IGhpOyBpKyspIHsKICAgIGNvbnN0IHYgPSB3Zi5wZWFrc1tpXTsKICAgIGlmICh2ID4gMC4wMDMpIHsKICAgICAgc3VtICs9IHYgKiB2OwogICAgICBjb3VudCsrOwogICAgfQogIH0KICBpZiAoY291bnQgPT09IDApIHJldHVybiB1bmRlZmluZWQ7CiAgcmV0dXJuIDEwICogTWF0aC5sb2cxMChzdW0gLyBjb3VudCk7Cn0KCmV4cG9ydCBmdW5jdGlvbiBjbGlwUGVha0RCKAogIGM6IENsaXAsCiAgd2Y6IFdhdmVmb3JtRW52ZWxvcGVJbnB1dCB8IHVuZGVmaW5lZAopOiBudW1iZXIgfCB1bmRlZmluZWQgewogIGlmICghd2YgfHwgIXdmLnBlYWtzLmxlbmd0aCkgcmV0dXJuIHVuZGVmaW5lZDsKICBjb25zdCBzMCA9IGMuc291cmNlU3RhcnQgPz8gMDsKICBjb25zdCBsZW4gPSBjbGlwU291cmNlTGVuZ3RoKGMpOwogIGNvbnN0IGxvID0gTWF0aC5tYXgoMCwgTWF0aC5mbG9vcihzMCAqIHdmLnBlYWtzUGVyU2Vjb25kKSk7CiAgY29uc3QgaGkgPSBNYXRoLm1pbih3Zi5wZWFrcy5sZW5ndGgsIE1hdGguZmxvb3IoKHMwICsgbGVuKSAqIHdmLnBlYWtzUGVyU2Vjb25kKSk7CiAgaWYgKGhpIDw9IGxvKSByZXR1cm4gdW5kZWZpbmVkOwogIGxldCBwZWFrID0gMDsKICBmb3IgKGxldCBpID0gbG87IGkgPCBoaTsgaSsrKSB7CiAgICBpZiAod2YucGVha3NbaV0gPiBwZWFrKSBwZWFrID0gd2YucGVha3NbaV07CiAgfQogIGlmIChwZWFrIDw9IDApIHJldHVybiB1bmRlZmluZWQ7CiAgcmV0dXJuIDIwICogTWF0aC5sb2cxMChwZWFrKTsKfQoKZXhwb3J0IGZ1bmN0aW9uIHRyYWNrQXVkaW9BY3Rpdml0eSgKICB0cmFja0lEOiBzdHJpbmcsCiAgcHJvamVjdDogUHJvamVjdCwKICB3YXZlZm9ybXM6IFJlY29yZDxzdHJpbmcsIFdhdmVmb3JtRW52ZWxvcGVJbnB1dD4KKTogQXVkaW9BY3Rpdml0eVNwYW5bXSB7CiAgY29uc3Qgc3BhbnM6IEF1ZGlvQWN0aXZpdHlTcGFuW10gPSBbXTsKICBjb25zdCBzdGVwID0gMC4wNTsKICBmb3IgKGNvbnN0IGMgb2YgcHJvamVjdC5jbGlwcykgewogICAgaWYgKGMudHJhY2tJRCAhPT0gdHJhY2tJRCB8fCBjLmtpbmQgIT09ICdhdWRpbycgfHwgIWMuYXNzZXRJRCkgY29udGludWU7CiAgICBjb25zdCB3ZiA9IHdhdmVmb3Jtc1tjLmFzc2V0SURdOwogICAgaWYgKCF3ZiB8fCAhd2YucGVha3MubGVuZ3RoKSB7CiAgICAgIHNwYW5zLnB1c2goeyBzdGFydDogYy5zdGFydCwgZW5kOiBjbGlwRW5kKGMpIH0pOwogICAgICBjb250aW51ZTsKICAgIH0KICAgIGNvbnN0IGVuZCA9IGNsaXBFbmQoYyk7CiAgICBsZXQgb3BlbjogbnVtYmVyIHwgdW5kZWZpbmVkOwogICAgbGV0IHQgPSBjLnN0YXJ0OwogICAgd2hpbGUgKHQgPCBlbmQpIHsKICAgICAgY29uc3Qgc3JjID0gY2xpcFNvdXJjZVRpbWVBdChjLCB0KTsKICAgICAgY29uc3Qgc3JjTmV4dCA9IGNsaXBTb3VyY2VUaW1lQXQoYywgdCArIHN0ZXApOwogICAgICBjb25zdCBsbyA9IE1hdGgubWF4KDAsIE1hdGguZmxvb3IoTWF0aC5taW4oc3JjLCBzcmNOZXh0KSAqIHdmLnBlYWtzUGVyU2Vjb25kKSk7CiAgICAgIGNvbnN0IGhpID0gTWF0aC5taW4oCiAgICAgICAgd2YucGVha3MubGVuZ3RoIC0gMSwKICAgICAgICBNYXRoLmZsb29yKE1hdGgubWF4KHNyYywgc3JjTmV4dCkgKiB3Zi5wZWFrc1BlclNlY29uZCkKICAgICAgKTsKICAgICAgbGV0IHBlYWsgPSAwOwogICAgICBmb3IgKGxldCBpID0gbG87IGkgPD0gaGk7IGkrKykgewogICAgICAgIGlmICh3Zi5wZWFrc1tpXSA+IHBlYWspIHBlYWsgPSB3Zi5wZWFrc1tpXTsKICAgICAgfQogICAgICBjb25zdCBhY3RpdmUgPSBwZWFrICogZGJUb0xpbmVhcihjLmdhaW5EQiA/PyAwKSAqIGNsaXBGYWRlR2FpbkF0KGMsIHQpID4gMC4wMzsKICAgICAgaWYgKGFjdGl2ZSAmJiBvcGVuID09PSB1bmRlZmluZWQpIG9wZW4gPSB0OwogICAgICBpZiAoIWFjdGl2ZSAmJiBvcGVuICE9PSB1bmRlZmluZWQpIHsKICAgICAgICBzcGFucy5wdXNoKHsgc3RhcnQ6IG9wZW4sIGVuZDogdCB9KTsKICAgICAgICBvcGVuID0gdW5kZWZpbmVkOwogICAgICB9CiAgICAgIHQgKz0gc3RlcDsKICAgIH0KICAgIGlmIChvcGVuICE9PSB1bmRlZmluZWQpIHNwYW5zLnB1c2goeyBzdGFydDogb3BlbiwgZW5kIH0pOwogIH0KICBzcGFucy5zb3J0KChhLCBiKSA9PiBhLnN0YXJ0IC0gYi5zdGFydCk7CiAgY29uc3QgbWVyZ2VkOiBBdWRpb0FjdGl2aXR5U3BhbltdID0gW107CiAgZm9yIChjb25zdCBzIG9mIHNwYW5zKSB7CiAgICBjb25zdCBsYXN0ID0gbWVyZ2VkW21lcmdlZC5sZW5ndGggLSAxXTsKICAgIGlmIChsYXN0ICYmIHMuc3RhcnQgLSBsYXN0LmVuZCA8IDAuMzUpIHsKICAgICAgbGFzdC5lbmQgPSBNYXRoLm1heChsYXN0LmVuZCwgcy5lbmQpOwogICAgfSBlbHNlIHsKICAgICAgbWVyZ2VkLnB1c2goeyAuLi5zIH0pOwogICAgfQogIH0KICByZXR1cm4gbWVyZ2VkOwp9CgpleHBvcnQgZnVuY3Rpb24gZHVja0dhaW5BdCh0OiBudW1iZXIsIHNwYW5zOiBBdWRpb0FjdGl2aXR5U3BhbltdLCBsb3c6IG51bWJlcik6IG51bWJlciB7CiAgY29uc3QgYXR0YWNrID0gMC4xNTsKICBjb25zdCByZWxlYXNlID0gMC41OwogIGxldCBnID0gMTsKICBmb3IgKGNvbnN0IHMgb2Ygc3BhbnMpIHsKICAgIGlmICh0IDwgcy5zdGFydCAtIGF0dGFjayB8fCB0ID4gcy5lbmQgKyByZWxlYXNlKSBjb250aW51ZTsKICAgIGxldCBmOiBudW1iZXI7CiAgICBpZiAodCA8IHMuc3RhcnQpIGYgPSAocy5zdGFydCAtIHQpIC8gYXR0YWNrOwogICAgZWxzZSBpZiAodCA+IHMuZW5kKSBmID0gKHQgLSBzLmVuZCkgLyByZWxlYXNlOwogICAgZWxzZSBmID0gMDsKICAgIGcgPSBNYXRoLm1pbihnLCBsb3cgKyAoMSAtIGxvdykgKiBmKTsKICB9CiAgcmV0dXJuIGc7Cn0KCmV4cG9ydCBmdW5jdGlvbiBjb21wdXRlTGV2ZWxFcXVhbGl6YXRpb25HYWlucygKICBjbGlwczogQ2xpcFtdLAogIHdhdmVmb3JtczogUmVjb3JkPHN0cmluZywgV2F2ZWZvcm1FbnZlbG9wZUlucHV0PiwKICB0YXJnZXREQj86IG51bWJlcgopOiB7IGdhaW5zOiBNYXA8c3RyaW5nLCBudW1iZXI+OyBzaWxlbnRDbGlwSWRzOiBzdHJpbmdbXSB9IHsKICBjb25zdCBtZWFzdXJlZDogQXJyYXk8eyBjbGlwOiBDbGlwOyBkYjogbnVtYmVyIH0+ID0gW107CiAgY29uc3Qgc2lsZW50Q2xpcElkczogc3RyaW5nW10gPSBbXTsKICBmb3IgKGNvbnN0IGMgb2YgY2xpcHMpIHsKICAgIGlmIChjLmtpbmQgIT09ICdhdWRpbycgfHwgIWMuYXNzZXRJRCkgY29udGludWU7CiAgICBjb25zdCBkYiA9IGNsaXBFbnZlbG9wZURCKGMsIHdhdmVmb3Jtc1tjLmFzc2V0SURdKTsKICAgIGlmIChkYiA9PT0gdW5kZWZpbmVkKSB7CiAgICAgIHNpbGVudENsaXBJZHMucHVzaChjLmlkKTsKICAgICAgY29udGludWU7CiAgICB9CiAgICBtZWFzdXJlZC5wdXNoKHsgY2xpcDogYywgZGIgfSk7CiAgfQogIGNvbnN0IGdhaW5zID0gbmV3IE1hcDxzdHJpbmcsIG51bWJlcj4oKTsKICBpZiAoIW1lYXN1cmVkLmxlbmd0aCkgcmV0dXJuIHsgZ2FpbnMsIHNpbGVudENsaXBJZHMgfTsKICBjb25zdCBzb3J0ZWQgPSBbLi4ubWVhc3VyZWRdLm1hcCgobSkgPT4gbS5kYiArIChtLmNsaXAuZ2FpbkRCID8/IDApKS5zb3J0KChhLCBiKSA9PiBhIC0gYik7CiAgY29uc3QgbWVkaWFuID0gc29ydGVkW01hdGguZmxvb3Ioc29ydGVkLmxlbmd0aCAvIDIpXTsKICBjb25zdCB0YXJnZXQgPSB0YXJnZXREQiA/PyBNYXRoLm1pbigtMTAsIE1hdGgubWF4KC0yNCwgbWVkaWFuKSk7CiAgZm9yIChjb25zdCBtIG9mIG1lYXN1cmVkKSB7CiAgICBjb25zdCBuZXh0ID0gTWF0aC5yb3VuZChNYXRoLm1heCgtNjAsIE1hdGgubWluKDEyLCB0YXJnZXQgLSBtLmRiKSkgKiAxMCkgLyAxMDsKICAgIGdhaW5zLnNldChtLmNsaXAuaWQsIG5leHQpOwogIH0KICByZXR1cm4geyBnYWlucywgc2lsZW50Q2xpcElkcyB9Owp9Cg==
+import { clipEnd, clipFadeGainAt, dbToLinear } from './project';
+import { clipSourceLength, clipSourceTimeAt } from './speedRamp';
+import { Clip, Project } from './types';
+
+export interface WaveformEnvelopeInput {
+  peaksPerSecond: number;
+  peaks: number[];
+}
+
+export interface AudioActivitySpan {
+  start: number;
+  end: number;
+}
+
+export function clipEnvelopeDB(
+  c: Clip,
+  wf: WaveformEnvelopeInput | undefined
+): number | undefined {
+  if (!wf || !wf.peaks.length) return undefined;
+  const s0 = c.sourceStart ?? 0;
+  const len = clipSourceLength(c);
+  const lo = Math.max(0, Math.floor(s0 * wf.peaksPerSecond));
+  const hi = Math.min(wf.peaks.length, Math.floor((s0 + len) * wf.peaksPerSecond));
+  if (hi <= lo) return undefined;
+  let sum = 0;
+  let count = 0;
+  for (let i = lo; i < hi; i++) {
+    const v = wf.peaks[i];
+    if (v > 0.003) {
+      sum += v * v;
+      count++;
+    }
+  }
+  if (count === 0) return undefined;
+  return 10 * Math.log10(sum / count);
+}
+
+export function clipPeakDB(
+  c: Clip,
+  wf: WaveformEnvelopeInput | undefined
+): number | undefined {
+  if (!wf || !wf.peaks.length) return undefined;
+  const s0 = c.sourceStart ?? 0;
+  const len = clipSourceLength(c);
+  const lo = Math.max(0, Math.floor(s0 * wf.peaksPerSecond));
+  const hi = Math.min(wf.peaks.length, Math.floor((s0 + len) * wf.peaksPerSecond));
+  if (hi <= lo) return undefined;
+  let peak = 0;
+  for (let i = lo; i < hi; i++) {
+    if (wf.peaks[i] > peak) peak = wf.peaks[i];
+  }
+  if (peak <= 0) return undefined;
+  return 20 * Math.log10(peak);
+}
+
+export function trackAudioActivity(
+  trackID: string,
+  project: Project,
+  waveforms: Record<string, WaveformEnvelopeInput>
+): AudioActivitySpan[] {
+  const spans: AudioActivitySpan[] = [];
+  const step = 0.05;
+  for (const c of project.clips) {
+    if (c.trackID !== trackID || c.kind !== 'audio' || !c.assetID) continue;
+    const wf = waveforms[c.assetID];
+    if (!wf || !wf.peaks.length) {
+      spans.push({ start: c.start, end: clipEnd(c) });
+      continue;
+    }
+    const end = clipEnd(c);
+    let open: number | undefined;
+    let t = c.start;
+    while (t < end) {
+      const src = clipSourceTimeAt(c, t);
+      const srcNext = clipSourceTimeAt(c, t + step);
+      const lo = Math.max(0, Math.floor(Math.min(src, srcNext) * wf.peaksPerSecond));
+      const hi = Math.min(
+        wf.peaks.length - 1,
+        Math.floor(Math.max(src, srcNext) * wf.peaksPerSecond)
+      );
+      let peak = 0;
+      for (let i = lo; i <= hi; i++) {
+        if (wf.peaks[i] > peak) peak = wf.peaks[i];
+      }
+      const active = peak * dbToLinear(c.gainDB ?? 0) * clipFadeGainAt(c, t) > 0.03;
+      if (active && open === undefined) open = t;
+      if (!active && open !== undefined) {
+        spans.push({ start: open, end: t });
+        open = undefined;
+      }
+      t += step;
+    }
+    if (open !== undefined) spans.push({ start: open, end });
+  }
+  spans.sort((a, b) => a.start - b.start);
+  const merged: AudioActivitySpan[] = [];
+  for (const s of spans) {
+    const last = merged[merged.length - 1];
+    if (last && s.start - last.end < 0.35) {
+      last.end = Math.max(last.end, s.end);
+    } else {
+      merged.push({ ...s });
+    }
+  }
+  return merged;
+}
+
+export function duckGainAt(t: number, spans: AudioActivitySpan[], low: number): number {
+  const attack = 0.15;
+  const release = 0.5;
+  let g = 1;
+  for (const s of spans) {
+    if (t < s.start - attack || t > s.end + release) continue;
+    let f: number;
+    if (t < s.start) f = (s.start - t) / attack;
+    else if (t > s.end) f = (t - s.end) / release;
+    else f = 0;
+    g = Math.min(g, low + (1 - low) * f);
+  }
+  return g;
+}
+
+export function computeLevelEqualizationGains(
+  clips: Clip[],
+  waveforms: Record<string, WaveformEnvelopeInput>,
+  targetDB?: number
+): { gains: Map<string, number>; silentClipIds: string[] } {
+  const measured: Array<{ clip: Clip; db: number }> = [];
+  const silentClipIds: string[] = [];
+  for (const c of clips) {
+    if (c.kind !== 'audio' || !c.assetID) continue;
+    const db = clipEnvelopeDB(c, waveforms[c.assetID]);
+    if (db === undefined) {
+      silentClipIds.push(c.id);
+      continue;
+    }
+    measured.push({ clip: c, db });
+  }
+  const gains = new Map<string, number>();
+  if (!measured.length) return { gains, silentClipIds };
+  const sorted = [...measured].map((m) => m.db + (m.clip.gainDB ?? 0)).sort((a, b) => a - b);
+  const median = sorted[Math.floor(sorted.length / 2)];
+  const target = targetDB ?? Math.min(-10, Math.max(-24, median));
+  for (const m of measured) {
+    const next = Math.round(Math.max(-60, Math.min(12, target - m.db)) * 10) / 10;
+    gains.set(m.clip.id, next);
+  }
+  return { gains, silentClipIds };
+}
