@@ -1,1 +1,84 @@
-aW1wb3J0IHR5cGUgeyBQbHVnaW5TdW1tYXJ5IH0gZnJvbSAnLi4vLi4vc2hhcmVkL2RqaVR5cGVzJzsKaW1wb3J0IHsgZ2V0UGx1Z2luRW5hYmxlZFN0YXRlLCBzZXRQbHVnaW5FbmFibGVkU3RhdGUgfSBmcm9tICcuLi9zZXR0aW5ncyc7CmltcG9ydCB0eXBlIHsgUmVnaXN0ZXJlZFBsdWdpblJlY29yZCwgVmVjdHJhaWxQbHVnaW4gfSBmcm9tICcuL3R5cGVzJzsKCmV4cG9ydCBjbGFzcyBQbHVnaW5NYW5hZ2VyIHsKICBwcml2YXRlIHJlYWRvbmx5IHBsdWdpbnMgPSBuZXcgTWFwPHN0cmluZywgUmVnaXN0ZXJlZFBsdWdpblJlY29yZD4oKTsKCiAgcmVnaXN0ZXIocGx1Z2luOiBWZWN0cmFpbFBsdWdpbik6IHZvaWQgewogICAgY29uc3QgZW5hYmxlZCA9IGdldFBsdWdpbkVuYWJsZWRTdGF0ZShwbHVnaW4uaWQsIHBsdWdpbi5kZWZhdWx0RW5hYmxlZCA/PyB0cnVlKTsKICAgIHRoaXMucGx1Z2lucy5zZXQocGx1Z2luLmlkLCB7CiAgICAgIHBsdWdpbiwKICAgICAgc3VtbWFyeTogewogICAgICAgIGlkOiBwbHVnaW4uaWQsCiAgICAgICAgbmFtZTogcGx1Z2luLm5hbWUsCiAgICAgICAgbmFtZVpoOiBwbHVnaW4ubmFtZVpoLAogICAgICAgIHZlcnNpb246IHBsdWdpbi52ZXJzaW9uLAogICAgICAgIGRlc2NyaXB0aW9uOiBwbHVnaW4uZGVzY3JpcHRpb24sCiAgICAgICAgZGVzY3JpcHRpb25aaDogcGx1Z2luLmRlc2NyaXB0aW9uWmgsCiAgICAgICAgZW5hYmxlZCwKICAgICAgICBoZWFsdGh5OiB0cnVlLAogICAgICB9LAogICAgfSk7CiAgfQoKICBhc3luYyBpbml0QWxsKCk6IFByb21pc2U8dm9pZD4gewogICAgZm9yIChjb25zdCByZWMgb2YgdGhpcy5wbHVnaW5zLnZhbHVlcygpKSB7CiAgICAgIGlmICghcmVjLnN1bW1hcnkuZW5hYmxlZCkgY29udGludWU7CiAgICAgIHRyeSB7CiAgICAgICAgYXdhaXQgcmVjLnBsdWdpbi5pbml0KCk7CiAgICAgICAgcmVjLnN1bW1hcnkuaGVhbHRoeSA9IHRydWU7CiAgICAgICAgcmVjLnN1bW1hcnkuZXJyb3IgPSB1bmRlZmluZWQ7CiAgICAgIH0gY2F0Y2ggKGVycikgewogICAgICAgIHJlYy5zdW1tYXJ5LmhlYWx0aHkgPSBmYWxzZTsKICAgICAgICByZWMuc3VtbWFyeS5lcnJvciA9IGVyciBpbnN0YW5jZW9mIEVycm9yID8gZXJyLm1lc3NhZ2UgOiBTdHJpbmcoZXJyKTsKICAgICAgfQogICAgfQogIH0KCiAgYXN5bmMgZGlzcG9zZUFsbCgpOiBQcm9taXNlPHZvaWQ+IHsKICAgIGZvciAoY29uc3QgcmVjIG9mIHRoaXMucGx1Z2lucy52YWx1ZXMoKSkgewogICAgICB0cnkgewogICAgICAgIGF3YWl0IHJlYy5wbHVnaW4uZGlzcG9zZSgpOwogICAgICB9IGNhdGNoIHsKICAgICAgICAvLyBGYXVsdCBpc29sYXRpb24gZHVyaW5nIHNodXRkb3duLgogICAgICB9CiAgICB9CiAgfQoKICBpc0VuYWJsZWQocGx1Z2luSWQ6IHN0cmluZyk6IGJvb2xlYW4gewogICAgcmV0dXJuIHRoaXMucGx1Z2lucy5nZXQocGx1Z2luSWQpPy5zdW1tYXJ5LmVuYWJsZWQgPz8gZmFsc2U7CiAgfQoKICBhc3luYyBzZXRFbmFibGVkKHBsdWdpbklkOiBzdHJpbmcsIGVuYWJsZWQ6IGJvb2xlYW4pOiBQcm9taXNlPFBsdWdpblN1bW1hcnlbXT4gewogICAgY29uc3QgcmVjID0gdGhpcy5wbHVnaW5zLmdldChwbHVnaW5JZCk7CiAgICBpZiAoIXJlYykgcmV0dXJuIHRoaXMubGlzdCgpOwogICAgc2V0UGx1Z2luRW5hYmxlZFN0YXRlKHBsdWdpbklkLCBlbmFibGVkKTsKICAgIHJlYy5zdW1tYXJ5LmVuYWJsZWQgPSBlbmFibGVkOwogICAgdHJ5IHsKICAgICAgaWYgKGVuYWJsZWQpIHsKICAgICAgICBhd2FpdCByZWMucGx1Z2luLmluaXQoKTsKICAgICAgfSBlbHNlIHsKICAgICAgICBhd2FpdCByZWMucGx1Z2luLmRpc3Bvc2UoKTsKICAgICAgfQogICAgICBhd2FpdCByZWMucGx1Z2luLm9uRW5hYmxlZENoYW5nZT8uKGVuYWJsZWQpOwogICAgICByZWMuc3VtbWFyeS5oZWFsdGh5ID0gdHJ1ZTsKICAgICAgcmVjLnN1bW1hcnkuZXJyb3IgPSB1bmRlZmluZWQ7CiAgICB9IGNhdGNoIChlcnIpIHsKICAgICAgcmVjLnN1bW1hcnkuaGVhbHRoeSA9IGZhbHNlOwogICAgICByZWMuc3VtbWFyeS5lcnJvciA9IGVyciBpbnN0YW5jZW9mIEVycm9yID8gZXJyLm1lc3NhZ2UgOiBTdHJpbmcoZXJyKTsKICAgIH0KICAgIHJldHVybiB0aGlzLmxpc3QoKTsKICB9CgogIGxpc3QoKTogUGx1Z2luU3VtbWFyeVtdIHsKICAgIHJldHVybiBbLi4udGhpcy5wbHVnaW5zLnZhbHVlcygpXS5tYXAoKHJlYykgPT4gewogICAgICBjb25zdCBoZWFsdGggPSByZWMucGx1Z2luLmdldEhlYWx0aD8uKCk7CiAgICAgIHJldHVybiB7CiAgICAgICAgLi4ucmVjLnN1bW1hcnksCiAgICAgICAgaGVhbHRoeTogaGVhbHRoID8gaGVhbHRoLmhlYWx0aHkgOiByZWMuc3VtbWFyeS5oZWFsdGh5LAogICAgICAgIGVycm9yOiBoZWFsdGg/LmVycm9yID8/IHJlYy5zdW1tYXJ5LmVycm9yLAogICAgICB9OwogICAgfSk7CiAgfQp9Cg==
+import type { PluginSummary } from '../../shared/djiTypes';
+import { getPluginEnabledState, setPluginEnabledState } from '../settings';
+import type { RegisteredPluginRecord, VectrailPlugin } from './types';
+
+export class PluginManager {
+  private readonly plugins = new Map<string, RegisteredPluginRecord>();
+
+  register(plugin: VectrailPlugin): void {
+    const enabled = getPluginEnabledState(plugin.id, plugin.defaultEnabled ?? true);
+    this.plugins.set(plugin.id, {
+      plugin,
+      summary: {
+        id: plugin.id,
+        name: plugin.name,
+        nameZh: plugin.nameZh,
+        version: plugin.version,
+        description: plugin.description,
+        descriptionZh: plugin.descriptionZh,
+        enabled,
+        healthy: true,
+      },
+    });
+  }
+
+  async initAll(): Promise<void> {
+    for (const rec of this.plugins.values()) {
+      if (!rec.summary.enabled) continue;
+      try {
+        await rec.plugin.init();
+        rec.summary.healthy = true;
+        rec.summary.error = undefined;
+      } catch (err) {
+        rec.summary.healthy = false;
+        rec.summary.error = err instanceof Error ? err.message : String(err);
+      }
+    }
+  }
+
+  async disposeAll(): Promise<void> {
+    for (const rec of this.plugins.values()) {
+      try {
+        await rec.plugin.dispose();
+      } catch {
+        // Fault isolation during shutdown.
+      }
+    }
+  }
+
+  isEnabled(pluginId: string): boolean {
+    return this.plugins.get(pluginId)?.summary.enabled ?? false;
+  }
+
+  async setEnabled(pluginId: string, enabled: boolean): Promise<PluginSummary[]> {
+    const rec = this.plugins.get(pluginId);
+    if (!rec) return this.list();
+    setPluginEnabledState(pluginId, enabled);
+    rec.summary.enabled = enabled;
+    try {
+      if (enabled) {
+        await rec.plugin.init();
+      } else {
+        await rec.plugin.dispose();
+      }
+      await rec.plugin.onEnabledChange?.(enabled);
+      rec.summary.healthy = true;
+      rec.summary.error = undefined;
+    } catch (err) {
+      rec.summary.healthy = false;
+      rec.summary.error = err instanceof Error ? err.message : String(err);
+    }
+    return this.list();
+  }
+
+  list(): PluginSummary[] {
+    return [...this.plugins.values()].map((rec) => {
+      const health = rec.plugin.getHealth?.();
+      return {
+        ...rec.summary,
+        healthy: health ? health.healthy : rec.summary.healthy,
+        error: health?.error ?? rec.summary.error,
+      };
+    });
+  }
+}
