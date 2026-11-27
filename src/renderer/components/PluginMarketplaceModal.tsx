@@ -58,6 +58,7 @@ interface PluginMarketplaceModalProps {
   plugins: PluginSummary[];
   onTogglePlugin: (pluginId: string, enabled: boolean) => Promise<void>;
   onOpenDjiImport: () => void;
+  onOpenMediaImport: () => void;
   onOpenTemplates: () => void;
   onClose: () => void;
 }
@@ -66,6 +67,7 @@ export const PluginMarketplaceModal: React.FC<PluginMarketplaceModalProps> = ({
   plugins,
   onTogglePlugin,
   onOpenDjiImport,
+  onOpenMediaImport,
   onOpenTemplates,
   onClose,
 }) => {
@@ -335,6 +337,19 @@ export const PluginMarketplaceModal: React.FC<PluginMarketplaceModalProps> = ({
                           style={{ background: 'var(--text)', color: 'var(--on-text)' }}
                         >
                           <span>{L('打开模板库', 'Open Templates')}</span>
+                          <ArrowUpRight size={11} />
+                        </button>
+                      )}
+                      {item.actionType === 'open_media' && (
+                        <button
+                          onClick={() => {
+                            onClose();
+                            onOpenMediaImport();
+                          }}
+                          className="inline-flex items-center gap-1 px-2.5 py-1 rounded text-[10.5px] font-semibold shrink-0"
+                          style={{ background: 'var(--accent)', color: '#FFF' }}
+                        >
+                          <span>{L('打开解析器', 'Open Importer')}</span>
                           <ArrowUpRight size={11} />
                         </button>
                       )}
