@@ -1,1 +1,110 @@
-aW1wb3J0IGZzIGZyb20gJ25vZGU6ZnMnOwppbXBvcnQgcGF0aCBmcm9tICdub2RlOnBhdGgnOwppbXBvcnQgeyBleGVjRmlsZSB9IGZyb20gJ25vZGU6Y2hpbGRfcHJvY2Vzcyc7CmltcG9ydCB7IHByb21pc2lmeSB9IGZyb20gJ25vZGU6dXRpbCc7CmltcG9ydCB7IE1lZGlhQXNzZXQsIFNjcnViU3RyaXBJbmZvIH0gZnJvbSAnLi4vLi4vc2hhcmVkL3R5cGVzJzsKaW1wb3J0IHsgRkZNUEVHX0JJTiwgZmlsZUhhc2hLZXksIGdldENhY2hlRGlyIH0gZnJvbSAnLi9mZm1wZWcnOwoKY29uc3QgZXhlY0ZpbGVBc3luYyA9IHByb21pc2lmeShleGVjRmlsZSk7Cgpjb25zdCBTQ1JVQl9SQVRFID0gODsKY29uc3QgU0NSVUJfTUFYX1NJREUgPSA5NjA7CgpleHBvcnQgY2xhc3MgU2NydWJDYWNoZU1hbmFnZXIgewogIHByaXZhdGUgc3RyaXBzID0gbmV3IE1hcDxzdHJpbmcsIFNjcnViU3RyaXBJbmZvPigpOwogIHByaXZhdGUgcXVldWU6IE1lZGlhQXNzZXRbXSA9IFtdOwogIHByaXZhdGUgd29ya2luZ0lkOiBzdHJpbmcgfCBudWxsID0gbnVsbDsKICBwcml2YXRlIG9uUmVhZHk/OiAoYXNzZXRJZDogc3RyaW5nLCBzdHJpcDogU2NydWJTdHJpcEluZm8pID0+IHZvaWQ7CgogIGNvbnN0cnVjdG9yKG9uUmVhZHk/OiAoYXNzZXRJZDogc3RyaW5nLCBzdHJpcDogU2NydWJTdHJpcEluZm8pID0+IHZvaWQpIHsKICAgIHRoaXMub25SZWFkeSA9IG9uUmVhZHk7CiAgfQoKICBnZXQoYXNzZXRJZDogc3RyaW5nKTogU2NydWJTdHJpcEluZm8gfCB1bmRlZmluZWQgewogICAgcmV0dXJuIHRoaXMuc3RyaXBzLmdldChhc3NldElkKTsKICB9CgogIHNuYXBzaG90KCk6IFJlY29yZDxzdHJpbmcsIFNjcnViU3RyaXBJbmZvPiB7CiAgICBjb25zdCBvdXQ6IFJlY29yZDxzdHJpbmcsIFNjcnViU3RyaXBJbmZvPiA9IHt9OwogICAgZm9yIChjb25zdCBbaywgdl0gb2YgdGhpcy5zdHJpcHMuZW50cmllcygpKSBvdXRba10gPSB2OwogICAgcmV0dXJuIG91dDsKICB9CgogIGZvcmdldChhc3NldElkOiBzdHJpbmcpOiB2b2lkIHsKICAgIHRoaXMuc3RyaXBzLmRlbGV0ZShhc3NldElkKTsKICAgIHRoaXMucXVldWUgPSB0aGlzLnF1ZXVlLmZpbHRlcigoYSkgPT4gYS5pZCAhPT0gYXNzZXRJZCk7CiAgfQoKICBlbnF1ZXVlKGFzc2V0OiBNZWRpYUFzc2V0KTogdm9pZCB7CiAgICBpZiAoYXNzZXQua2luZCAhPT0gJ3ZpZGVvJyB8fCBhc3NldC5kdXJhdGlvbiA8PSAwIHx8ICFmcy5leGlzdHNTeW5jKGFzc2V0LnBhdGgpKSByZXR1cm47CiAgICBpZiAodGhpcy5zdHJpcHMuaGFzKGFzc2V0LmlkKSB8fCB0aGlzLndvcmtpbmdJZCA9PT0gYXNzZXQuaWQpIHJldHVybjsKICAgIGlmICh0aGlzLnF1ZXVlLnNvbWUoKGEpID0+IGEuaWQgPT09IGFzc2V0LmlkKSkgcmV0dXJuOwogICAgdGhpcy5xdWV1ZS5wdXNoKGFzc2V0KTsKICAgIHZvaWQgdGhpcy5wdW1wKCk7CiAgfQoKICBwcml2YXRlIGFzeW5jIHB1bXAoKTogUHJvbWlzZTx2b2lkPiB7CiAgICBpZiAodGhpcy53b3JraW5nSWQgfHwgIXRoaXMucXVldWUubGVuZ3RoKSByZXR1cm47CiAgICBjb25zdCBhc3NldCA9IHRoaXMucXVldWUuc2hpZnQoKSE7CiAgICB0aGlzLndvcmtpbmdJZCA9IGFzc2V0LmlkOwogICAgdHJ5IHsKICAgICAgY29uc3Qgc3RyaXAgPSBhd2FpdCB0aGlzLmJ1aWxkU3RyaXAoYXNzZXQpOwogICAgICBpZiAoc3RyaXAgJiYgc3RyaXAuZmlsZXMubGVuZ3RoID4gMCkgewogICAgICAgIHRoaXMuc3RyaXBzLnNldChhc3NldC5pZCwgc3RyaXApOwogICAgICAgIHRoaXMub25SZWFkeT8uKGFzc2V0LmlkLCBzdHJpcCk7CiAgICAgIH0KICAgIH0gY2F0Y2ggewogICAgICAvLyBub24tZmF0YWwgc2NydWIgd2FybXVwIGVycm9yCiAgICB9IGZpbmFsbHkgewogICAgICB0aGlzLndvcmtpbmdJZCA9IG51bGw7CiAgICAgIGlmICh0aGlzLnF1ZXVlLmxlbmd0aCkgdm9pZCB0aGlzLnB1bXAoKTsKICAgIH0KICB9CgogIHByaXZhdGUgYXN5bmMgYnVpbGRTdHJpcChhc3NldDogTWVkaWFBc3NldCk6IFByb21pc2U8U2NydWJTdHJpcEluZm8gfCB1bmRlZmluZWQ+IHsKICAgIGNvbnN0IGRpciA9IHBhdGguam9pbihnZXRDYWNoZURpcignU2NydWInKSwgYCR7ZmlsZUhhc2hLZXkoYXNzZXQucGF0aCl9LSR7U0NSVUJfUkFURX1gKTsKICAgIGNvbnN0IG1hbmlmZXN0UGF0aCA9IHBhdGguam9pbihkaXIsICdtYW5pZmVzdC5qc29uJyk7CiAgICBpZiAoZnMuZXhpc3RzU3luYyhtYW5pZmVzdFBhdGgpKSB7CiAgICAgIHRyeSB7CiAgICAgICAgY29uc3QgcGFyc2VkID0gSlNPTi5wYXJzZShmcy5yZWFkRmlsZVN5bmMobWFuaWZlc3RQYXRoLCAndXRmOCcpKSBhcyBTY3J1YlN0cmlwSW5mbzsKICAgICAgICBpZiAocGFyc2VkLmZpbGVzPy5sZW5ndGggJiYgZnMuZXhpc3RzU3luYyhwYXJzZWQuZmlsZXNbMF0pKSByZXR1cm4gcGFyc2VkOwogICAgICB9IGNhdGNoIHsKICAgICAgICAvLyByZWJ1aWxkCiAgICAgIH0KICAgIH0KICAgIGZzLm1rZGlyU3luYyhkaXIsIHsgcmVjdXJzaXZlOiB0cnVlIH0pOwogICAgLy8gQ2FwIHRvdGFsIHNjcnViIGZyYW1lcyBvbiB1bHRyYS1sb25nIHJlY29yZGluZ3Mgc28gZGlzayBzdGF5cyBib3VuZGVkCiAgICBjb25zdCByYXRlID0gYXNzZXQuZHVyYXRpb24gPiAzMDAgPyAyIDogYXNzZXQuZHVyYXRpb24gPiA5MCA/IDQgOiBTQ1JVQl9SQVRFOwogICAgY29uc3Qgb3V0UGF0dGVybiA9IHBhdGguam9pbihkaXIsICdmJTA1ZC5qcGcnKTsKICAgIGF3YWl0IGV4ZWNGaWxlQXN5bmMoCiAgICAgIEZGTVBFR19CSU4sCiAgICAgIFsKICAgICAgICAnLWhpZGVfYmFubmVyJywKICAgICAgICAnLXYnLAogICAgICAgICdlcnJvcicsCiAgICAgICAgJy15JywKICAgICAgICAnLWknLAogICAgICAgIGFzc2V0LnBhdGgsCiAgICAgICAgJy12ZicsCiAgICAgICAgYGZwcz0ke3JhdGV9LHNjYWxlPSdtaW4oJHtTQ1JVQl9NQVhfU0lERX0saXcpJzonbWluKCR7U0NSVUJfTUFYX1NJREV9LGloKSc6Zm9yY2Vfb3JpZ2luYWxfYXNwZWN0X3JhdGlvPWRlY3JlYXNlYCwKICAgICAgICAnLXE6dicsCiAgICAgICAgJzUnLAogICAgICAgIG91dFBhdHRlcm4sCiAgICAgIF0sCiAgICAgIHsgd2luZG93c0hpZGU6IHRydWUsIHRpbWVvdXQ6IDEyMDAwMCB9CiAgICApOwogICAgY29uc3QgZmlsZXMgPSBmcwogICAgICAucmVhZGRpclN5bmMoZGlyKQogICAgICAuZmlsdGVyKChmKSA9PiBmLmVuZHNXaXRoKCcuanBnJykpCiAgICAgIC5zb3J0KCkKICAgICAgLm1hcCgoZikgPT4gcGF0aC5qb2luKGRpciwgZikpOwogICAgaWYgKCFmaWxlcy5sZW5ndGgpIHJldHVybiB1bmRlZmluZWQ7CiAgICBjb25zdCBzdHJpcDogU2NydWJTdHJpcEluZm8gPSB7IHJhdGUsIGZpbGVzIH07CiAgICB0cnkgewogICAgICBmcy53cml0ZUZpbGVTeW5jKG1hbmlmZXN0UGF0aCwgSlNPTi5zdHJpbmdpZnkoc3RyaXApLCAndXRmOCcpOwogICAgfSBjYXRjaCB7CiAgICAgIC8vIGlnbm9yZSBjYWNoZSBtYW5pZmVzdCBlcnJvcgogICAgfQogICAgcmV0dXJuIHN0cmlwOwogIH0KfQo=
+import fs from 'node:fs';
+import path from 'node:path';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { MediaAsset, ScrubStripInfo } from '../../shared/types';
+import { FFMPEG_BIN, fileHashKey, getCacheDir } from './ffmpeg';
+
+const execFileAsync = promisify(execFile);
+
+const SCRUB_RATE = 8;
+const SCRUB_MAX_SIDE = 960;
+
+export class ScrubCacheManager {
+  private strips = new Map<string, ScrubStripInfo>();
+  private queue: MediaAsset[] = [];
+  private workingId: string | null = null;
+  private onReady?: (assetId: string, strip: ScrubStripInfo) => void;
+
+  constructor(onReady?: (assetId: string, strip: ScrubStripInfo) => void) {
+    this.onReady = onReady;
+  }
+
+  get(assetId: string): ScrubStripInfo | undefined {
+    return this.strips.get(assetId);
+  }
+
+  snapshot(): Record<string, ScrubStripInfo> {
+    const out: Record<string, ScrubStripInfo> = {};
+    for (const [k, v] of this.strips.entries()) out[k] = v;
+    return out;
+  }
+
+  forget(assetId: string): void {
+    this.strips.delete(assetId);
+    this.queue = this.queue.filter((a) => a.id !== assetId);
+  }
+
+  enqueue(asset: MediaAsset): void {
+    if (asset.kind !== 'video' || asset.duration <= 0 || !fs.existsSync(asset.path)) return;
+    if (this.strips.has(asset.id) || this.workingId === asset.id) return;
+    if (this.queue.some((a) => a.id === asset.id)) return;
+    this.queue.push(asset);
+    void this.pump();
+  }
+
+  private async pump(): Promise<void> {
+    if (this.workingId || !this.queue.length) return;
+    const asset = this.queue.shift()!;
+    this.workingId = asset.id;
+    try {
+      const strip = await this.buildStrip(asset);
+      if (strip && strip.files.length > 0) {
+        this.strips.set(asset.id, strip);
+        this.onReady?.(asset.id, strip);
+      }
+    } catch {
+      // non-fatal scrub warmup error
+    } finally {
+      this.workingId = null;
+      if (this.queue.length) void this.pump();
+    }
+  }
+
+  private async buildStrip(asset: MediaAsset): Promise<ScrubStripInfo | undefined> {
+    const dir = path.join(getCacheDir('Scrub'), `${fileHashKey(asset.path)}-${SCRUB_RATE}`);
+    const manifestPath = path.join(dir, 'manifest.json');
+    if (fs.existsSync(manifestPath)) {
+      try {
+        const parsed = JSON.parse(fs.readFileSync(manifestPath, 'utf8')) as ScrubStripInfo;
+        if (parsed.files?.length && fs.existsSync(parsed.files[0])) return parsed;
+      } catch {
+        // rebuild
+      }
+    }
+    fs.mkdirSync(dir, { recursive: true });
+    // Cap total scrub frames on ultra-long recordings so disk stays bounded
+    const rate = asset.duration > 300 ? 2 : asset.duration > 90 ? 4 : SCRUB_RATE;
+    const outPattern = path.join(dir, 'f%05d.jpg');
+    await execFileAsync(
+      FFMPEG_BIN,
+      [
+        '-hide_banner',
+        '-v',
+        'error',
+        '-y',
+        '-i',
+        asset.path,
+        '-vf',
+        `fps=${rate},scale='min(${SCRUB_MAX_SIDE},iw)':'min(${SCRUB_MAX_SIDE},ih)':force_original_aspect_ratio=decrease`,
+        '-q:v',
+        '5',
+        outPattern,
+      ],
+      { windowsHide: true, timeout: 120000 }
+    );
+    const files = fs
+      .readdirSync(dir)
+      .filter((f) => f.endsWith('.jpg'))
+      .sort()
+      .map((f) => path.join(dir, f));
+    if (!files.length) return undefined;
+    const strip: ScrubStripInfo = { rate, files };
+    try {
+      fs.writeFileSync(manifestPath, JSON.stringify(strip), 'utf8');
+    } catch {
+      // ignore cache manifest error
+    }
+    return strip;
+  }
+}
