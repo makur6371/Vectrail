@@ -308,7 +308,7 @@ describe('Versioning and Plugin Marketplace catalog', () => {
   it('reads unified version from package.json and keeps marketplace catalog consistent', () => {
     const pkg = JSON.parse(fs.readFileSync(path.resolve(process.cwd(), 'package.json'), 'utf8')) as { version: string };
     expect(getVectrailVersion()).toBe(pkg.version);
-    expect(pkg.version).toBe('1.2.0');
+    expect(pkg.version).toBe('1.3.0');
 
     const ids = new Set(PLUGIN_MARKETPLACE_CATALOG.map((p) => p.id));
     expect(ids.size).toBe(PLUGIN_MARKETPLACE_CATALOG.length);
