@@ -219,7 +219,7 @@ export class MediaImportService implements VectrailPlugin {
         destination = await this.downloadDirect(
           selected.url.startsWith('//') ? `https:${selected.url}` : selected.url,
           directTarget,
-          media.platform === 'douyin' ? 'https://www.douyin.com/' : undefined,
+          this.refererFor(media.platform),
           task.id,
           (downloaded, total, speed) => {
             this.updateTask(task.id, {
@@ -231,6 +231,11 @@ export class MediaImportService implements VectrailPlugin {
           }
         );
       } else {
+        if (media.engine !== 'yt-dlp') {
+          throw new Error(
+            `The ${media.engine} resolver returned no direct media URL for this quality.`
+          );
+        }
         const handle = createDownload(
           this.engine.binary,
           task.sourceUrl,
@@ -364,6 +369,14 @@ export class MediaImportService implements VectrailPlugin {
         request.destroy(new Error('Cancelled'));
       });
     });
+  }
+
+  private refererFor(platform: VideoImportMedia['platform']): string | undefined {
+    if (platform === 'douyin') return 'https://www.douyin.com/';
+    if (platform === 'tiktok') return 'https://www.tiktok.com/';
+    if (platform === 'xiaohongshu') return 'https://www.xiaohongshu.com/';
+    if (platform === 'bilibili') return 'https://www.bilibili.com/';
+    return undefined;
   }
 
   async streamRemote(url: string, range?: string): Promise<unknown> {

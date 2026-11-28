@@ -294,6 +294,101 @@ describe('DJI Wireless Import plugin (Mock Camera + Plugin isolation)', () => {
 });
 
 describe('Universal media link import (direct-link routing)', () => {
+  it('keeps the direct media URL on every resolved format', async () => {
+    prevCacheDir = process.env.VECTRAIL_CACHE_DIR;
+    process.env.VECTRAIL_CACHE_DIR = makeTempDir('vectrail-webimport-url-cache-');
+    const store = new ProjectStore();
+    const service = new MediaImportService(store);
+
+    const samplePath = path.join(makeTempDir('vectrail-webimport-url-sample-'), 'sample.mp4');
+    await new Promise<void>((resolve, reject) => {
+      const child = spawn(
+        FFMPEG_BIN,
+        [
+          '-y',
+          '-f',
+          'lavfi',
+          '-i',
+          'testsrc=size=160x120:rate=10:duration=1',
+          '-f',
+          'lavfi',
+          '-i',
+          'sine=frequency=440:duration=1',
+          '-c:v',
+          'libx264',
+          '-pix_fmt',
+          'yuv420p',
+          '-c:a',
+          'aac',
+          '-shortest',
+          samplePath,
+        ],
+        { windowsHide: true }
+      );
+      child.on('error', reject);
+      child.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`ffmpeg exited ${code}`))));
+    });
+    const payload = fs.readFileSync(samplePath);
+    const server = http.createServer((_req, res) => {
+      res.writeHead(200, { 'Content-Length': String(payload.length) });
+      res.end(payload);
+    });
+    await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', () => resolve()));
+    const addr = server.address();
+    const port = typeof addr === 'object' && addr ? addr.port : 0;
+
+    try {
+      const media: VideoImportMedia = {
+        engine: 'dtk-native',
+        platform: 'douyin',
+        sourceUrl: 'https://v.douyin.com/example/',
+        id: '1',
+        title: 'Direct URL preserved',
+        description: '',
+        author: 'tester',
+        authorId: '',
+        duration: 10,
+        formats: [
+          {
+            id: 'main-1080',
+            label: '1080p main',
+            url: `http://127.0.0.1:${port}/video.mp4`,
+            extension: 'mp4',
+            height: 1080,
+            fps: 30,
+            filesize: payload.length,
+            filesizeApprox: payload.length,
+            hasVideo: true,
+            hasAudio: true,
+          },
+        ],
+        subtitles: [],
+        gallery: [],
+      };
+
+      expect(media.formats[0].url).toBeTruthy();
+      const tasks = await service.importResolved(media, media.formats[0].id);
+      expect(tasks[0].engine).toBe('dtk-native');
+
+      await new Promise<void>((resolve, reject) => {
+        const start = Date.now();
+        const timer = setInterval(() => {
+          const current = service.listTasks()[0];
+          if (current?.status === 'done') {
+            clearInterval(timer);
+            resolve();
+          } else if (current?.status === 'failed' || Date.now() - start > 15000) {
+            clearInterval(timer);
+            reject(new Error(current?.error ?? 'Timed out'));
+          }
+        }, 40);
+      });
+    } finally {
+      await new Promise<void>((resolve) => server.close(() => resolve()));
+      await service.dispose();
+    }
+  }, 20000);
+
   it('downloads a resolved direct link without invoking yt-dlp', async () => {
     prevCacheDir = process.env.VECTRAIL_CACHE_DIR;
     process.env.VECTRAIL_CACHE_DIR = makeTempDir('vectrail-webimport-cache-');

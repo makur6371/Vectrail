@@ -211,6 +211,7 @@ export async function resolveDtkMedia(input: string): Promise<VideoImportMedia> 
       .map((format) => ({
         id: format.id,
         label: format.label,
+        url: format.url,
         extension: 'mp4',
         height: format.height,
         fps: 0,
