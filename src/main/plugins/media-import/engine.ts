@@ -184,6 +184,129 @@ export async function resolveDouyinMedia(input: string): Promise<VideoImportMedi
   };
 }
 
+const BUGPK_ENDPOINTS: Array<[VideoImportPlatform, string]> = [
+  ['douyin', 'douyin'],
+  ['kuaishou', 'ksjx'],
+  ['bilibili', 'bilibili'],
+  ['xiaohongshu', 'xhsjx'],
+  ['generic', 'short_videos'],
+];
+
+function bugPkUrl(url: string, endpoint: string): string {
+  return `https://api.bugpk.com/api/${endpoint}?url=${encodeURIComponent(url)}`;
+}
+
+async function requestJson(url: string): Promise<unknown> {
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      const response = await fetch(url, {
+        signal: AbortSignal.timeout(45000),
+        headers: { Accept: 'application/json', 'User-Agent': 'Vectrail/1.3.0' },
+      });
+      if (!response.ok) throw new Error(`BugPk HTTP ${response.status}`);
+      return (await response.json()) as unknown;
+    } catch (err) {
+      if (attempt === 2) throw err;
+      await new Promise((resolve) => setTimeout(resolve, 1000 * (attempt + 1)));
+    }
+  }
+  throw new Error('BugPk request failed');
+}
+
+export async function resolveBugPkMedia(url: string): Promise<VideoImportMedia> {
+  const platform = detectPlatform(url);
+  const endpoint =
+    BUGPK_ENDPOINTS.find(([candidate]) => candidate === platform)?.[1] ??
+    BUGPK_ENDPOINTS.at(-1)![1];
+  const payload = (await requestJson(bugPkUrl(url, endpoint))) as {
+    code?: number;
+    msg?: string;
+    data?: {
+      title?: string;
+      desc?: string;
+      cover?: string;
+      author?: { name?: string };
+      user?: { name?: string };
+      url?: string;
+      duration?: number;
+      quality?: string;
+      width?: number;
+      height?: number;
+      size?: number;
+      video_backup?: Array<{ url?: string; quality?: string; height?: number; width?: number; size?: number }>;
+      images?: string[];
+      music?: { url?: string };
+      videos?: Array<{ url?: string; duration?: number }>;
+      extra?: { aweme_id?: string };
+    };
+  };
+  if (payload.code !== 200 || !payload.data) {
+    throw new Error(payload.msg || `BugPk returned code ${payload.code}`);
+  }
+  const data = payload.data;
+  const formats = [] as VideoImportMedia['formats'];
+  if (data.url) {
+    formats.push({
+      id: 'original',
+      url: data.url,
+      label: data.quality ? `${data.quality} (${data.height ?? 0}p)` : 'Original',
+      extension: 'mp4',
+      height: data.height ?? 0,
+      fps: 0,
+      filesize: data.size ?? null,
+      filesizeApprox: data.size ?? null,
+      hasVideo: true,
+      hasAudio: true,
+    });
+  }
+  for (const [index, backup] of (data.video_backup ?? []).entries()) {
+    if (!backup.url) continue;
+    formats.push({
+      id: `backup-${index}`,
+      url: backup.url,
+      label: backup.quality ?? 'Backup',
+      extension: 'mp4',
+      height: backup.height ?? 0,
+      fps: 0,
+      filesize: backup.size ?? null,
+      filesizeApprox: backup.size ?? null,
+      hasVideo: true,
+      hasAudio: true,
+    });
+  }
+  for (const [index, video] of (data.videos ?? []).entries()) {
+    if (!video.url) continue;
+    formats.push({
+      id: `bilibili-${index}`,
+      url: video.url,
+      label: `Part ${index + 1}`,
+      extension: 'mp4',
+      height: data.height ?? 0,
+      fps: 0,
+      filesize: null,
+      filesizeApprox: null,
+      hasVideo: true,
+      hasAudio: true,
+    });
+  }
+  if (formats.length === 0) throw new Error('BugPk response contained no downloadable media.');
+  return {
+    engine: 'bugpk',
+    platform,
+    sourceUrl: url,
+    id: data.extra?.aweme_id ?? Date.now().toString(),
+    title: data.title ?? 'Untitled media',
+    description: data.desc ?? '',
+    author: data.author?.name ?? data.user?.name ?? '',
+    authorId: '',
+    duration: Math.round(data.duration ?? (data as { videos?: Array<{ duration?: number }> }).videos?.at(0)?.duration ?? 0),
+    thumbnailUrl: data.cover,
+    formats,
+    subtitles: [],
+    gallery: data.images ?? [],
+  };
+}
+
 export function ytDlpArguments(url: string): string[] {
   return [
     '--dump-single-json',

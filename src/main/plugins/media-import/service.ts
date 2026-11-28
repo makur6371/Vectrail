@@ -17,6 +17,7 @@ import {
   getEngineStatus,
   resolveMedia,
   resolveDouyinMedia,
+  resolveBugPkMedia,
 } from './engine';
 import http from 'node:http';
 import https from 'node:https';
@@ -102,6 +103,13 @@ export class MediaImportService implements VectrailPlugin {
         if (!this.engine.available) await this.healthCheck();
         if (!this.engine.available) throw new Error(`${message} (yt-dlp unavailable)`);
       }
+    }
+    try {
+      const bugPk = await resolveBugPkMedia(extractUrls(input)[0] ?? '');
+      this.media.set(bugPk.sourceUrl, bugPk);
+      return bugPk;
+    } catch {
+      // Continue with yt-dlp.
     }
     if (!this.engine.available) await this.healthCheck();
     if (!this.engine.available) {
