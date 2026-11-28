@@ -55,6 +55,10 @@ if (process.argv.includes('--mcp')) {
       scheme: 'vectrail-dji',
       privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, corsEnabled: true },
     },
+    {
+      scheme: 'vectrail-webimport',
+      privileges: { standard: true, secure: true, supportFetchAPI: true, stream: true, corsEnabled: true },
+    },
   ]);
 
   const store = new ProjectStore();
@@ -323,6 +327,27 @@ async function serveMediaRequest(req: Request, filePath: string): Promise<Respon
         status: result.status,
         headers: { 'Content-Type': result.contentType },
       });
+    });
+
+    protocol.handle('vectrail-webimport', async (req) => {
+      const mediaUrl = new URL(req.url).searchParams.get('url') ?? '';
+      if (!/^https?:\/\//i.test(mediaUrl)) return new Response('Bad Request', { status: 400 });
+      const range = req.headers.get('range') ?? undefined;
+      const result = (await mediaImportPlugin.streamRemote(mediaUrl, range)) as {
+        status: number;
+        contentType: string;
+        contentLength?: string;
+        contentRange?: string;
+        acceptRanges?: string;
+        body: unknown;
+      };
+      const headers: Record<string, string> = {
+        'Content-Type': result.contentType,
+      };
+      if (result.contentLength) headers['Content-Length'] = result.contentLength;
+      if (result.contentRange) headers['Content-Range'] = result.contentRange;
+      if (result.acceptRanges) headers['Accept-Ranges'] = result.acceptRanges;
+      return new Response(result.body as ReadableStream, { status: result.status, headers });
     });
 
     mcpServer.start(MCP_DEFAULT_PORT);

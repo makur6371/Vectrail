@@ -157,11 +157,29 @@ export const MediaLinkImportModal: React.FC<Props> = ({ onClose }) => {
           {preview && (
             <div className="p-3 rounded-lg space-y-3" style={{ background: 'var(--sheet-field)', border: '1px solid var(--stroke)' }}>
               <div className="flex gap-3">
-                {preview.thumbnailUrl && <img src={preview.thumbnailUrl} alt="" className="w-32 h-20 object-cover rounded-md" />}
-                <div className="min-w-0">
+                <div className="w-48 h-28 rounded-md overflow-hidden shrink-0 relative" style={{ background: 'var(--well)' }}>
+                  {(() => {
+                    const playable = preview.formats.find((format) => format.hasVideo && format.url);
+                    const previewUrl = selectedFormat
+                      ? preview.formats.find((format) => format.id === selectedFormat && format.url)?.url
+                      : playable?.url;
+                    const streamUrl = previewUrl
+                      ? `vectrail-webimport://preview/video?url=${encodeURIComponent(previewUrl)}`
+                      : null;
+                    return streamUrl ? (
+                      <video src={streamUrl} controls className="w-full h-full object-contain" />
+                    ) : preview.thumbnailUrl ? (
+                      <img src={preview.thumbnailUrl} alt="" className="w-full h-full object-cover" />
+                    ) : null;
+                  })()}
+                </div>
+                <div className="min-w-0 flex-1">
                   <div className="text-[12.5px] font-semibold truncate">{preview.title}</div>
                   <div className="text-[10.5px] truncate" style={{ color: 'var(--text-dim)' }}>
                     {preview.author || preview.platform} · {preview.duration ? `${preview.duration.toFixed(0)}s` : 'unknown'} · {preview.engine}
+                  </div>
+                  <div className="mt-2 text-[10px]" style={{ color: 'var(--text-faint)' }}>
+                    {L('当前清晰度可直接预览，切换清晰度后播放器会同步更新。', 'The selected quality can be previewed directly; changing quality updates the player.')}
                   </div>
                 </div>
               </div>

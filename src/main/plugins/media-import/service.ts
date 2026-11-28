@@ -336,6 +336,35 @@ export class MediaImportService implements VectrailPlugin {
       );
     });
   }
+
+  async streamRemote(url: string, range?: string): Promise<unknown> {
+    return new Promise((resolve, reject) => {
+      const protocol = url.startsWith('https:') ? https : http;
+      const request = protocol.get(
+        url,
+        { headers: { 'User-Agent': 'Mozilla/5.0', ...(range ? { Range: range } : {}) } },
+        (response) => {
+          if (response.statusCode && response.statusCode >= 300 && response.statusCode < 400) {
+            const location = response.headers.location;
+            if (location) {
+              response.resume();
+              this.streamRemote(new URL(location, url).toString(), range).then(resolve, reject);
+              return;
+            }
+          }
+          resolve({
+            status: response.statusCode ?? 500,
+            contentType: response.headers['content-type'] ?? 'video/mp4',
+            contentLength: response.headers['content-length'],
+            contentRange: response.headers['content-range'],
+            acceptRanges: response.headers['accept-ranges'] ?? 'bytes',
+            body: response,
+          });
+        }
+      );
+      request.on('error', reject);
+    });
+  }
 }
 
 export function toPluginSummary(plugin: MediaImportService): PluginSummary {
