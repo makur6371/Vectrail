@@ -61,14 +61,14 @@ export const PLUGIN_MARKETPLACE_CATALOG: MarketplacePluginEntry[] = [
     descriptionZh:
       '基于本地 yt-dlp 引擎的多平台链接解析器，支持从分享文本中提取链接、画质预览、下载所选清晰度、FFprobe 校验并自动导入工程。',
     capabilities: [
-      'Douyin, XHS, Kuaishou, Bilibili, YouTube, TikTok coverage',
-      'Batch link extraction, format preview, and engine health check',
-      'Progress, cancel, retry, FFprobe verification, and auto import',
+      'Three resolvers: local DTK signing, public BugPk API, and yt-dlp',
+      'Douyin, TikTok, XHS, Bilibili, YouTube, Kuaishou and more',
+      'Preview player, one-click quality pick, cancel, retry, FFprobe verify',
     ],
     capabilitiesZh: [
-      '优先覆盖抖音、小红书、快手、B站、YouTube、TikTok',
-      '混杂文本提取链接、画质预览与引擎健康检查',
-      '任务进度、取消重试、FFprobe 完整性校验与自动入库',
+      '三条解析线路：本地 DTK 签名、公共 BugPk 接口、yt-dlp',
+      '覆盖抖音、TikTok、小红书、B站、YouTube、快手等',
+      '预览播放、一键选清晰度、取消重试、FFprobe 校验入库',
     ],
     tags: ['yt-dlp', '抖音', '小红书', 'B站', 'YouTube'],
     actionType: 'open_media',

@@ -10,9 +10,13 @@ from urllib.parse import urlencode
 from dtk.platforms.douyin.endpoints import DouyinAPIEndpoints, DEFAULT_HEADERS
 from dtk.platforms.douyin.params import base_params
 from dtk.platforms.douyin.parser import parse_content
+from dtk.platforms.tiktok.endpoints import TikTokAPIEndpoints
+from dtk.platforms.tiktok.params import base_params as tiktok_base_params
+from dtk.platforms.tiktok.parser import parse_content as parse_tiktok_content
 from dtk.signing.native.abogus import ABogus
+from dtk.signing.native.tiktok_sign import sign as tiktok_sign
 from dtk.signing.native.tokens import gen_false_ms_token
-from dtk.signing.native.websign import sign
+from dtk.signing.native.websign import sign as douyin_sign
 from dtk.urls.expand import expand as expand_short_link, RedirectFetcher
 from dtk.urls.parse import first_url, identify
 

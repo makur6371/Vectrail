@@ -16,8 +16,9 @@ import {
   extractUrls,
   getEngineStatus,
   resolveMedia,
-  resolveDouyinMedia,
+  resolveDtkMedia,
   resolveBugPkMedia,
+  PLATFORM_ROUTES,
 } from './engine';
 import http from 'node:http';
 import https from 'node:https';
@@ -94,35 +95,36 @@ export class MediaImportService implements VectrailPlugin {
   }
 
   async resolveLink(input: string): Promise<VideoImportMedia> {
-    if (detectPlatform(extractUrls(input)[0] ?? '') === 'douyin') {
+    const url = extractUrls(input)[0];
+    if (!url) throw new Error('No valid http(s) link found.');
+    const platform = detectPlatform(url);
+    const failures: string[] = [];
+    for (const engine of PLATFORM_ROUTES[platform] ?? PLATFORM_ROUTES.generic) {
       try {
-        const douyin = await resolveDouyinMedia(input);
-        this.media.set(douyin.sourceUrl, douyin);
-        return douyin;
+        const media = await this.resolveWithEngine(engine, url, input);
+        this.media.set(media.sourceUrl, media);
+        return media;
       } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        if (!this.engine.available) await this.healthCheck();
-        if (!this.engine.available) throw new Error(`${message} (yt-dlp unavailable)`);
+        failures.push(`${engine}: ${err instanceof Error ? err.message : String(err)}`);
       }
     }
-    try {
-      const bugPk = await resolveBugPkMedia(extractUrls(input)[0] ?? '');
-      this.media.set(bugPk.sourceUrl, bugPk);
-      return bugPk;
-    } catch {
-      // Continue with yt-dlp.
-    }
+    throw new Error(failures.join(' | ') || 'No resolver could handle this link.');
+  }
+
+  private async resolveWithEngine(
+    engine: 'dtk-native' | 'bugpk' | 'yt-dlp',
+    url: string,
+    input: string
+  ): Promise<VideoImportMedia> {
+    if (engine === 'dtk-native') return resolveDtkMedia(input);
+    if (engine === 'bugpk') return resolveBugPkMedia(url);
     if (!this.engine.available) await this.healthCheck();
     if (!this.engine.available) {
       throw new Error(
         'yt-dlp is not installed or not on PATH. Install Python yt-dlp, or place yt-dlp(.exe) beside Vectrail.'
       );
     }
-    const url = extractUrls(input)[0];
-    if (!url) throw new Error('No valid http(s) link found.');
-    const media = await resolveMedia(this.engine.binary, url);
-    this.media.set(media.sourceUrl, media);
-    return media;
+    return resolveMedia(this.engine.binary, url);
   }
 
   async importLinks(input: string, formatId?: string): Promise<VideoImportTask[]> {

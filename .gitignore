@@ -14,3 +14,4 @@ coverage/
 Thumbs.db
 __pycache__/
 *.pyc
+plugins/media-import/dtk/**/__pycache__/

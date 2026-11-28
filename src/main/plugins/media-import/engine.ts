@@ -10,6 +10,7 @@ import type {
   VideoImportPlatform,
 } from '../../../shared/mediaImportTypes';
 import { FFPROBE_BIN } from '../../engine/ffmpeg';
+import { getCacheDir } from '../../engine/ffmpeg';
 import { detectPythonAndBleak } from '../dji-wireless-import/wifiManager';
 
 const execFileAsync = promisify(execFile);
@@ -71,36 +72,72 @@ export async function getEngineStatus(binary?: string): Promise<VideoImportEngin
   };
 }
 
-function resolveDouyinScript(): string | null {
+function resolveDtkScript(): string | null {
   const candidates = [
-    path.resolve(process.cwd(), 'plugins', 'media-import', 'douyin_dtk.py'),
-    path.resolve(__dirname, '../../../../plugins/media-import/douyin_dtk.py'),
-    process.resourcesPath ? path.join(process.resourcesPath, 'plugins', 'media-import', 'douyin_dtk.py') : null,
+    path.resolve(process.cwd(), 'plugins', 'media-import', 'dtk_resolve.py'),
+    path.resolve(__dirname, '../../../../plugins/media-import/dtk_resolve.py'),
+    process.resourcesPath ? path.join(process.resourcesPath, 'plugins', 'media-import', 'dtk_resolve.py') : null,
   ].filter((candidate): candidate is string => Boolean(candidate));
   return candidates.find((candidate) => fs.existsSync(candidate)) ?? null;
 }
 
-export async function getDouyinRouteStatus(): Promise<VideoImportLinkRoute> {
-  const script = resolveDouyinScript();
+function resolveDtkRoot(): string | null {
+  const script = resolveDtkScript();
+  return script ? path.dirname(script) : null;
+}
+
+const DTK_PYTHON_DEPS = ['httpx', 'pydantic', 'pydantic-settings', 'structlog'];
+
+async function ensureDtkDependencies(pythonPath: string): Promise<string> {
+  const probe = await execFileAsync(
+    pythonPath,
+    ['-c', 'import httpx, pydantic, pydantic_settings, structlog'],
+    { windowsHide: true, timeout: 20000 }
+  ).catch(() => null);
+  if (probe) return pythonPath;
+  const target = path.join(getCacheDir('Plugins/media-import'), 'dtk-venv');
+  if (!fs.existsSync(path.join(target, 'Scripts', 'python.exe'))) {
+    await execFileAsync(pythonPath, ['-m', 'venv', target], { windowsHide: true, timeout: 120000 });
+  }
+  const venvPython = path.join(target, 'Scripts', 'python.exe');
+  await execFileAsync(venvPython, ['-m', 'pip', 'install', '--quiet', '--upgrade', 'pip'], {
+    windowsHide: true,
+    timeout: 180000,
+  });
+  await execFileAsync(venvPython, ['-m', 'pip', 'install', '--quiet', ...DTK_PYTHON_DEPS], {
+    windowsHide: true,
+    timeout: 300000,
+  });
+  return venvPython;
+}
+
+export async function getDtkRouteStatus(): Promise<VideoImportLinkRoute> {
+  const script = resolveDtkScript();
   const python = await detectPythonAndBleak();
   if (!script) {
-    return { id: 'douyin-dtk', label: 'DTK native', labelZh: 'DTK 本地线路', available: false, error: 'douyin_dtk.py not found' };
+    return { id: 'dtk-native', label: 'DTK native', labelZh: 'DTK 本地线路', available: false, error: 'dtk_resolve.py not found' };
   }
   if (!python.pythonPath || !python.pythonAvailable) {
-    return { id: 'douyin-dtk', label: 'DTK native', labelZh: 'DTK 本地线路', available: false, error: 'Python 3.12+ not found' };
+    return { id: 'dtk-native', label: 'DTK native', labelZh: 'DTK 本地线路', available: false, error: 'Python 3.12+ not found' };
   }
   try {
-    const { stdout } = await execFileAsync(python.pythonPath, [script, '--check'], {
+    const runtime = await ensureDtkDependencies(python.pythonPath);
+    const { stdout } = await execFileAsync(runtime, [script, '--check'], {
       windowsHide: true,
       timeout: 10000,
       maxBuffer: 1024 * 1024,
+      env: {
+        ...process.env,
+        PYTHONIOENCODING: 'utf-8',
+        PYTHONPATH: [resolveDtkRoot(), process.env.PYTHONPATH].filter(Boolean).join(';'),
+      },
     });
     const status = JSON.parse(stdout.trim().split(/\r?\n/).at(-1) ?? '{}') as { ok?: boolean; version?: string; error?: string };
     if (!status.ok) throw new Error(status.error ?? 'DTK route unavailable');
-    return { id: 'douyin-dtk', label: 'DTK native', labelZh: 'DTK 本地线路', available: true, version: status.version };
+    return { id: 'dtk-native', label: 'DTK native', labelZh: 'DTK 本地线路', available: true, version: status.version };
   } catch (err) {
     return {
-      id: 'douyin-dtk',
+      id: 'dtk-native',
       label: 'DTK native',
       labelZh: 'DTK 本地线路',
       available: false,
@@ -117,20 +154,22 @@ function resolvePython(): string | null {
   return null;
 }
 
-export async function resolveDouyinMedia(input: string): Promise<VideoImportMedia> {
-  const script = resolveDouyinScript();
-  if (!script) throw new Error('Douyin DTK sidecar is missing.');
+export async function resolveDtkMedia(input: string): Promise<VideoImportMedia> {
+  const script = resolveDtkScript();
+  if (!script) throw new Error('DTK native sidecar is missing.');
+  const dtkRoot = resolveDtkRoot();
   const python = await detectPythonAndBleak();
   const pythonPath = python.pythonPath ?? resolvePython();
-  if (!pythonPath) throw new Error('Python 3.12+ is required for the Douyin DTK route.');
-  const { stdout } = await execFileAsync(pythonPath, [script, '--resolve', input], {
+  if (!pythonPath) throw new Error('Python 3.12+ is required for the DTK native route.');
+  const runtime = await ensureDtkDependencies(pythonPath);
+  const { stdout } = await execFileAsync(runtime, [script, '--resolve', input], {
     windowsHide: true,
     timeout: 45000,
     maxBuffer: 16 * 1024 * 1024,
     env: {
       ...process.env,
       PYTHONIOENCODING: 'utf-8',
-      PYTHONPATH: [process.env.PYTHONPATH, 'dtk'].filter(Boolean).join(';'),
+      PYTHONPATH: [dtkRoot, process.env.PYTHONPATH].filter(Boolean).join(';'),
     },
   });
   const lines = stdout.trim().split(/\r?\n/);
@@ -155,9 +194,10 @@ export async function resolveDouyinMedia(input: string): Promise<VideoImportMedi
       })
     | { ok: false; error: string };
   if (!parsed.ok) throw new Error(parsed.error);
+  const platform = (parsed as { platform?: string }).platform === 'tiktok' ? 'tiktok' : 'douyin';
   return {
-    engine: 'douyin-dtk',
-    platform: 'douyin',
+    engine: 'dtk-native',
+    platform,
     sourceUrl: input,
     id: parsed.id,
     title: parsed.title,
@@ -191,6 +231,27 @@ const BUGPK_ENDPOINTS: Array<[VideoImportPlatform, string]> = [
   ['xiaohongshu', 'xhsjx'],
   ['generic', 'short_videos'],
 ];
+
+export type MediaImportEngineId = 'dtk-native' | 'bugpk' | 'yt-dlp';
+
+// Ordered engine preference per platform. The first engine that resolves wins.
+// Only engines proven on real links for that platform are listed first; the
+// rest stay as fallbacks so a platform outage degrades instead of breaking.
+export const PLATFORM_ROUTES: Record<VideoImportPlatform, MediaImportEngineId[]> = {
+  douyin: ['dtk-native', 'bugpk', 'yt-dlp'],
+  tiktok: ['dtk-native', 'bugpk', 'yt-dlp'],
+  xiaohongshu: ['yt-dlp', 'bugpk'],
+  bilibili: ['yt-dlp', 'bugpk'],
+  kuaishou: ['bugpk', 'yt-dlp'],
+  youtube: ['yt-dlp'],
+  weibo: ['yt-dlp'],
+  instagram: ['yt-dlp'],
+  twitter: ['yt-dlp'],
+  facebook: ['yt-dlp'],
+  vimeo: ['yt-dlp'],
+  wechat_channels: ['yt-dlp'],
+  generic: ['yt-dlp', 'bugpk'],
+};
 
 function bugPkUrl(url: string, endpoint: string): string {
   return `https://api.bugpk.com/api/${endpoint}?url=${encodeURIComponent(url)}`;

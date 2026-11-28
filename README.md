@@ -46,6 +46,11 @@ Vectrail is a desktop editing studio built around speed and control. It keeps he
 - **Local Whisper transcription** and automatic scene tags such as `bright`, `night`, `action`, `people`, `vivid`, and `sharp`.
 - **Magic AI bar** with `@` mention autocomplete, live execution steps, one-click undo, Cloud AI configuration, and agent session logs.
 - **Core 16 / Pro 32 editing skills** and composable workflow templates.
+- **Universal video link importer** — paste a share link and get the media: three
+  resolver lines (a vendored local DTK signing core for Douyin and TikTok, the
+  public BugPk API, and yt-dlp), an inline preview player, one-click quality
+  selection, resumable direct downloads, FFprobe verification, and automatic
+  library import.
 - **DJI import plugin** for BLE/Wi-Fi camera discovery, live connection health, resumable downloads, USB mass-storage ingest, SHA-256 verification, simulated-camera testing, and automatic library import.
 - **Extension marketplace** for managing ready and planned integrations, including iPhone import, digital human, voice cloning, and watch folders.
 - **FFmpeg export engine** with hardware probing, audio-only WAV, aspect presets, `.cube` LUT baking, and caption burn-in.

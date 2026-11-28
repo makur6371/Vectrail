@@ -77,7 +77,7 @@ export interface VideoImportEngineStatus {
 }
 
 export interface VideoImportLinkRoute {
-  id: 'yt-dlp' | 'douyin-dtk';
+  id: 'yt-dlp' | 'dtk-native' | 'bugpk';
   label: string;
   labelZh: string;
   available: boolean;
