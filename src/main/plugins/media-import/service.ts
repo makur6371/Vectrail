@@ -45,6 +45,7 @@ export class MediaImportService implements VectrailPlugin {
   private media = new Map<string, VideoImportMedia>();
   private tasks = new Map<string, VideoImportTask>();
   private readonly cancelHandles = new Map<string, () => void>();
+  private readonly cancelledIds = new Set<string>();
   private readonly listeners = new Set<(tasks: VideoImportTask[]) => void>();
 
   constructor(private readonly store: ProjectStore) {}
@@ -165,6 +166,7 @@ export class MediaImportService implements VectrailPlugin {
   }
 
   cancelTask(taskId: string): void {
+    this.cancelledIds.add(taskId);
     this.cancelHandles.get(taskId)?.();
     this.cancelHandles.delete(taskId);
     this.updateTask(taskId, { status: 'cancelled', speedBytesPerSec: 0, etaSeconds: null });
@@ -174,6 +176,7 @@ export class MediaImportService implements VectrailPlugin {
     const task = this.tasks.get(taskId);
     if (!task) return this.listTasks();
     if (task.status !== 'failed' && task.status !== 'cancelled') return this.listTasks();
+    this.cancelledIds.delete(taskId);
     this.updateTask(taskId, { status: 'resolving', error: undefined, downloadedBytes: 0 });
     void this.runTask(task).catch(() => undefined);
     return this.listTasks();
@@ -201,6 +204,7 @@ export class MediaImportService implements VectrailPlugin {
         media.formats[0];
       const directory = defaultDownloadDirectory();
       const outputTemplate = path.join(directory, `${Date.now()}-${sanitizeFilename(media.title)}.%(ext)s`);
+      const directTarget = path.join(directory, `${Date.now()}-${sanitizeFilename(media.title)}.mp4`);
       this.updateTask(task.id, {
         title: media.title,
         formatId: selected?.id ?? 'best',
@@ -208,10 +212,13 @@ export class MediaImportService implements VectrailPlugin {
         totalBytes: selected?.filesize ?? selected?.filesizeApprox ?? null,
       });
 
-      if (media.engine === 'douyin-dtk' && selected?.url) {
-        const destination = await this.downloadDirect(
-          selected.url.startsWith('//') ? `https:${selected?.url}` : selected?.url,
-          outputTemplate.replace('.%(ext)s', '.mp4'),
+      let destination: string | undefined;
+      if (selected?.url) {
+        destination = await this.downloadDirect(
+          selected.url.startsWith('//') ? `https:${selected.url}` : selected.url,
+          directTarget,
+          media.platform === 'douyin' ? 'https://www.douyin.com/' : undefined,
+          task.id,
           (downloaded, total, speed) => {
             this.updateTask(task.id, {
               downloadedBytes: downloaded,
@@ -221,7 +228,6 @@ export class MediaImportService implements VectrailPlugin {
             });
           }
         );
-        fs.renameSync(destination, outputTemplate.replace('.%(ext)s', '.mp4'));
       } else {
         const handle = createDownload(
           this.engine.binary,
@@ -245,14 +251,14 @@ export class MediaImportService implements VectrailPlugin {
         this.cancelHandles.set(task.id, handle.cancel);
         await handle.promise;
         this.cancelHandles.delete(task.id);
+        const produced = fs
+          .readdirSync(directory)
+          .map((entry) => path.join(directory, entry))
+          .filter((entry) => fs.existsSync(entry) && fs.statSync(entry).isFile())
+          .sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs);
+        destination = produced[0];
       }
 
-      const files = fs
-        .readdirSync(directory)
-        .map((entry) => path.join(directory, entry))
-        .filter((entry) => fs.existsSync(entry) && fs.statSync(entry).isFile())
-        .sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs);
-      const destination = files[0];
       if (!destination) throw new Error('Download completed but no output file was found.');
 
       const probe = await probeMediaAsset(destination);
@@ -283,6 +289,8 @@ export class MediaImportService implements VectrailPlugin {
   private downloadDirect(
     url: string,
     destination: string,
+    referer: string | undefined,
+    taskId: string,
     onProgress: (downloaded: number, total: number | null, speed: number) => void
   ): Promise<string> {
     return new Promise((resolve, reject) => {
@@ -291,23 +299,45 @@ export class MediaImportService implements VectrailPlugin {
       let downloaded = 0;
       let lastTick = Date.now();
       let windowBytes = 0;
-      const request = protocol.get(url, { headers: { 'User-Agent': 'Mozilla/5.0' } }, (response) => {
+      const headers: Record<string, string> = { 'User-Agent': 'Mozilla/5.0' };
+      if (referer) headers.Referer = referer;
+      let resumeFrom = 0;
+      if (fs.existsSync(partPath)) resumeFrom = fs.statSync(partPath).size;
+      if (resumeFrom > 0) headers.Range = `bytes=${resumeFrom}-`;
+      const request = protocol.get(url, { headers }, (response) => {
         const total = Number(response.headers['content-length']) || null;
         if (response.statusCode && response.statusCode >= 300 && response.statusCode < 400) {
           const location = response.headers.location;
           if (location) {
             response.resume();
-            this.downloadDirect(new URL(location, url).toString(), destination, onProgress).then(resolve, reject);
+            this.downloadDirect(
+              new URL(location, url).toString(),
+              destination,
+              referer,
+              taskId,
+              onProgress
+            ).then(resolve, reject);
             return;
           }
         }
-        if (response.statusCode !== 200) {
+        if (response.statusCode === 206) {
+          downloaded = resumeFrom;
+        } else if (response.statusCode === 200 && resumeFrom > 0) {
+          resumeFrom = 0;
+          downloaded = 0;
+          if (fs.existsSync(partPath)) fs.unlinkSync(partPath);
+        }
+        if (response.statusCode !== 200 && response.statusCode !== 206) {
           response.resume();
           reject(new Error(`Direct download HTTP ${response.statusCode}`));
           return;
         }
-        const output = fs.createWriteStream(partPath);
+        const output = fs.createWriteStream(partPath, { flags: resumeFrom > 0 ? 'a' : 'w' });
         response.on('data', (chunk: Buffer) => {
+          if (this.cancelledIds.has(taskId)) {
+            request.destroy(new Error('Cancelled'));
+            return;
+          }
           downloaded += chunk.length;
           windowBytes += chunk.length;
           const now = Date.now();
@@ -328,12 +358,9 @@ export class MediaImportService implements VectrailPlugin {
         response.on('error', reject);
       });
       request.on('error', reject);
-      this.cancelHandles.set(
-        'direct-download-current',
-        () => {
-          request.destroy(new Error('Cancelled'));
-        }
-      );
+      this.cancelHandles.set(taskId, () => {
+        request.destroy(new Error('Cancelled'));
+      });
     });
   }
 

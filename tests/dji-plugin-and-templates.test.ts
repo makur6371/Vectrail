@@ -1,3 +1,4 @@
+import { spawn } from 'node:child_process';
 import fs from 'node:fs';
 import http from 'node:http';
 import os from 'node:os';
@@ -15,12 +16,15 @@ import {
 } from '../src/main/plugins/dji-wireless-import/duml';
 import { resolveDjiModel } from '../src/main/plugins/dji-wireless-import/models';
 import { DjiWirelessImportService } from '../src/main/plugins/dji-wireless-import/service';
+import { MediaImportService } from '../src/main/plugins/media-import/service';
 import { DjiDownloadQueue } from '../src/main/plugins/dji-wireless-import/downloadQueue';
 import { MockDjiCameraServer } from '../src/main/plugins/dji-wireless-import/mockCamera';
 import { hashFileSha256 } from '../src/main/plugins/dji-wireless-import/integrity';
 import { CORE_16_SKILLS, EDITING_SKILLS_32, EDITING_TEMPLATES } from '../src/shared/editingTemplates';
 import { PLUGIN_MARKETPLACE_CATALOG, filterMarketplacePlugins } from '../src/shared/pluginMarketplace';
 import { getVectrailVersion } from '../src/main/version';
+import { FFMPEG_BIN } from '../src/main/engine/ffmpeg';
+import type { VideoImportMedia } from '../src/shared/mediaImportTypes';
 
 const tempDirs: string[] = [];
 let prevCacheDir: string | undefined;
@@ -287,6 +291,108 @@ describe('DJI Wireless Import plugin (Mock Camera + Plugin isolation)', () => {
     await dji.dispose();
     expect(MockDjiCameraServer).toBeDefined();
   }, 15000);
+});
+
+describe('Universal media link import (direct-link routing)', () => {
+  it('downloads a resolved direct link without invoking yt-dlp', async () => {
+    prevCacheDir = process.env.VECTRAIL_CACHE_DIR;
+    process.env.VECTRAIL_CACHE_DIR = makeTempDir('vectrail-webimport-cache-');
+    const store = new ProjectStore();
+    const service = new MediaImportService(store);
+
+    const samplePath = path.join(makeTempDir('vectrail-webimport-sample-'), 'sample.mp4');
+    await new Promise<void>((resolve, reject) => {
+      const child = spawn(
+        FFMPEG_BIN,
+        [
+          '-y',
+          '-f',
+          'lavfi',
+          '-i',
+          'testsrc=size=160x120:rate=10:duration=1',
+          '-f',
+          'lavfi',
+          '-i',
+          'sine=frequency=440:duration=1',
+          '-c:v',
+          'libx264',
+          '-pix_fmt',
+          'yuv420p',
+          '-c:a',
+          'aac',
+          '-shortest',
+          samplePath,
+        ],
+        { windowsHide: true }
+      );
+      child.on('error', reject);
+      child.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`ffmpeg exited ${code}`))));
+    });
+    const payload = fs.readFileSync(samplePath);
+    const server = http.createServer((req, res) => {
+      res.writeHead(200, { 'Content-Length': String(payload.length) });
+      res.end(payload);
+    });
+    await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', () => resolve()));
+    const addr = server.address();
+    const port = typeof addr === 'object' && addr ? addr.port : 0;
+
+    try {
+      const media: VideoImportMedia = {
+        engine: 'bugpk',
+        platform: 'douyin',
+        sourceUrl: 'https://v.douyin.com/example/',
+        id: '1',
+        title: 'Direct link route',
+        description: '',
+        author: 'tester',
+        authorId: '',
+        duration: 10,
+        formats: [
+          {
+            id: 'original',
+            label: '1080p',
+            url: `http://127.0.0.1:${port}/video.mp4`,
+            extension: 'mp4',
+            height: 1080,
+            fps: 30,
+            filesize: payload.length,
+            filesizeApprox: payload.length,
+            hasVideo: true,
+            hasAudio: true,
+          },
+        ],
+        subtitles: [],
+        gallery: [],
+      };
+
+      const tasks = await service.importResolved(media, 'original');
+      expect(tasks).toHaveLength(1);
+
+      await new Promise<void>((resolve, reject) => {
+        const start = Date.now();
+        const timer = setInterval(() => {
+          const current = service.listTasks()[0];
+          if (current?.status === 'done') {
+            clearInterval(timer);
+            resolve();
+          } else if (current?.status === 'failed' || Date.now() - start > 15000) {
+            clearInterval(timer);
+            reject(new Error(current?.error ?? 'Timed out waiting for direct download'));
+          }
+        }, 40);
+      });
+
+      const finished = service.listTasks()[0];
+      expect(finished.status).toBe('done');
+      expect(finished.engine).toBe('bugpk');
+      expect(finished.destinationPath).toBeTruthy();
+      expect(fs.readFileSync(finished.destinationPath!).length).toBe(payload.length);
+    } finally {
+      await new Promise<void>((resolve) => server.close(() => resolve()));
+      await service.dispose();
+    }
+  }, 20000);
 });
 
 describe('Editing skills (16 Core / 32 Full) and composable templates', () => {
