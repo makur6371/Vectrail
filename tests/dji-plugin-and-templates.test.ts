@@ -329,7 +329,7 @@ describe('Universal media link import (direct-link routing)', () => {
       child.on('close', (code) => (code === 0 ? resolve() : reject(new Error(`ffmpeg exited ${code}`))));
     });
     const payload = fs.readFileSync(samplePath);
-    const server = http.createServer((req, res) => {
+    const server = http.createServer((_req, res) => {
       res.writeHead(200, { 'Content-Length': String(payload.length) });
       res.end(payload);
     });
