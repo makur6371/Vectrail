@@ -108,6 +108,7 @@ export interface VectrailBridgeAPI {
   clearDjiUsbImports: () => Promise<void>;
   mediaImportHealth: () => Promise<VideoImportEngineStatus>;
   mediaImportResolve: (input: string) => Promise<VideoImportMedia>;
+  mediaImportResolved: (media: VideoImportMedia, formatId: string) => Promise<VideoImportTask[]>;
   mediaImportLinks: (input: string, formatId?: string) => Promise<VideoImportTask[]>;
   getMediaImportTasks: () => Promise<VideoImportTask[]>;
   onMediaImportTasks: (cb: (tasks: VideoImportTask[]) => void) => () => void;
@@ -212,6 +213,7 @@ const api: VectrailBridgeAPI = {
   clearDjiUsbImports: () => ipcRenderer.invoke('vectrail:dji-clear-usb'),
   mediaImportHealth: () => ipcRenderer.invoke('vectrail:media-import-health'),
   mediaImportResolve: (input) => ipcRenderer.invoke('vectrail:media-import-resolve', input),
+  mediaImportResolved: (media, formatId) => ipcRenderer.invoke('vectrail:media-import-resolved', media, formatId),
   mediaImportLinks: (input, formatId) => ipcRenderer.invoke('vectrail:media-import-links', input, formatId),
   getMediaImportTasks: () => ipcRenderer.invoke('vectrail:media-import-tasks'),
   onMediaImportTasks: (cb) => {

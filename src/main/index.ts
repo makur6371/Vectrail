@@ -4,6 +4,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { CloudAiConfig, ExportSettings, Project } from '../shared/types';
 import type { DjiPluginSettings } from '../shared/djiTypes';
+import type { VideoImportMedia } from '../shared/mediaImportTypes';
 import { computeExportRenderSize } from '../shared/project';
 import { loadSavedShortcuts, ProjectStore, saveShortcutsConfig } from './state';
 import {
@@ -594,6 +595,9 @@ async function serveMediaRequest(req: Request, filePath: string): Promise<Respon
   ipcMain.handle('vectrail:dji-clear-usb', () => djiPlugin.clearFinishedUsbImports());
   ipcMain.handle('vectrail:media-import-health', () => mediaImportPlugin.healthCheck());
   ipcMain.handle('vectrail:media-import-resolve', (_e, input: string) => mediaImportPlugin.resolveLink(input));
+  ipcMain.handle('vectrail:media-import-resolved', (_e, media: VideoImportMedia, formatId: string) =>
+    mediaImportPlugin.importResolved(media, formatId)
+  );
   ipcMain.handle('vectrail:media-import-links', (_e, input: string, formatId?: string) =>
     mediaImportPlugin.importLinks(input, formatId)
   );

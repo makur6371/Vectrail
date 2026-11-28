@@ -125,30 +125,41 @@ export class MediaImportService implements VectrailPlugin {
   }
 
   async importLinks(input: string, formatId?: string): Promise<VideoImportTask[]> {
-    const urls = extractUrls(input);
-    if (urls.length === 0) throw new Error('No valid http(s) link found.');
+    return this.importMedia(this.resolveLink(input), detectPlatform(extractUrls(input)[0] ?? ''), formatId ?? 'bv*+ba/b');
+  }
+
+  async importResolved(media: VideoImportMedia, formatId: string): Promise<VideoImportTask[]> {
+    this.media.set(media.sourceUrl, media);
+    return this.importMedia(Promise.resolve(media), media.platform, formatId);
+  }
+
+  private async importMedia(
+    mediaPromise: Promise<VideoImportMedia>,
+    platform: VideoImportMedia['platform'],
+    formatId: string
+  ): Promise<VideoImportTask[]> {
+    const media = await mediaPromise;
+    const url = media.sourceUrl;
     const tasks: VideoImportTask[] = [];
-    for (const url of urls) {
-      const task: VideoImportTask = {
-        id: `web-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
-        sourceUrl: url,
-        platform: detectPlatform(url),
-        engine: 'yt-dlp',
-        formatId: formatId ?? 'bv*+ba/b',
-        title: 'Resolving...',
-        status: 'resolving',
-        downloadedBytes: 0,
-        totalBytes: null,
-        speedBytesPerSec: 0,
-        etaSeconds: null,
-        importedAssetIds: [],
-        startedAt: Date.now(),
-        updatedAt: Date.now(),
-      };
-      this.tasks.set(task.id, task);
-      tasks.push(task);
-      void this.runTask(task).catch(() => undefined);
-    }
+    const task: VideoImportTask = {
+      id: `web-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      sourceUrl: url,
+      platform,
+      engine: media.engine,
+      formatId,
+      title: media.title,
+      status: 'downloading',
+      downloadedBytes: 0,
+      totalBytes: null,
+      speedBytesPerSec: 0,
+      etaSeconds: null,
+      importedAssetIds: [],
+      startedAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+    this.tasks.set(task.id, task);
+    tasks.push(task);
+    void this.runTask(task).catch(() => undefined);
     this.emit();
     return tasks;
   }

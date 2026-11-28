@@ -73,6 +73,12 @@ export const MediaLinkImportModal: React.FC<Props> = ({ onClose }) => {
     setBusy(true);
     setError(null);
     try {
+      if (preview) {
+        await window.vectrail.mediaImportResolved(preview, selectedFormat || preview.formats[0]?.id || 'best');
+        setInput('');
+        setPreview(null);
+        return;
+      }
       await window.vectrail.mediaImportLinks(input, selectedFormat || undefined);
       setInput('');
       setPreview(null);
